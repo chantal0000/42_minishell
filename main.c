@@ -6,11 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/05 16:04:16 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	makefile_check()
 {
