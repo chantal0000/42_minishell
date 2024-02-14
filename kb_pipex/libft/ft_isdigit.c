@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/11 15:57:45 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/24 14:49:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+int	ft_isdigit(int c)
 {
-	printf("this is our minishell");
-}
-
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
-	return (0);
+	if (c >= 48 && c <= 57)
+		return (1);
+	else
+		return (0);
 }

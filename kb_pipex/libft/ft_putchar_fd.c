@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/16 11:49:21 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/25 13:54:16 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+void	ft_putchar_fd(char c, int fd)
 {
-	printf("this is our minishell");
-}
-
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
-	return (0);
+	write (fd, &c, 1);
 }

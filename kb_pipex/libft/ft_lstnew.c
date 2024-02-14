@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/22 12:53:12 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/25 14:36:39 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+t_list	*ft_lstnew(void *content)
 {
-	printf("this is our minishell");
-}
+	t_list	*new_node;
 
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
-	return (0);
+	new_node = (t_list *) malloc (sizeof(t_list));
+	if (new_node == 0)
+		return (0);
+	new_node->content = content;
+	new_node->next = 0;
+	return (new_node);
 }

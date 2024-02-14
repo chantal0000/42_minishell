@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/11 16:24:14 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/22 18:58:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+int	ft_atoi(const char *str)
 {
-	printf("this is our minishell");
-}
+	int	i;
+	int	sign;
+	int	result;
 
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
-	return (0);
+	i = 0;
+	sign = 1;
+	result = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == 45)
+	{
+		sign *= -1;
+		i++;
+	}
+	else if (str[i] == 43)
+		i++;
+	while (str[i] >= 48 && str[i] <= 57 && str[i] != '\0')
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (result * sign);
 }

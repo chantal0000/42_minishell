@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/11 16:14:24 by kbolon            #+#    #+#             */
+/*   Updated: 2023/10/24 15:04:11 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+char	*ft_strrchr(const char *s, int c)
 {
-	printf("this is our minishell");
-}
+	int	i;
 
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
+	i = ft_strlen(s);
+	if (s)
+	{
+		while (s[i] != (char)c && i >= 0)
+			i--;
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+	}
 	return (0);
 }

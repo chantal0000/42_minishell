@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/10 14:52:48 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/22 15:16:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	printf("this is our minishell");
-}
+	const unsigned char	*p;
+	unsigned char		val;
+	size_t				i;
 
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
+	val = (unsigned char) c;
+	p = s;
+	i = 0;
+	while (i < n)
+	{
+		if (*p == val)
+			return ((void *)p);
+		i++;
+		p++;
+	}
 	return (0);
 }

@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/11 16:18:58 by kbolon            #+#    #+#             */
+/*   Updated: 2023/10/24 15:03:35 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	printf("this is our minishell");
-}
+	const unsigned char	*p;
+	const unsigned char	*q;
 
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
+	p = (const unsigned char *)s1;
+	q = (const unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while (*p == *q && n > 0)
+	{
+		p++;
+		q++;
+		n--;
+		if (n == 0)
+			return (0);
+	}
+	if (*p != *q)
+		return (*p - *q);
 	return (0);
 }

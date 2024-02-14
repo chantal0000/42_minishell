@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/11 14:59:37 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/24 17:00:36 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
-	printf("this is our minishell");
-}
+	size_t	i;
+	size_t	j;
 
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
-	return (0);
+	i = 0;
+	j = ft_strlen(src);
+	if (size != 0)
+	{
+		while ((src[i] != '\0') && (i < size - 1))
+		{
+			dst[i] = src [i];
+			i++;
+		}
+		if (size > 0)
+			dst[i] = '\0';
+	}
+	return (j);
 }

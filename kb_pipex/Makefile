@@ -5,34 +5,38 @@
 #                                                     +:+ +:+         +:+      #
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/02/13 06:32:59 by kbolon           ###   ########.fr        #
+#    Created: 2023/09/19 14:30:13 by kbolon            #+#    #+#              #
+#    Updated: 2023/10/26 12:54:52 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = pipex
 
-SRCS = main.c
+SRCS = src/pipex.c\
+		src/pipex_utils.c\
 
+LIBFT = libft/libft.a
 
-CC = cc
-OBJS = $(SRCS:.c=.o)
+OBJS = ${SRCS:.c=.o}
+
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(NAME)
+all: ${NAME}
 
-$(NAME): $(OBJS)
-	cc $(CFLAGS) -o $(NAME) $(OBJS)
+${NAME}: ${OBJS} ${LIBFT}
+	cc ${CFLAGS} ${OBJS} ${LIBFT} -o ${NAME}
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
+${LIBFT}:
+	make -C libft
 
-clean:
-	rm -f $(OBJS)
+clean: 
+	rm -f ${OBJS}
+	make clean -C libft
 
 fclean: clean
-		rm -f $(NAME)
+	rm -f ${NAME}
+	make fclean -C libft
 
-re: fclean all
+re: fclean all 
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean 

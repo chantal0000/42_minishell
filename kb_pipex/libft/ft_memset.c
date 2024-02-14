@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/11 16:02:55 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/11 16:04:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+void	*ft_memset(void *b, int c, size_t len)
 {
-	printf("this is our minishell");
-}
+	unsigned char	*p;
+	unsigned char	val;
+	size_t			i;
 
-int	main(int ac, char **av)
-{
-	char	**list;
-	int		i;
-
-	i = ac - 1;
-	list = av;
-	makefile_check();
-	return (0);
+	p = b;
+	val = (unsigned char) c;
+	i = 0;
+	while (i < len)
+	{
+		*(unsigned char *) p = val;
+		p++;
+		i++;
+	}
+	return (b);
 }

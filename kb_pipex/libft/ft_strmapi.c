@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/13 06:31:36 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/22 13:48:26 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/22 14:02:15 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	makefile_check()
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	printf("this is our minishell");
-}
-
-int	main(int ac, char **av)
-{
-	char	**list;
+	char	*p;
+	size_t	len;
 	int		i;
 
-	i = ac - 1;
-	list = av;
-	makefile_check();
-	return (0);
+	i = 0;
+	if (s == 0)
+		return (0);
+	len = ft_strlen(s);
+	p = (char *)malloc(sizeof(char) * (len + 1));
+	if (p == 0)
+		return (0);
+	p[len] = '\0';
+	while (s[i] != '\0')
+	{
+		p[i] = (*f)(i, s[i]);
+		i++;
+	}
+	return (p);
 }
