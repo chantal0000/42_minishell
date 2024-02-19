@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 10:41:28 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/16 09:31:54 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/25 11:48:26 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
-
-typef struct s_token
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int				*type;
-	char			*str;
-	struct s_token	*left;
-	struct s_token	*right;
-	char			char;//null character?
-}	t_token;
+	size_t	i;
 
-void	makefile_check();
-
-#endif
+	i = 0;
+	while (i < n && s1[i] != '\0' && s2[i] != '\0' && (s1[i] == s2[i]))
+		i++;
+	if (i == n)
+		return (0);
+	else
+		return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+}

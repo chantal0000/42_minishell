@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 10:41:28 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/12 13:48:31 by kbolon            #+#    #+#             */
+/*   Updated: 2023/12/07 10:36:09 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
-
-typef struct s_token
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int				*type;
-	char			*str;
-	struct s_token	*left;
-	struct s_token	*right;
-	char			char;//null character?
-}	t_token;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-void	makefile_check();
-
-#endif
+	if (!s1 && !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	return (str);
+}

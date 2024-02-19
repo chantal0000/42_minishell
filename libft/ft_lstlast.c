@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 10:41:28 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/23 15:50:24 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/24 10:44:46 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
-
-typef struct s_token
+t_list	*ft_lstlast(t_list *lst)
 {
-	int				*type;
-	char			*str;
-	struct s_token	*left;
-	struct s_token	*right;
-	char			char;//null character?
-}	t_token;
-
-void	makefile_check();
-
-#endif
+	if (!lst)
+		return (0);
+	while (lst->next != 0)
+		lst = lst -> next;
+	return (lst);
+}

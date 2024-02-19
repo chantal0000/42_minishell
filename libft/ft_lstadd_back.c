@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 10:41:28 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/23 15:47:17 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/24 11:54:06 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
-
-typef struct s_token
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	int				*type;
-	char			*str;
-	struct s_token	*left;
-	struct s_token	*right;
-	char			char;//null character?
-}	t_token;
-
-void	makefile_check();
-
-#endif
+	if (!lst || !new)
+		return ;
+	if (*lst)
+		ft_lstlast(*lst)->next = new;
+	else
+		*lst = new;
+}

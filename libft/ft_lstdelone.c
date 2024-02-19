@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 10:41:28 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/23 15:49:35 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/23 15:49:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
-
-typef struct s_token
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	int				*type;
-	char			*str;
-	struct s_token	*left;
-	struct s_token	*right;
-	char			char;//null character?
-}	t_token;
-
-void	makefile_check();
-
-#endif
+	if (!lst)
+		return ;
+	(*del)(lst->content);
+	free(lst);
+}

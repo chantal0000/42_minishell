@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 10:41:28 by kbolon           ###   ########.fr       */
+/*   Created: 2023/05/22 13:48:26 by kbolon            #+#    #+#             */
+/*   Updated: 2023/05/22 14:02:15 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
-
-typef struct s_token
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int				*type;
-	char			*str;
-	struct s_token	*left;
-	struct s_token	*right;
-	char			char;//null character?
-}	t_token;
+	char	*p;
+	size_t	len;
+	int		i;
 
-void	makefile_check();
-
-#endif
+	i = 0;
+	if (s == 0)
+		return (0);
+	len = ft_strlen(s);
+	p = (char *)malloc(sizeof(char) * (len + 1));
+	if (p == 0)
+		return (0);
+	p[len] = '\0';
+	while (s[i] != '\0')
+	{
+		p[i] = (*f)(i, s[i]);
+		i++;
+	}
+	return (p);
+}

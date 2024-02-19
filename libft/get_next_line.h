@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 10:41:28 by kbolon           ###   ########.fr       */
+/*   Created: 2023/06/15 15:26:47 by kbolon            #+#    #+#             */
+/*   Updated: 2023/12/07 10:37:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#include <unistd.h>
-#include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <stddef.h>
+# include <stdio.h>
+# include <unistd.h>
+# include "libft.h"
 
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
 
-typef struct s_token
-{
-	int				*type;
-	char			*str;
-	struct s_token	*left;
-	struct s_token	*right;
-	char			char;//null character?
-}	t_token;
+# ifndef MAX_FD
+#  define MAX_FD 1024
+# endif
 
-void	makefile_check();
+char	*get_next_line(int fd);
+char	*new_line(char *line);
+char	*ft_get_line(int fd, char *line, char *tmp);
 
 #endif
