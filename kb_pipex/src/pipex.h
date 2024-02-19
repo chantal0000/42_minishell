@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:30:04 by kbolon            #+#    #+#             */
-/*   Updated: 2023/11/01 11:28:34 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:34:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int		pipex(char **argv, char **envp);
 char	*make_path(char **all_path, char **cmd_split);
 void	error_message(char *str, int i, int *fd, int *fd2);
 void	checkstring(char *s);
+void	ms_run_cmd(char *cmd, char **envp);
 
 #endif
