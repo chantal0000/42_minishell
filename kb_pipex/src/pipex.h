@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:30:04 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/14 16:34:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/20 17:20:06 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 
 char	*get_path(char *cmd, char **envp);
 void	run_cmd(char *cmd, char **envp);

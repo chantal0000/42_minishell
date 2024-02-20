@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:35:54 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/14 16:36:28 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/20 17:08:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	child(char **argv, int *fd, char **envp)
 		error_message("Error dup2 FD stdout child", 1, fd, &filein);
 	close(fd[0]);
 	close(filein);
-	ms_run_cmd(argv[2], envp);
+	run_cmd(argv[2], envp);
 }
 
 void	parent(char **argv, int *fd, char **envp)
@@ -47,7 +47,7 @@ void	parent(char **argv, int *fd, char **envp)
 		error_message("Error dup2 FD stdin parent", 1, fd, &fileout);
 	close(fd[1]);
 	close(fileout);
-	ms_run_cmd(argv[3], envp);
+	run_cmd(argv[3], envp);
 }
 
 int	pipex(char **argv, char **envp)

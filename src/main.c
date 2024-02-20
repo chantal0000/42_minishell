@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 07:22:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/20 18:53:01 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	main()
 	char	*token;
 	char	*token2;
 
-	line = readline("minishell: ");
+	line = readline("kach-22: ");
 	if (!line)
 		return (0);
 	s1 = strdup(line);
 	s2 = strdup(line);
 //	parse_quotes_and_pipes(s1);
-	token = ft_strtok(s1, DELIMETER);
+	token = ft_strtok(s1, DELIMITER);
 	printf("Mine\n");
 	while (token != NULL)
 	{
@@ -35,11 +35,11 @@ int	main()
 	}
 //	parse_quotes_and_pipes(s2);
 	printf("Real\n");
-	token2 = ft_strtok(s2, DELIMETER);
+	token2 = ft_strtok(s2, DELIMITER);
 	while (token2 != NULL)
 	{
 		printf("%s\n", token2);
-		token = strtok(NULL, DELIMETER);
+		token = strtok(NULL, DELIMITER);
 	}
 	free(line);
 	free(s1);
