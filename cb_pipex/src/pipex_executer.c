@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/02/19 14:39:59 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:55:59 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 
 /*
@@ -99,9 +101,87 @@ int	execute_cmd(char **env, char *cmd)
 		exit (127);
 	return (127);
 }
+
+
+
+// test with 2 commands
+
+void	handle_cmd2(char **env, char **input, int fd_array[2])
+{
+	int		fd;
+	char	*cmd;
+
+	cmd = input[2];
+	//fd = open(input[1], O_TRUNC | O_CREAT | O_RDWR, 0644);
+	// if (fd == -1)
+	// {
+	// 	ft_printf("pipex: %s: Permission denied\n", input[4]);
+	// 	ft_error_after_pipe("", fd_array, EXIT_FAILURE);
+	// }
+	// do i need the comment below if i dont write into anywhere
+	//dup2(fd, STDOUT_FILENO);
+	dup2(fd_array[0], STDIN_FILENO);
+	close(fd_array[1]);
+	if (execute_cmd(env, cmd) == -1)
+	{
+		close(fd_array[0]);
+		close(fd_array[1]);
+		close(fd);
+		exit(127);
+	}
+}
+
+void	handle_cmd1(char **env, char **input, int fd_array[2])
+{
+	int		fd;
+	char	*cmd;
+
+	cmd = input[1];
+	// if (access(input[1], F_OK) == -1)
+	// {
+	// 	ft_printf("pipex: %s: No such file or directory\n", input[1]);
+	// 	ft_error_after_pipe("", fd_array, EXIT_FAILURE);
+	// }
+	// if (access(input[1], R_OK) == -1)
+	// {
+	// 	ft_printf("pipex: %s: Permission denied\n", input[1]);
+	// 	ft_error_after_pipe("", fd_array, EXIT_FAILURE);
+	// }
+	//fd = open(input[1], O_RDONLY);
+	// do i need the line below if i dont have a file / redirection?
+	//dup2(fd, STDIN_FILENO);
+	dup2(fd_array[1], STDOUT_FILENO);
+	close(fd_array[0]);
+	if (execute_cmd(env, cmd) == -1)
+	{
+		close(fd_array[0]);
+		close(fd_array[1]);
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+}
+
+
 // test main to see if i can execute commands
 int main (int argc, char **argv, char **env)
 {
-	execute_cmd(env, argv[1]);
+	int fd_array[2];
+	int id1 = 0;
+	int id2 = 0;
+
+	pipe(fd_array);
+	id1 = fork();
+	if (id1 == 0)
+	{
+
+		handle_cmd1(env, argv, fd_array);
+		//execute_cmd(env, argv[1]);
+	}
+	if (id2 == 0)
+	{
+		handle_cmd2(env, argv, fd_array);
+		//execute_cmd(env, argv[2]);
+	}
+
 	return (0);
 }
