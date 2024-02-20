@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-SRCS = main.c parser.c
+SRCS = src/main.c src/parser.c
 
 CC = cc
 OBJS = $(SRCS:.c=.o)
