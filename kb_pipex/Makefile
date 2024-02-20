@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 14:30:13 by kbolon            #+#    #+#              #
-#    Updated: 2023/10/26 12:54:52 by kbolon           ###   ########.fr        #
+#    Updated: 2024/02/20 17:18:56 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = pipex
 SRCS = src/pipex.c\
 		src/pipex_utils.c\
 
-LIBFT = libft/libft.a
+LIBFT = ../libft/libft.a
 
 OBJS = ${SRCS:.c=.o}
 

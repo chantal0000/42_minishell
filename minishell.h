@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 07:30:28 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/20 18:23:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@
 # include <unistd.h>
 # include <stdio.h>
 //MACOS
-# include <editline/readline.h>
+//# include <editline/readline.h>
 //Linux
-//# include <readline/readline.h>
-
+# include <readline/readline.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include "libft/libft.h"
 
 # define EXEC 1
 # define REDIR 2
@@ -31,13 +35,16 @@
 
 typedef struct s_token
 {
-	int				*type;
-	char			*str;
+	int				type;//number of type of command (EXEC, PIPE? etc)
+	char			*name;//file including the executable
 	struct s_token	*left;
 	struct s_token	*right;
-	char			char;//null character?
+	char			end;//null character?
 }	t_token;
 
-void	makefile_check();
+char	*ft_strtok(char *str, char *delimiter);
+void	restore_pipes(char *str);
+void	parse_quotes_and_pipes(char *str);
+void	split_cmds(char *cmd);
 
 #endif

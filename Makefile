@@ -6,36 +6,42 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/02/20 07:35:33 by kbolon           ###   ########.fr        #
+#    Updated: 2024/02/20 18:08:55 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = main.c parser.c
-
+SRCS = src/main.c \
+		src/parser.c
+		
+LIBFT = libft/libft.a
 CC = cc
 OBJS = $(SRCS:.c=.o)
+COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 
-#Linux
-#CFLAGS = -Wall -Wextra -Werror -lreadline
 #MACOS
-CFLAGS = -Wall -Wextra -Werror -ledit#could be -leditline
-
+#CFLAGS = -Wall -Wextra -Werror -ledit#could be -leditline
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	cc $(CFLAGS) -o $(NAME) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS) 
+	cc $(CFLAGS) $(LINKFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
+
+$(LIBFT):
+	make -C libft
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
+	$(CC) $(CFLAGS) $(COMFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJS)
+	make clean -C libft
 
 fclean: clean
 	rm -f $(NAME)
+	make fclean -C libft
 
 re: fclean all
 
