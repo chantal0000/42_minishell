@@ -6,18 +6,22 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/02/13 06:32:59 by kbolon           ###   ########.fr        #
+#    Updated: 2024/02/20 07:35:33 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = main.c
-
+SRCS = src/main.c src/parser.c
 
 CC = cc
 OBJS = $(SRCS:.c=.o)
-CFLAGS = -Wall -Wextra -Werror
+
+#Linux
+#CFLAGS = -Wall -Wextra -Werror -lreadline
+#MACOS
+CFLAGS = -Wall -Wextra -Werror -ledit#could be -leditline
+
 
 all: $(NAME)
 
@@ -31,7 +35,7 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-		rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
