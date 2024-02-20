@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:30:02 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/19 16:17:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/20 07:03:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <editline/readline.h>
 
 #define TOKEN_BUF 100
 #define DELIMITER "|<>&()"
@@ -130,8 +131,8 @@ void	free_memory(char **arr)
 
 void	split_cmds(char *cmd)
 {
-	char 	**tokens_array;
-	char	token;
+//	char 	**tokens_array;
+//	char	token;
 	int		buffer;
 	int		i;
 
@@ -140,11 +141,11 @@ void	split_cmds(char *cmd)
 	i = 0;
 	buffer = TOKEN_BUF;
 //	parse_quotes_and_pipes(cmd);
-	tokens_array = (char *) malloc(buffer * sizeof(char));
-	if (!tokens_array)
-		return ;
-	token = ft_strtok(cmd, DELIMITER);
-	while (token != NULL)
+//	tokens_array = (char *) malloc(buffer * sizeof(char));
+//	if (!tokens_array)
+//		return ;
+//	token = ft_strtok(cmd, DELIMITER);
+/*	while (token != NULL)
 	{
 		tokens[i] = token;
 		i++;
@@ -154,7 +155,7 @@ void	split_cmds(char *cmd)
 			tokens = 
 		}
 	}
-/*	pipe_split = ft_split(cmd, '|');
+	pipe_split = ft_split(cmd, '|');
 	printf("pipe replace\n");
 	while (pipe_split[i])
 	{
@@ -260,19 +261,38 @@ int	ft_strlen(char *str)
 
 
 
-int	main(int argc, char *argv[])
+int	main()
 {
-//	char	s[] = "wc -l | fine";
-//	char	s2[] = "wc -l | fine";
+	char	*line;
+	char	*s1;
+	char	*s2;
 	char	*delim = "<>|&()";
 	char	*token;
+	char	*token2;
 
-	token = ft_strtok(argv[1], delim);
+	line = readline("minishell: ");
+	if (!line)
+		return (0);
+	s1 = strdup(line);
+	s2 = strdup(line);
+	parse_quotes_and_pipes(s1);
+	token = ft_strtok(s1, delim);
 	printf("Mine\n");
 	while (token != NULL)
 	{
 		printf("%s\n", token);
 		token = ft_strtok(NULL, delim);
 	}
+	parse_quotes_and_pipes(s2);
+	token2 = strtok(s2, delim);
+	printf("\nReal\n");
+	while (token2 != NULL)
+	{
+		printf("%s2\n", token);
+		token2 = strtok(NULL, delim);
+	}
+	free(line);
+	free(s1);
+	free(s2);
 	return (0);
 }
