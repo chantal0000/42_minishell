@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/02/20 11:55:59 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:04:17 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,3 +185,5 @@ int main (int argc, char **argv, char **env)
 
 	return (0);
 }
+
+// nl < input.txt > output1.txt > text
