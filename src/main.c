@@ -6,43 +6,31 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 18:53:01 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/22 16:19:55 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	main()
+
+int	main(int argc, char *argv[], char **envp)
 {
 	char	*line;
-	char	*s1;//check mine
-	char	*s2;//check real
+	char	*s1;
 	char	*token;
-	char	*token2;
 
 	line = readline("kach-22: ");
 	if (!line)
 		return (0);
-	s1 = strdup(line);
-	s2 = strdup(line);
-//	parse_quotes_and_pipes(s1);
+	s1 = ft_strdup(line);
 	token = ft_strtok(s1, DELIMITER);
-	printf("Mine\n");
+	printf("\nMine\n");
 	while (token != NULL)
 	{
 		printf("%s\n", token);
 		token = ft_strtok(NULL, DELIMITER);
 	}
-//	parse_quotes_and_pipes(s2);
-	printf("Real\n");
-	token2 = ft_strtok(s2, DELIMITER);
-	while (token2 != NULL)
-	{
-		printf("%s\n", token2);
-		token = strtok(NULL, DELIMITER);
-	}
 	free(line);
 	free(s1);
-	free(s2);
 	return (0);
 }
