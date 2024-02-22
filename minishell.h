@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 18:23:17 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/21 16:44:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,20 @@
 # define TOKEN_BUF 100
 # define DELIMITER "|<>&()"
 
+typedef enum
+{
+	EXEC,
+	REDIR,
+	PIPE,
+	LIST,
+	BACK
+} t_type;
+
 typedef struct s_token
 {
 	int				type;//number of type of command (EXEC, PIPE? etc)
-	char			*name;//file including the executable
 	struct s_token	*left;
 	struct s_token	*right;
-	char			end;//null character?
 }	t_token;
 
 char	*ft_strtok(char *str, char *delimiter);

@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/02/20 18:08:55 by kbolon           ###   ########.fr        #
+#    Updated: 2024/02/21 15:13:33 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS = src/main.c \
 		src/parser.c
 		
 LIBFT = libft/libft.a
-CC = cc
+CC = cc -g
 OBJS = $(SRCS:.c=.o)
 COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
 LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline

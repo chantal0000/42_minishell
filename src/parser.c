@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 07:17:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 18:21:55 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/21 16:17:10 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,14 @@ void	restore_pipes(char *str)
 	}
 }
 
+t_token	parser(char *token)
+{
+	t_token	*head;
+
+	head = NULL;
+	
+}
+
 char	*ft_strtok(char *str, char *delimiter)
 {
 	int			len;
@@ -118,7 +126,7 @@ char	*ft_strtok(char *str, char *delimiter)
 	if (str != NULL)
 		ptr = str;
 	if (*ptr == '\0')
-		return (NULL); //return NULL if no more tokens
+		return (NULL);
 	token = ptr;
 	while (*ptr != '\0')
 	{
