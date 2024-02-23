@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_home.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 07:17:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 18:21:55 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/23 07:51:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,21 @@ char	*ft_strtok(char *str, char *delimiter)
 		ptr++;
 	}
 	return (token);
+}
+int	find_tokens(char *pstr, char *ptok, char *endtok, char *pstrend)
+{
+	char	whitespace;
+	char	tokens;
+	char	*str;
+	int		i;
+
+	whitespace = " \n\t\r\v";
+	tokens = "|<>()&";//do we do &?? I don't think so
+	str = pstr;
+	while (ptok < pstrend && ft_strchr(whitespace, *str))//or can I do != '\0'?
+		str++;
+	if (ptok)//if something in ptok, update str pointer to it
+		*ptok = str;
+	i = *str;
+	if (*str == '\0)
 }
