@@ -6,43 +6,53 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 18:53:01 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/23 07:52:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	main()
+void	error_message(char *str, int i, int *fd, int *fd2)
 {
-	char	*line;
-	char	*s1;//check mine
-	char	*s2;//check real
-	char	*token;
-	char	*token2;
+	if (fd || fd2)
+	{
+		close(*fd);
+		close(*fd2);
+	}
+	perror(str);
+	exit (i);
+}
 
-	line = readline("kach-22: ");
+int	main(int ac, char *av[], char *envp[])
+{
+	static char	*line;
+	char		*s1;
+	char		*token;
+
+	if (ac != 1)
+	{
+		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
+		exit(1);//is this the right error code?
+	}
+//not sure if we need the next 6 lines, if buffer has already
+//been allocated, return the memory to free the pool
+	line = (char *)NULL;
+	if (line)
+	{
+		free(line);
+		line = (char *)NULL;
+	}
+	line = readline("minishell: ");
 	if (!line)
 		return (0);
-	s1 = strdup(line);
-	s2 = strdup(line);
-//	parse_quotes_and_pipes(s1);
-	token = ft_strtok(s1, DELIMITER);
-	printf("Mine\n");
-	while (token != NULL)
+	while (line)
 	{
-		printf("%s\n", token);
-		token = ft_strtok(NULL, DELIMITER);
-	}
-//	parse_quotes_and_pipes(s2);
-	printf("Real\n");
-	token2 = ft_strtok(s2, DELIMITER);
-	while (token2 != NULL)
-	{
-		printf("%s\n", token2);
-		token = strtok(NULL, DELIMITER);
+		if (*line)
+			add_history(line);
+		if (parse_line(line))
+			//run/exec the cmds
+		line = ("minishell: ");
 	}
 	free(line);
-	free(s1);
-	free(s2);
 	return (0);
 }
