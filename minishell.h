@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/21 16:44:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:48:39 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,38 @@
 # define REDIR 2
 # define PIPE 3
 # define LIST 4
-# define BACK 5
-# define TOKEN_BUF 100
-# define DELIMITER "|<>&()"
+# define DELIMITER "|<>()"
 
-typedef enum
+#define MAXARGS 20
+
+typedef struct s_type
 {
-	EXEC,
-	REDIR,
-	PIPE,
-	LIST,
-	BACK
-} t_type;
+	int	type;
+}	t_type;
 
-typedef struct s_token
+typedef struct s_exec_cmd
 {
-	int				type;//number of type of command (EXEC, PIPE? etc)
-	struct s_token	*left;
-	struct s_token	*right;
-}	t_token;
+	int		type;
+	char	*argv[MAXARGS];
+	char	*arg_options[MAXARGS];
+}	t_exec_cmd;
 
-char	*ft_strtok(char *str, char *delimiter);
-void	restore_pipes(char *str);
-void	parse_quotes_and_pipes(char *str);
-void	split_cmds(char *cmd);
+typedef struct s_redir_cmd
+{
+	int		type;
+	t_cmd	*cmd;
+	char	*file;
+	char	*end_file;
+	int		mode;
+	int		fd;
+}	t_redir_cmd;
+
+typedef struct	s_cmd
+{
+	int		type;
+	t_cmd	*left;
+	t_cmd	*right;
+}	t_cmd;
+
 
 #endif
