@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/27 06:38:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:09:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,36 @@
 # define REDIR 2
 # define PIPE 3
 # define LIST 4
-# define BACK 5
-# define TOKEN_BUF 100
 # define DELIMITER "|<>&()"
 
-typedef struct s_token
+typedef struct s_type
 {
-	int				type;//number of type of command (EXEC, PIPE? etc)
-	char			*name;//file including the executable
-	struct s_token	*left;
-	struct s_token	*right;
-	char			end;//null character?
-}	t_token;
+	int	type;
+}	t_type;
+
+typedef struct s_exec_cmd
+{
+	int		type;
+	char	*argv[MAXARGS];
+	char	*arg_options[MAXARGS];
+}	t_exec_cmd;
+
+typedef struct s_redir_cmd
+{
+	int		type;
+	t_cmd	*cmd;
+	char	*file;
+	char	*end_file;
+	int		mode;
+	int		fd;
+}	t_redir_cmd;
+
+typedef struct	s_cmd
+{
+	int		type;
+	t_type	*left;
+	t_type	*right;
+}	t_cmd;
 
 char	*ft_strtok(char *str, char *delimiter);
 void	restore_pipes(char *str);
