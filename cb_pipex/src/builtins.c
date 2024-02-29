@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:22:32 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/02/29 10:29:35 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:19:05 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_echo(char **input)
 {
 	//where to write it? terminal or file is the question
 	size_t	i;
+	size_t	j;
 	int		len;
 	int		flag;
 	// 1 to scip echo? or different
@@ -42,11 +43,38 @@ void	ft_echo(char **input)
 		i++;
 	}
 	// add null terminator?
+	if (flag != 1)
+	{
+		//...
+	}
 }
 
+/*
+** cd -> change directory (only rel or absolut path)
+** change the current working directory
+** if no dir is specified it goes to HOME
+** chdir(const char *path), changes directory of calling process to dir specified
+** getenv()
+*/
 
 
-// ◦ cd with only a relative or absolute path
+
+
+
+
+
+
+
+
+void	ft_cd()
+{
+	// if input after cd is NULL
+	// if (chdir(getenv("HOME")) != 0)
+		// handle error
+	// else (try change dir)
+		// if (chdir(input[xyz] != 0))
+			//handle error
+}
 
 /*
 ** pwd (with no options)-> Printf Working Directory
