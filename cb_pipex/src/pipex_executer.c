@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/02/21 18:04:17 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:19:11 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,3 +187,40 @@ int main (int argc, char **argv, char **env)
 }
 
 // nl < input.txt > output1.txt > text
+
+
+// redirection?
+
+// char *** ls -la | wc
+// char ** ls -la
+// char *ls
+
+// char ***commands
+// int number of commands
+// char *infile path
+// char *outfile path
+
+// init_piptes(nb_commands)
+
+// init_redirection
+
+// if (i == 0)
+// {
+// 	if (infile path = 0)
+// 		infile_fd = STDIN_FILENO;
+// 	else
+// 		infile_fd = open(infile_path);
+// }
+// else if (i == nb_commands - 1)
+// {
+// 	if (outfile_path = 0)
+// 		outfile_fd = STDOUT_FILENO
+// 	else
+// 		outfile_fd = open(outfile_path)
+// }
+
+
+// else
+// {
+// 	infile_fd =- pipe[]
+// }
