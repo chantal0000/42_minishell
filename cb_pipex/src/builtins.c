@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:22:32 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/02/21 10:40:29 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:29:35 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,44 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-//◦ echo with option -n
+/*
+** echo -n
+** displays text or variables to the terminal or to files
+** -n suppress the newline at the end that echo usually adds
+** -n is optional, so we need to check for it
+*/
+void	ft_echo(char **input)
+{
+	//where to write it? terminal or file is the question
+	size_t	i;
+	int		len;
+	int		flag;
+	// 1 to scip echo? or different
+	i = 1;
+	flag = 0;
+	if (ft_strncmp("echo -n", input[1], 7))
+	{
+		flag = 1;
+	}
+	while(input[i])
+	{
+		len = ft_strlen(input[i]);
+		write(1, input[i], len);
+		i++;
+	}
+	// add null terminator?
+}
+
+
+
 // ◦ cd with only a relative or absolute path
-// ◦ pwd with no options
-void	pwd(char **environment)
+
+/*
+** pwd (with no options)-> Printf Working Directory
+** outputs the full pathname of the current working directory,
+** which is the dir you are currently in within the filesystem hierarchy
+*/
+void	ft_pwd(char **environment)
 {
 	size_t	i;
 	char *pwd;
