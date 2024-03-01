@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:22:32 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/02/29 18:19:05 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/01 16:38:47 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "../../libft/libft.h"
 
 /*
 ** echo -n
@@ -26,27 +27,29 @@ void	ft_echo(char **input)
 {
 	//where to write it? terminal or file is the question
 	size_t	i;
-	size_t	j;
 	int		len;
 	int		flag;
-	// 1 to scip echo? or different
+	// 1 to skip echo? or different
 	i = 1;
 	flag = 0;
-	if (ft_strncmp("echo -n", input[1], 7))
-	{
+	// only works when I put "echo -n" in qoutes currently
+	if (ft_strncmp("echo -n", input[1], 7) == 0)
 		flag = 1;
-	}
+	printf("flag: %d\n", flag);
+	if (flag == 1)
+		i = 2;
+	else
+		i = 2;
 	while(input[i])
 	{
 		len = ft_strlen(input[i]);
 		write(1, input[i], len);
+		if (input[i + 1] != NULL)
+			write(1, " ", 1);
 		i++;
 	}
-	// add null terminator?
 	if (flag != 1)
-	{
-		//...
-	}
+		write(1, "\n", 1);
 }
 
 /*
@@ -58,23 +61,15 @@ void	ft_echo(char **input)
 */
 
 
-
-
-
-
-
-
-
-
-void	ft_cd()
-{
-	// if input after cd is NULL
-	// if (chdir(getenv("HOME")) != 0)
-		// handle error
-	// else (try change dir)
-		// if (chdir(input[xyz] != 0))
-			//handle error
-}
+// void	ft_cd()
+// {
+// 	// if input after cd is NULL
+// 	// if (chdir(getenv("HOME")) != 0)
+// 		// handle error
+// 	// else (try change dir)
+// 		// if (chdir(input[xyz] != 0))
+// 			//handle error
+// }
 
 /*
 ** pwd (with no options)-> Printf Working Directory
@@ -110,7 +105,12 @@ void	ft_pwd(char **environment)
 
 int main (int argc, char **argv, char **env)
 {
-	pwd(env);
-
+	ft_pwd(env);
+	int i = 0;
+	// while(argv[i])
+	// {
+		ft_echo(argv);
+		// i++;
+	// }
 	return (0);
 }
