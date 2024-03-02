@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:22:32 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/01 16:38:47 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/02 16:16:20 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,16 @@ void	ft_echo(char **input)
 */
 
 
-// void	ft_cd()
+// void	ft_cd(char *directory)
 // {
 // 	// if input after cd is NULL
 // 	// if (chdir(getenv("HOME")) != 0)
 // 		// handle error
 // 	// else (try change dir)
-// 		// if (chdir(input[xyz] != 0))
+// 		// if (chdir(input[xyz]) != 0))
 // 			//handle error
+// 	if(chdir("test") == -1)
+// 		write(1, "error\n", 6);
 // }
 
 /*
@@ -105,12 +107,36 @@ void	ft_pwd(char **environment)
 
 int main (int argc, char **argv, char **env)
 {
-	ft_pwd(env);
-	int i = 0;
+	//ft_pwd(env);
+	//int i = 0;
 	// while(argv[i])
 	// {
-		ft_echo(argv);
+	//	ft_echo(argv);
 		// i++;
 	// }
+	// printf("directory: %s\n", argv[2]);
+	// ft_cd(argv[2]);
+	 char s[100];
+	    printf("%s\n", getcwd(s, 100));
+	chdir("test");
+	    printf("%s\n", getcwd(s, 100));
 	return (0);
 }
+
+
+// int main()
+// {
+//     char s[100];
+
+//     // printing current working directory
+//     printf("%s\n", getcwd(s, 100));
+
+//     // using the command
+//     chdir("..");
+
+//     // printing current working directory
+//     printf("%s\n", getcwd(s, 100));
+
+//     // after chdir is executed
+//     return 0;
+// }
