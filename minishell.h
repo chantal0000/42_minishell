@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/28 14:08:17 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/01 16:04:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,22 @@
 
 # define EXEC 1
 # define REDIR 2
-# define PIPE
-# define DELIMITER "|<>&()"
+# define PIPE 3
+# define DELIMITER "|<>()"
+# define WHITESPACE " \n\t\r\v"
+# define MAXARGS 20
 
 typedef struct s_type
 {
 	int	type;
 }	t_type;
+
+typedef struct	s_cmd
+{
+	int		type;
+	t_type	*left;
+	t_type	*right;
+}	t_cmd;
 
 typedef struct s_exec
 {
@@ -52,12 +61,6 @@ typedef struct s_redir
 	int		fd;
 }	t_redir;
 
-typedef struct	s_cmd
-{
-	int		type;
-	t_type	*left;
-	t_type	*right;
-}	t_cmd;
 
 
 
