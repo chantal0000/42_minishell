@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/23 07:52:34 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/04 16:01:30 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int ac, char *av[], char *envp[])
 	{
 		if (*line)
 			add_history(line);
-		if (parse_line(line))
+			build_cmd_tree(&line);
 			//run/exec the cmds
 		line = ("minishell: ");
 	}
