@@ -6,14 +6,16 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/02/20 18:53:13 by kbolon           ###   ########.fr        #
+#    Updated: 2024/03/04 14:54:43 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS = src/main.c \
-		src/parser.c
+		src/parser.c \
+		src/parser2.c \
+		src/parser3.c
 		
 LIBFT = libft/libft.a
 CC = cc
