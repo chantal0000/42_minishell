@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/04 18:39:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/05 07:50:35 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_cmd	*parse_exec(char *s, t_exec *cmd_tree, char *cmd, char *opt)
 		cmd_tree->cmd[i] = cmd;
 		cmd_tree->options[i] = opt;
 		i++;
-		cmd_tree = parse_for_redirections((t_cmd *)cmd_tree, &s);
+		cmd_tree = (t_exec *)parse_for_redirections((t_cmd *)cmd_tree, s);
 	}
 	cmd_tree->cmd[i] = NULL;
 	cmd_tree->options[i] = NULL;
@@ -85,8 +85,8 @@ t_cmd	*build_cmd_tree(char *s)
 	if (!temp)
 		return (NULL);
 	temp->type = EXEC;
-	cmd_tree = (t_exec *)temp;
-	cmd_tree = parse_for_redirections(cmd_tree, &s);
+	cmd_tree = (t_cmd *)temp;
+	cmd_tree = parse_for_redirections((t_cmd *)cmd_tree, s);
 	if(!parse_exec(s, (t_exec *)cmd_tree, cmd, opt))
 		free_cmd_tree((t_exec *)cmd_tree);
 	return (cmd_tree);
