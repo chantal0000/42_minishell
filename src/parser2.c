@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:35:03 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/04 17:10:12 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/05 15:02:45 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,16 @@ int	find_tokens(char **s, char **cmd, char **opt)
 	return (token);
 }
 
-//When a struct cmd* is received, it points to a base structure with limited fields. 
-//To manipulate extended fields in derived structures like struct exec_cmd or 
-//struct redir_cmd, the pointer must be cast to the appropriate type. 
+//When a struct cmd* is received, it points to a base struct w/ limited 
+//fields. To manipulate extended fields in structures like t_exec or 
+//t_redir, the pointer must be cast to the appropriate type. 
 //This casting informs the compiler of the pointer's actual structure type, 
 //enabling access to both base and extended fields.
 
 //This approach facilitates polymorphism in C, enabling functions like 
-//nul_terminate_cmds to operate on various command types through a 
+//ft_nul_cmds to operate on various command types through a 
 //common interface. By examining the type field and casting accordingly, 
 //the function ensures type safety while handling diverse command structures.
-
 t_cmd	*ft_nul_cmds(t_cmd *cmd)
 {
 	t_exec	*exec_cmd;
@@ -83,18 +82,11 @@ t_cmd	*ft_nul_cmds(t_cmd *cmd)
 	t_redir	*redir_cmd;
 	int		i;
 
-	if(!cmd)
+	if (!cmd)
 		return (0);
 	i = 0;
 	if (cmd->type == EXEC)
-	{
-		exec_cmd = (t_exec *)cmd;
-		while (exec_cmd->cmd[i])
-		{
-			exec_cmd->options[i] = 0;
-			i++;
-		}
-	}
+		exec_cmd = ft_exec_cmd(cmd);
 	if (cmd->type == PIPE)
 	{
 		pipe_cmd = (t_cmd *)cmd;
@@ -112,7 +104,7 @@ t_cmd	*ft_nul_cmds(t_cmd *cmd)
 	return (cmd);
 }
 
-t_cmd *pipe_cmd (t_cmd *left, t_cmd *right)
+t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
 {
 	t_cmd	*cmd;
 
@@ -129,9 +121,9 @@ t_cmd *pipe_cmd (t_cmd *left, t_cmd *right)
 t_exec	*ft_exec_cmd(t_cmd *cmd)
 {
 	t_exec	*exec_cmd;
-	int			i;
+	int		i;
 
-	if(!cmd)
+	if (!cmd)
 		return (0);
 	i = 0;
 	exec_cmd = (t_exec *)cmd;
