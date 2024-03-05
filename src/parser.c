@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/04 16:26:15 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/05 07:51:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,36 @@ void	free_cmd_tree(t_exec *tree)
 		free(tree->options);
 	}
 }
+
+int	main()
+{
+	char	*line = "> ls -l | wc";
+//	char	*s1;
+	char	*s2;
+	char	*delim = "<>|()";
+	char	*token;
+	int		token2;
+
+/*	line = readline("minishell: ");
+	if (!line)
+		return (0);*/
+//	s1 = ft_strdup(line);
+	s2 = ft_strdup(line);
+/*	token = ft_strtok(s1, delim);
+	printf("Mine\n");
+	while (token != NULL)
+	{
+		printf("%s\n", token);
+		token = ft_strtok(NULL, delim);
+	}*/
+	build_cmd_tree(s2);
+//	token2 = find_tokens(s2);
+//	printf("%c\n", token2);
+
+//	free(line); //need this for readline
+//	free(s1);
+//	free(s2);
+	return (0);
+}
+
+			
