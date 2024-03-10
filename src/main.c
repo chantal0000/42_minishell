@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/05 14:37:30 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/10 10:35:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,48 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 	exit (i);
 }
 
-/*int	main(int ac, char *av[], char *envp[])
+void print_cmd(t_cmd *cmd)
 {
-	static char	*line = "ls -l | wc";
-	char 		*s1;
+	t_exec	*exec_cmd;
+	t_cmd	*pipe_cmd;
+	int		i;
+
+	if (cmd == NULL)
+		return ;
+	i = 0;
+	if (cmd->type == EXEC)
+	{
+		exec_cmd = (t_exec *)cmd;
+		printf("Command: ");
+		while (exec_cmd->cmd[i])
+		{
+			printf("%s ", exec_cmd->cmd[i]);
+			i++;
+		}
+		printf("\n");
+	}
+	else if (cmd->type == PIPE)
+	{
+		pipe_cmd = (t_cmd *)cmd;
+		print_cmd(pipe_cmd->left);
+		print_cmd(pipe_cmd->right);
+	}
+	else
+		printf("Unknown command type\n");
+}
+
+/*int	main(int ac, char **av, char *envp[])
+{
+	static char	*line;
 	t_cmd		*cmd;
 	
-	s1 = ft_strdup(line);
 	if (ac != 1)
 	{
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
 		exit(1);//is this the right error code?
 	}
-	cmd = build_cmd_tree(s1);
+	void(ac);
+	void(av);
 	line = readline("minishell: ");
 	if (!line)
 		return (0);
@@ -44,31 +73,34 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 		if (*line)
 		{
 			add_history(line);
-			build_cmd_tree(&line);
+			cmd = *parse_for_cmds(line);
 			//run/exec the cmds
 		}
 		line = ("minishell: ");
 	}
-//	free(line);
-	free(s1);
+//	rl_clear_history();
+	free(line);
 	return (0);
 }*/
 
+
 int	main()
 {
-	char	*line = "> ls -l | wc";
-	char	*s2;
-	char	*delim = "<>|()";
-	char	*token;
-	int		token2;
+	char	*line = "  ( ls )| wc";
+	int		token;
+//	t_cmd	cmd;
+	
+//	cmd = *parse_for_cmds(line);
+//	print_cmd(&cmd);
+	printf("\nMine\n");
+	token = find_tokens(&line, NULL, NULL);
+	printf("token is: %c\n", token);
+	while (token != '\0')
+	{
+	 	printf("token is: %c\n", token);
+		token = find_tokens(&line, NULL, NULL);
+	}
 
-	s2 = ft_strdup(line);
-	parse_for_cmds(s2);
-//	token2 = find_tokens(s2);
-//	printf("%c\n", token2);
-
-//	free(line); //need this for readline
-//	free(s1);
-	free(s2);
+	
 	return (0);
 }
