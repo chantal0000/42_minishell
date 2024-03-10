@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/05 14:54:53 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/10 07:13:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,13 @@ void	free_cmd_tree(t_exec *tree)
 		}
 		free(tree->options);
 	}
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	if (cmd->left)
+		free(cmd->left);
+	if (cmd->right)
+		free(cmd->right);
+	free(cmd);
 }

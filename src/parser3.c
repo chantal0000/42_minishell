@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/05 14:30:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/10 10:48:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,46 @@ t_cmd	*redir_cmd(t_cmd *cmd, char *beg_file, char *end_file, int instructions, i
 	return ((t_cmd *)redirection);
 }
 
-t_cmd	*parse_group(char **s)
+t_cmd	*parse_for_groups(char **s)
 {
 	t_cmd	*cmd;
 
+	printf("now checking for groups\n");
 	if (!check_next_char(s, '('))
-		return (0);
-	find_tokens(s, 0 , 0);
-	cmd = ft_parse_for_pipe(*s);
+	{
+		printf("missing left bracket");
+		exit (1);
+	}
+	find_tokens(s, NULL , NULL);//move to token
+	printf("now checking for pipes again\n");
+	cmd = ft_parse_for_pipe(s);
 	if (!check_next_char(s, ')'))
-		return (0);//bash doesn't exit here...update it to match
-	find_tokens(s, 0, 0);
-	cmd = parse_for_redirections(cmd, *s);
+	{
+		printf("missing closing bracket");
+		exit (1);//bash doesn't exit here...update it to match
+	}
+	find_tokens(s, 0, 0);//move to next token
+	cmd = parse_for_redirections(cmd, s);
+	cmd = build_cmd_tree(s);
 	return (cmd);
 }
 
 
-t_cmd	*parse_exec(char *s, t_exec *cmd_tree, char *cmd, char *opt)
+t_cmd	*parse_exec(char **s, t_exec *cmd_tree, char *cmd, char *opt)
 {
 	int		i;
 	int		token;
 
 	i = 0;
-	while (!check_next_char(&s, '|'))// && !check_next_char(&s, ')'))
+	token = 0;
+	while (!check_next_char(s, '|'))// && !check_next_char(&s, ')'))
 	{
-		if (!find_tokens(&s, &cmd, &opt))
+		if (!find_tokens(s, &cmd, &opt))
 			break ;
-		if (token != 'a')
+		else if (token != 'a')
 		{
 			printf("please enter valid commands\n");
-			return (NULL);
+			return ((void *)0);
 		}
 		cmd_tree->cmd[i] = cmd;
 		cmd_tree->options[i] = opt;
@@ -66,11 +76,10 @@ t_cmd	*parse_exec(char *s, t_exec *cmd_tree, char *cmd, char *opt)
 	}
 	cmd_tree->cmd[i] = NULL;
 	cmd_tree->options[i] = NULL;
-//	ft_nul_cmds((t_cmd *)cmd_tree);
 	return ((t_cmd *)cmd_tree);
 }
 
-t_cmd	*build_cmd_tree(char *s)
+t_cmd	*build_cmd_tree(char **s)
 {
 	t_exec	*temp;
 	t_cmd	*cmd_tree;
@@ -79,13 +88,17 @@ t_cmd	*build_cmd_tree(char *s)
 
 	cmd = NULL;
 	opt = NULL;
-	if (check_next_char(&s, '('))
-		return (parse_group(&s));
+	printf("now building cmd tree\n");
+	if (check_next_char(s, '('))
+	{
+		printf("now checking for left bracket\n");
+		cmd_tree = parse_for_groups(s);
+		return (cmd_tree);
+	}
 	temp = (t_exec *)ft_calloc(1, sizeof(t_exec));
 	if (!temp)
-		return (NULL);
+		return ((void *)0);
 	temp->type = EXEC;
-//	printf("%d\n", temp->type);
 	cmd_tree = (t_cmd *)temp;
 	cmd_tree = parse_for_redirections((t_cmd *)cmd_tree, s);
 	if(!parse_exec(s, (t_exec *)cmd_tree, cmd, opt))
@@ -93,30 +106,34 @@ t_cmd	*build_cmd_tree(char *s)
 	return (cmd_tree);
 }
 
-t_cmd	*parse_for_redirections(t_cmd *cmd, char *s)
+t_cmd	*parse_for_redirections(t_cmd *cmd, char **s)
 {
-	int		token;
+//	int		token;
 	char	*beg_of_file;
 	char	*end_of_file;
 
-	while (check_next_char(&s, '<') || check_next_char(&s, '>'))
+	printf("now parsing for redirections\n");
+	while (check_next_char(s, '<') || check_next_char(s, '>'))
 	{
-		token = find_tokens(&s, 0, 0);
-		if (find_tokens(&s, &beg_of_file, &end_of_file) != 'a')
+		printf("in while loop\n");
+//		token = find_tokens(s, 0, 0);
+//		printf("token: %d\n", token);
+		find_tokens(s, 0, 0);
+		if (find_tokens(s, &beg_of_file, &end_of_file) != 'a')
 		{
 			printf("missing file");//need to change to follow bash
 			return ((void *)0);
 		}
-		if (*s == '>')
+/*		if (**s == '>')
 			cmd = redir_cmd(cmd, beg_of_file, end_of_file, O_WRONLY | O_CREAT | O_TRUNC, 1);//fd=1
-		else if (*s == '<')
+		else if (**s == '<')
 			cmd = redir_cmd(cmd, beg_of_file, end_of_file, O_RDONLY, 0);//fd=0
-		else if (*s == '+')
+		else if (**s == '+')
 			cmd = redir_cmd(cmd, beg_of_file, end_of_file,  O_WRONLY | O_CREAT, 1);//fd=1
-		else if (*s == '-')
+		else if (**s == '-')
 			cmd = redir_cmd(cmd, beg_of_file, end_of_file, O_RDONLY, 0);//fd=0
 		else
-			return ((void *)0);
+			return ((void *)0);*/
 	}
 	return (cmd);
 }

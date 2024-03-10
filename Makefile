@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/03/05 14:55:06 by kbolon           ###   ########.fr        #
+#    Updated: 2024/03/10 10:47:18 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,21 @@ SRCS = src/main.c \
 		src/parser.c \
 		src/parser2.c \
 		src/parser3.c \
+		src/parser4.c \
 		src/utils.c
 		
 LIBFT = libft/libft.a
 CC = cc
 OBJS = $(SRCS:.c=.o)
-COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
-LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
+#LINUX
+#CFLAGS = -Wall -Wextra -Werror -ledit
+#COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+#LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-#CFLAGS = -Wall -Wextra -Werror -ledit#could be -leditline
+CFLAGS = -Wall -Wextra -Werror#could be -leditline
+COMFLAGS = -I/opt/homebrew/opt/readline/include#libedit/include
+LINKFLAGS = -L/opt/homebrew/opt/readline -lreadline#libedit/lib -ledit
 
 all: $(NAME)
 
