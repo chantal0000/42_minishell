@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/10 10:48:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/12 14:41:33 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@
 # define PIPE 3
 # define DELIMITER "|<>()"
 # define WHITESPACE " \n\t\r\v"
-# define MAXARGS 10
+# define MAXARGS 15
 
 typedef struct s_cmd	t_cmd;
 
 typedef struct s_cmd
 {
-	char	*s;
+//	char	*s;
 	int		type;
 	t_cmd	*left;
 	t_cmd	*right;
@@ -64,7 +64,7 @@ typedef struct s_redir
 t_cmd	*parse_for_cmds(char *s);
 int		is_token(char s);
 int		is_whitespace(char s);
-t_cmd	*ft_parse_for_pipe(char **str);
+t_cmd	*parse_for_pipe(char **str);
 int		check_next_char(char **s, char token);
 
 //parser2.c
@@ -89,5 +89,5 @@ void	free_cmd_tree(t_exec *tree);
 
 
 //char	*ft_strtok(char *str, char *delimiter);
-
+//t_cmd	*pipecmd(t_cmd *left, t_cmd *right);
 #endif

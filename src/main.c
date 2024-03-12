@@ -50,7 +50,8 @@ void print_cmd(t_cmd *cmd)
 		print_cmd(pipe_cmd->right);
 	}
 	else
-		printf("Unknown command type\n");
+//		printf("Unknown command type\n");
+	return ;
 }
 
 /*int	main(int ac, char **av, char *envp[])

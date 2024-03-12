@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:35:03 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/10 10:46:40 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/11 19:06:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	find_tokens(char **s, char **beg_of_file, char **end_of_file)
 	char	*line;
 
 	line = *s;
-
 	while (*line != '\0' && is_whitespace(*line))
 		line++;
 	if (beg_of_file != NULL)
@@ -110,17 +109,3 @@ t_cmd	*ft_nul_cmds(t_cmd *cmd)
 	}
 	return ((t_cmd *)cmd);
 }
-
-t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
-{
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->type = PIPE;
-	cmd->left = left;
-	cmd->right = right;
-	return (cmd);
-}
-
