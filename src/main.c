@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/10 10:35:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/12 15:08:59 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void print_cmd(t_cmd *cmd)
 		print_cmd(pipe_cmd->right);
 	}
 	else
-		printf("Unknown command type\n");
+//		printf("Unknown command type\n");
+	return ;
 }
 
 /*int	main(int ac, char **av, char *envp[])
@@ -86,20 +87,20 @@ void print_cmd(t_cmd *cmd)
 
 int	main()
 {
-	char	*line = "  ( ls )| wc";
-	int		token;
-//	t_cmd	cmd;
+	char	*line = " (ls -a) | wc";
+//	int		token;
+	t_cmd	cmd;
 	
-//	cmd = *parse_for_cmds(line);
-//	print_cmd(&cmd);
-	printf("\nMine\n");
+	cmd = *parse_for_cmds(line);
+	print_cmd(&cmd);
+/*	printf("\nMine\n");
 	token = find_tokens(&line, NULL, NULL);
 	printf("token is: %c\n", token);
 	while (token != '\0')
 	{
 	 	printf("token is: %c\n", token);
 		token = find_tokens(&line, NULL, NULL);
-	}
+	}*/
 
 	
 	return (0);
