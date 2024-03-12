@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser2.c                                          :+:      :+:    :+:   */
+/*   find_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:35:03 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/11 19:06:56 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:12:22 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,20 @@ int	check_for_alligators(char **s)
 	}
 	return (token);
 }
-int	check_for_nontokens(char **s)
+/*int	check_for_nontokens(char **s)
 {
 	int	token;
 
 	token = 'a';
+	printf("in check_for_nontokens\n");
 	while (**s != '\0' && !is_whitespace(**s) && !is_token(**s))
+	{
 		(*s)++;
+		printf("token checker : %c\n", **s);
+	}
+	printf("out check_for_nontokens\n");
 	return (token);
-}
+}*/
 
 int	find_tokens(char **s, char **beg_of_file, char **end_of_file)
 {
@@ -55,8 +60,9 @@ int	find_tokens(char **s, char **beg_of_file, char **end_of_file)
 	line = *s;
 	while (*line != '\0' && is_whitespace(*line))
 		line++;
-	if (beg_of_file != NULL)
+	if (beg_of_file)
 		*beg_of_file = line;
+//	printf("beg:%c\n", **beg_of_file);
 	token = *line;
 	if (*line == '\0')
 		return (token);
@@ -65,47 +71,18 @@ int	find_tokens(char **s, char **beg_of_file, char **end_of_file)
 	else if (*line == '>' || *line == '<')
 		token = check_for_alligators(&line);
 	else
-		token = check_for_nontokens(&line);
+		token = 'a';
+	while (*line != '\0' && !is_whitespace(*line) && !is_token(*line))
+	{
+		line++;
+//		printf("token checker : %c\n", *line);
+	}
+//		token = check_for_nontokens(&line);
 	if (end_of_file)
 		*end_of_file = line;
+//	printf("end:%c\n", **end_of_file);
 	while (*line != '\0' && is_whitespace(*line))
-		line++;
+		line++;//moves to space after token
 	*s = line;
 	return (token);
-}
-
-//When a struct cmd* is received, it points to a base struct w/ limited 
-//fields. To manipulate extended fields in structures like t_exec or 
-//t_redir, the pointer must be cast to the appropriate type. 
-//This casting informs the compiler of the pointer's actual structure type, 
-//enabling access to both base and extended fields.
-
-//This approach facilitates polymorphism in C, enabling functions like 
-//ft_nul_cmds to operate on various command types through a 
-//common interface. By examining the type field and casting accordingly, 
-//the function ensures type safety while handling diverse command structures.
-t_cmd	*ft_nul_cmds(t_cmd *cmd)
-{
-	t_cmd	*pipe_cmd;
-	t_redir	*redir_cmd;
-
-	if (!cmd)
-		return ((void *)0);
-	if (cmd->type == EXEC)
-		cmd = (t_cmd *)ft_exec_cmd(cmd);
-	if (cmd->type == PIPE)
-	{
-		pipe_cmd = (t_cmd *)cmd;
-		{
-			ft_nul_cmds(pipe_cmd->left);
-			ft_nul_cmds(pipe_cmd->right);
-		}
-	}
-	if (cmd->type == REDIR)
-	{
-		redir_cmd = (t_redir *)cmd;
-		ft_nul_cmds(redir_cmd->cmd);
-		redir_cmd->end_file = 0;
-	}
-	return ((t_cmd *)cmd);
 }

@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser3.c                                          :+:      :+:    :+:   */
+/*   parse_exec_cmds.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 15:11:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:31:55 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-t_cmd	*redir_cmd(t_cmd *cmd, char *beg_file, char *end_file, int instructions, int fd)
-{
-	t_redir	*redirection;
-
-	redirection = (t_redir *)ft_calloc(1, sizeof(t_redir));
-	if (!redirection)
-		return (NULL);
-	redirection->type = REDIR;
-	redirection->cmd = cmd;
-	redirection->beg_file = beg_file;
-	redirection->end_file = end_file;
-	redirection->instructions = instructions;
-	redirection->fd = fd;
-	return ((t_cmd *)redirection);
-}
 
 t_cmd	*parse_for_groups(char **s)
 {
@@ -60,11 +44,12 @@ t_cmd	*parse_exec(char **s, t_exec *cmd_tree, char *cmd, char *opt)
 	i = 0;
 	token = 0;
 	printf("\nin parse_exec\n");
-	while (!check_next_char(s, '|') && !check_next_char(s, ')'))// && !check_next_char(&s, ')'))
+	while (!check_next_char(s, '|') || !check_next_char(s, ')'))
 	{
-		if (!(token = find_tokens(s, &cmd, &opt)))//do I need?  I am looking for only 'a'
+		token = find_tokens(s, &cmd, &opt);
+		if (!token)
 			break ;
-		else if (token != 'a')
+		if (token != 'a' && !is_token(token))
 		{
 			printf("please enter valid commands\n");
 			return (NULL);
@@ -74,7 +59,7 @@ t_cmd	*parse_exec(char **s, t_exec *cmd_tree, char *cmd, char *opt)
 		cmd_tree->cmd[i] = cmd; //pointer to token
 		cmd_tree->options[i] = opt; //pointer to space after token
 		i++;
-		if (i > MAXARGS)//do I need?
+		if (i > MAXARGS)
 		{
 			printf("too many args");
 			exit (1);
@@ -92,8 +77,8 @@ t_cmd	*build_cmd_tree(char **s)
 	char	*cmd;
 	char	*opt;
 
-	cmd = NULL;
-	opt = NULL;
+	cmd = *s;
+	opt = *s;
 	printf("now building cmd tree\n");
 	if (check_next_char(s, '('))
 	{
@@ -111,37 +96,3 @@ t_cmd	*build_cmd_tree(char **s)
 		free (cmd_tree);
 	return (cmd_tree);
 }
-
-/*t_cmd	*parse_for_redirections(t_cmd *cmd, char **s)
-{
-//	int		token;
-	char	*beg_of_file;
-	char	*end_of_file;
-
-	printf("now parsing for redirections\n");
-	while (check_next_char(s, '<') || check_next_char(s, '>'))
-	{
-		printf("in while loop\n");
-//		token = find_tokens(s, 0, 0);
-//		printf("token: %d\n", token);
-		find_tokens(s, 0, 0);
-		if (find_tokens(s, &beg_of_file, &end_of_file) != 'a')
-		{
-			printf("missing file");//need to change to follow bash
-			return ((void *)0);
-		}
-		if (**s == '>')
-			cmd = redir_cmd(cmd, beg_of_file, end_of_file, O_WRONLY | O_CREAT | O_TRUNC, 1);//fd=1
-		else if (**s == '<')
-			cmd = redir_cmd(cmd, beg_of_file, end_of_file, O_RDONLY, 0);//fd=0
-		else if (**s == '+')
-			cmd = redir_cmd(cmd, beg_of_file, end_of_file,  O_WRONLY | O_CREAT, 1);//fd=1
-		else if (**s == '-')
-			cmd = redir_cmd(cmd, beg_of_file, end_of_file, O_RDONLY, 0);//fd=0
-		else
-			return ((void *)0);
-	}
-	return (cmd);
-}*/
-
-

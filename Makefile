@@ -6,17 +6,19 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/03/10 10:47:18 by kbolon           ###   ########.fr        #
+#    Updated: 2024/03/12 18:30:05 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS = src/main.c \
-		src/parser.c \
-		src/parser2.c \
-		src/parser3.c \
-		src/parser4.c \
+		src/find_tokens.c \
+		src/nul_terminate_fcns.c \
+		src/parse_exec_cmds.c \
+		src/parse_for_cmds.c \
+		src/parse_pipes_and_groups.c \
+		src/parse_for_redirs.c \
 		src/utils.c
 		
 LIBFT = libft/libft.a
