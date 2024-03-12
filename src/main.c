@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 15:25:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/12 19:06:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,41 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 	exit (i);
 }
 
-void print_cmd(t_cmd *cmd)
+/*void print_cmd(t_cmd *cmd)
 {
 	t_exec	*exec_cmd;
 	t_cmd	*pipe_cmd;
 	int		i;
 
+	printf("Now in print command \n");
 	if (cmd == NULL)
 		return ;
 	i = 0;
 	if (cmd->type == EXEC)
 	{
+		printf("Now in print EXEC command \n");
 		exec_cmd = (t_exec *)cmd;
-		printf("Command: ");
-		while (exec_cmd->cmd[i])
+		while (exec_cmd->cmd[i] != NULL)
 		{
-			printf("%s ", exec_cmd->cmd[i]);
+			printf("Command: %s \n", exec_cmd->cmd[i]);
 			i++;
 		}
 		printf("\n");
+		printf("Now in exiting EXEC command \n");
 	}
 	else if (cmd->type == PIPE)
 	{
+		printf("Now in print PIPE command \n");
 		pipe_cmd = (t_cmd *)cmd;
 		print_cmd(pipe_cmd->left);
 		print_cmd(pipe_cmd->right);
+		printf("Now in exiting print PIPE command \n");
 	}
 	else
 //		printf("Unknown command type\n");
+	printf("Now exiting print command \n");
 	return ;
-}
+}*/
 
 /*int	main(int ac, char **av, char *envp[])
 {
@@ -87,21 +92,21 @@ void print_cmd(t_cmd *cmd)
 
 int	main()
 {
-	char	*line = " (ls -a) | wc";
-//	int		token;
+	char	*line = " ls -a | wc";
+	int		token;
 	t_cmd	cmd;
 	
 	cmd = *parse_for_cmds(line);
-	print_cmd(&cmd);
-/*	printf("\nMine\n");
+	printf("cmd: %d\n", cmd.type);
+//	print_cmd(&cmd);
+	printf("\nMine\n");
 	token = find_tokens(&line, NULL, NULL);
 	printf("token is: %c\n", token);
 	while (token != '\0')
 	{
 	 	printf("token is: %c\n", token);
 		token = find_tokens(&line, NULL, NULL);
-	}*/
-
-	
+	}
+//	free_cmd(&cmd);
 	return (0);
 }
