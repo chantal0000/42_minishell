@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 19:00:35 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/14 21:07:49 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,6 @@ typedef struct s_cmd
 	t_cmd	*right;
 }	t_cmd;
 
-typedef struct s_exec
-{
-	int		type;
-	char	*cmd[MAXARGS];
-	char	*options[MAXARGS];
-}	t_exec;
-
 typedef struct s_redir
 {
 	int		type;
@@ -59,6 +52,19 @@ typedef struct s_redir
 	int		instructions;
 	int		fd;
 }	t_redir;
+
+typedef struct s_exec
+{
+	int		type; // simple_cmd or pipe
+
+	t_redir red_in;
+	t_redir red_out;
+	char	*cmd[MAXARGS];
+
+	t_exec	*next;
+	char	*options[MAXARGS];
+}	t_exec;
+
 
 //find_tokens.c
 int		check_for_alligators(char **s);

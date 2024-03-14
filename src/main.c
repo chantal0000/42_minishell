@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 19:06:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:20:37 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 {
 	static char	*line;
 	t_cmd		*cmd;
-	
+
 	if (ac != 1)
 	{
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
@@ -93,20 +93,21 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 int	main()
 {
 	char	*line = " ls -a | wc";
-	int		token;
+	// int		token;
 	t_cmd	cmd;
-	
+
 	cmd = *parse_for_cmds(line);
 	printf("cmd: %d\n", cmd.type);
 //	print_cmd(&cmd);
-	printf("\nMine\n");
-	token = find_tokens(&line, NULL, NULL);
-	printf("token is: %c\n", token);
-	while (token != '\0')
-	{
-	 	printf("token is: %c\n", token);
-		token = find_tokens(&line, NULL, NULL);
-	}
+	// printf("\nMine\n");
+	// token = find_tokens(&line, NULL, NULL);
+	// printf("token is: %c\n", token);
+	// while (token != '\0')
+	// {
+	//  	printf("token is: %c\n", token);
+	// 	token = find_tokens(&line, NULL, NULL);
+	// }
+	//hello
 //	free_cmd(&cmd);
 	return (0);
 }
