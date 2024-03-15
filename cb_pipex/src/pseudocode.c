@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 
 typedef struct s_exec t_exec;
@@ -26,10 +27,11 @@ struct s_exec{
 	//??
 	t_exec	*prev;
 	t_exec	*next;
+	// save the env somewhere?
 };
 
 
-void	ft_simple_cmd()
+void	ft_simple_cmd(t_exec *node)
 {
 	// check if it is a builtin
 	// otherwise execve()
@@ -63,7 +65,8 @@ void ft_pipe_first(t_exec *node, int pipe_fd[2])
 		dup2(pipe_fd[1], STDOUT_FILENO);
 	}
 	// close irrelevant stuff
-
+	// added close otherwise ls | wc didnt work
+	close(pipe_fd[1]);
 	int pid = fork();
 	if (pid == 0)
 	{
@@ -71,12 +74,12 @@ void ft_pipe_first(t_exec *node, int pipe_fd[2])
 		// execve("/bin/ls", &"ls", NULL);
 		exit(0);
 	}
-
-
+	// wait(NULL);
 	// fork
 	// new function: built in vs cmd
 	// execution
 }
+
 void ft_pipe_middle(t_exec *node, int pipe_fd[2], int old_pipe_in)
 {
 	char *cmd[2];
@@ -108,13 +111,15 @@ void ft_pipe_middle(t_exec *node, int pipe_fd[2], int old_pipe_in)
 	}
 
 	// close irrelevant stuff
+	// added close otherwise ls | wc didnt work
+	close(pipe_fd[1]);
 	int pid = fork();
 	if (pid == 0)
 	{
 		execve(node->cmd, cmd, NULL);
 		// exit(0);
 	}
-
+	// wait(NULL);
 	// fork
 	// new function built in vs cmd
 	// execution
@@ -142,12 +147,14 @@ void ft_pipe_last(t_exec *node, int pipe_fd[2], int old_pipe_in)
 		close(pipe_fd[1]);
 	}
 	// close irrelevant stuff
-
+	// added close otherwise ls | wc didnt work
+	close(pipe_fd[1]);
 	int pid = fork();
 	if (pid == 0)
 	{
 		execve(node->cmd, cmd, NULL);
 	}
+	// wait(NULL);
 	// fork
 	// new function built in vs cmd
 	// execution
@@ -167,7 +174,7 @@ void	ft_executor(t_exec *node)
 
 	if (!node->next && !node->prev)
 	{
-		ft_simple_cmd();
+		ft_simple_cmd(node);
 	}
 
 	// int num_nodes = ft_count_nodes(node);
@@ -178,12 +185,11 @@ void	ft_executor(t_exec *node)
 	int std_in = dup(STDIN_FILENO);
 	int std_out = dup(STDOUT_FILENO);
 
-
 	while(node)
 	{
 		if (node->next && node->prev)
 		{
-			// printf("entering middle pipe cmd is %s\n", node->cmd);
+			printf("entering middle pipe cmd is %s\n", node->cmd);
 			write(2, "\nentering middle pipe\n", 22);
 			pipe(pipe_fd);
 			ft_pipe_middle(node, pipe_fd, old_pipe_in);
@@ -193,19 +199,22 @@ void	ft_executor(t_exec *node)
 			write(2, "\nentering first pipe\n", 21);
 			pipe(pipe_fd);
 			ft_pipe_first(node, pipe_fd);
-			// printf("entering first pipe cmd is %s\n", node->cmd);
+			printf("entering first pipe cmd is %s\n", node->cmd);
 		}
 		else
 		{
 			write(2, "\nentering last pipe\n", 21);
 			ft_pipe_last(node, pipe_fd, old_pipe_in);
-			// printf("entering last pipe, cmd is %s\n", node->cmd);
+			printf("entering last pipe, cmd is %s\n", node->cmd);
 		}
 		old_pipe_in = pipe_fd[0];
 		dup2(std_in, STDIN_FILENO);
 		dup2(std_out, STDOUT_FILENO);
 		node = node->next;
 	}
+	//new added??
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
 }
 
 int main()
@@ -220,7 +229,7 @@ int main()
 	// middle2 = malloc(sizeof(t_exec) * 1);
 	last = malloc(sizeof(t_exec) * 1);
 
-	int outfile = open("test", O_TRUNC | O_CREAT | O_RDWR, 0644);
+	int outfile = open("test2", O_TRUNC | O_CREAT | O_RDWR, 0644);
 
 	first->cmd = strdup("/bin/ls");
 	first->fd_in = -1;
@@ -234,13 +243,13 @@ int main()
 	middle1->prev = first;
 	middle1->next = last;
 
-	// middle2->cmd = strdup("grep2");
+	// middle2->cmd = strdup("/bin/nl");
 	// middle2->fd_in = -1;
 	// middle2->fd_out = -1;
 	// middle2->prev = middle1;
 	// middle2->next = last;
 
-	last->cmd = strdup("/bin/cat");
+	last->cmd = strdup("/bin/wc");
 	last->fd_in = -1;
 	last->fd_out = -1;
 	last->prev = middle1;
@@ -249,5 +258,5 @@ int main()
 	ft_executor(first);
 
 // ls | wc -> does not work?
-
+// grep also doesnt work
 }
