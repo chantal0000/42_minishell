@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 11:54:10 by kbolon           ###   ########.fr       */
+/*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
+/*   Updated: 2024/03/17 14:25:30 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_cmdtree(t_cmd *tree)
+/*void	ft_init_struct()
 {
-	int	i;
-
-	i = 0;
-	if (!tree)
-		return ;
-	if (tree->cmd[i])//frees exec cmds
-	{
-		while (tree->cmd[i])
-		{
-			free(tree->cmd[i]);
-			i++;
-		}
-		free(tree->cmd);
-	}
-	if (tree->prev)
-		free(tree->prev);
-	if (tree->next)
-		free(tree->next);
-	if (tree->file_name)
-		free(tree->file_name);
-	if (tree->fd_in)
-		close(tree->fd_in);
-	if (tree->fd_out)
-		close(tree->fd_out);
+	if (type pipe)
 }
+
+void	ft_pipe_init()
+{
+	t_cmd	cmd;
+
+	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);	
+	cmd->type = PIPE;
+	cmd->left = temp;
+	cmd->right = parse_for_pipe(str);
+}*/
