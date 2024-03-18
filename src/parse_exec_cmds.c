@@ -6,93 +6,79 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 18:31:55 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:57:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*parse_for_groups(char **s)
+t_cmd	*ft_init_stuct(void)
 {
-	t_cmd	*cmd;
+	t_cmd	*cmd_tree;
 
-	printf("now checking for groups\n");
-	if (!check_next_char(s, '('))
-	{
-		printf("missing left bracket");
-		exit (1);
-	}
-	find_tokens(s, NULL , NULL);
-	cmd = parse_for_pipe(s);
-	if (!check_next_char(s, ')'))
-	{
-		printf("missing closing bracket\n");
-		exit (1);//bash doesn't exit here...update it to match
-	}
-	printf("found closing bracket\n");
-	printf("\nGROUP CLOSED\n");
-//	cmd = parse_for_redirections(cmd, s);
-	return (cmd);
+	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	if (!cmd_tree)
+		return (NULL);
+	return (cmd_tree);
 }
 
+char	*parse_line(char *arr)
+{
+	int	i;
 
-t_cmd	*parse_exec(char **s, t_exec *cmd_tree, char *cmd, char *opt)
+	i = 0;
+	printf("now in parse_line\n");
+	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
+		i++;
+	arr[i] = '\0';
+	return (arr);
+}
+
+t_cmd	*init_exec_cmds(char **s, char *non_token)
 {
 	int		i;
 	int		token;
+	t_cmd	*cmd_tree;
 
 	i = 0;
 	token = 0;
-	printf("\nin parse_exec\n");
-	while (!check_next_char(s, '|') || !check_next_char(s, ')'))
+	cmd_tree = ft_init_stuct();
+	cmd_tree = parse_for_redirections(cmd_tree, s);//check for redirs and pass the tree we have built so far
+	if (!cmd_tree)
+		return (NULL);
+	cmd_tree->type = EXEC;
+	while (*s && !is_token(**s))
 	{
-		token = find_tokens(s, &cmd, &opt);
-		if (!token)
+		token = find_tokens(s, &non_token);
+		if (token == 0)//if not a token, break
 			break ;
-		if (token != 'a' && !is_token(token))
-		{
-			printf("please enter valid commands\n");
-			return (NULL);
-		}
-		printf("cmd: %c\n", *cmd);
-		printf("opt: %c\n", *opt);
-		cmd_tree->cmd[i] = cmd; //pointer to token
-		cmd_tree->options[i] = opt; //pointer to space after token
+		cmd_tree->cmd[i] = ft_strdup(non_token);
+		parse_line(cmd_tree->cmd[i]);
 		i++;
-		if (i > MAXARGS)
-		{
-			printf("too many args");
-			exit (1);
-		}
-//		cmd_tree = (t_exec *)parse_for_redirections((t_cmd *)cmd_tree, s);
+		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
 	cmd_tree->cmd[i] = NULL;
-	cmd_tree->options[i] = NULL;
-	return ((t_cmd *)cmd_tree);
+	for (int i = 0; cmd_tree->cmd[i] != NULL; i++)
+		printf("cmd[%d]: %s\n", i, cmd_tree->cmd[i]);
+	return (cmd_tree);
 }
 
-t_cmd	*build_cmd_tree(char **s)
+t_cmd	*parse_exec_cmds(char **s)
 {
 	t_cmd	*cmd_tree;
-	char	*cmd;
-	char	*opt;
+	char	*non_token;
 
-	cmd = *s;
-	opt = *s;
-	printf("now building cmd tree\n");
+	non_token = NULL;
+	printf("now in parse exec\n");
 	if (check_next_char(s, '('))
 	{
 		printf("\nGROUP FOUND\n\n");
 		cmd_tree = parse_for_groups(s);
 		return (cmd_tree);
-	}	
-	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	if (!cmd_tree)
-		return (NULL);
-	cmd_tree->type = EXEC;
-//	cmd_tree = parse_for_redirections(cmd_tree, s);
-	cmd_tree = parse_exec(s, (t_exec *)cmd_tree, cmd, opt);
+	}
+	cmd_tree = init_exec_cmds(s, non_token);//fill the struct
 	if(!cmd_tree)
 		free (cmd_tree);
+	printf("EXIT exec\n");
 	return (cmd_tree);
 }

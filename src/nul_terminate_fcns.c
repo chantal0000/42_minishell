@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:46:54 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 18:46:46 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/18 11:48:06 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,31 @@
 //ft_nul_cmds to operate on various command types through a 
 //common interface. By examining the type field and casting accordingly, 
 //the function ensures type safety while handling diverse command structures.
-t_cmd	*ft_nul_cmds(t_cmd *cmd)
+/*t_cmd	*ft_nul_cmds(t_cmd *cmd)
 {
 	t_cmd	*pipe_cmd;
-	t_redir	*redir_cmd;
+	t_cmd	*redir_cmd;
 
-	printf("now nul terminating\n");
 	if (!cmd)
 		return (NULL);
-/*	if (cmd->type == EXEC)
-	{
-		cmd = (t_cmd *)ft_exec_cmd(cmd);
-		printf("nul terminated exec\n");
-	}*/
 	if (cmd->type == PIPE)
 	{
-		pipe_cmd = (t_cmd *)cmd;
+		pipe_cmd = cmd;
 		{
-			ft_nul_cmds(pipe_cmd->left);
-			ft_nul_cmds(pipe_cmd->right);
+			ft_nul_cmds(pipe_cmd->prev);
+			ft_nul_cmds(pipe_cmd->next);
 		}
-		printf("nul terminated pipe\n");
+//		printf("nul terminated pipe\n");
 	}
 	if (cmd->type == REDIR)
 	{
-		redir_cmd = (t_redir *)cmd;
+		redir_cmd = cmd;
 		ft_nul_cmds(redir_cmd->cmd);
-		redir_cmd->end_file = 0;
-		printf("nul terminated redir\n");
+//		redir_cmd->end_file = 0;
+//		printf("nul terminated redir\n");
 	}
-	printf("now exit nul terminate\n");
 	return (cmd);
-}
+}*/
 
 
 //iterates through exec cmds and nulterminates cmd options

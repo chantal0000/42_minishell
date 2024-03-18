@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 18:47:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:55:16 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ t_cmd	*parse_for_cmds(char *s)
 		printf("check syntax\n");//check what bash returns
 		return ((void *)0);
 	}
-	ft_nul_cmds(cmd);
+//	ft_nul_cmds(cmd);//currently do it in each respective fcn
 	printf("exit parse for cmds\n");
 	return (cmd);
 }
-
 
 int	is_token(char s)
 {
