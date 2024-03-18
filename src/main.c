@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 14:41:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/18 17:08:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,17 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 
 int	main()
 {
-	char	*line = "  ls -a | wc";
+	char	*line = " ((ls -a) | wc ) | wc";
 //	int		token;
-	t_cmd	cmd;
+	t_cmd	*cmd;
 	
 	printf("line to be parsed: %s\n", line);
-	cmd = *parse_for_cmds(line);
-	printf("cmd->type: %d\n", cmd.type);
-//	print_cmd(&cmd);
-/*	printf("\nMine\n");
-	token = find_tokens(&line, NULL, NULL);
-	printf("token is: %c\n", token);
-	while (token != '\0')
+	cmd = parse_for_cmds(line);
+	while (cmd->next != NULL)
 	{
-	 	printf("token is: %c\n", token);
-		token = find_tokens(&line, NULL, NULL);
-	}*/
+		printf("cmd->type: %d\n", cmd->type);
+		cmd = (*cmd).next;
+	}
 //	free_cmd(&cmd);
 	return (0);
 }

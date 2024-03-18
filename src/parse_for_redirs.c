@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 14:18:24 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/18 17:07:02 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 	int		token;
 	char	*file_name;
 
+	printf("now parsing for redirs\n");
 	file_name = NULL;
 	if ((**s == '<' || **s == '>') && **s != '\0')
 	{
@@ -27,8 +28,6 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 			exit (1);
 		}
 		node->file_name = parse_line(ft_strdup(file_name));
-//		parse_line(node->file_name);
-//		printf("node->file_name: %s\n", node->file_name);
 		if (token == '>')
 			node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);//fd=1
 		else if (token == '<')
@@ -40,7 +39,6 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		else
 			return (NULL);
 	}
-//	printf("exiting redir fcn\n");
 	return (node);
 }
 
