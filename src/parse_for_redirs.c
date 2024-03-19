@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 17:07:02 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/19 06:45:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 	int		token;
 	char	*file_name;
 
-	printf("now parsing for redirs\n");
+//	printf("now parsing for redirs\n");
 	file_name = NULL;
 	if ((**s == '<' || **s == '>') && **s != '\0')
 	{
