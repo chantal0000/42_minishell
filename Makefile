@@ -6,7 +6,7 @@
 #    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/03/14 21:06:48 by chbuerge         ###   ########.fr        #
+#    Updated: 2024/03/19 09:50:52 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS = src/main.c \
 		src/parse_for_cmds.c \
 		src/parse_pipes_and_groups.c \
 		src/parse_for_redirs.c \
-		src/utils.c
+		src/utils.c \
+		src/executer/executer.c
 
 LIBFT = libft/libft.a
 CC = cc
@@ -33,7 +34,7 @@ LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 # CFLAGS = -Wall -Wextra -Werror#could be -leditline
 # COMFLAGS = -I/opt/homebrew/opt/readline/include#libedit/include
 # LINKFLAGS = -L/opt/homebrew/opt/readline -lreadline#libedit/lib -ledit
-# 
+#
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
