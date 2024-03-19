@@ -6,10 +6,11 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/19 09:38:11 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:02:34 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
 void	error_message(char *str, int i, int *fd, int *fd2)
 {
@@ -91,7 +92,7 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 
 int	main()
 {
-	char	*line = " ((ls -a) | wc ) | wc";
+	char	*line = "ls | wc";
 //	int		token;
 	t_cmd	*cmd;
 
@@ -103,6 +104,9 @@ int	main()
 		cmd = (*cmd).next;
 	}
 	printf("back in main fcn\n");
+	// execution here?
+	ft_executor(cmd);
+
 //	free_cmd(&cmd);
 	return (0);
 }

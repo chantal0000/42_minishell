@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/19 09:37:39 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:01:11 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,20 @@ typedef struct s_redir
 	int		instructions;
 	int		fd;
 }	t_redir;
+*/
+
+typedef struct s_cmd
+{
+	int		type;//cmd type (EXEC, PIPE, REDIR)
+	char	*cmd[MAXARGS + 1];//for EXEC ONLY
+	t_cmd	*prev;//pointer to left branch (PIPE)
+	t_cmd	*next;//pointer to right branch (PIPE)
+	char	*file_name;//pointer to beg file name for redir
+//	char	*end_file;//pointer to space after file name for redir
+	int		instructions;//instructions for redir (O_CREAT...)
+	int		fd_in;//already open FD
+	int		fd_out;
+} t_cmd;
 
 //find_tokens.c
 int		check_for_alligators(char **s);
@@ -93,4 +107,12 @@ t_cmd	*parse_for_groups(char **s);
 void	free_cmdtree(t_cmd *tree);
 
 //char	*ft_strtok(char *str, char *delimiter);
+
+
+
+// Executer | executer.c
+void	ft_executor(t_cmd *node);
+void ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void ft_pipe_first(t_cmd *node, int pipe_fd[2]);
 #endif
