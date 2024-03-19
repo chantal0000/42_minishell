@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/12 18:47:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/19 06:41:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*parse_for_cmds(char *s)
 
 	if (!s)
 		return (0);
-	printf("parse for cmds\n");
+//	printf("parse for cmds\n");
 	cmd = parse_for_pipe(&s);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
@@ -28,11 +28,10 @@ t_cmd	*parse_for_cmds(char *s)
 		printf("check syntax\n");//check what bash returns
 		return ((void *)0);
 	}
-	ft_nul_cmds(cmd);
-	printf("exit parse for cmds\n");
+//	ft_nul_cmds(cmd);//currently do it in each respective fcn
+//	printf("exit parse for cmds\n");
 	return (cmd);
 }
-
 
 int	is_token(char s)
 {
@@ -58,9 +57,13 @@ int	is_whitespace(char s)
 //boolean, returns 1 if true (if next char is a token) and 0 for false
 int	check_next_char(char **s, char token)
 {
-	while (**s != '\0' && is_whitespace(**s))
-		(*s)++;
-	if (*s && ft_strchr(*s, token))
+	char	*temp;
+
+	temp = *s;
+	while (*temp != '\0' && is_whitespace(*temp))
+		temp++;
+	*s = temp;
+	if (**s != '\0' && **s == token)
 		return (1);
 	return (0);
 }
