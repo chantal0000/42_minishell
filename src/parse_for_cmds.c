@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 16:57:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/19 06:41:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*parse_for_cmds(char *s)
 
 	if (!s)
 		return (0);
-	printf("parse for cmds\n");
+//	printf("parse for cmds\n");
 	cmd = parse_for_pipe(&s);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
@@ -29,7 +29,7 @@ t_cmd	*parse_for_cmds(char *s)
 		return ((void *)0);
 	}
 //	ft_nul_cmds(cmd);//currently do it in each respective fcn
-	printf("exit parse for cmds\n");
+//	printf("exit parse for cmds\n");
 	return (cmd);
 }
 

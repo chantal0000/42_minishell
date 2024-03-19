@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 16:16:35 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/19 06:45:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*parse_line(char *arr)
 	int	i;
 
 	i = 0;
-	printf("now in parse_line\n");
+//	printf("now in parse_line\n");
 	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
 		i++;
 	arr[i] = '\0';
@@ -50,7 +50,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
-		printf("token in init exec: %c\n", token);
+//		printf("token in init exec: %c\n", token);
 		if (token == 0)//if not a token, break
 			break ;
 		cmd_tree->cmd[i] = ft_strdup(non_token);
@@ -59,8 +59,9 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
 	cmd_tree->cmd[i] = NULL;
-	for (int i = 0; cmd_tree->cmd[i] != NULL; i++)
-		printf("cmd[%d]: %s\n", i, cmd_tree->cmd[i]);
+	printf("cmds in exec:\n");//remove
+	for (int i = 0; cmd_tree->cmd[i] != NULL; i++)//remove
+		printf("cmd[%d]: %s\n", i, cmd_tree->cmd[i]);//remove
 	return (cmd_tree);
 }
 
@@ -70,16 +71,16 @@ t_cmd	*parse_exec_cmds(char **s)
 	char	*non_token;
 
 	non_token = NULL;
-	printf("now in parse exec\n");
+//	printf("now in parse exec\n");
 	if (check_next_char(s, '('))
 	{
-		printf("\nGROUP FOUND\n\n");
+		printf("\nGROUP FOUND\n");
 		cmd_tree = parse_for_groups(s);
 		return (cmd_tree);
 	}
 	cmd_tree = init_exec_cmds(s, non_token);//fill the struct
 	if(!cmd_tree)
 		free (cmd_tree);
-	printf("EXIT exec\n");
+//	printf("EXIT exec\n");
 	return (cmd_tree);
 }
