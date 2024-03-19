@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 14:14:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/19 09:37:39 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct s_cmd	t_cmd;
 typedef struct s_exec
 {
 	int		type;
-	char	*cmd[MAXARGS + 1];
+	char	*cmd[MAXARGS];
+	char	*options[MAXARGS];
 }	t_exec;
 
 typedef struct s_redir
@@ -56,21 +57,7 @@ typedef struct s_redir
 	char	*end_file;
 	int		instructions;
 	int		fd;
-}	t_redir;*/
-
-typedef struct s_cmd
-{
-	int		type;//cmd type (EXEC, PIPE, REDIR)
-	char	*cmd[MAXARGS + 1];//for EXEC ONLY
-	t_cmd	*prev;//pointer to left branch (PIPE)
-	t_cmd	*next;//pointer to right branch (PIPE)
-	char	*file_name;//pointer to beg file name for redir
-//	char	*end_file;//pointer to space after file name for redir
-	int		instructions;//instructions for redir (O_CREAT...)
-	int		fd_in;//already open FD
-	int		fd_out;
-} t_cmd;
-
+}	t_redir;
 
 //find_tokens.c
 int		check_for_alligators(char **s);

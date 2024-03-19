@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/19 06:42:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/19 09:38:11 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 
 void	error_message(char *str, int i, int *fd, int *fd2)
 {
@@ -63,7 +62,7 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 {
 	static char	*line;
 	t_cmd		*cmd;
-	
+
 	if (ac != 1)
 	{
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
@@ -95,7 +94,7 @@ int	main()
 	char	*line = " ((ls -a) | wc ) | wc";
 //	int		token;
 	t_cmd	*cmd;
-	
+
 	printf("line to be parsed: %s\n", line);
 	cmd = parse_for_cmds(line);
 	while (cmd->next != NULL)

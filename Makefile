@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
+#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/03/12 18:30:05 by kbolon           ###   ########.fr        #
+#    Updated: 2024/03/14 21:06:48 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,23 +20,23 @@ SRCS = src/main.c \
 		src/parse_pipes_and_groups.c \
 		src/parse_for_redirs.c \
 		src/utils.c
-		
+
 LIBFT = libft/libft.a
 CC = cc
 OBJS = $(SRCS:.c=.o)
 #LINUX
-#CFLAGS = -Wall -Wextra -Werror -ledit
-#COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
-#LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
+CFLAGS = -Wall -Wextra -Werror
+COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-CFLAGS = -Wall -Wextra -Werror#could be -leditline
-COMFLAGS = -I/opt/homebrew/opt/readline/include#libedit/include
-LINKFLAGS = -L/opt/homebrew/opt/readline -lreadline#libedit/lib -ledit
-
+# CFLAGS = -Wall -Wextra -Werror#could be -leditline
+# COMFLAGS = -I/opt/homebrew/opt/readline/include#libedit/include
+# LINKFLAGS = -L/opt/homebrew/opt/readline -lreadline#libedit/lib -ledit
+# 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS) 
+$(NAME): $(LIBFT) $(OBJS)
 	cc $(CFLAGS) $(LINKFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
 
 $(LIBFT):
