@@ -6,17 +6,28 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 09:42:25 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/19 09:57:49 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:21:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// void	ft_simple_cmd(t_cmd *node)
-// {
-// 	// check if it is a builtin
-// 	// otherwise execve()
-// }
+void	ft_simple_cmd(t_cmd *node)
+{
+	// check if it is a builtin
+	// otherwise execve()
+
+	printf("ft_simple_cmd\n");
+	printf("node->cmd[0]: %s\n", node->cmd[0]);
+	if (node->prev)
+		printf("node->prev->type: %d\n", node->prev->type);
+	else
+		printf("no prev\n");
+	if (node->next)
+		printf("node->next->type: %d\n", node->next->type);
+	else
+		printf("no next\n");
+}
 
 /*
 ** -1 meaning there if no in/out file
@@ -156,8 +167,8 @@ void	ft_executor(t_cmd *node)
 
 	if (!node->next && !node->prev)
 	{
-		//ft_simple_cmd(node);
-		printf("simple cmd\n");
+		ft_simple_cmd(node);
+		//printf("simple cmd\n");
 	}
 
 	// int num_nodes = ft_count_nodes(node);
