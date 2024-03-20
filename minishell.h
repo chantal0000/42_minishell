@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/19 10:01:11 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:56:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	int		type;//cmd type (EXEC, PIPE, REDIR)
+	int		index;
 	char	*cmd[MAXARGS + 1];//for EXEC ONLY
 	t_cmd	*prev;//pointer to left branch (PIPE)
 	t_cmd	*next;//pointer to right branch (PIPE)
 	char	*file_name;//pointer to beg file name for redir
-//	char	*end_file;//pointer to space after file name for redir
 	int		instructions;//instructions for redir (O_CREAT...)
 	int		fd_in;//already open FD
 	int		fd_out;
@@ -82,11 +82,14 @@ int		check_for_nontokens(char **s);
 //t_exec	*ft_exec_cmd(t_cmd *cmd);//already null terminate in parse_exec
 //t_cmd	*ft_nul_cmds(t_cmd *cmd);
 
+//init_struct.c
+t_cmd	*ft_init_struct(t_cmd **cmd_tree);
+
 //parse_exec_cmds.c
-t_cmd	*ft_init_stuct(void);
 char	*parse_line(char *arr);
-t_cmd	*init_exec_cmds(char **s, char *non_token);
-t_cmd	*parse_exec_cmds(char **s);
+//t_cmd	*init_exec_cmds(char **s, char *non_token);
+t_cmd	*parse_exec_cmds(t_cmd *tree, char **s);
+t_cmd	*init_exec_cmds(t_cmd *tree, char **s, char *non_token);
 
 //parse_for_cmds.c
 t_cmd	*parse_for_cmds(char *s);
