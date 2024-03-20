@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_pipes_and_groups.c                           :+:      :+:    :+:   */
+/*   parse_pipes_and_groups_ORIGINAL.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/20 16:59:47 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/20 16:36:03 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,26 @@ t_cmd	*parse_for_pipe(char **str)
 	t_cmd	*cmd;
 	t_cmd	*temp;
 	int		token;
-	int		i = 0;
 
 	if (!**str || !str)
 		return (0);
 	token = 0;
-	cmd = 0;
-//	cmd = ft_init_struct(&cmd);
-//	if (!cmd)
-//		return (NULL);
-	cmd = parse_exec_cmds(cmd, str);
+//	printf("now parsing for pipes\n");
+//	printf("string in pipe: %s\n", *str);
+	cmd = parse_exec_cmds(str);
 	if (!cmd)
 		return (NULL);
 	token = check_next_char(str, '|');
 	if (token == 1)
 	{
-		temp = ft_init_struct(&cmd);
+		temp = ft_init_struct(&cmdz);
 		if (!temp)
 			return (NULL);
 		printf("\nPIPE FOUND\n\n");
 		find_tokens(str, NULL);
-		temp->index = i;
 		temp->type = PIPE;
 		temp->prev = cmd;
 		temp->next = parse_for_pipe(str);
-		printf("pipe->prev: %s\n", *temp->prev->cmd);
-		printf("pipe->next: %s\n", *temp->next->cmd);
-		i++;
 		return (temp);
 	}
 	else

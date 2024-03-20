@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
+#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/03/19 09:50:52 by chbuerge         ###   ########.fr        #
+#    Updated: 2024/03/20 16:09:40 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 
 SRCS = src/main.c \
 		src/find_tokens.c \
+		src/init_struct.c \
 		src/nul_terminate_fcns.c \
 		src/parse_exec_cmds.c \
 		src/parse_for_cmds.c \
