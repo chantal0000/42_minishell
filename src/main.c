@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/19 06:42:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:01:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 {
 	static char	*line;
 	t_cmd		*cmd;
-	
+
 	if (ac != 1)
 	{
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
@@ -80,10 +80,13 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 		{
 			add_history(line);
 			cmd = *parse_for_cmds(line);
+			printf("back in main fcn\n");
+			ft_executor(cmd);
 			//run/exec the cmds
 		}
 		line = ("minishell: ");
 	}
+
 //	rl_clear_history();
 	free(line);
 	return (0);
@@ -92,18 +95,22 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 
 int	main()
 {
-	char	*line = " ((ls -a) | wc ) | wc";
+	char	*line = "ls | wc | cat";
 //	int		token;
 	t_cmd	*cmd;
-	
+
 	printf("line to be parsed: %s\n", line);
 	cmd = parse_for_cmds(line);
+	printf("back in main fcn\n");
 	while (cmd->next != NULL)
 	{
+		printf("node [%d]: %d\n", cmd->null);
 		printf("cmd->type: %d\n", cmd->type);
 		cmd = (*cmd).next;
 	}
-	printf("back in main fcn\n");
+
+	// execution here?
+	ft_executor(cmd);
 //	free_cmd(&cmd);
 	return (0);
 }
