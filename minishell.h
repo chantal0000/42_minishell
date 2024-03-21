@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 14:14:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/20 16:56:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct s_cmd	t_cmd;
 typedef struct s_exec
 {
 	int		type;
-	char	*cmd[MAXARGS + 1];
+	char	*cmd[MAXARGS];
+	char	*options[MAXARGS];
 }	t_exec;
 
 typedef struct s_redir
@@ -56,21 +57,21 @@ typedef struct s_redir
 	char	*end_file;
 	int		instructions;
 	int		fd;
-}	t_redir;*/
+}	t_redir;
+*/
 
 typedef struct s_cmd
 {
 	int		type;//cmd type (EXEC, PIPE, REDIR)
+	int		index;
 	char	*cmd[MAXARGS + 1];//for EXEC ONLY
 	t_cmd	*prev;//pointer to left branch (PIPE)
 	t_cmd	*next;//pointer to right branch (PIPE)
 	char	*file_name;//pointer to beg file name for redir
-//	char	*end_file;//pointer to space after file name for redir
 	int		instructions;//instructions for redir (O_CREAT...)
 	int		fd_in;//already open FD
 	int		fd_out;
 } t_cmd;
-
 
 //find_tokens.c
 int		check_for_alligators(char **s);
@@ -81,11 +82,14 @@ int		check_for_nontokens(char **s);
 //t_exec	*ft_exec_cmd(t_cmd *cmd);//already null terminate in parse_exec
 //t_cmd	*ft_nul_cmds(t_cmd *cmd);
 
+//init_struct.c
+t_cmd	*ft_init_struct(t_cmd **cmd_tree);
+
 //parse_exec_cmds.c
-t_cmd	*ft_init_stuct(void);
 char	*parse_line(char *arr);
-t_cmd	*init_exec_cmds(char **s, char *non_token);
-t_cmd	*parse_exec_cmds(char **s);
+//t_cmd	*init_exec_cmds(char **s, char *non_token);
+t_cmd	*parse_exec_cmds(t_cmd *tree, char **s);
+t_cmd	*init_exec_cmds(t_cmd *tree, char **s, char *non_token);
 
 //parse_for_cmds.c
 t_cmd	*parse_for_cmds(char *s);
@@ -106,4 +110,12 @@ t_cmd	*parse_for_groups(char **s);
 void	free_cmdtree(t_cmd *tree);
 
 //char	*ft_strtok(char *str, char *delimiter);
+
+
+
+// Executer | executer.c
+void	ft_executor(t_cmd *node);
+void ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void ft_pipe_first(t_cmd *node, int pipe_fd[2]);
 #endif
