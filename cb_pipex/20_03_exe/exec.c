@@ -7,6 +7,13 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+/*
+** executor works with the *char[MAXARGS] -> took out split from my pipex exec
+** need to change struct name based on our struct in minishell
+**
+*/
+
+
 
 int	execute_cmd(char **env, char **cmd);
 typedef struct s_exec t_exec;
@@ -42,7 +49,11 @@ void	ft_simple_cmd(t_exec *node)
     {
         printf("it's not a built_in\n");
         // handle redirections?
-        execute_cmd(node->env, node->cmd);
+        if (execute_cmd(node->env, node->cmd) == -1)
+		{
+			// handle error
+			write(2, "Error in simple_cmd\n", 21);
+		}
     }
 	// check if it is a builtin
     // redirections
@@ -61,9 +72,6 @@ void ft_pipe_first(t_exec *node, int pipe_fd[2])
 
 	// cmd[0] = node->cmd;
 	// cmd[1] = NULL;
-
-
-	// check redirection,
 	if ((node->fd_in) !=  -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
@@ -85,9 +93,17 @@ void ft_pipe_first(t_exec *node, int pipe_fd[2])
         // printf("in first_pipe pid 0\n");
 		write (2, "in first_pipe pid 0\n", 21);
         // implemented my pipex executor
-        execute_cmd(node->env, node->cmd);
+		if (execute_cmd(node->env, node->cmd) == -1)
+		{
 		//execve(node->cmd, cmd, NULL);
 		// execve("/bin/ls", &"ls", NULL);
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			// function closing fdin and fd out
+			exit(EXIT_FAILURE);
+
+		exit(EXIT_FAILURE);
+		}
 		exit(0);
 	}
 	// wait(NULL);
@@ -133,9 +149,15 @@ void ft_pipe_middle(t_exec *node, int pipe_fd[2], int old_pipe_in)
 	if (pid == 0)
 	{
          // implemented my pipex executor
-        execute_cmd(node->env, node->cmd);
+		if (execute_cmd(node->env, node->cmd) == -1)
+		{
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			// function closing fdin and fd out
+			exit(EXIT_FAILURE);
 		//execve(node->cmd, cmd, NULL);
 		// exit(0);
+		}
 	}
 	// wait(NULL);
 	// fork
@@ -171,8 +193,14 @@ void ft_pipe_last(t_exec *node, int pipe_fd[2], int old_pipe_in)
 	if (pid == 0)
 	{
          // implemented my pipex executor
-        execute_cmd(node->env, node->cmd);
+		if (execute_cmd(node->env, node->cmd) == -1)
+		{
 		// execve(node->cmd, cmd, NULL);
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			// function closing fdin and fd out
+			exit(EXIT_FAILURE);
+		}
 	}
 	// wait(NULL);
 	// fork
