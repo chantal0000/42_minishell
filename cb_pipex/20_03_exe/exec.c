@@ -10,7 +10,7 @@
 /*
 ** executor works with the *char[MAXARGS] -> took out split from my pipex exec
 ** need to change struct name based on our struct in minishell
-**
+** need to include wait to properly end 
 */
 
 
