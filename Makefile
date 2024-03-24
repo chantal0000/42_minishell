@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/03/20 16:09:40 by kbolon           ###   ########.fr        #
+#    Updated: 2024/03/24 09:55:14 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,20 +21,20 @@ SRCS = src/main.c \
 		src/parse_pipes_and_groups.c \
 		src/parse_for_redirs.c \
 		src/utils.c \
-		src/executer/executer.c
+#		src/executer/executer.c
 
 LIBFT = libft/libft.a
 CC = cc
 OBJS = $(SRCS:.c=.o)
 #LINUX
-CFLAGS = -Wall -Wextra -Werror
-COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
-LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
+#CFLAGS = -Wall -Wextra -Werror
+#COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+#LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-# CFLAGS = -Wall -Wextra -Werror#could be -leditline
-# COMFLAGS = -I/opt/homebrew/opt/readline/include#libedit/include
-# LINKFLAGS = -L/opt/homebrew/opt/readline -lreadline#libedit/lib -ledit
+CFLAGS = -Wall -Wextra -Werror#could be -leditline
+COMFLAGS = -I/opt/homebrew/opt/readline/include#libedit/include
+LINKFLAGS = -L/opt/homebrew/opt/readline -lreadline#libedit/lib -ledit
 #
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/20 16:36:03 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:26:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_cmd	*parse_for_pipe(char **str)
 	token = check_next_char(str, '|');
 	if (token == 1)
 	{
-		temp = ft_init_struct(&cmdz);
+		temp = ft_init_struct(&cmds);
 		if (!temp)
 			return (NULL);
 		printf("\nPIPE FOUND\n\n");

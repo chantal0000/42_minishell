@@ -6,13 +6,13 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/19 06:45:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/23 16:24:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*parse_for_redirections(t_cmd *node, char **s)
+t_cmd	*parse_for_redirections(t_cmd *cmd, char **s)
 {
 	int		token;
 	char	*file_name;
@@ -27,31 +27,19 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 			printf("missing file\n");//need to change to follow bash
 			exit (1);
 		}
-		node->file_name = parse_line(ft_strdup(file_name));
+		file_name = parse_line(ft_strdup(file_name));
 		if (token == '>')
-			node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);//fd=1
+			cmd = init_redir(cmd, file_name, O_WRONLY | O_CREAT | O_TRUNC, 1);//fd=1
 		else if (token == '<')
-			node = redir_cmd(node, O_RDONLY, 0);//fd=0
+			cmd = init_redir(cmd, file_name, O_RDONLY, 0);//fd=0
 		else if (token == '+')
-			node = redir_cmd(node, O_WRONLY | O_CREAT, 1);//fd=1
+			cmd = init_redir(cmd, file_name, O_WRONLY | O_CREAT, 1);//fd=1
 		else if (token == '-')
-			node = redir_cmd(node, O_RDONLY, 0);//fd=0
+			cmd = init_redir(cmd, file_name, O_RDONLY, 0);//fd=0
 		else
 			return (NULL);
 	}
-	return (node);
+	return (cmd);
 }
 
 
-t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
-{
-	if (!node)
-		return (NULL);
-	node->type = REDIR;
-	node->instructions = instructions;
-	if (fd == 0)
-		node->fd_in = fd;
-	else if (fd == 1)
-		node->fd_out = fd;
-	return (node);
-}

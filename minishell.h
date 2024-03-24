@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/20 16:56:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/24 19:14:10 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,44 +33,38 @@
 # define WHITESPACE " \n\t\r\v"
 # define MAXARGS 5
 
-typedef struct s_cmd	t_cmd;
+typedef struct s_cmd t_cmd;
 
-/*typedef struct s_cmd
+typedef struct s_head
 {
-	int		type;
-	t_cmd	*prev;
-	t_cmd	*next;
-}	t_cmd;
+	int		index;
+	char	**cmd_env;
+	t_cmd	*cmd;
+}	t_head;
 
 typedef struct s_exec
 {
 	int		type;
-	char	*cmd[MAXARGS];
-	char	*options[MAXARGS];
+	char	*cmd[MAXARGS + 1];
 }	t_exec;
 
 typedef struct s_redir
 {
 	int		type;
 	t_cmd	*cmd;
-	char	*beg_file;
-	char	*end_file;
+	char	*file_name;
 	int		instructions;
-	int		fd;
+	int		fd_in;
+	int		fd_out;
 }	t_redir;
-*/
+
 
 typedef struct s_cmd
 {
 	int		type;//cmd type (EXEC, PIPE, REDIR)
 	int		index;
-	char	*cmd[MAXARGS + 1];//for EXEC ONLY
 	t_cmd	*prev;//pointer to left branch (PIPE)
 	t_cmd	*next;//pointer to right branch (PIPE)
-	char	*file_name;//pointer to beg file name for redir
-	int		instructions;//instructions for redir (O_CREAT...)
-	int		fd_in;//already open FD
-	int		fd_out;
 } t_cmd;
 
 //find_tokens.c
@@ -83,13 +77,16 @@ int		check_for_nontokens(char **s);
 //t_cmd	*ft_nul_cmds(t_cmd *cmd);
 
 //init_struct.c
-t_cmd	*ft_init_struct(t_cmd **cmd_tree);
+t_head	*init_head(char **envp);
+t_cmd	*init_cmd_struct();
+t_cmd	*init_exec();
+t_cmd	*init_redir(t_cmd *cmd_tree, char *file_name, int instructions, int fd);
 
 //parse_exec_cmds.c
 char	*parse_line(char *arr);
 //t_cmd	*init_exec_cmds(char **s, char *non_token);
-t_cmd	*parse_exec_cmds(t_cmd *tree, char **s);
-t_cmd	*init_exec_cmds(t_cmd *tree, char **s, char *non_token);
+t_cmd	*parse_exec_cmds(char **s, int *i);
+t_exec	*init_exec_cmds(t_exec *exec, t_cmd *cmd, char **s, char *non_token);
 
 //parse_for_cmds.c
 t_cmd	*parse_for_cmds(char *s);
@@ -99,23 +96,22 @@ int		check_next_char(char **s, char token);
 
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *cmd, char **s);
-t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
+//t_cmd	*redir_cmd(t_cmd *cmd, int instructions, int fd);
 
 //parse_pipes_and_groups.c
-t_cmd	*parse_for_pipe(char **str);
-t_cmd	*parse_for_groups(char **s);
-//t_cmd 	*pipe_cmd (t_cmd *left, t_cmd *right);
+t_cmd	*parse_for_pipe(char **str, int *i);
+t_cmd	*parse_for_groups(char **s, int *i);
+t_cmd	*init_pipe(t_cmd *prev, t_cmd *next);
+
 
 //utils.c
 void	free_cmdtree(t_cmd *tree);
-
-//char	*ft_strtok(char *str, char *delimiter);
 
 
 
 // Executer | executer.c
 void	ft_executor(t_cmd *node);
-void ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
-void ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
-void ft_pipe_first(t_cmd *node, int pipe_fd[2]);
+void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
 #endif
