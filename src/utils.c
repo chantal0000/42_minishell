@@ -6,13 +6,13 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 11:54:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/23 16:26:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_cmdtree(t_cmd *tree)
+/*void	free_cmdtree(t_cmd *tree)
 {
 	int	i;
 
@@ -38,4 +38,4 @@ void	free_cmdtree(t_cmd *tree)
 		close(tree->fd_in);
 	if (tree->fd_out)
 		close(tree->fd_out);
-}
+}*/

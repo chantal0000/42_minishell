@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 09:42:25 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/20 11:21:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:51:50 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_simple_cmd(t_cmd *node)
+/*void	ft_simple_cmd(t_cmd *node)
 {
 	// check if it is a builtin
 	// otherwise execve()
@@ -27,7 +27,7 @@ void	ft_simple_cmd(t_cmd *node)
 		printf("node->next->type: %d\n", node->next->type);
 	else
 		printf("no next\n");
-}
+}*/
 
 /*
 ** -1 meaning there if no in/out file
@@ -35,7 +35,7 @@ void	ft_simple_cmd(t_cmd *node)
 ** 2. if there is an outfile we dup the files fd for stdout
 ** 3. else we set the stdout to pipe_fd[1] (write end)
 */
-void ft_pipe_first(t_cmd *node, int pipe_fd[2])
+/*void ft_pipe_first(t_cmd *node, int pipe_fd[2])
 {
 	char *cmd[2];
 
@@ -150,7 +150,7 @@ void ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in)
 	// fork
 	// new function built in vs cmd
 	// execution
-}
+}*/
 
 /*
 ** 1. checks if its only one node, meaning a simple cmd
@@ -161,7 +161,7 @@ void ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in)
 ** 6. we save the old fd_in into old_pipe_in
 ** 7. move on to the next node in the linked list
 */
-void	ft_executor(t_cmd *node)
+/*void	ft_executor(t_cmd *node)
 {
 	printf("IN EXECUTER\n");
 
@@ -209,4 +209,4 @@ void	ft_executor(t_cmd *node)
 	//new added??
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-}
+}*/

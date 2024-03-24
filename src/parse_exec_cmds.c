@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/20 16:59:53 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/24 19:21:12 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,52 +23,63 @@ char	*parse_line(char *arr)
 	return (arr);
 }
 
-t_cmd	*init_exec_cmds(t_cmd *tree, char **s, char *non_token)
+t_exec	*init_exec_cmds(t_exec *exec, t_cmd *cmd, char **s, char *non_token)
 {
 	int		i;
 	int		token;
-//	t_cmd	*cmd_tree;
 
 	i = 0;
-	token = 0;
-//	cmd_tree = parse_for_redirections(cmd_tree, s);//check for redirs and pass the tree we have built so far
-	tree = parse_for_redirections(tree, s);
-	if (!tree)
+	if (!exec)
 		return (NULL);
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
-//		printf("token in init exec: %c\n", token);
+		printf("\ntoken in init exec: %c\n", token);
 		if (token == 0)//if not a token, break
 			break ;
-		tree->cmd[i] = ft_strdup(non_token);
-		parse_line(tree->cmd[i]);
+		exec->cmd[i] = ft_strdup(non_token);
+		parse_line(exec->cmd[i]);
 		i++;
-		tree = parse_for_redirections(tree, s);
+		cmd = parse_for_redirections(cmd, s);
 	}
-	tree->cmd[i] = NULL;
+	exec->cmd[i] = NULL;
 	printf("cmds in exec:\n");//remove
-	for (int i = 0; tree->cmd[i] != NULL; i++)//remove
-		printf("cmd[%d]: %s\n", i, tree->cmd[i]);//remove
-	return (tree);
+	for (int i = 0; exec->cmd[i] != NULL; i++)//remove
+		printf("cmd[%d]: %s\n", i, exec->cmd[i]);//remove
+	return (exec);
 }
 
-t_cmd	*parse_exec_cmds(t_cmd *tree, char **s)
+t_cmd	*parse_exec_cmds(char **s, int *i)
 {
-//	t_cmd	*cmd_tree;
+	t_exec	*exec;
+	t_cmd	*cmd;
 	char	*non_token;
 
 	non_token = NULL;
-//	printf("now in parse exec\n");
+	printf("now in parse exec\n");
 	if (check_next_char(s, '('))
 	{
 		printf("\nGROUP FOUND\n");
-		tree = parse_for_groups(s);
-		return (tree);
+		cmd = parse_for_groups(s, i);
+		return (cmd);
 	}
-	tree = init_exec_cmds(tree, s, non_token);//fill the struct
-	if(!tree)
-		free (tree);
+	if (check_next_char(s, '\'') || check_next_char(s, '"'))
+	{
+		printf("\nQUOTES FOUND\n");
+//		cmd = parse_for_quotes(s);
+//		return (cmd);
+	}
+	cmd = init_exec();
+	if(!cmd)
+	{
+		printf("cmd exec didn't initialise");
+		exit (1);
+	}
+	(*i)++;
+	cmd->index = *i;
+	exec = (t_exec *)cmd;
+	cmd = parse_for_redirections(cmd, s);
+	exec = init_exec_cmds(exec, cmd, s, non_token);
 //	printf("EXIT exec\n");
-	return (tree);
+	return ((t_cmd *)exec);
 }
