@@ -6,28 +6,28 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/24 19:29:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/25 14:48:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //if (s != '\0' means we have stopped before end of string
-t_cmd	*parse_for_cmds(char *s)
+t_cmd	*parse_for_cmds(char *s, char **envp)
 {
 	t_cmd	*cmd;
 	int		i;
 
+	printf("in parse for cmd\n");
 	i = 0;
 	if (!s)
 		return (0);
-	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	cmd = parse_for_pipe(&s, &i, envp);
 	if (!cmd)
 	{
 		printf("failed init in parse cmd");
 		exit (1);
 	}
-	cmd = parse_for_pipe(&s, &i);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
 	if (*s != '\0')

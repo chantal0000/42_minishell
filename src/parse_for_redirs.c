@@ -6,13 +6,13 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/23 16:24:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/25 13:04:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*parse_for_redirections(t_cmd *cmd, char **s)
+t_cmd	*parse_for_redirections(t_cmd *cmd, char **s, int *i, char **envp)
 {
 	int		token;
 	char	*file_name;
@@ -38,6 +38,9 @@ t_cmd	*parse_for_redirections(t_cmd *cmd, char **s)
 			cmd = init_redir(cmd, file_name, O_RDONLY, 0);//fd=0
 		else
 			return (NULL);
+		cmd->index = *i;
+		cmd->env = envp;
+		(*i)++;
 	}
 	return (cmd);
 }

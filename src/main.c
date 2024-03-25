@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/23 15:49:26 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/25 14:41:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,22 +97,19 @@ int	main()
 {
 	char	*line = "ls | wc | cat";
 //	int		token;
-	t_head	*cmd_tree;
+	t_cmd	*list;
 	char	**envp;
 //	int i = 0;
 
-	cmd_tree = NULL;
+	list = NULL;
 	envp = NULL;
-	cmd_tree = init_head(envp);
-	if (!cmd_tree)
-		return (0);
+//	cmd_tree = init_head(envp);
+//	if (!cmd_tree)
+//		return (0);
 	printf("line to be parsed: %s\n", line);
-	cmd_tree->cmd = parse_for_cmds(line);
-	if (!cmd_tree->cmd)
-	{
-		free (cmd_tree);
+	list = parse_for_cmds(line, envp);
+	if (!list)
 		return (0);
-	}
 //	printf("back in main fcn\n");
 /*	while (cmd_tree->next != NULL)
 	{
@@ -128,6 +125,6 @@ int	main()
 
 	// execution here?
 	ft_executor(cmd_tree);*/
-	free(cmd_tree);
+//	free(list);
 	return (0);
 }
