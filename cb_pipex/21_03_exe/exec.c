@@ -41,25 +41,25 @@ struct s_exec{
 int ft_is_builtin(t_exec *node);
 int	handle_exit_status(int pid);
 
-// void	ft_simple_cmd(t_exec *node)
-// {
-//     printf("in ft_simple_cmd\n");
-//     if (ft_is_builtin(node) == 0)
-//         printf("it's a build_in\n");
-//     else
-//     {
-//         printf("it's not a built_in\n");
-//         // handle redirections?
-//         if (execute_cmd(node->env, node->cmd) == -1)
-// 		{
-// 			// handle error
-// 			write(2, "Error in simple_cmd\n", 21);
-// 		}
-//     }
-// 	// check if it is a builtin
-//     // redirections
-// 	// otherwise execve()
-// }
+void	ft_simple_cmd(t_exec *node)
+{
+    printf("in ft_simple_cmd\n");
+    if (ft_is_builtin(node) == 0)
+        printf("it's a build_in\n");
+    else
+    {
+        printf("it's not a built_in\n");
+        // handle redirections?
+        if (execute_cmd(node->env, node->cmd) == -1)
+		{
+			// handle error
+			write(2, "Error in simple_cmd\n", 21);
+		}
+    }
+	// check if it is a builtin
+    // redirections
+	// otherwise execve()
+}
 
 /*
 ** -1 meaning there if no in/out file
@@ -225,10 +225,10 @@ int ft_pipe_last(t_exec *node, int pipe_fd[2], int old_pipe_in)
 int	ft_executor(t_exec *node)
 {
 
-	// if (!node->next && !node->prev)
-	// {
-	// 	ft_simple_cmd(node);
-	// }
+	if (!node->next && !node->prev)
+	{
+		ft_simple_cmd(node);
+	}
 
 	// int num_nodes = ft_count_nodes(node);
 	// int fd_array[num_nodes - 1][2];
