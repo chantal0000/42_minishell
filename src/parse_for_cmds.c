@@ -6,28 +6,21 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/25 14:48:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/25 18:55:09 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //if (s != '\0' means we have stopped before end of string
-t_cmd	*parse_for_cmds(char *s, char **envp)
+t_cmd	*parse_for_cmds(char *s)
 {
 	t_cmd	*cmd;
-	int		i;
 
-	printf("in parse for cmd\n");
-	i = 0;
 	if (!s)
 		return (0);
-	cmd = parse_for_pipe(&s, &i, envp);
-	if (!cmd)
-	{
-		printf("failed init in parse cmd");
-		exit (1);
-	}
+	printf("parse for cmds\n");
+	cmd = parse_for_pipe(&s);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
 	if (*s != '\0')
@@ -35,11 +28,9 @@ t_cmd	*parse_for_cmds(char *s, char **envp)
 		printf("check syntax\n");//check what bash returns
 		return ((void *)0);
 	}
-//	ft_nul_cmds(cmd);//currently do it in each respective fcn
-//	printf("exit parse for cmds\n");
+	printf("exit parse for cmds\n");
 	return (cmd);
 }
-
 int	is_token(char s)
 {
 	char	*tokens;

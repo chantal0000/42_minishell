@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/25 14:50:45 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:05:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,78 +34,63 @@ char	*parse_line(char *arr)
 	return (exec);
 }*/
 
-void	init_exec_cmds(t_cmd *node, char **s, char *non_token, char **envp, int *i)
+t_cmd	*init_exec_cmds(char **s, char *non_token)
 {
-	int		j;
+	int		i;
 	int		token;
+	t_cmd	*cmd_tree;
 
-	printf("filling cmd array in list\n");
-	j = 0;
+	i = 0;
+	token = 0;
+	cmd_tree = ft_init_stuct();
+	cmd_tree = parse_for_redirections(cmd_tree, s);//check for redirs and pass the tree we have built so far
+	if (!cmd_tree)
+		return (NULL);
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
-		printf("\ntoken in init exec: %c\n", token);
 		if (token == 0)//if not a token, break
 			break ;
-		if (!node->cmd)
-		{
-			node->cmd = (char **)ft_calloc((MAXARGS + 1), sizeof(char *));
-			if (!node->cmd)
-			{
-				printf("array not initialised\n");
-				exit (1);
-			}
-		}
-		printf("array initialized\n");
-		node->cmd[j] = ft_strdup(non_token);
-		if (!node->cmd[j])
-		{
-			printf("problems with copying line in array\n");
-			exit (1);
-		}
-		parse_line(node->cmd[j]);
-		j++;
-		node = parse_for_redirections(node, s, i, envp);//need to add envp?
+		cmd_tree->cmd[i] = strdup(non_token);
+		parse_line(cmd_tree->cmd[i]);
+		i++;
+		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
-	node->cmd[j] = NULL;
-	printf("cmds in exec:\n");//remove
-	for (int i = 0; node->cmd[i] != NULL; i++)//remove
-		printf("cmd[%d]: %s\n", i, node->cmd[i]);//remove
+	cmd_tree->cmd[i] = NULL;
+	for (int i = 0; cmd_tree->cmd[i] != NULL; i++)
+		printf("cmd[%d]: %s\n", i, cmd_tree->cmd[i]);
+	return (cmd_tree);
 }
 
-t_cmd	*parse_exec_cmds(char **s, int *i, char **envp)
+t_cmd	*parse_exec_cmds(char **s)
 {
-	t_cmd	*node;
+	t_cmd	*cmd_tree;
 	char	*non_token;
+	int		i;
 
 	non_token = NULL;
-//	node = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	node = build_cmd_tree(cmd, temp, i, envp);
-	if (!node)
+	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	if (!cmd_tree)
 	{
-		printf("node not initialised 1\n");
+		printf("cmd_tree initiation in exec failed\n");
 		exit (1);
 	}
-	printf("in parse for exec\n");
+	i = 0;
+	while (i < MAXARGS)
+	{
+		cmd_tree->cmd[i] = NULL;
+		i++;
+	}
+	printf("now in parse exec\n");
 	if (check_next_char(s, '('))
 	{
-		printf("\nGROUP FOUND\n");
-		node = parse_for_groups(s, i, envp);
-		return (node);
+		printf("\nGROUP FOUND\n\n");
+		cmd_tree = parse_for_groups(s);
+		return (cmd_tree);
 	}
-	if (check_next_char(s, '\'') || check_next_char(s, '"'))
-	{
-		printf("\nQUOTES FOUND\n");
-//		node = parse_for_quotes(s);
-//		return (node);
-	}
-//	node->index = *i;
-	node = parse_for_redirections(node, s, i, envp);//need to add envp?
-	init_exec_cmds(node, s, non_token, envp, i);
-	if (!node->cmd[0])
-	{
-		printf("cmd exec didn't initialise");
-		exit (1);
-	}
-	return (node);
+	cmd_tree = init_exec_cmds(s, non_token);//fill the struct
+	if(!cmd_tree)
+		free (cmd_tree);
+	printf("EXIT exec\n");
+	return (cmd_tree);
 }

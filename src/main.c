@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/25 14:41:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:04:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 		if (*line)
 		{
 			add_history(line);
-			cmd = *parse_for_cmds(line);
+			cmd = *parse_for_cmds(line, envp);
 			printf("back in main fcn\n");
 			ft_executor(cmd);
 			//run/exec the cmds
@@ -96,35 +96,27 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 int	main()
 {
 	char	*line = "ls | wc | cat";
-//	int		token;
 	t_cmd	*list;
-	char	**envp;
-//	int i = 0;
+//	char	*envp = "address";
+	int		j = 0;
 
 	list = NULL;
-	envp = NULL;
 //	cmd_tree = init_head(envp);
 //	if (!cmd_tree)
 //		return (0);
 	printf("line to be parsed: %s\n", line);
-	list = parse_for_cmds(line, envp);
+	list = parse_for_cmds(line);//need to add envp
 	if (!list)
 		return (0);
-//	printf("back in main fcn\n");
-/*	while (cmd_tree->next != NULL)
+	while (list != NULL) 
 	{
-		printf("cmd node [%d]: \n", i);
-//		printf("node [%d]:\n", cmd_tree->index);
-		printf("cmd->type: %d\n", cmd_tree->type);
-//		printf("cmd->prev->type: %d\n", cmd_tree->prev->type);
-		printf("cmd->prev: %s\n", *cmd_tree->prev->cmd);
-		printf("cmd->next: %s\n", *cmd_tree->next->cmd);
-		i++;
-		cmd_tree = cmd_tree->next;
-	}
-
-	// execution here?
-	ft_executor(cmd_tree);*/
-//	free(list);
+        printf("Node[%d] command:\n", j);
+        for (int i = 0; i < MAXARGS && list->cmd[i] != NULL; i++) 
+		{
+            printf("cmd[%d]: %s\n", i, list->cmd[i]);
+        }
+        list = list->next;
+		j++;
+    }
 	return (0);
 }
