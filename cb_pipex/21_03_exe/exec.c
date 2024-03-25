@@ -266,6 +266,10 @@ int	ft_executor(t_exec *node)
 		dup2(std_out, STDOUT_FILENO);
 		node = node->next;
 	}
+	// now everything is closed?
+	close(std_in);
+	close(std_out);
+
 	//new added??
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
@@ -285,8 +289,8 @@ int main(int argc, char **argv, char **env)
 	// middle2 = malloc(sizeof(t_exec) * 1);
 	last = malloc(sizeof(t_exec) * 1);
 
-	int outfile = open("test2", O_TRUNC | O_CREAT | O_RDWR, 0644);
-    int infile = open("test_in.txt", O_RDONLY, 0644);
+	// int outfile = open("test2", O_TRUNC | O_CREAT | O_RDWR, 0644);
+    // int infile = open("test_in.txt", O_RDONLY, 0644);
 
 	first->cmd[0] = strdup("ls");
 	first->cmd[1] = strdup("-l");
@@ -295,16 +299,16 @@ int main(int argc, char **argv, char **env)
 	first->fd_in = -1;
 	first->fd_out = -1;
 	first->prev = NULL;
-	first->next = middle1;
+	first->next = last;
     first->env = env;
 
-	middle1->cmd[0] = strdup("cat");
-	middle1->cmd[1] = NULL;
-	middle1->fd_in = -1;
-	middle1->fd_out = -1;
-	middle1->prev = first;
-	middle1->next = last;
-    middle1->env = env;
+	// middle1->cmd[0] = strdup("cat");
+	// middle1->cmd[1] = NULL;
+	// middle1->fd_in = -1;
+	// middle1->fd_out = -1;
+	// middle1->prev = first;
+	// middle1->next = last;
+    // middle1->env = env;
 
 
 	// middle2->cmd = strdup("/bin/nl");
@@ -319,7 +323,7 @@ int main(int argc, char **argv, char **env)
 	last->cmd[1] = NULL;
 	last->fd_in = -1;
 	last->fd_out = -1;
-	last->prev = middle1;
+	last->prev = first;
 	last->next = NULL;
     last->env = env;
 
