@@ -13,8 +13,6 @@
 ** need to include wait to properly end
 */
 
-
-
 int	execute_cmd(char **env, char **cmd);
 typedef struct s_exec t_exec;
 typedef struct s_red t_red;
@@ -41,6 +39,11 @@ struct s_exec{
 int ft_is_builtin(t_exec *node);
 int	handle_exit_status(int pid);
 
+
+/*
+** Executes a simple command. If it's a built-in command, it's executed directly.
+** Otherwise, it handles redirections and executes using execve().
+*/
 void	ft_simple_cmd(t_exec *node)
 {
     printf("in ft_simple_cmd\n");
@@ -61,6 +64,10 @@ void	ft_simple_cmd(t_exec *node)
 	// otherwise execve()
 }
 
+/*
+** Handles the execution of the first command in a pipeline.
+** Handles input/output redirection and executes the command.
+*/
 /*
 ** -1 meaning there if no in/out file
 ** 1. if there is an infile we dup the files fd for stdin
@@ -114,13 +121,13 @@ int ft_pipe_first(t_exec *node, int pipe_fd[2])
 	// execution
 }
 
+
+/*
+** Handles the execution of commands in the middle of a pipeline.
+** Handles input/output redirection and executes the command.
+*/
 int ft_pipe_middle(t_exec *node, int pipe_fd[2], int old_pipe_in)
 {
-	// char *cmd[2];
-
-	// cmd[0] = node->cmd;
-	// cmd[1] = NULL;
-
 	// check in redirection,
 	if (node->fd_in !=  -1)
 	{
@@ -169,6 +176,11 @@ int ft_pipe_middle(t_exec *node, int pipe_fd[2], int old_pipe_in)
 	// execution
 }
 
+
+/*
+** Handles the execution of the last command in a pipeline.
+** Handles input/output redirection and executes the command.
+*/
 int ft_pipe_last(t_exec *node, int pipe_fd[2], int old_pipe_in)
 {
 	// char *cmd[2];
@@ -213,7 +225,10 @@ int ft_pipe_last(t_exec *node, int pipe_fd[2], int old_pipe_in)
 	// execution
 }
 
+
 /*
+** Executes a sequence of commands, possibly connected by pipes.
+** Determines the position of each command and executes it accordingly.
 ** 1. checks if its only one node, meaning a simple cmd
 ** 2. loop through nodes of linked list
 ** 3. checks if there is a next and prev node, meaning we are in middle
@@ -224,21 +239,14 @@ int ft_pipe_last(t_exec *node, int pipe_fd[2], int old_pipe_in)
 */
 int	ft_executor(t_exec *node)
 {
-
-	if (!node->next && !node->prev)
-	{
-		ft_simple_cmd(node);
-	}
-
-	// int num_nodes = ft_count_nodes(node);
-	// int fd_array[num_nodes - 1][2];
-
 	int old_pipe_in = 0;
 	int pipe_fd[2];
 	int std_in = dup(STDIN_FILENO);
 	int std_out = dup(STDOUT_FILENO);
 	int	exit_status = 0;
 
+	if (!node->next && !node->prev)
+		ft_simple_cmd(node);
 	while(node)
 	{
 		if (node->next && node->prev)
