@@ -41,25 +41,25 @@ struct s_exec{
 int ft_is_builtin(t_exec *node);
 int	handle_exit_status(int pid);
 
-void	ft_simple_cmd(t_exec *node)
-{
-    printf("in ft_simple_cmd\n");
-    if (ft_is_builtin(node) == 0)
-        printf("it's a build_in\n");
-    else
-    {
-        printf("it's not a built_in\n");
-        // handle redirections?
-        if (execute_cmd(node->env, node->cmd) == -1)
-		{
-			// handle error
-			write(2, "Error in simple_cmd\n", 21);
-		}
-    }
-	// check if it is a builtin
-    // redirections
-	// otherwise execve()
-}
+// void	ft_simple_cmd(t_exec *node)
+// {
+//     printf("in ft_simple_cmd\n");
+//     if (ft_is_builtin(node) == 0)
+//         printf("it's a build_in\n");
+//     else
+//     {
+//         printf("it's not a built_in\n");
+//         // handle redirections?
+//         if (execute_cmd(node->env, node->cmd) == -1)
+// 		{
+// 			// handle error
+// 			write(2, "Error in simple_cmd\n", 21);
+// 		}
+//     }
+// 	// check if it is a builtin
+//     // redirections
+// 	// otherwise execve()
+// }
 
 /*
 ** -1 meaning there if no in/out file
@@ -101,13 +101,12 @@ int ft_pipe_first(t_exec *node, int pipe_fd[2])
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
 			// function closing fdin and fd out
-			exit(EXIT_FAILURE);
-
 		exit(EXIT_FAILURE);
 		}
 		exit(0);
 	}
 	// we only reach here if pid != 0, so if we are in parent
+
 	return (handle_exit_status(pid));
 	// wait(NULL);
 	// fork
@@ -147,6 +146,7 @@ int ft_pipe_middle(t_exec *node, int pipe_fd[2], int old_pipe_in)
 
 	// close irrelevant stuff
 	// added close otherwise ls | wc didnt work
+	close(old_pipe_in);
 	close(pipe_fd[1]);
 	int pid = fork();
 	if (pid == 0)
@@ -225,15 +225,15 @@ int ft_pipe_last(t_exec *node, int pipe_fd[2], int old_pipe_in)
 int	ft_executor(t_exec *node)
 {
 
-	if (!node->next && !node->prev)
-	{
-		ft_simple_cmd(node);
-	}
+	// if (!node->next && !node->prev)
+	// {
+	// 	ft_simple_cmd(node);
+	// }
 
 	// int num_nodes = ft_count_nodes(node);
 	// int fd_array[num_nodes - 1][2];
 
-	int old_pipe_in;
+	int old_pipe_in = 0;
 	int pipe_fd[2];
 	int std_in = dup(STDIN_FILENO);
 	int std_out = dup(STDOUT_FILENO);
@@ -269,7 +269,6 @@ int	ft_executor(t_exec *node)
 	// now everything is closed?
 	close(std_in);
 	close(std_out);
-
 	//new added??
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
@@ -286,7 +285,7 @@ int main(int argc, char **argv, char **env)
 
 	first = malloc(sizeof(t_exec) * 1);
 	middle1 = malloc(sizeof(t_exec) * 1);
-	// middle2 = malloc(sizeof(t_exec) * 1);
+	middle2 = malloc(sizeof(t_exec) * 1);
 	last = malloc(sizeof(t_exec) * 1);
 
 	// int outfile = open("test2", O_TRUNC | O_CREAT | O_RDWR, 0644);
@@ -299,31 +298,32 @@ int main(int argc, char **argv, char **env)
 	first->fd_in = -1;
 	first->fd_out = -1;
 	first->prev = NULL;
-	first->next = last;
+	first->next = middle1;
     first->env = env;
 
-	// middle1->cmd[0] = strdup("cat");
-	// middle1->cmd[1] = NULL;
-	// middle1->fd_in = -1;
-	// middle1->fd_out = -1;
-	// middle1->prev = first;
-	// middle1->next = last;
-    // middle1->env = env;
+	middle1->cmd[0] = strdup("cat");
+	middle1->cmd[1] = NULL;
+	middle1->fd_in = -1;
+	middle1->fd_out = -1;
+	middle1->prev = first;
+	middle1->next = middle2;
+    middle1->env = env;
 
 
-	// middle2->cmd = strdup("/bin/nl");
-	// middle2->fd_in = -1;
-	// middle2->fd_out = -1;
-	// middle2->prev = middle1;
-	// middle2->next = last;
-    // middle2->env = *env;
+	middle2->cmd[0] = strdup("/bin/nl");
+	middle2->cmd[1] = NULL;
+	middle2->fd_in = -1;
+	middle2->fd_out = -1;
+	middle2->prev = middle1;
+	middle2->next = last;
+    middle2->env = env;
 
 
 	last->cmd[0] = strdup("nl");
 	last->cmd[1] = NULL;
 	last->fd_in = -1;
 	last->fd_out = -1;
-	last->prev = first;
+	last->prev = middle2;
 	last->next = NULL;
     last->env = env;
 
