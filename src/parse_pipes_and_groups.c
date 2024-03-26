@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/25 18:57:02 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/26 18:05:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_cmd	*parse_for_pipe(char **str)
 
 	if (!**str || !str)
 		return (0);
-	printf("now parsing for pipes\n");
-	printf("string in pipe: %s\n", *str);
+//	printf("now parsing for pipes\n");
+//	printf("string in pipe: %s\n", *str);
 	cmd = parse_exec_cmds(str);
 	if (!cmd)
 		return (NULL);
@@ -37,7 +37,7 @@ t_cmd	*parse_for_pipe(char **str)
 		cmd->next = parse_for_pipe(str);
 		return (cmd);
 	}
-	printf("\nEXIT PIPE PARSING FCN\n");
+//	printf("\nEXIT PIPE PARSING FCN\n");
 	return (temp);
 }
 
