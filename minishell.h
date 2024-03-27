@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/26 18:03:28 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/27 15:42:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ typedef struct s_cmd
 	t_cmd	*next;//pointer to right branch (PIPE)
 } t_cmd;
 
+
+void	print_stack(t_cmd *root);
+
 //find_tokens.c
 int		check_for_alligators(char **s);
 int 	find_tokens(char **s, char **beg_of_file);
@@ -89,7 +92,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token);
 t_cmd	*parse_exec_cmds(char **s);
 
 //parse_for_cmds.c
-t_cmd	*parse_for_cmds(char *s);
+void	parse_for_cmds(t_cmd **cmd, char *s);
 int		is_token(char s);
 int		is_whitespace(char s);
 int		check_next_char(char **s, char token);
@@ -99,7 +102,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
 //parse_pipes_and_groups.c
-t_cmd	*parse_for_pipe(char **str);
+void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe);
 t_cmd	*parse_for_groups(char **s);
 //t_cmd	*init_pipe(t_cmd *prev, t_cmd *next, int *i);
 

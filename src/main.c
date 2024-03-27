@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/27 14:09:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/27 15:44:59 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,21 @@ void	error_message(char *str, int i, int *fd, int *fd2)
 }
 void	print_stack(t_cmd *root)
 {
-	while (root != NULL)
+	t_cmd	*temp;
+
+	temp = root;
+	while (temp != NULL)
 	{
-		printf("node->current_position: %d\n", root->index);
-		printf("node->current_position: %p\n", root);
+		printf("node->current_position: %d\n", temp->index);
+		printf("node->current_position: %p\n", temp);
 //		printf("node->data: %d\n", root-> data);	
-		for (int i = 0; i < MAXARGS && root->cmd[i] != NULL; i++) 
+		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++) 
 		{
-			printf("cmd[%d]: %s\n", i, root->cmd[i]);
+			printf("cmd[%d]: %s\n", i, temp->cmd[i]);
 		}
-		printf("node->prev: %p\n", (void *)root -> prev);
-		printf("node->next: %p\n\n", (void *)root -> next);
-		root = root -> next;
+		printf("node->prev: %p\n", (void *)temp -> prev);
+		printf("node->next: %p\n\n", (void *)temp -> next);
+		temp = temp -> next;
 	}
 }
 
@@ -91,18 +94,18 @@ void	print_stack(t_cmd *root)
 
 int	main()
 {
-	char	*line = "ls | wc | cat | la ";
+	char	*line = "ls | wc -a h | cat | la ";
 	t_cmd	*list;
-	t_env	*env;
+//	t_env	*env;
 //	char	*envp = "address";
 
 	list = NULL;
-	env = NULL;
+//	env = NULL;
 //	cmd_tree = init_head(envp);
 //	if (!cmd_tree)
 //		return (0);
 	printf("line to be parsed: %s\n", line);
-	list = parse_for_cmds(line);//need to add envp
+	parse_for_cmds(&list, line);//need to add envp
 	if (!list)
 		return (0);
 	printf("\n");

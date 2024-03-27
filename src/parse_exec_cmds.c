@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/26 18:00:45 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/27 15:27:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		token = find_tokens(s, &non_token);
 		if (token == 0)//if not a token, break
 			break ;
-		cmd_tree->cmd[i] = strdup(non_token);
+		cmd_tree->cmd[i] = ft_strdup(non_token); 
 		parse_line(cmd_tree->cmd[i]);
 		i++;
 		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
 	cmd_tree->cmd[i] = NULL;
-
+/*	for (int i = 0; cmd_tree->cmd[i] != NULL; i++)
+		printf("cmd[%d]: %s\n", i, cmd_tree->cmd[i]);*/
 	return (cmd_tree);
 }
 
@@ -81,12 +82,12 @@ t_cmd	*parse_exec_cmds(char **s)
 		i++;
 	}
 //	printf("now in parse exec\n");
-	if (check_next_char(s, '('))
+	/*if (check_next_char(s, '('))
 	{
 		printf("\nGROUP FOUND\n\n");
 		cmd_tree = parse_for_groups(s);
 		return (cmd_tree);
-	}
+	}*/
 	cmd_tree = init_exec_cmds(s, non_token);//fill the struct
 	if(!cmd_tree)
 		free (cmd_tree);
