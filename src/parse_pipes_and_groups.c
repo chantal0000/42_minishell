@@ -76,7 +76,7 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe)
 		parse_for_pipe(str, cmd, 1);
 	}
 //	printf("\nEXIT PIPE PARSING FCN\n");
-
+	return (temp);
 }
 
 /*t_cmd	*parse_for_groups(char **s)

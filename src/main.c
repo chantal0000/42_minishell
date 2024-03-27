@@ -75,6 +75,23 @@ void	print_stack(t_cmd *root)
 	return (0);
 }*/
 
+void	print_stack(t_cmd *root)
+{
+	while (root != NULL)
+	{
+		printf("node->current_position: %d\n", root->index);
+		printf("node->current_position: %p\n", root);
+//		printf("node->data: %d\n", root-> data);	
+		for (int i = 0; i < MAXARGS && root->cmd[i] != NULL; i++) 
+		{
+			printf("cmd[%d]: %s\n", i, root->cmd[i]);
+		}
+		printf("node->prev: %p\n", (void *)root -> prev);
+		printf("node->next: %p\n\n", (void *)root -> next);
+		root = root -> next;
+	}
+}
+
 int	main()
 {
 	char	*line = "ls | wc -a h | cat | la ";

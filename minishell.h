@@ -40,20 +40,19 @@ typedef struct s_cmd t_cmd;
 	int		index;
 	char	**cmd_env;
 	t_cmd	*cmd;
-}	t_head;
+}	t_head;*/
 
-typedef struct s_exec
+typedef struct s_env
 {
-	int		type;
 	char	**cmd_env;
-	char	*cmd[MAXARGS + 1];
-}	t_exec;
 
-typedef struct s_redir
+}	t_env;
+
+/*typedef struct s_redir
 {
 	int		type;
 	t_cmd	*cmd;
-	char	**cmd_env;
+	t_env	*m_env;
 	char	*file_name;
 	int		instructions;
 	int		fd_in;
@@ -64,7 +63,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	int		index;
-	char	**env;
+	t_env	*m_env;
 	char	*cmd[MAXARGS + 1];
 	char	*file_name;
 	int		instructions;
@@ -84,8 +83,8 @@ int		check_for_nontokens(char **s);
 
 //init_struct.c
 t_cmd	*ft_init_stuct(void);
+t_cmd	*add_node(t_cmd *cmd, t_cmd *next, t_env *env, int index);
 t_cmd	*init_redir(t_cmd *cmd_tree, char *file_name, int instructions, int fd);
-t_cmd	*build_cmd_tree(t_cmd *prev, t_cmd *next, int *i, char **envp);
 
 //parse_exec_cmds.c
 char	*parse_line(char *arr);

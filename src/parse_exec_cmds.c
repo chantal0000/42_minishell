@@ -69,7 +69,7 @@ t_cmd	*parse_exec_cmds(char **s)
 	int		i;
 
 	non_token = NULL;
-	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	cmd_tree = (t_cmd *)calloc(1, sizeof(t_cmd));
 	if (!cmd_tree)
 	{
 		printf("cmd_tree initiation in exec failed\n");
@@ -81,8 +81,8 @@ t_cmd	*parse_exec_cmds(char **s)
 		cmd_tree->cmd[i] = NULL;
 		i++;
 	}
-	printf("now in parse exec\n");
-/*	if (check_next_char(s, '('))
+//	printf("now in parse exec\n");
+	/*if (check_next_char(s, '('))
 	{
 		printf("\nGROUP FOUND\n\n");
 		cmd_tree = parse_for_groups(s);
@@ -91,6 +91,8 @@ t_cmd	*parse_exec_cmds(char **s)
 	cmd_tree = init_exec_cmds(s, non_token);//fill the struct
 	if(!cmd_tree)
 		free (cmd_tree);
-	printf("EXIT exec\n");
+	for (int i = 0; cmd_tree->cmd[i] != NULL; i++)
+		printf("cmd[%d]: %s\n", i, cmd_tree->cmd[i]);
+//	printf("EXIT exec\n");
 	return (cmd_tree);
 }
