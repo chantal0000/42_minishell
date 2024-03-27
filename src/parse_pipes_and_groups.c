@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/27 15:55:01 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:15:35 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe)
 		parse_for_pipe(str, cmd, 1);
 	}
 //	printf("\nEXIT PIPE PARSING FCN\n");
-	return (temp);
 }
 
 /*t_cmd	*parse_for_groups(char **s)
