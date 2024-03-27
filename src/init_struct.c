@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/25 19:05:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/26 18:11:31 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,33 @@ t_cmd	*ft_init_stuct(void)
 {
 	t_cmd	*cmd_tree;
 
-	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	cmd_tree = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd_tree)
 		return (NULL);
 	return (cmd_tree);
 }
+
+/*t_cmd	*ft_init_struct(t_env *env)
+{
+	t_cmd	*cmd_tree;
+	int		i;
+
+	i = 0;
+	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	if (!cmd_tree)
+		return (NULL);
+	printf("first node initialised\n");
+	cmd_tree->index = 0;
+	cmd_tree->prev = NULL;
+	cmd_tree->next = NULL;
+	cmd_tree->m_env = env;
+	while (i < MAXARGS)
+	{
+		cmd_tree->cmd[i] = NULL;
+		i++;
+	}
+	return (cmd_tree);
+}*/
 
 /*t_cmd	*init_cmd(char **envp)
 {
@@ -41,7 +63,7 @@ t_cmd	*ft_init_stuct(void)
 	return (temp);
 }
 
-t_cmd	*add_cmd(t_cmd *prev, t_cmd *next, int *i, char **envp)
+t_cmd	*add_cmd(t_cmd *prev, t_cmd *next, int *i)
 {
 	t_cmd	*list;
 
@@ -52,7 +74,6 @@ t_cmd	*add_cmd(t_cmd *prev, t_cmd *next, int *i, char **envp)
 		exit (1);
 	}
 	list->index = *i;
-	list->env = envp;
 	list->prev = prev;
 	list->next = next;
 	list->fd_in = -1;
@@ -60,33 +81,37 @@ t_cmd	*add_cmd(t_cmd *prev, t_cmd *next, int *i, char **envp)
 	printf("cmd[%d] added to the cmd tree\n", *i);//delete
 	(*i)++;
 	return (list);
-}
-
-t_cmd	*build_cmd_tree(t_cmd *prev, t_cmd *next, int *i, char **envp)
-{
-	t_cmd	*cmd_node;
-
-	printf("\nnow initializing\n");//delete
-	cmd_node = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
- (!cmd_node)
-		return (NULL);
-	if (prev == NULL)
-	{
-		cmd_node = init_cmd(next, envp, i);
-		if (!cmd_node)
-			return (NULL);
-		return (cmd_node);
-	}
-	if (cmd_node->next == NULL)
-	{
-		cmd_node = add_cmd(prev, next, i, envp);
-		if (!cmd_node)
-			return (NULL);
-//		cmd_node->next = NULL;
-		return (cmd_node);
-	}
-	return (cmd_node);
 }*/
+
+t_cmd	*add_node(t_cmd *cmd, t_cmd *next, t_env *env, int index)
+{
+	t_cmd	*temp;
+	t_cmd	*ptr;
+	int		i;
+
+	i = 0;
+	printf("\nnow adding new node\n");
+	temp = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	if (!temp)
+		return (NULL);
+	temp->m_env = env;
+	while (i < MAXARGS)
+	{
+		temp->cmd[i] = NULL;
+		i++;
+	}
+	ptr = cmd;
+	while (ptr->next != NULL)
+	{
+		ptr->prev = ptr;
+		ptr = ptr->next;
+	}
+	ptr->next = temp;
+	temp->prev = ptr;
+	temp->next = next;
+	temp->index = index;
+	return (temp);
+}
 
 /*t_cmd	*init_exec()
 {
