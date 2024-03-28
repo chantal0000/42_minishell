@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:22:32 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/02 16:16:20 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:56:57 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "../../libft/libft.h"
+#include "../../minishell.h"
 
 /*
 ** echo -n
@@ -102,6 +103,18 @@ void	ft_pwd(char **environment)
 // ◦ export with no options
 // ◦ unset with no options
 // ◦ env with no options or arguments
+// receive main struct as argument
+void	ft_env(t_cmd *cmd)
+{
+	t_env *current = cmd->m_env;
+	while(current)
+	{
+		ft_printf("%s\n", current->cmd_env);
+		current = current->next;
+	}
+}
+
+
 // ◦ exit with no options
 
 

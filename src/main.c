@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/27 16:15:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/28 12:15:08 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	print_stack(t_cmd *root)
 	{
 		printf("node->current_position: %d\n", temp->index);
 		printf("node->current_position: %p\n", temp);
-//		printf("node->data: %d\n", root-> data);	
-		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++) 
+//		printf("node->data: %d\n", root-> data);
+		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++)
 		{
 			printf("cmd[%d]: %s\n", i, temp->cmd[i]);
 		}
@@ -75,12 +75,14 @@ void	print_stack(t_cmd *root)
 	return (0);
 }*/
 
-int	main()
+int	main(int argc, char **argv, char **env)
 {
-	char	*line = "ls | wc -a h | cat | la ";
+	char	*line = "ls | wc | cat ";
 	t_cmd	*list;
 //	t_env	*env;
 //	char	*envp = "address";
+(void)argc; // Suppress unused parameter warning
+(void)argv; // Suppress unused parameter warning
 
 	list = NULL;
 //	env = NULL;
@@ -93,5 +95,8 @@ int	main()
 		return (0);
 	printf("\n");
 	print_stack(list);
+	printf("main BEFORE executor\n");
+	ft_executor(list, env);
+	printf("main AFTER executor\n");
 	return (0);
 }
