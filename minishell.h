@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/28 11:51:43 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:05:55 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_env t_env;
 
 typedef struct s_env
 {
-	char	**cmd_env;
+	char	*cmd_env;
 	t_env	*next; // pointer to the next node in the linked list
 
 }	t_env;
@@ -124,4 +124,6 @@ void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
 
 int	execute_cmd(char **env, char **cmd);
 int	handle_exit_status(int pid);
+
+void	ft_env(t_cmd *cmd);
 #endif
