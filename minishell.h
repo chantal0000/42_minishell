@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/27 15:42:49 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/28 11:51:43 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <string.h>
 # include <fcntl.h>
 # include "libft/libft.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 # define EXEC 1
 # define REDIR 2
@@ -34,6 +36,7 @@
 # define MAXARGS 5
 
 typedef struct s_cmd t_cmd;
+typedef struct s_env t_env;
 
 /*typedef struct s_head
 {
@@ -45,6 +48,7 @@ typedef struct s_cmd t_cmd;
 typedef struct s_env
 {
 	char	**cmd_env;
+	t_env	*next; // pointer to the next node in the linked list
 
 }	t_env;
 
@@ -113,8 +117,11 @@ void	free_cmdtree(t_cmd *tree);
 
 
 // Executer | executer.c
-void	ft_executor(t_cmd *node);
+int		ft_executor(t_cmd *node, char **env);
 void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
+
+int	execute_cmd(char **env, char **cmd);
+int	handle_exit_status(int pid);
 #endif

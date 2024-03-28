@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
+#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/03/25 17:10:08 by kbolon           ###   ########.fr        #
+#    Updated: 2024/03/28 11:38:36 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ SRCS = src/main.c \
 		src/parse_pipes_and_groups.c \
 		src/parse_for_redirs.c \
 		src/utils.c \
-#		src/executer/executer.c
+		src/executor/executor.c \
+		src/executor/executor_utils.c \
+		src/executor/exit_status.c
 
 LIBFT = libft/libft.a
 CC = cc

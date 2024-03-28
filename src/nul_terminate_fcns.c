@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   nul_terminate_fcns.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:46:54 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/18 11:48:06 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/28 11:36:02 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//When a struct cmd* is received, it points to a base struct w/ limited 
-//fields. To manipulate extended fields in structures like t_exec or 
-//t_redir, the pointer must be cast to the appropriate type. 
-//This casting informs the compiler of the pointer's actual structure type, 
+//When a struct cmd* is received, it points to a base struct w/ limited
+//fields. To manipulate extended fields in structures like t_exec or
+//t_redir, the pointer must be cast to the appropriate type.
+//This casting informs the compiler of the pointer's actual structure type,
 //enabling access to both base and extended fields.
 
-//This approach facilitates polymorphism in C, enabling functions like 
-//ft_nul_cmds to operate on various command types through a 
-//common interface. By examining the type field and casting accordingly, 
+//This approach facilitates polymorphism in C, enabling functions like
+//ft_nul_cmds to operate on various command types through a
+//common interface. By examining the type field and casting accordingly,
 //the function ensures type safety while handling diverse command structures.
 /*t_cmd	*ft_nul_cmds(t_cmd *cmd)
 {
