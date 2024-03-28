@@ -6,53 +6,16 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/28 12:11:50 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:23:10 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// #include <stdio.h>
-// #include <unistd.h>
-// #include <string.h>
-// #include <stdlib.h>
-// #include <stdio.h>
-// #include <sys/types.h>
-// #include <fcntl.h>
-// #include <sys/wait.h>
-
-/*
-** executor works with the *char[MAXARGS] -> took out split from my pipex exec
-** need to change struct name based on our struct in minishell
-** need to include wait to properly end
-*/
-
-// int	execute_cmd(char **env, char **cmd);
-// typedef struct s_exec t_exec;
-// typedef struct s_red t_red;
-
-// typedef struct s_red{
-// 	int fd;
-
-// } t_red;
-// // typedef structure
-// struct s_exec{
-// 	int		type;//cmd type (EXEC, PIPE, REDIR)
-// 	char	*cmd[10];//for EXEC ONLY
-// 	t_exec	*prev;//pointer to left branch (PIPE)
-// 	t_exec	*next;//pointer to right branch (PIPE)
-// 	char	*file_name;//pointer to beg file name for redir
-// //	char	*end_file;//pointer to space after file name for redir
-// 	int		instructions;//instructions for redir (O_CREAT...)
-// 	int		fd_in;//already open FD
-// 	int		fd_out;
-// 	// later on we need our own env
-// 	char	**env;
-// };
-
-// int ft_is_builtin(t_exec *node);
-// int	handle_exit_status(int pid);
-
+// TO DO:
+	// - if there is a pipe check if built in or not
+	// - add final env
+	// - add resirections once they init in struct
 
 /*
 ** Executes a simple command. If it's a built-in command, it's executed directly.
@@ -60,9 +23,19 @@
 */
 void	ft_simple_cmd(t_cmd *node, char **env)
 {
-    // printf("in ft_simple_cmd\n");
-    // if (ft_is_builtin(node) == 0)
-    //     printf("it's a build_in\n");
+	// only here  to test
+	node->fd_in = -1;
+	node->fd_out = -1;
+
+	if ((node->fd_in) !=  -1)
+		dup2(node->fd_in, STDIN_FILENO);
+	if (node->fd_out != -1)
+		dup2(node->fd_out, STDOUT_FILENO);
+    // check if builtin, if (ft_is_builtin(node) == 0)
+	// {
+		//printf("it's a build_in\n");
+		//call built in fuction
+	// }
     // else
     // {
         printf("it's not a built_in\n");
@@ -72,33 +45,22 @@ void	ft_simple_cmd(t_cmd *node, char **env)
 			// handle error
 			write(2, "Error in simple_cmd\n", 21);
 		}
-    // }
-	// check if it is a builtin
-    // redirections
-	// otherwise execve()
 }
 
 /*
 ** Handles the execution of the first command in a pipeline.
 ** Handles input/output redirection and executes the command.
-*/
-/*
-** -1 meaning there if no in/out file
+** - 1 meaning there if no in/out file
 ** 1. if there is an infile we dup the files fd for stdin
 ** 2. if there is an outfile we dup the files fd for stdout
 ** 3. else we set the stdout to pipe_fd[1] (write end)
 */
 int ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 {
-	// char *cmd[2];
-
-	// cmd[0] = node->cmd;
-	// cmd[1] = NULL;
 	// just to test
 	node->fd_in = -1;
 	node->fd_out = -1;
 	//
-
 	if ((node->fd_in) !=  -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
@@ -117,27 +79,16 @@ int ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 	int pid = fork();
 	if (pid == 0)
 	{
-        // printf("in first_pipe pid 0\n");
 		write (2, "in first_pipe pid 0\n", 21);
-        // implemented my pipex executor
 		if (execute_cmd(env, node->cmd) == -1)
 		{
-		//execve(node->cmd, cmd, NULL);
-		// execve("/bin/ls", &"ls", NULL);
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
-			// function closing fdin and fd out
-		exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
-		exit(0);
 	}
 	// we only reach here if pid != 0, so if we are in parent
-
 	return (handle_exit_status(pid));
-	// wait(NULL);
-	// fork
-	// new function: built in vs cmd
-	// execution
 }
 
 
@@ -153,15 +104,12 @@ int ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 	//
 	// check in redirection,
 	if (node->fd_in !=  -1)
-	{
 		dup2(node->fd_in, STDIN_FILENO);
-	}
 	else
 	{
 		write (2, "MIDDLE PIPE: dupping IN pipe\n", 30);
 		dup2(old_pipe_in, STDIN_FILENO);
 	}
-
 	// check out redirection,
 	if (node->fd_out != -1)
 	{
@@ -173,32 +121,21 @@ int ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 		write (2, "MIDDLE PIPE: dupping OUT pipe\n", 31);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 	}
-
-	// close irrelevant stuff
-	// added close otherwise ls | wc didnt work
 	close(old_pipe_in);
 	close(pipe_fd[1]);
 	int pid = fork();
 	if (pid == 0)
 	{
-         // implemented my pipex executor
 		if (execute_cmd(env, node->cmd) == -1)
 		{
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
-			// function closing fdin and fd out
 			exit(EXIT_FAILURE);
-		//execve(node->cmd, cmd, NULL);
-		// exit(0);
 		}
 	}
-	// wait(NULL);
 	return (handle_exit_status(pid));
-	// fork
 	// new function built in vs cmd
-	// execution
 }
-
 
 /*
 ** Handles the execution of the last command in a pipeline.
@@ -210,12 +147,6 @@ int ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 	node->fd_in = -1;
 	node->fd_out = -1;
 	//
-
-	// char *cmd[2];
-
-	// cmd[0] = node->cmd;
-	// cmd[1] = NULL;
-	// check in redirection,
 	if (node->fd_in !=  -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	else
@@ -223,36 +154,32 @@ int ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 		write (2, "dupping IN last pipe\n", 22);
 		dup2(old_pipe_in, STDIN_FILENO);
 	}
-
-	// check out redirection,
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
 		close(pipe_fd[1]);
 	}
-	// close irrelevant stuff
-	// added close otherwise ls | wc didnt work
 	close(pipe_fd[1]);
 	int pid = fork();
 	if (pid == 0)
 	{
-         // implemented my pipex executor
 		if (execute_cmd(env, node->cmd) == -1)
 		{
-		// execve(node->cmd, cmd, NULL);
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
-			// function closing fdin and fd out
 			exit(EXIT_FAILURE);
 		}
 	}
 	// wait(NULL);
 	return (handle_exit_status(pid));
-	// fork
 	// new function built in vs cmd
-	// execution
 }
 
+/*
+** executor works with the *char[MAXARGS] -> took out split from my pipex exec
+** need to change struct name based on our struct in minishell
+** need to include wait to properly end
+*/
 
 /*
 ** Executes a sequence of commands, possibly connected by pipes.
@@ -310,7 +237,6 @@ int	ft_executor(t_cmd *node, char **env)
 	//new added??
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	// return exit status?
 	return (exit_status);
 }
 
