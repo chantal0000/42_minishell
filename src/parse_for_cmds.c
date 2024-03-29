@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/27 15:43:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/29 13:03:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 //if (s != '\0' means we have stopped before end of string
 void	parse_for_cmds(t_cmd **cmd, char *s)
 {
-//	t_cmd	*cmd;
+	int	index;
 
+	index = 0;
 	if (!s)
 		return ;
-	printf("parse for cmds\n");
-	parse_for_pipe(&s, cmd, 0);
+	parse_for_pipe(&s, cmd, 0, &index);
+	update_fd(*cmd);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
 	if (*s != '\0')
@@ -28,8 +29,6 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 		printf("check syntax\n");//check what bash returns
 		return ;
 	}
-	printf("exit parse for cmds\n");
-//	return (cmd);
 }
 int	is_token(char s)
 {
