@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/29 12:58:56 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/29 21:41:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define MAXARGS 5
 
 typedef struct s_cmd t_cmd;
+typedef struct s_env t_env;
 
 /*typedef struct s_head
 {
@@ -42,9 +43,11 @@ typedef struct s_cmd t_cmd;
 	t_cmd	*cmd;
 }	t_head;*/
 
+
 typedef struct s_env
 {
-	char	**cmd_env;
+	char	*cmd_env;
+	t_env	*next; // pointer to the next node in the linked list
 
 }	t_env;
 
@@ -111,7 +114,6 @@ t_cmd	*parse_for_groups(char **s);
 
 //utils.c
 void	free_cmdtree(t_cmd *tree);
-
 
 
 // Executer | executer.c
