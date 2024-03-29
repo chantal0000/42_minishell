@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/29 13:05:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/29 21:28:59 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,8 @@ int	main()
 	if (!list)
 		return (0);
 	print_stack(list);
+	printf("main BEFORE executor\n");
+	ft_executor(list, env);
+	printf("main AFTER executor\n");
 	return (0);
 }
