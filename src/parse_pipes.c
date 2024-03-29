@@ -1,81 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_pipes_and_groups.c                           :+:      :+:    :+:   */
+/*   parse_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/27 16:15:35 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/29 21:38:01 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*m_lstlast(t_cmd *lst)
-{
-	if (!lst)
-		return (0);
-	while (lst->next != 0)
-		lst = lst -> next;
-	return (lst);
-}
-
-void	m_lstadd_back(t_cmd **lst, t_cmd *new)
-{
-	
-	if (!lst || !new)
-		return ;
-	if (*lst)
-	{
-		new->prev = m_lstlast(*lst);
-		new->next = NULL;
-		m_lstlast(*lst)->next = new;
-	}
-	else
-	{
-		new->next = NULL;
-		new->prev = NULL;
-		*lst = new;
-	}
-}
-
-
-
 //cmd is prev subtree and temp next subtree and if more pipes, 
 //will create a new pipe node
-void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe)
+void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 {
-	// t_cmd	*cmd;
 	t_cmd	*temp;
 	t_cmd	*temp2;
 
-	// cmd = NULL;
 	temp2 = NULL;
 	if (!**str || !str)
 		return ;
-	 printf("now parsing for pipes\n");
-	// printf("string in pipe: %s\n", *str);
 	if (prev_pipe == 0)
 	{
 		temp = parse_exec_cmds(str);
 		if (!temp)
 			return ;
+		temp->index = *index;
 		m_lstadd_back(cmd, temp);
 	}
+	(*index)++;
 	if (check_next_char(str, '|'))
 	{
-		// temp->next = temp2;
-		printf("\nPIPE FOUND\n\n");
+//		printf("\nPIPE FOUND\n\n");
 		find_tokens(str, NULL);
 		temp2 = parse_exec_cmds(str);
+		temp2->index = *index;
 		m_lstadd_back(cmd, temp2);
-		// temp2->prev = temp;
-		// temp2->next = NULL;
-//		print_stack(*cmd);
-		parse_for_pipe(str, cmd, 1);
+		parse_for_pipe(str, cmd, 1, index);
 	}
-//	printf("\nEXIT PIPE PARSING FCN\n");
 }
 
 /*t_cmd	*parse_for_groups(char **s)

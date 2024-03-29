@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/25 18:55:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/29 21:38:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		}
 		node->file_name = parse_line(strdup(file_name));
 		if (token == '>')
+		{
 			node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);//fd=1
+			node->fd_out = 1;
+		}
 		else if (token == '<')
 			node = redir_cmd(node, O_RDONLY, 0);//fd=0
 		else if (token == '+')
@@ -38,8 +41,28 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		else
 			return (NULL);
 	}
-//	printf("exiting redir fcn\n");
 	return (node);
 }
 
-
+t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
+{
+	if (!node)
+		return (NULL);
+	node->instructions = instructions;
+	if (fd == 0)
+	{
+		node->fd_in = fd;
+		node->fd_out = -1;
+	}
+	else if (fd == 1)
+	{
+		node->fd_out = fd;
+		node->fd_in = -1;
+	}
+	else
+	{
+		node->fd_in = -1;
+		node->fd_out = -1;
+	}
+	return (node);
+}
