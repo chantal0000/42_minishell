@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/29 21:36:09 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/03/29 21:53:11 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ void	free_cmdtree(t_cmd *tree);
 
 
 // Executer | executer.c
-void	ft_executor(t_cmd *node);
+//void	ft_executor(t_cmd *node);
+int		ft_executor(t_cmd *node, char **env);
 void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);

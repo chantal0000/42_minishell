@@ -49,6 +49,7 @@ void	m_lstadd_back(t_cmd **lst, t_cmd *new)
 		*lst = new;
 	}
 }
+
 void	update_fd(t_cmd *tree)
 {
 	t_cmd	*temp;
