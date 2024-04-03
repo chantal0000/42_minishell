@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 14:07:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 14:12:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@ void	print_stack(t_cmd *root)
 	temp = root;
 	while (temp != NULL)
 	{
-		printf("node->current_position: %d\n", temp->index);
-		printf("node->current_position: %p\n", temp);
-//		printf("node->data: %d\n", root-> data);
-		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++)
+		printf("\nnode[%d]\n", temp->index);
+		printf("fd_in: %d\n", temp->fd_in);
+		printf("fd_out: %d\n", temp->fd_out);
+		printf("file_name: %s\n", temp->file_name);
+		printf("instructions: %d\n", temp->instructions);
+//		printf("node->current_position: %p\n", temp);
+//		printf("node->data: %d\n", root-> data);	
+		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++) 
 		{
 			printf("cmd[%d]: %s\n", i, temp->cmd[i]);
 		}
-		printf("node->prev: %p\n", (void *)temp -> prev);
-		printf("node->next: %p\n\n", (void *)temp -> next);
+//		printf("node->prev: %p\n", (void *)temp -> prev);
+//		printf("node->next: %p\n\n", (void *)temp -> next);
 		temp = temp -> next;
 	}
 }
@@ -77,7 +81,7 @@ void	print_stack(t_cmd *root)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*line = "ls | wc | cat ";
+	char	*line = "ls | <file1 wc | cat ";
 	t_cmd	*list;
 //	t_env	*env;
 //	char	*envp = "address";
