@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/03 16:48:56 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:37:42 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ void	ft_simple_cmd(t_cmd *node, char **env)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
 		dup2(node->fd_out, STDOUT_FILENO);
+	if (ft_is_builtin(node) == -1)
+	{
+		if (execute_cmd(env, node->cmd) == -1)
+		{
+			// handle error
+			write(2, "Error in simple_cmd\n", 21);
+		}
+	}
     // check if builtin, if (ft_is_builtin(node) == 0)
 	// {
 		//printf("it's a build_in\n");
@@ -40,11 +48,7 @@ void	ft_simple_cmd(t_cmd *node, char **env)
     // {
         printf("it's not a built_in\n");
         // handle redirections?
-        if (execute_cmd(env, node->cmd) == -1)
-		{
-			// handle error
-			write(2, "Error in simple_cmd\n", 21);
-		}
+
 }
 
 /*
