@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 16:44:00 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:32:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,12 @@
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
 
-/*typedef struct s_head
-{
-	int		index;
-	char	**cmd_env;
-	t_cmd	*cmd;
-}	t_head;*/
-
 typedef struct s_env
 {
 	char	*cmd_env;
 	t_env	*next; // pointer to the next node in the linked list
 
 }	t_env;
-
-/*typedef struct s_redir
-{
-	int		type;
-	t_cmd	*cmd;
-	t_env	*m_env;
-	char	*file_name;
-	int		instructions;
-	int		fd_in;
-	int		fd_out;
-}	t_redir;*/
-
 
 typedef struct s_cmd
 {
@@ -74,8 +55,8 @@ typedef struct s_cmd
 	int		fd_in;
 	int		fd_out;
 	t_cmd	*redir;
-	t_cmd	*prev;//pointer to left branch (PIPE)
-	t_cmd	*next;//pointer to right branch (PIPE)
+	t_cmd	*prev;
+	t_cmd	*next;
 } t_cmd;
 
 
@@ -113,7 +94,8 @@ t_cmd	*parse_for_groups(char **s);
 
 //utils.c
 void	free_cmdtree(t_cmd *tree);
-
+void	free_nodes(t_cmd *node);
+void	free_memory(char **arr);
 
 
 // Executer | executer.c
