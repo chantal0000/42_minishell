@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/29 21:52:20 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 14:07:10 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*line = "ls | wc | cat ";
 	t_cmd	*list;
-	t_env	*env;
+//	t_env	*env;
 //	char	*envp = "address";
 (void)argc; // Suppress unused parameter warning
 (void)argv; // Suppress unused parameter warning
-
+(void)env;
 	list = NULL;
 //	env = NULL;
 //	cmd_tree = init_head(envp);
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **env)
 	printf("\n");
 	print_stack(list);
 	printf("main BEFORE executor\n");
-	ft_executor(list, env);
+//	ft_executor(list, env);
 	printf("main AFTER executor\n");
 	return (0);
 }
