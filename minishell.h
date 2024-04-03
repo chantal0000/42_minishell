@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/29 21:53:11 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 14:04:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ typedef struct s_cmd
 
 
 void	print_stack(t_cmd *root);
+
+//find_tokens.c
+int	check_for_alligators(char **s);
+int	find_tokens(char **s, char **beg_of_file);
 
 //init_struct.c
 t_cmd	*ft_init_stuct(void);
