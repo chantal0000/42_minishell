@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:36:23 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/26 16:36:59 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:18:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 ** @param line: The environment variable line to be stored in the node.
 ** @return: A pointer to the newly created node.
 */
-t_env	*create_env_node(char *line)
+void	*create_env_node(char *line)
 {
 	t_env	*new_node;
 
-	new_node = malloc(sizeof (t_env));
+	new_node = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	new_node->env_line = line;
+	new_node->cmd_env = line;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -57,24 +57,41 @@ void	insert_end(t_env **head, char *line)
 ** @param environment: The array of strings containing environment variable lines.
 **                     The last element of the array must be NULL.
 */
-void	fill_env_struct(char **environment)
+void	fill_env_struct(t_cmd *cmd, char **environment)
 {
 	int		i;
 	t_env	*env_head;
+	t_cmd	*temp;
 
 	i = 0;
+	if (!cmd)
+		return ;
 	env_head = NULL;
-	while (environment[i])
+	temp = cmd;
+	while (temp)
+	{
+		while (environment[i])
+		{
+			insert_end(&env_head, environment[i]);
+			i++;
+		}
+		temp->m_env = env_head;
+//		printf("env: %s\n", temp->m_env->cmd_env);
+		temp = temp->next;
+	}
+	cmd = temp;
+/*	 (environment[i])
 	{
 		insert_end(&env_head, environment[i]);
 		i++;
-	}
+	}*/
 	// while (env_head)
 	// {
 	// 	printf("%s\n", env_head->env_line);
 	// 	env_head = env_head->next;
 	// }
 }
+
 
 // test main
 // int main(int argc, char **argv, char **env)
