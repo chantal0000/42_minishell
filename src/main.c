@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 16:20:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 16:44:12 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	print_stack(t_cmd *root)
 		printf("file_name: %s\n", temp->file_name);
 		printf("instructions: %d\n", temp->instructions);
 		printf("env: %s\n", temp->m_env->cmd_env);
-//		printf("node->data: %d\n", root-> data);	
-		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++) 
+//		printf("node->data: %d\n", root-> data);
+		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++)
 		{
 			printf("cmd[%d]: %s\n", i, temp->cmd[i]);
 		}
@@ -76,7 +76,7 @@ int	main(int argc, char **argv, char **env)
 			//run/exec the cmds
 //		}
 //		line = ("minishell: ");
-	ft_executor(list, env);
+	ft_executor(list);
 //	rl_clear_history();
 	free(line);
 	return (0);

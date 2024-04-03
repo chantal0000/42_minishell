@@ -6,7 +6,7 @@
 #    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/03 16:10:21 by kbolon           ###   ########.fr        #
+#    Updated: 2024/04/03 16:39:54 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS = src/main.c \
 		src/executor/executor.c \
 		src/executor/executor_utils.c \
 		src/executor/exit_status.c \
-		src/environment.c
+		src/environment.c \
+		src/executor/lst_into_arr_env.c
 
 LIBFT = libft/libft.a
 CC = cc

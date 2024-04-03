@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 15:00:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 16:44:00 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	free_cmdtree(t_cmd *tree);
 
 // Executer | executer.c
 //void	ft_executor(t_cmd *node);
-int		ft_executor(t_cmd *node, char **env);
+int		ft_executor(t_cmd *node);
 void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
@@ -132,5 +132,6 @@ int	handle_exit_status(int pid);
 //environment.c
 void	*create_env_node(char *line);
 void	fill_env_struct(t_cmd *cmd, char **environment);
+char **ft_env_list_to_array(t_env *head);
 
 #endif
