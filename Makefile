@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
+#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/03 14:07:40 by kbolon           ###   ########.fr        #
+#    Updated: 2024/04/03 14:29:24 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ SRCS = src/main.c \
 		src/parse_for_cmds.c \
 		src/parse_pipes.c \
 		src/parse_for_redirs.c \
-		src/utils.c
-#		src/executor/executor.c \
+		src/utils.c \
+		src/executor/executor.c \
 		src/executor/executor_utils.c \
 		src/executor/exit_status.c#
 

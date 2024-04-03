@@ -6,67 +6,34 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/28 14:34:47 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:44:11 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-
-int	execute_cmd(char **env, char *cmd);
-typedef struct s_exec t_exec;
-typedef struct s_red t_red;
-
-struct s_exec{
-	// int		in;
-	// init als -1
-	int		fd_in;
-	// only of the last output file
-	int		fd_out;
-	// example [ls] [-a]
-	char	*cmd;
-	//??
-	t_exec	*prev;
-	t_exec	*next;
-    char **env;
-    char *builtins_names[7];
-
-	// save the env somewhere?
-};
-void    ft_init_bultins_names(t_exec *node);
-/*
-** 0 -> it's a builtin
-*/
-int ft_is_builtin(t_exec *node)
+int	ft_is_builtin()
 {
-    int i;
+	// char *cmd_to_check = cmd->cmd[0];
+	char *cmd_to_check = "export hallo";
 
-    i = 0;
-    ft_init_bultins_names(node);
-    printf("in ft_is_builtin\n");
-    while(i < 7)
-    {
-       // printf("in ft_is_builtin LOOP\n");
-        // need ft_strcm
-   //     printf("node->cmd: %s node->builtins_names: %s\n", node->cmd, node->builtins_names[i]);
-        if(strcmp(node->cmd, node->builtins_names[i]) == 0)
-            return (0);
-        i++;
-    }
-    printf("END ft_is_builtin\n");
-    return (1);
-}
-
-/*
-** initialize builtins
-*/
-void    ft_init_bultins_names(t_exec *node)
-{
-    node->builtins_names[0] = "cd";
-    node->builtins_names[1] = "echo";
-    node->builtins_names[2] = "env";
-    node->builtins_names[3] = "export";
-    node->builtins_names[4] = "exit";
-    node->builtins_names[5] = "pwd";
-    node->builtins_names[6] = "unset";
+	if (ft_strncmp(cmd_to_check, "exit", ft_strlen(cmd_to_check)) == 0)
+		printf("built-in: exit\n");
+	else if (ft_strncmp(cmd_to_check, "cd", ft_strlen(cmd_to_check)) == 0)
+		printf("built-in: cd\n");
+	else if (ft_strncmp(cmd_to_check, "echo", ft_strlen(cmd_to_check)) == 0)
+		printf("built-in: echo\n");
+	else if (ft_strncmp(cmd_to_check, "env", ft_strlen(cmd_to_check)) == 0)
+		printf("built-in: env\n");
+	else if (ft_strncmp(cmd_to_check, "export", ft_strlen(cmd_to_check)) == 0)
+		printf("built-in: export\n");
+	else if (ft_strncmp(cmd_to_check, "pwd", ft_strlen(cmd_to_check)) == 0)
+		printf("built-in: pwd\n");
+	else if (ft_strncmp(cmd_to_check, "unset", ft_strlen(cmd_to_check)) == 0)
+		printf("built-in: unset\n");
+	else
+	{
+		printf("not a built-in\nreturn with -1 \n");
+		return (-1);
+	}
 }
