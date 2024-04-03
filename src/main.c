@@ -3,25 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 16:44:12 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:42:03 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	error_message(char *str, int i, int *fd, int *fd2)
-{
-	if (fd || fd2)
-	{
-		close(*fd);
-		close(*fd2);
-	}
-	perror(str);
-	exit (i);
-}
 void	print_stack(t_cmd *root)
 {
 	t_cmd	*temp;
@@ -48,10 +38,11 @@ void	print_stack(t_cmd *root)
 
 int	main(int argc, char **argv, char **env)
 {
-	static char	*line;
+//	static char	*line;
 	t_cmd		*list;
-//	char	*line = "ls | wc | cat ";
+	char		*line = "ls | wc | cat ";
 
+	line = NULL;
 	if (argc != 1)
 	{
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
@@ -59,8 +50,8 @@ int	main(int argc, char **argv, char **env)
 	}
 	(void)argc; // Suppress unused parameter warning
 	(void)argv; // Suppress unused parameter warning
-//	(void)env;
-	line = readline("minishell: ");
+	(void)env;
+//	line = readline("minishell: ");
 //	if (!line)
 //		return (0);
 //	while (line)
@@ -70,7 +61,10 @@ int	main(int argc, char **argv, char **env)
 //			add_history(line);
 	parse_for_cmds(&list, line, env);//need to add envp
 	if (!list)
+	{
+		free_nodes(list);
 		return (0);
+	}
 	print_stack(list);
 //			ft_executor(cmd);
 			//run/exec the cmds
@@ -78,6 +72,7 @@ int	main(int argc, char **argv, char **env)
 //		line = ("minishell: ");
 	ft_executor(list);
 //	rl_clear_history();
+	free_nodes(list);
 	free(line);
 	return (0);
 }

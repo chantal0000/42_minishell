@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 16:53:39 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:36:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,11 @@ void	free_cmdtree(t_cmd *tree)
 	i = 0;
 	if (!tree)
 		return ;
-	if (tree->cmd)
-		free_memory(tree->cmd);
-//	if (tree->prev)
-		free_nodes(tree->prev);
-	if (tree->next)
-		free(tree->next);
+	free_nodes(tree);
 	if (tree->file_name)
 		free(tree->file_name);
-	if (tree->fd_in)
-		close(tree->fd_in);
-	if (tree->fd_out)
-		close(tree->fd_out);
-}
-void	error_message(void)
-{
-	write(2, "Error\n", 6);
-	exit (1);
-}
-
-void	standard_error(void)
-{
-	write(2, "Error\n", 6);
-	exit (0);
+//	if (tree->m_env)
+//		free_nodes(tree->m_env);
 }
 
 void	free_nodes(t_cmd *node)
@@ -53,7 +35,14 @@ void	free_nodes(t_cmd *node)
 	while (node)
 	{
 		temp = node;
-		node = node -> next;
+		if (temp->fd_in)
+			close(temp->fd_in);
+		if (temp->fd_out)
+			close(temp->fd_out);
+		if (temp->m_env)
+			free(temp->m_env->cmd_env);
+		free(temp->file_name);
+		node = node->next;
 		free(temp);
 	}
 }
