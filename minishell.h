@@ -6,7 +6,11 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/03 14:32:38 by chbuerge         ###   ########.fr       */
+=======
+/*   Updated: 2024/04/03 15:00:10 by kbolon           ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +113,6 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
 t_cmd	*parse_for_groups(char **s);
-//t_cmd	*init_pipe(t_cmd *prev, t_cmd *next, int *i);
 
 
 //utils.c

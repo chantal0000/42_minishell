@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/29 21:38:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 15:04:39 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		}
 		node->file_name = parse_line(strdup(file_name));
 		if (token == '>')
-		{
 			node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);//fd=1
-			node->fd_out = 1;
-		}
 		else if (token == '<')
 			node = redir_cmd(node, O_RDONLY, 0);//fd=0
 		else if (token == '+')
