@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 17:42:03 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:47:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_stack(t_cmd *root)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+/*int	main(int argc, char **argv, char **env)
 {
 //	static char	*line;
 	t_cmd		*list;
@@ -75,9 +75,9 @@ int	main(int argc, char **argv, char **env)
 	free_nodes(list);
 	free(line);
 	return (0);
-}
+}*/
 
-/*int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	char	*line = "ls | wc | cat ";
 	t_cmd	*list;
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **env)
 	list = NULL;
 //	env = NULL;
 	printf("line to be parsed: %s\n", line);
-	parse_for_cmds(&list, line);//need to add envp
+	parse_for_cmds(&list, line, env);//need to add envp
 	if (!list)
 		return (0);
 	printf("\n");
@@ -98,4 +98,4 @@ int	main(int argc, char **argv, char **env)
 //	ft_executor(list, env);
 	printf("main AFTER executor\n");
 	return (0);
-}*/
+}
