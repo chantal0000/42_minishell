@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/03/29 21:38:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 15:12:24 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_cmd	*m_lstlast(t_cmd *lst)
 
 void	m_lstadd_back(t_cmd **lst, t_cmd *new)
 {
-	
 	if (!lst || !new)
 		return ;
 	if (*lst)
@@ -57,14 +56,15 @@ void	update_fd(t_cmd *tree)
 	if (!tree)
 		return ;
 	temp = tree;
-	while (temp->next != NULL)
+	while (temp)
 	{
 		if (temp->file_name == NULL)
 		{
-			tree->fd_in = -1;
-			tree->fd_out = -1;
+			temp->fd_in = -1;
+			temp->fd_out = -1;
 		}
 		temp = temp->next;
 	}
 	tree = temp;
 }
+

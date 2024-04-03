@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 14:12:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/03 15:15:43 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	print_stack(t_cmd *root)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*line = "ls | <file1 wc | cat ";
+	char	*line = "ls | wc | cat ";
 	t_cmd	*list;
 //	t_env	*env;
 //	char	*envp = "address";
