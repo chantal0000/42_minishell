@@ -6,11 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/03 14:32:38 by chbuerge         ###   ########.fr       */
-=======
 /*   Updated: 2024/04/03 15:00:10 by kbolon           ###   ########.fr       */
->>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +97,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token);
 t_cmd	*parse_exec_cmds(char **s);
 
 //parse_for_cmds.c
-void	parse_for_cmds(t_cmd **cmd, char *s);
+void	parse_for_cmds(t_cmd **cmd, char *s, char **env);
 int		is_token(char s);
 int		is_whitespace(char s);
 int		check_next_char(char **s, char token);
@@ -123,14 +119,18 @@ void	free_cmdtree(t_cmd *tree);
 // Executer | executer.c
 //void	ft_executor(t_cmd *node);
 int		ft_executor(t_cmd *node, char **env);
-// void	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
-// void	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
-// void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
+void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
+void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
 
-// Exectutor | executor_utils.c
+//execute_utils.c
 int	execute_cmd(char **env, char **cmd);
 
-// Executor | exit_status.c
+//exit_status.c
 int	handle_exit_status(int pid);
+
+//environment.c
+void	*create_env_node(char *line);
+void	fill_env_struct(t_cmd *cmd, char **environment);
 
 #endif
