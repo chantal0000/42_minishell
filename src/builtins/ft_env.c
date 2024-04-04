@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:35:02 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 10:58:10 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:08:27 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** variables and their values
 */
 
-void	ft_env(t_cmd *cmd)
+int	ft_env(t_cmd *cmd)
 {
 	t_env *current;
 
@@ -30,6 +30,7 @@ void	ft_env(t_cmd *cmd)
 		printf("%s\n", current->cmd_env);
 		current = current->next;
 	}
+	return (EXIT_SUCCESS);
 }
 
 
