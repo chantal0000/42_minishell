@@ -6,45 +6,32 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 17:36:18 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/04 16:24:00 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_cmdtree(t_cmd *tree)
-{
-	int	i;
-
-	i = 0;
-	if (!tree)
-		return ;
-	free_nodes(tree);
-	if (tree->file_name)
-		free(tree->file_name);
-//	if (tree->m_env)
-//		free_nodes(tree->m_env);
-}
-
-void	free_nodes(t_cmd *node)
+void	free_cmd(t_cmd *tree)
 {
 	t_cmd	*temp;
 
-	if (!node)
+	if (!tree)
 		return ;
-	while (node)
+	while (tree)
 	{
-		temp = node;
-		if (temp->fd_in)
+		temp = tree;
+		if (temp->fd_in >= 0)
 			close(temp->fd_in);
-		if (temp->fd_out)
+		if (temp->fd_out >= 0)
 			close(temp->fd_out);
 		if (temp->m_env)
-			free(temp->m_env->cmd_env);
+			free_env(temp->m_env);
 		free(temp->file_name);
-		node = node->next;
+		tree = tree->next;
 		free(temp);
 	}
+	free(tree);
 }
 
 void	free_memory(char **arr)
@@ -58,4 +45,17 @@ void	free_memory(char **arr)
 		i++;
 	}
 	free(arr);
+}
+
+void free_env(t_env	*env)
+{
+	t_env	*temp;
+
+	while (env)
+	{
+		temp = env;
+		env = temp->next;
+		free(temp);
+	}
+	free(env);
 }

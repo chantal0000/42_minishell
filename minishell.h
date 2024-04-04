@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 11:46:57 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:11:33 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ typedef struct s_cmd
 	int		instructions;
 	int		fd_in;
 	int		fd_out;
-	t_cmd	*redir;
 	t_cmd	*prev;
 	t_cmd	*next;
-} t_cmd;
+}	t_cmd;
 
 
 void	print_stack(t_cmd *root);
@@ -93,8 +92,8 @@ t_cmd	*parse_for_groups(char **s);
 
 
 //utils.c
-void	free_cmdtree(t_cmd *tree);
-void	free_nodes(t_cmd *node);
+void	free_cmd(t_cmd *tree);
+void	free_env(t_env	*env);
 void	free_memory(char **arr);
 
 
