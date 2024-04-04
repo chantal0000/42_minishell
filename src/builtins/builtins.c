@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 10:59:31 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:12:39 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_is_builtin(t_cmd *cmd)
 	if (ft_strncmp(cmd_to_check, "exit", 4) == 0)
 		printf("built-in: exit\n");
 	else if (ft_strncmp(cmd_to_check, "cd", 2) == 0)
-		printf("built-in: cd\n");
+		ft_cd(cmd);
 	else if (ft_strncmp(cmd_to_check, "echo", 4) == 0)
 		printf("built-in: echo\n");
 	else if (ft_strncmp(cmd_to_check, "env", 3) == 0)

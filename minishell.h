@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 11:00:43 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:13:59 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,7 @@ char **ft_env_list_to_array(t_env *head);
 //builtins/builtins.c
 int	ft_is_builtin(t_cmd *cmd);
 //builtins/env.c
-void	ft_env(t_cmd *cmd);
+int	ft_env(t_cmd *cmd);
+//builtins/cd.c
+int	ft_cd(t_cmd *cmd);
 #endif
