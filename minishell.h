@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 17:32:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:03:46 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,7 @@ void	*create_env_node(char *line);
 void	fill_env_struct(t_cmd *cmd, char **environment);
 char **ft_env_list_to_array(t_env *head);
 
+
+//builtins.c
+int	ft_is_builtin(t_cmd *cmd);
 #endif
