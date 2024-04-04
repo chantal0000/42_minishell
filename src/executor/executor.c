@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 10:56:01 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:31:33 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 		}
 	}
 	// we only reach here if pid != 0, so if we are in parent
-	return (handle_exit_status(pid));
+	return ((pid));
 }
 
 
@@ -136,7 +136,7 @@ int ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 			exit(EXIT_FAILURE);
 		}
 	}
-	return (handle_exit_status(pid));
+	return ((pid));
 	// new function built in vs cmd
 }
 
@@ -174,7 +174,7 @@ int ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 		}
 	}
 	// wait(NULL);
-	return (handle_exit_status(pid));
+	return ((pid));
 	// new function built in vs cmd
 }
 
@@ -246,6 +246,7 @@ int	ft_executor(t_cmd *node)
 	//new added??
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
+	exit_status = handle_exit_status(exit_status);
 	return (exit_status);
 }
 
