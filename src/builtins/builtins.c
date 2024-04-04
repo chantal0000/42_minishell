@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 10:50:47 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:59:31 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int	ft_is_builtin(t_cmd *cmd)
 
 	if (ft_strncmp(cmd_to_check, "exit", 4) == 0)
 		printf("built-in: exit\n");
-	else if (ft_strncmp(cmd_to_check, "cd", ft_strlen(cmd_to_check)) == 0)
+	else if (ft_strncmp(cmd_to_check, "cd", 2) == 0)
 		printf("built-in: cd\n");
-	else if (ft_strncmp(cmd_to_check, "echo", ft_strlen(cmd_to_check)) == 0)
+	else if (ft_strncmp(cmd_to_check, "echo", 4) == 0)
 		printf("built-in: echo\n");
-	else if (ft_strncmp(cmd_to_check, "env", ft_strlen(cmd_to_check)) == 0)
-		printf("built-in: env\n");
-	else if (ft_strncmp(cmd_to_check, "export", ft_strlen(cmd_to_check)) == 0)
+	else if (ft_strncmp(cmd_to_check, "env", 3) == 0)
+		ft_env(cmd);
+	else if (ft_strncmp(cmd_to_check, "export", 6) == 0)
 		printf("built-in: export\n");
-	else if (ft_strncmp(cmd_to_check, "pwd", ft_strlen(cmd_to_check)) == 0)
+	else if (ft_strncmp(cmd_to_check, "pwd", 3) == 0)
 		printf("built-in: pwd\n");
-	else if (ft_strncmp(cmd_to_check, "unset", ft_strlen(cmd_to_check)) == 0)
+	else if (ft_strncmp(cmd_to_check, "unset", 5) == 0)
 		printf("built-in: unset\n");
 	else
 	{

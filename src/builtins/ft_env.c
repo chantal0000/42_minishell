@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:35:02 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/28 15:02:49 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:58:10 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@
 
 void	ft_env(t_cmd *cmd)
 {
-	while (cmd->m_env)
-	{
-		printf("%s\n", cmd->m_env->cmd_env);
-		cmd->m_env = cmd->m_env->next;
-	}
+	t_env *current;
 
+	current = cmd->m_env;
+
+	printf("in FT_ENV\n");
+
+	while(current)
+	{
+		printf("%s\n", current->cmd_env);
+		current = current->next;
+	}
 }
 
 
