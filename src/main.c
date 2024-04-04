@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 10:49:52 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:20:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,13 @@ void	print_stack(t_cmd *root)
 //		line = ("minishell: ");
 	ft_executor(list);
 //	rl_clear_history();
-	free_nodes(list);
 	free(line);
 	return (0);
 }*/
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*line = "ls";
+	char	*line = "ls -a";
 	t_cmd	*list;
 //	t_env	*env;
 //	char	*envp = "address";
@@ -91,11 +90,15 @@ int	main(int argc, char **argv, char **env)
 	printf("line to be parsed: %s\n", line);
 	parse_for_cmds(&list, line, env);//need to add envp
 	if (!list)
+	{
+		free(line);
 		return (0);
-	printf("\n");
-	print_stack(list);
-	printf("main BEFORE executor\n");
-	ft_executor(list);
-	printf("main AFTER executor\n");
+	}
+//	print_stack(list);
+//	printf("main BEFORE executor\n");
+//	ft_executor(list);
+//	printf("main AFTER executor\n");
+	free(line);
+	free_cmd(list);
 	return (0);
 }
