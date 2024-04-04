@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 11:12:39 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:45:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_is_builtin(t_cmd *cmd)
 	printf("cmd_to_check: %s\n", cmd_to_check);
 
 	if (ft_strncmp(cmd_to_check, "exit", 4) == 0)
-		printf("built-in: exit\n");
+		ft_exit(cmd);
 	else if (ft_strncmp(cmd_to_check, "cd", 2) == 0)
 		ft_cd(cmd);
 	else if (ft_strncmp(cmd_to_check, "echo", 4) == 0)
@@ -30,7 +30,7 @@ int	ft_is_builtin(t_cmd *cmd)
 	else if (ft_strncmp(cmd_to_check, "export", 6) == 0)
 		printf("built-in: export\n");
 	else if (ft_strncmp(cmd_to_check, "pwd", 3) == 0)
-		printf("built-in: pwd\n");
+		ft_pwd();
 	else if (ft_strncmp(cmd_to_check, "unset", 5) == 0)
 		printf("built-in: unset\n");
 	else
