@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/03 17:37:42 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:49:11 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ void	ft_simple_cmd(t_cmd *node, char **env)
 	// only here  to test
 	// node->fd_in = -1;
 	// node->fd_out = -1;
-
+	printf("entering FT_SIMPLE_CMD\n");
 	if ((node->fd_in) !=  -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
 		dup2(node->fd_out, STDOUT_FILENO);
+
+	// why are we trying to execute the command even though its a built in
+
 	if (ft_is_builtin(node) == -1)
 	{
 		if (execute_cmd(env, node->cmd) == -1)
@@ -39,6 +42,8 @@ void	ft_simple_cmd(t_cmd *node, char **env)
 			write(2, "Error in simple_cmd\n", 21);
 		}
 	}
+	else
+		printf("yoyo\n");
     // check if builtin, if (ft_is_builtin(node) == 0)
 	// {
 		//printf("it's a build_in\n");
@@ -46,7 +51,7 @@ void	ft_simple_cmd(t_cmd *node, char **env)
 	// }
     // else
     // {
-        printf("it's not a built_in\n");
+        // printf("theo it's not a built_in\n");
         // handle redirections?
 
 }
@@ -207,7 +212,12 @@ int	ft_executor(t_cmd *node)
 	int	exit_status = 0;
 	char **env1 = ft_env_list_to_array(node->m_env);
 	if (!node->next && !node->prev)
+	{
+		printf("\n\nentering single cmd %s\n\n", node->cmd[0]);
 		ft_simple_cmd(node, env1);
+	}
+	else
+	{
 	while(node)
 	{
 		if (node->next && node->prev)
@@ -234,6 +244,7 @@ int	ft_executor(t_cmd *node)
 		dup2(std_in, STDIN_FILENO);
 		dup2(std_out, STDOUT_FILENO);
 		node = node->next;
+	}
 	}
 	// now everything is closed?
 	close(std_in);

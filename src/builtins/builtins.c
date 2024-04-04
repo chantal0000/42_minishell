@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/03 17:39:14 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:50:47 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	ft_is_builtin(t_cmd *cmd)
 {
-	char *cmd_to_check = cmd->cmd[0];
-	// char *cmd_to_check = "export hallo";
+	char *cmd_to_check;
 
-	if (ft_strncmp(cmd_to_check, "exit", ft_strlen(cmd_to_check)) == 0)
+	cmd_to_check = cmd->cmd[0];
+	printf("cmd_to_check: %s\n", cmd_to_check);
+
+	if (ft_strncmp(cmd_to_check, "exit", 4) == 0)
 		printf("built-in: exit\n");
 	else if (ft_strncmp(cmd_to_check, "cd", ft_strlen(cmd_to_check)) == 0)
 		printf("built-in: cd\n");
