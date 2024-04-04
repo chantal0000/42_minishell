@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 10:49:11 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:56:01 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,11 @@
 */
 void	ft_simple_cmd(t_cmd *node, char **env)
 {
-	// only here  to test
-	// node->fd_in = -1;
-	// node->fd_out = -1;
 	printf("entering FT_SIMPLE_CMD\n");
 	if ((node->fd_in) !=  -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
 		dup2(node->fd_out, STDOUT_FILENO);
-
-	// why are we trying to execute the command even though its a built in
-
 	if (ft_is_builtin(node) == -1)
 	{
 		if (execute_cmd(env, node->cmd) == -1)
