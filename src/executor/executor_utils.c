@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/03/28 11:36:31 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:07:46 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ int	execute_cmd(char **env, char **cmd)
 		// free array function from pipex?
 		//if (split_cmd)
 		//	free_array(split_cmd);
-		return (-1);
+		return (127);
 	}
-	if (execve(cmd_path, split_cmd, env) != 1)
-		exit (127);
-	return (127);
+	if (execve(cmd_path, split_cmd, env) == -1)
+		return (127);
+	return (0);
 }
