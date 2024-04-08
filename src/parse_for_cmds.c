@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 11:59:51 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:46:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@ void	parse_for_cmds(t_cmd **cmd, char *s, char **env)
 	index = 0;
 	if (!s)
 		return ;
+
 	parse_for_pipe(&s, cmd, 0, &index);
-//	update_fd(*cmd);
+	update_fd(*cmd);
 	fill_env_struct(*cmd, env);
+	printf("env %s\n", env[1]);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
 	if (*s != '\0')
 	{
+		free_cmd(*cmd);
 		printf("check syntax\n");//check what bash returns
 		return ;
 	}

@@ -40,17 +40,23 @@ void	insert_end(t_env **head, char *line)
 	t_env	*new_node;
 	t_env	*temp;
 
+	temp = NULL;
 	new_node = create_env_node(line);
-	temp = *head;
+	if (!new_node)
+	{
+//		free_env(head->cmd_env);
+		return ;
+	}
 	if (*head == NULL)
 	{
 		*head = new_node;
 		return ;
 	}
+	temp = *head;
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new_node;
-	
+//	free (new_node);
 }
 
 /*
@@ -65,7 +71,7 @@ void	fill_env_struct(t_cmd *cmd, char **environment)
 	t_cmd	*temp;
 
 	i = 0;
-	if (!cmd)
+	if (!cmd || !environment)
 		return ;
 	env_head = NULL;
 	temp = cmd;
@@ -81,6 +87,7 @@ void	fill_env_struct(t_cmd *cmd, char **environment)
 		temp = temp->next;
 	}
 	cmd = temp;
+//	free (temp);
 /*	 (environment[i])
 	{
 		insert_end(&env_head, environment[i]);
