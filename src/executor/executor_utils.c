@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/05 16:07:46 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 10:20:57 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	execute_cmd(char **env, char **cmd)
 		write(STDERR_FILENO, "Command '", 9);
 		while (cmd[i])
 		{
-			write(STDERR_FILENO, &cmd[i], 1);
+			write(STDERR_FILENO, cmd[i], ft_strlen(cmd[i]));
 			i++;
 		}
 		write(STDERR_FILENO, "' not found\n", 12);
