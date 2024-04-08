@@ -6,32 +6,29 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 16:24:00 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 16:10:10 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_cmd(t_cmd *tree)
+void	free_cmd(t_cmd *cmd)
 {
-	t_cmd	*temp;
-
-	if (!tree)
+	if (!cmd)
 		return ;
-	while (tree)
+	while (cmd)
 	{
-		temp = tree;
-		if (temp->fd_in >= 0)
-			close(temp->fd_in);
-		if (temp->fd_out >= 0)
-			close(temp->fd_out);
-		if (temp->m_env)
-			free_env(temp->m_env);
-		free(temp->file_name);
-		tree = tree->next;
-		free(temp);
+		free_memory(cmd->cmd);
+		if (cmd->fd_in >= 0)
+			close(cmd->fd_in);
+		if (cmd->fd_out >= 0)
+			close(cmd->fd_out);
+//		if (cmd->m_env)
+//			free(cmd->m_env);
+		free(cmd->file_name);
+		cmd = cmd->next;
 	}
-	free(tree);
+	free (cmd);
 }
 
 void	free_memory(char **arr)
@@ -39,23 +36,26 @@ void	free_memory(char **arr)
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	if (!*arr || !arr)
+		return ;
+	while (arr[i] != NULL)
 	{
 		free(arr[i]);
 		i++;
 	}
-	free(arr);
 }
-
-void free_env(t_env	*env)
+void	free_env(t_env **env)
 {
-	t_env	*temp;
+	int		i;
 
-	while (env)
+	i = 0;
+	if (!env)
+		return ;
+	while (env[i] != NULL)
 	{
-		temp = env;
-		env = temp->next;
-		free(temp);
+		free(env[i]);
+		i++;
+//		env = env->next;
 	}
-	free(env);
+	free (env);
 }
