@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 11:21:50 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:33:00 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,13 @@
 ** if only "exit"
 ** EXIT CODE 0
 */
-
 int	ft_exit(t_cmd *cmd)
 {
-	// [exit] [1] [hello]
-	char **exit_cmd = cmd->cmd;
-	// const char *exit_cmd[] = { "exit", "               -42", NULL};
-	// const char *exit_cmd[] = { "exit", "hello", "world", NULL};
-	// const char *exit_cmd[] = { "exit", "1", "hello", NULL};
-	//  char *exit_cmd[] = {"exit", NULL};
+	char	**exit_cmd;
+	int		i;
 
-	int i = 0;
-	// printf("%s\n", exit_cmd[0]);
-	// printf("%s\n", exit_cmd[1]);
-	// printf("%s\n", exit_cmd[2]);
-	// check if exit_cmd[1] is numeric
-
+	exit_cmd = cmd->cmd;
+	i = 0;
 	if (exit_cmd[1] != NULL)
 	{
 		while (exit_cmd[1][i])
@@ -58,8 +49,6 @@ int	ft_exit(t_cmd *cmd)
 				i++;
 			if (exit_cmd[1][i] == '-' || exit_cmd[1][i] == '+')
 				i++;
-			// if non numeric exit but with error msg & exit code 2
-			// ft_isdigit returns 0 if not a digit
 			if ((ft_isdigit(exit_cmd[1][i]) == 0))
 			{
 				printf("exit_cmd[1][%d]: %c\n", i, exit_cmd[1][i]);
@@ -89,7 +78,7 @@ int	ft_exit(t_cmd *cmd)
 	else
 	{
 		printf("exit\n");
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

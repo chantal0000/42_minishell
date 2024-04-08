@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:06:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/04 11:15:21 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:29:20 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 int	ft_array_size(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i])
@@ -31,31 +31,29 @@ int	ft_array_size(char **array)
 	return (i);
 }
 
-
 int	ft_cd(t_cmd *cmd)
 {
-	char **cd_cmd = cmd->cmd;
+	char	**cd_cmd;
+	char	*home_dir;
+	int		array_size;
 
-	int array_size = ft_array_size(cd_cmd);
+	cd_cmd = cmd->cmd;
+	array_size = ft_array_size(cd_cmd);
 	if (array_size > 2)
 	{
 		printf("error\n");
 		return (EXIT_FAILURE);
 	}
-	// check if **cmd has only one cmd -> cd
-	char *home_dir = getenv("HOME");
+	home_dir = getenv("HOME");
 	if (array_size == 1)
 	{
-
-	if (home_dir)
-	{
-		chdir(home_dir);
-	}
+		if (home_dir)
+			chdir(home_dir);
 	}
 	else
 	{
-		if(cd_cmd[1])
+		if (cd_cmd[1])
 			chdir(cd_cmd[1]);
 	}
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
