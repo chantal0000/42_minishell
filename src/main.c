@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 18:09:39 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 18:12:46 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	main(int argc, char **argv, char **env)
 //	printf("main BEFORE executor\n");
 	exit_status = ft_executor(list);
 //	printf("main AFTER executor\n");
-	// free(line);
-	// free_cmd(list);
+	free(line);
+	free_cmd(list);
 	return (exit_status);
 }
