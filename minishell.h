@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 15:11:33 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 09:41:01 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_cmd
 	int		instructions;
 	int		fd_in;
 	int		fd_out;
+	int		pid;
 	t_cmd	*prev;
 	t_cmd	*next;
 }	t_cmd;
@@ -108,7 +109,7 @@ void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
 int	execute_cmd(char **env, char **cmd);
 
 //exit_status.c
-int	handle_exit_status(int pid);
+int	handle_exit_status(t_cmd *node);
 
 //environment.c
 void	*create_env_node(char *line);

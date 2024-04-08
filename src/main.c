@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 16:20:56 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 10:21:38 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,12 @@ void	print_stack(t_cmd *root)
 	free(line);
 	return (0);
 }*/
-
+// exit status in main???
 int	main(int argc, char **argv, char **env)
 {
-	char	*line = "ls -a";
+	char	*line = "cat | cat | ls";
 	t_cmd	*list;
+	int exit_status = 0;
 //	t_env	*env;
 //	char	*envp = "address";
 (void)argc; // Suppress unused parameter warning
@@ -96,9 +97,9 @@ int	main(int argc, char **argv, char **env)
 	}
 //	print_stack(list);
 //	printf("main BEFORE executor\n");
-//	ft_executor(list);
+	exit_status = ft_executor(list);
 //	printf("main AFTER executor\n");
-	free(line);
-	free_cmd(list);
-	return (0);
+	// free(line);
+	// free_cmd(list);
+	return (exit_status);
 }
