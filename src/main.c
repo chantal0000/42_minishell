@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 10:21:38 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:02:14 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	print_stack(t_cmd *root)
 // exit status in main???
 int	main(int argc, char **argv, char **env)
 {
-	char	*line = "cat | cat | ls";
+	char	*line = " grep lady < infile.txt | nl";
 	t_cmd	*list;
 	int exit_status = 0;
 //	t_env	*env;
