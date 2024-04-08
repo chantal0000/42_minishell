@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 15:50:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 17:58:46 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,10 @@ t_cmd	*ft_init_stuct(void)
 
 t_cmd	*m_lstlast(t_cmd *lst)
 {
-//	t_cmd	*temp;
-
 	if (!lst)
 		return (0);
-//	temp = lst;
 	while (lst->next != 0)
 		lst = lst->next;
-//	lst = temp;
-//	free (temp);
 	return (lst);
 }
 

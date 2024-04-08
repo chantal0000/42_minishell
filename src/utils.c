@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 16:10:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 18:00:20 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	free_cmd(t_cmd *cmd)
 			close(cmd->fd_in);
 		if (cmd->fd_out >= 0)
 			close(cmd->fd_out);
-//		if (cmd->m_env)
-//			free(cmd->m_env);
+		if (cmd->m_env)
+			free_env(&cmd->m_env);
 		free(cmd->file_name);
 		cmd = cmd->next;
 	}
@@ -43,6 +43,7 @@ void	free_memory(char **arr)
 		free(arr[i]);
 		i++;
 	}
+//	free(arr);
 }
 void	free_env(t_env **env)
 {
@@ -59,3 +60,16 @@ void	free_env(t_env **env)
 	}
 	free (env);
 }
+
+/*void free_env(t_env	*env)
+{
+	t_env	*temp;
+
+	while (env)
+	{
+		temp = env;
+		env = temp->next;
+		free(temp);
+	}
+	free(env);
+}*/

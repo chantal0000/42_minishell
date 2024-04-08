@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 16:10:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 17:24:37 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 //# include <editline/readline.h>
 //Linux
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -28,9 +29,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-# define EXEC 1
-# define REDIR 2
-# define PIPE 3
 # define DELIMITER "|<>()"
 # define WHITESPACE " \n\t\r\v"
 # define MAXARGS 5
