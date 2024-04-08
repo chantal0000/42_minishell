@@ -6,21 +6,20 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 15:46:34 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 18:03:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //if (s != '\0' means we have stopped before end of string
-void	parse_for_cmds(t_cmd **cmd, char *s, char **env)
+/*void	parse_for_cmds(t_cmd **cmd, char *s, char **env)
 {
 	int	index;
 
 	index = 0;
 	if (!s)
 		return ;
-
 	parse_for_pipe(&s, cmd, 0, &index);
 	update_fd(*cmd);
 	fill_env_struct(*cmd, env);
@@ -30,6 +29,25 @@ void	parse_for_cmds(t_cmd **cmd, char *s, char **env)
 	if (*s != '\0')
 	{
 		free_cmd(*cmd);
+		printf("check syntax\n");//check what bash returns
+		return ;
+	}
+}*/
+//if (s != '\0' means we have stopped before end of string
+void	parse_for_cmds(t_cmd **cmd, char *s, char **env)
+{
+	int	index;
+
+	index = 0;
+	if (!s)
+		return ;
+	parse_for_pipe(&s, cmd, 0, &index);
+	update_fd(*cmd);
+	fill_env_struct(*cmd, env);
+	while (*s != '\0' && is_whitespace(*s))
+		(*s)++;
+	if (*s != '\0')
+	{
 		printf("check syntax\n");//check what bash returns
 		return ;
 	}
