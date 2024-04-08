@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
+#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/04 11:46:37 by chbuerge         ###   ########.fr        #
+#    Updated: 2024/04/08 12:16:46 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ OBJS = $(SRCS:.c=.o)
 #LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-CFLAGS = -Wall -Wextra -Werror#could be -leditline
+CFLAGS = -Wall -Wextra -Werror -ggdb3 #could be -leditline
 COMFLAGS = -I/opt/homebrew/opt/readline/include#libedit/include
 LINKFLAGS = -L/opt/homebrew/opt/readline -lreadline#libedit/lib -ledit
 #

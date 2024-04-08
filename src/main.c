@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 12:05:02 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:47:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ void	print_stack(t_cmd *root)
 	}
 }
 
-/*int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-//	static char	*line;
+	static char	*line;
 	t_cmd		*list;
-	char		*line = "ls | wc | cat ";
+//	char		*line = "ls | wc | cat ";
 
 	line = NULL;
+	list = ft_init_stuct();
 	if (argc != 1)
 	{
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
@@ -50,42 +51,45 @@ void	print_stack(t_cmd *root)
 	}
 	(void)argc; // Suppress unused parameter warning
 	(void)argv; // Suppress unused parameter warning
-	(void)env;
-//	line = readline("minishell: ");
-//	if (!line)
-//		return (0);
+	line = readline("minishell: ");
+	if (ft_strncmp(line, "minishell:", 10) == 0)
+			line = line + 10;
+	printf("line to be parsed: %s\n", line);
+	if (!line)
+		return (0);
 //	while (line)
 //	{
 //		if (*line)
 //		{
 //			add_history(line);
 	parse_for_cmds(&list, line, env);//need to add envp
-	if (!list)
+/*	if (!list)
 	{
-		free_nodes(list);
+		free_cmd(list);
 		return (0);
-	}
-	print_stack(list);
+	}*/
+//	print_stack(list);
 //			ft_executor(cmd);
 			//run/exec the cmds
 //		}
 //		line = ("minishell: ");
-	ft_executor(list);
+//	ft_executor(list);
 //	rl_clear_history();
 	free(line);
+	free_cmd(list);
 	return (0);
-}*/
+}
 // exit status in main???
-int	main(int argc, char **argv, char **env)
+/*int	main(int argc, char **argv, char **env)
 {
 	char	*line = " grep lady < infile.txt | nl";
 	t_cmd	*list;
 	int exit_status = 0;
 //	t_env	*env;
 //	char	*envp = "address";
-(void)argc; // Suppress unused parameter warning
-(void)argv; // Suppress unused parameter warning
-(void)env;
+	(void)argc; // Suppress unused parameter warning
+	(void)argv; // Suppress unused parameter warning
+	(void)env;
 	list = NULL;
 //	env = NULL;
 	printf("line to be parsed: %s\n", line);
@@ -97,9 +101,9 @@ int	main(int argc, char **argv, char **env)
 	}
 //	print_stack(list);
 //	printf("main BEFORE executor\n");
-	exit_status = ft_executor(list);
+//	exit_status = ft_executor(list);
 //	printf("main AFTER executor\n");
 	// free(line);
-	// free_cmd(list);
+	free_cmd(list);
 	return (exit_status);
-}
+}*/
