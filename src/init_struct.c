@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 15:12:24 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 12:00:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ void	m_lstadd_back(t_cmd **lst, t_cmd *new)
 		new->prev = m_lstlast(*lst);
 		new->next = NULL;
 		m_lstlast(*lst)->next = new;
+		free (new);
 	}
 	else
 	{
 		new->next = NULL;
 		new->prev = NULL;
 		*lst = new;
+		free (new);
 	}
 }
 
@@ -66,5 +68,6 @@ void	update_fd(t_cmd *tree)
 		temp = temp->next;
 	}
 	tree = temp;
+	free (temp);
 }
 

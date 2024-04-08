@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 16:12:43 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 11:58:19 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 	}
 	if (prev_pipe == 0)
 	{
-		temp = parse_exec_cmds(str);
+//		temp = parse_exec_cmds(str);
 		if (!temp)
 		{
 //			free_cmd(*cmd);
@@ -44,7 +44,7 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 	{
 //		printf("\nPIPE FOUND\n\n");
 		find_tokens(str, NULL);
-		temp2 = parse_exec_cmds(str);
+//		temp2 = parse_exec_cmds(str);
 		temp2->index = *index;
 		m_lstadd_back(cmd, temp2);
 		parse_for_pipe(str, cmd, 1, index);

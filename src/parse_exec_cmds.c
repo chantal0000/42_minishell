@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/04 16:17:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 11:57:30 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		free(non_token);
 		return (NULL);
 	}
-	cmd_tree = parse_for_redirections(cmd_tree, s);//check for redirs and pass the tree we have built so far
+//	cmd_tree = parse_for_redirections(cmd_tree, s);//check for redirs and pass the tree we have built so far
 	if (!cmd_tree)
 	{
 //		free_memory(s);
@@ -71,7 +71,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		}
 		parse_line(cmd_tree->cmd[i]);
 		i++;
-		cmd_tree = parse_for_redirections(cmd_tree, s);
+//		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
 	cmd_tree->cmd[i] = NULL;
 	return (cmd_tree);
