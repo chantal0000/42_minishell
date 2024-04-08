@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 15:47:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/08 17:01:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **env)
 			//run/exec the cmds
 //		}
 //		line = ("minishell: ");
-//	ft_executor(list);
+	ft_executor(list);
 //	rl_clear_history();
 	free(line);
 	free_cmd(list);
