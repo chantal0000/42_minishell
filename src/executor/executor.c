@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 12:22:40 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:06:32 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,14 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execute_cmd(env, node->cmd) == 127)
+		if (ft_is_builtin(node) == -1)
 		{
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-			exit(127);
+			if (execute_cmd(env, node->cmd) == 127)
+			{
+				close(pipe_fd[0]);
+				close(pipe_fd[1]);
+				exit(127);
+			}
 		}
 	}
 	node->pid = pid;
@@ -107,11 +110,14 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execute_cmd(env, node->cmd) == 127)
+		if (ft_is_builtin(node) == -1)
 		{
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-			exit(127);
+			if (execute_cmd(env, node->cmd) == 127)
+			{
+				close(pipe_fd[0]);
+				close(pipe_fd[1]);
+				exit(127);
+			}
 		}
 	}
 	node->pid = pid;
@@ -143,11 +149,14 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execute_cmd(env, node->cmd) == 127)
+		if (ft_is_builtin(node) == -1)
 		{
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-			exit(127);
+			if (execute_cmd(env, node->cmd) == 127)
+			{
+				close(pipe_fd[0]);
+				close(pipe_fd[1]);
+				exit(127);
+			}
 		}
 	}
 	node->pid = pid;

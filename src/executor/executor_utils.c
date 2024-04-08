@@ -6,22 +6,12 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 10:20:57 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:19:12 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-//#include "minishell.h"
-// #include <unistd.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <sys/stat.h>
-// #include <fcntl.h>
-
-char	*ft_strjoin(char const *s1, char const *s2);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-char	**ft_split(const char *str, char c);
 /*
 ** join the path to one string and add the name of the command to create the
 ** whole cmd_path
@@ -85,11 +75,6 @@ int	execute_cmd(char **env, char **cmd)
 	int		i;
 
 	i = 0;
-	// take out this split and change char *cmd to char **cmd
-	// split_cmd = ft_split(cmd, ' ');
-
-	write (2, "in execute_cmd\n", 16);
-
 	split_cmd = cmd;
 	cmd_path = find_cmd_path(split_cmd[0], env);
 	if (!cmd_path)
