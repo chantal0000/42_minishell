@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 11:01:18 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:22:40 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int	ft_simple_cmd(t_cmd *node, char **env, int exit_status)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
 		dup2(node->fd_out, STDOUT_FILENO);
+	printf("single cmd\n");
 	if (ft_is_builtin(node) == -1)
 	{
+		printf("single cmd 1\n");
 		if (execute_cmd(env, node->cmd) == 127)
 		{
 			exit(127);
