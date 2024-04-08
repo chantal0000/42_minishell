@@ -6,26 +6,21 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 10:17:03 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:01:18 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// TO DO:
-	// - if there is a pipe check if built in or not
-	// - add final env
-	// - add resirections once they init in struct
-
 /*
 ** Executes a simple command. If it's a built-in command, it's executed directly.
 ** Otherwise, it handles redirections and executes using execve().
 */
-int	ft_simple_cmd(t_cmd *node, char **env)
+void	close_after(int std_in, int std_out, int pipe_fd[2]);
+
+int	ft_simple_cmd(t_cmd *node, char **env, int exit_status)
 {
-	int exit_status = 0;
-	printf("entering FT_SIMPLE_CMD\n");
-	if ((node->fd_in) !=  -1)
+	if ((node->fd_in) != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
 		dup2(node->fd_out, STDOUT_FILENO);
@@ -36,17 +31,6 @@ int	ft_simple_cmd(t_cmd *node, char **env)
 			exit(127);
 		}
 	}
-	else
-		printf("yoyo\n");
-    // check if builtin, if (ft_is_builtin(node) == 0)
-	// {
-		//printf("it's a build_in\n");
-		//call built in fuction
-	// }
-    // else
-    // {
-        // printf("theo it's not a built_in\n");
-        // handle redirections?
 	return (exit_status);
 }
 
@@ -58,13 +42,12 @@ int	ft_simple_cmd(t_cmd *node, char **env)
 ** 2. if there is an outfile we dup the files fd for stdout
 ** 3. else we set the stdout to pipe_fd[1] (write end)
 */
-int ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
+int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 {
-	// just to test
-	// node->fd_in = -1;
-	// node->fd_out = -1;
-	//
-	if ((node->fd_in) !=  -1)
+	int	pid;
+
+	pid = 0;
+	if ((node->fd_in) != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
 	{
@@ -76,13 +59,10 @@ int ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 		write (2, "dupping IN first pipe\n", 23);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 	}
-	// close irrelevant stuff
-	// added close otherwise ls | wc didnt work
 	close(pipe_fd[1]);
-	int pid = fork();
+	pid = fork();
 	if (pid == 0)
 	{
-		write (2, "in first_pipe pid 0\n", 21);
 		if (execute_cmd(env, node->cmd) == 127)
 		{
 			close(pipe_fd[0]);
@@ -91,30 +71,25 @@ int ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 		}
 	}
 	node->pid = pid;
-	// we only reach here if pid != 0, so if we are in parent
-	return ((pid));
+	return (pid);
 }
-
 
 /*
 ** Handles the execution of commands in the middle of a pipeline.
 ** Handles input/output redirection and executes the command.
 */
-int ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
+int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 {
-	// just to test
-	// node->fd_in = -1;
-	// node->fd_out = -1;
-	//
-	// check in redirection,
-	if (node->fd_in !=  -1)
+	int	pid;
+
+	pid = 0;
+	if (node->fd_in != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	else
 	{
 		write (2, "MIDDLE PIPE: dupping IN pipe\n", 30);
 		dup2(old_pipe_in, STDIN_FILENO);
 	}
-	// check out redirection,
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
@@ -127,7 +102,7 @@ int ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 	}
 	close(old_pipe_in);
 	close(pipe_fd[1]);
-	int pid = fork();
+	pid = fork();
 	if (pid == 0)
 	{
 		if (execute_cmd(env, node->cmd) == 127)
@@ -138,21 +113,19 @@ int ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 		}
 	}
 	node->pid = pid;
-	return ((pid));
-	// new function built in vs cmd
+	return (pid);
 }
 
 /*
 ** Handles the execution of the last command in a pipeline.
 ** Handles input/output redirection and executes the command.
 */
-int ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
+int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 {
-	// just to test
-	// node->fd_in = -1;
-	// node->fd_out = -1;
-	//
-	if (node->fd_in !=  -1)
+	int	pid;
+
+	pid = 0;
+	if (node->fd_in != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	else
 	{
@@ -165,7 +138,7 @@ int ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 		close(pipe_fd[1]);
 	}
 	close(pipe_fd[1]);
-	int pid = fork();
+	pid = fork();
 	if (pid == 0)
 	{
 		if (execute_cmd(env, node->cmd) == 127)
@@ -175,18 +148,9 @@ int ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 			exit(127);
 		}
 	}
-	// wait(NULL);
-	else
-		node->pid = pid;
-	return ((pid));
-	// new function built in vs cmd
+	node->pid = pid;
+	return (pid);
 }
-
-/*
-** executor works with the *char[MAXARGS] -> took out split from my pipex exec
-** need to change struct name based on our struct in minishell
-** need to include wait to properly end
-*/
 
 /*
 ** Executes a sequence of commands, possibly connected by pipes.
@@ -200,24 +164,12 @@ int ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 ** 7. move on to the next node in the linked list
 */
 
-// env is just for now to test
-int	ft_executor(t_cmd *node)
+int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head)
 {
-
 	int old_pipe_in = 0;
 	int pipe_fd[2];
 	int std_in = dup(STDIN_FILENO);
 	int std_out = dup(STDOUT_FILENO);
-	int	exit_status = 0;
-	char **env1 = ft_env_list_to_array(node->m_env);
-	t_cmd *head = node;
-	if (!node->next && !node->prev)
-	{
-		printf("\n\nentering single cmd %s\n\n", node->cmd[0]);
-		exit_status = ft_simple_cmd(node, env1);
-	}
-	else
-	{
 	while(node)
 	{
 		if (node->next && node->prev)
@@ -246,16 +198,36 @@ int	ft_executor(t_cmd *node)
 		node = node->next;
 	}
 	exit_status = handle_exit_status(head);
-	}
-	// wait here somehow
-
+	close_after(std_in, std_out, pipe_fd);
+	return(exit_status);
+}
+//I AM NOT ACTUALLY CALLING THIS FUNCTION ATM
+void	close_after(int std_in, int std_out, int pipe_fd[2])
+{
 	// now everything is closed?
 	close(std_in);
 	close(std_out);
 	//new added??
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
+}
 
+int	ft_executor(t_cmd *node)
+{
+	int	exit_status;
+	t_cmd *head;
+	char **env1;
+
+	exit_status = 0;
+	head = node;
+	env1 = ft_env_list_to_array(node->m_env);
+	if (!node->next && !node->prev)
+	{
+		printf("\n\nentering single cmd %s\n\n", node->cmd[0]);
+		exit_status = ft_simple_cmd(node, env1, exit_status);
+	}
+	else
+		exit_status = loop_cmds(node, env1, exit_status, head);
 	return (exit_status);
 }
 
