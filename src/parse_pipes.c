@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/09 08:26:51 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/09 17:20:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 	(*index)++;
 	if (check_next_char(str, '|'))
 	{
-//		printf("\nPIPE FOUND\n\n");
 		find_tokens(str, NULL);
 		temp2 = parse_exec_cmds(str);
 		temp2->index = *index;
@@ -41,37 +40,6 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 		parse_for_pipe(str, cmd, 1, index);
 	}
 }
-
-
-/*t_cmd	*parse_for_groups(char **s)
-{
-// 	t_cmd	*cmd;
-// //	int		token;
-
-// 	cmd = NULL;
-// 	if (!**s || !s)
-// 		return (0);
-// 	printf("%s\n", *s);
-// 	printf("now checking for groups\n");
-// 	if (!check_next_char(s, '('))
-// 	{
-// 		printf("missing prev bracket");
-// 		exit (1);
-// 	}
-// 	find_tokens(s, 0);
-// 	printf("%s\n", *s);
-// //	cmd = parse_for_pipe(s, cmd);
-// 	if (!check_next_char(s, ')'))
-// 	{
-// 		printf("missing closing bracket\n");
-// 		exit (1);//bash doesn't exit here...update it to match
-// 	}
-// 	printf("found closing bracket\n");
-// 	printf("\nGROUP CLOSED\n");
-// 	cmd = parse_for_redirections(cmd, s);
-	return (NULL);
-}*/
-
 
 /*t_cmd	*parse_for_single(char **s)
 {
