@@ -6,13 +6,13 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/09 08:25:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/09 17:21:29 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*ft_init_stuct(void)
+t_cmd	*ft_init_struct(void)
 {
 	t_cmd	*cmd_tree;
 
@@ -63,6 +63,7 @@ void	update_fd(t_cmd *tree)
 			temp->fd_in = -1;
 			temp->fd_out = -1;
 		}
+		temp->pid = 0;
 		temp = temp->next;
 	}
 	tree = temp;
