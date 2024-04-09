@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 17:24:37 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/09 08:29:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,11 @@ t_cmd	*parse_for_groups(char **s);
 
 //utils.c
 void	free_cmd(t_cmd *tree);
-void	free_cmds(t_cmd *cmd);
+//void	free_cmds(t_cmd *cmd);
 void	free_env(t_env	**env);
 void	free_memory(char **arr);
+void	free_cmdtree(t_cmd *tree);
+void	free_nodes(t_cmd *node);
 
 
 // Executer | executer.c

@@ -6,55 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 18:02:48 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/09 08:26:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//cmd is prev subtree and temp next subtree and if more pipes, 
-//will create a new pipe node
-/*void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
-{
-	t_cmd	*temp;
-	t_cmd	*temp2;
-
-	temp2 = NULL;
-	temp = NULL;
-	if (!**str || !str)
-	{
-		free(*cmd);
-		free(str);
-		return ;
-	}
-	if (prev_pipe == 0)
-	{
-		temp = parse_exec_cmds(str);
-		if (!temp)
-		{
-			free_cmd(*cmd);
-			free (str);
-			return ;
-		}
-		temp->index = *index;
-		m_lstadd_back(cmd, temp);
-	}
-	(*index)++;
-	if (check_next_char(str, '|'))
-	{
-		find_tokens(str, NULL);
-		temp2 = parse_exec_cmds(str);
-		if (!temp2)
-		{
-			printf("problems adding exec to list");
-			free_cmd(*cmd);
-			return ;
-		}
-		temp2->index = *index;
-		m_lstadd_back(cmd, temp2);
-		parse_for_pipe(str, cmd, 1, index);
-	}
-}*/
 
 //cmd is prev subtree and temp next subtree and if more pipes, 
 //will create a new pipe node
@@ -64,22 +20,13 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 	t_cmd	*temp2;
 
 	temp2 = NULL;
-	temp = NULL;
 	if (!**str || !str)
-	{
-//		free_cmd(*cmd);
-//		free(str);
 		return ;
-	}
 	if (prev_pipe == 0)
 	{
 		temp = parse_exec_cmds(str);
 		if (!temp)
-		{
-//			free_cmd(*cmd);
-//			free(str);
 			return ;
-		}
 		temp->index = *index;
 		m_lstadd_back(cmd, temp);
 	}
@@ -94,6 +41,7 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 		parse_for_pipe(str, cmd, 1, index);
 	}
 }
+
 
 /*t_cmd	*parse_for_groups(char **s)
 {

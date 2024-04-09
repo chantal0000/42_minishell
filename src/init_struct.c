@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/08 17:58:46 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/09 08:25:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmd	*m_lstlast(t_cmd *lst)
 	if (!lst)
 		return (0);
 	while (lst->next != 0)
-		lst = lst->next;
+		lst = lst -> next;
 	return (lst);
 }
 
