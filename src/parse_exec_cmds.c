@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/09 17:25:23 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/10 10:26:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 	int		i;
 	int		token;
 	t_cmd	*cmd_tree;
+//	char	*temp;
 
 	i = 0;
 	token = 0;
 	cmd_tree = ft_init_struct();
+//	temp = parse_for_quotes(*s);
 	cmd_tree = parse_for_redirections(cmd_tree, s);
 	if (!cmd_tree)
 		return (NULL);
@@ -42,6 +44,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		token = find_tokens(s, &non_token);
 		if (token == 0)
 			break ;
+		cmd_tree->token = token;
 		cmd_tree->cmd[i] = ft_strdup(non_token);
 		if (!cmd_tree)
 		{
