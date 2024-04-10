@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/09 17:21:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/10 04:12:31 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_cmd
 {
 	int		index;
 	t_env	*m_env;
+	int		token;
 	char	*cmd[MAXARGS + 1];
 	char	*file_name;
 	int		instructions;
@@ -56,7 +57,6 @@ typedef struct s_cmd
 	t_cmd	*prev;
 	t_cmd	*next;
 }	t_cmd;
-
 
 void	print_stack(t_cmd *root);
 
@@ -87,8 +87,9 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
-t_cmd	*parse_for_groups(char **s);
-
+//t_cmd	*parse_for_groups(char **s);
+char	parse_for_single_quotes(char *s);
+char	*parse_for_quotes(char *s);
 
 //utils.c
 void	free_cmdtree(t_cmd *tree);

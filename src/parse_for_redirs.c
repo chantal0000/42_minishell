@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/03 16:43:28 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/10 03:30:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 	}
 	else if (fd == 1)
 	{
-		node->fd_out = open(node->file_name, O_WRONLY | O_CREAT | O_TRUNC, 1);
+		node->fd_out = open(node->file_name, O_WRONLY | O_CREAT | O_TRUNC | S_IRUSR | S_IWUSR, 0777);
 		if (node->fd_out < 0)
 		{
 			printf("Error Opening Outfile\n");

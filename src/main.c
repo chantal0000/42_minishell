@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/09 17:28:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/10 02:41:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	print_stack(t_cmd *root)
 		printf("instructions: %d\n", temp->instructions);
 		printf("env: %s\n", temp->m_env->cmd_env);
 		printf("pid: %d\n", temp->pid);
+		printf("token: %c\n", temp->token);
 //		printf("node->data: %d\n", root-> data);
 		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++)
 		{
@@ -69,6 +70,7 @@ int	main(int argc, char **argv, char **env)
 		printf("line to be parsed: %s\n", line);
 //		add_history(line);
 		parse_for_cmds(&list, line, env);//need to add envp
+		print_stack(list);
 		if (!list)
 		{
 			free(line);
@@ -76,7 +78,6 @@ int	main(int argc, char **argv, char **env)
 		}
 		ft_executor(list);
 	}
-//	print_stack(list);
 //	exit_status = ft_executor(list);
 	free(line);
 	free_cmdtree(list);
