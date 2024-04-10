@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:16:16 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/10 14:51:17 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/10 19:44:09 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 	//check if it already exits?
 		//if yes update
 	//else create
-char	create_str(char *str)
-{
-	
-}
+// char	create_str(char *str)
+// {
+
+// }
 
 int	ft_check_syntax(char *str)
 {
