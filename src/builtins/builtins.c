@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 12:27:27 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/10 19:17:51 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	ft_is_builtin(t_cmd *cmd)
 	else if (ft_strcmp(cmd_to_check, "env") == 0)
 		ft_env(cmd);
 	else if (ft_strcmp(cmd_to_check, "export") == 0)
-		printf("built-in: export\n");
+	{
+		ft_export(cmd);
+	}
 	else if (ft_strcmp(cmd_to_check, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd_to_check, "unset") == 0)

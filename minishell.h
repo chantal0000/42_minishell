@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/09 17:21:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/10 19:18:36 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_env t_env;
 
 typedef struct s_env
 {
+	//char	*env_name;
+	//char	*env_value;
 	char	*cmd_env;
 	t_env	*next; // pointer to the next node in the linked list
 
@@ -124,4 +126,6 @@ int	ft_cd(t_cmd *cmd);
 int	ft_exit(t_cmd *cmd);
 //builtins/pwd.c
 int	ft_pwd();
+int	ft_export(t_cmd *cmd);
+
 #endif

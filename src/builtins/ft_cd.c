@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:06:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 15:29:20 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:34:26 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ int	ft_cd(t_cmd *cmd)
 		if (cd_cmd[1])
 			chdir(cd_cmd[1]);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
