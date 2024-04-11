@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:16:16 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/10 19:44:09 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/11 10:13:31 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	ft_export(t_cmd *cmd)
 		while(temp->m_env)
 		{
 			printf("declare -x ");
+			// printf("%s="%s"\n", empt->m_env->env_name, empt->m_env->env_value);
 			printf("%s\n", temp->m_env->cmd_env);
 			temp->m_env = temp->m_env->next;
 		}

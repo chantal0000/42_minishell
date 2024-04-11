@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:35:02 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 15:29:55 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:40:24 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ int	ft_env(t_cmd *cmd)
 		printf("%s\n", current->cmd_env);
 		current = current->next;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
