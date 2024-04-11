@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/10 19:18:36 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:39:31 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		check_next_char(char **s, char token);
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
-t_cmd	*ft_heredoc(t_cmd *cmd, char **s);
+t_cmd	*ft_heredoc(t_cmd *cmd);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
@@ -97,10 +97,15 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
 char	parse_for_single_quotes(char *s);
 char	*parse_for_quotes(char *s);
 
-//utils.c
+//free_functions.c
 void	free_cmdtree(t_cmd *tree);
 void	free_memory(char **arr);
 void	free_env(t_env	**env);
+
+//utils.c
+char	*ft_strndup(const char *s, size_t n);
+int		ft_strcmp(char *s1, char *s2);
+int		find_delimiter(char *s1, char *delim);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);
