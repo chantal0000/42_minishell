@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/10 14:30:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/11 17:52:10 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ void	print_stack(t_cmd *root)
 		printf("env: %s\n", temp->m_env->cmd_env);
 		printf("pid: %d\n", temp->pid);
 		printf("token: %c\n", temp->token);
+		printf("delimiter: %s\n", temp->heredoc_delimiter);
 //		printf("node->data: %d\n", root-> data);
 		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++)
 		{
 			printf("cmd[%d]: %s\n", i, temp->cmd[i]);
 		}
-//		printf("node->prev: %p\n", (void *)temp -> prev);
-//		printf("node->next: %p\n\n", (void *)temp -> next);
 		temp = temp -> next;
 	}
 }
