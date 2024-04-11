@@ -5,61 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/11 17:47:43 by kbolon           ###   ########.fr       */
+/*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
+/*   Updated: 2024/04/10 02:28:50 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-char	*ft_strndup(const char *s, size_t n)
+void	free_cmdtree(t_cmd *tree)
 {
-	char	*p;
-	size_t	i;
+	t_cmd	*temp;
 
-	i = 0;
-	p = (char *)malloc (sizeof(char) * (n + 1));
-	if (p == 0)
-		return (0);
-	while (i < n)
+	if (!tree)
+		return ;
+	while (tree)
 	{
-		p[i] = s[i];
-		i++;
+		temp = tree;
+		if (temp->fd_in)
+			close(temp->fd_in);
+		if (temp->fd_out)
+			close(temp->fd_out);
+		if (temp->pid)
+			close(temp->pid);
+		if (temp->m_env)
+			free_env(&temp->m_env);
+		if (temp->file_name)
+			free(temp->file_name);
+		free_memory(temp->cmd);
+		tree = tree->next;
 	}
-	p[i] = '\0';
-	return (p);
+	free(temp);
+	free(tree);
 }
 
-/*int	ft_strcmp(char *s1, char *s2)
+void	free_memory(char **arr)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while ((s1[i] != '\0') && (s2[i] != '\0') && (s1[i] == s2[i]))
+	if (!*arr || !arr)
+		return ;
+	while (arr[i] != NULL)
 	{
+		free(arr[i]);
 		i++;
 	}
-	return (s1[i] - s2[i]);
-}*/
+	free(arr);
+}
 
-int	find_delimiter(char *s1, char *delim)
+void	free_env(t_env **env)
 {
-	int	i;
-	int	j;
+	int		i;
 
 	i = 0;
-	j = 0;
-	printf("in find delimiter \n");
-	while (s1[i] != '\0' && delim[j] != '\0' && s1[i] == delim[j])
+	if (!env)
+		return ;
+	while (env[i] != NULL)
 	{
+		free(env[i]);
 		i++;
-		j++;
 	}
-	if (delim[j] == '\0')
-		return (1);
-	printf("out find delimiter \n");
-	return (0);
+	free (env);
 }

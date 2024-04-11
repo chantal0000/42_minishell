@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
+#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/10 11:28:16 by chbuerge         ###   ########.fr        #
+#    Updated: 2024/04/11 16:25:05 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS = src/main.c \
 		src/parse_pipes.c \
 		src/parse_for_redirs.c \
 		src/heredoc.c \
+		src/free_functions.c \
 		src/utils.c \
 		src/executor/executor.c \
 		src/executor/executor_utils.c \
