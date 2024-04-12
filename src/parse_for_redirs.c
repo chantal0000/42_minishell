@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/11 17:51:56 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:30:31 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 {
 	int		token;
-	int		i;
 	char	*file_name;
 
 	file_name = NULL;
-	i = 0;
 	printf("string in redir1: %s \n", *s);
 	if ((**s == '<' || **s == '>') && **s != '\0')
 	{
@@ -32,8 +30,9 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		if (token == '-')
 		{
 			node->heredoc_delimiter = parse_line(strdup(file_name));
-//			ft_heredoc(node);
+			ft_heredoc(node);
 //			node = redir_cmd(node, O_RDONLY | O_CREAT, 0);//fd=0 do I need create here?
+			printf("string from heredoc: %s\n", make_string(node->heredoc_content));
 		}
 		else
 			node->file_name = parse_line(strdup(file_name));
@@ -46,9 +45,6 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 	}
 	return (node);
 }
-
-
-
 
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 {
@@ -85,39 +81,56 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 	return (node);
 }
 
-t_cmd	*ft_heredoc(t_cmd *cmd)
+void	ft_heredoc(t_cmd *cmd)
 {
 	static char	*str;
-	int			len;
 	int			i;
 
 	i = 0;
-	str = readline("> ");
-	if (!str)
+	while (i < MAX_CONTENT_SIZE)
 	{
-		printf("Problems reading input for heredoc");
-		exit(1);
-	}
-	if (find_delimiter(str, cmd->heredoc_content[i]) == 1)
-		return (cmd);
-	while (find_delimiter(str, cmd->heredoc_content[i]) == 0)
-	{
-		len = ft_strlen(str);
-		cmd->heredoc_content[i] = (char *)ft_calloc(MAX_CONTENT_SIZE + 1, sizeof(char));
-		if (!cmd->heredoc_content[i])
-		{
-			printf("Memory allocation failed in heredoc\n");
-			exit (1);
-		}
-		cmd->heredoc_content[i] = ft_strdup(str);
-		str = readline("heredoc> ");
+		str = readline("> ");
 		if (!str)
 		{
 			printf("Problems reading input for heredoc");
 			exit(1);
 		}
+		if (strcmp(str, cmd->heredoc_delimiter) == 0)
+			break;
+		cmd->heredoc_content[i] = ft_strdup(str);
+		if (!cmd->heredoc_content[i])
+		{
+			printf("Memory allocation failed in heredoc\n");
+			exit (1);
+		}
 		i++;
 	}
 	cmd->heredoc_content[i] = NULL;
-	return (cmd);
+}
+
+char	*make_string(char **s)
+{
+	char	*temp;
+	int		i;
+
+	i = 0;
+	temp = (char *)ft_calloc(1, sizeof(char));
+	if (!temp)
+	{
+		printf("problem allocating mem for string\n");
+//		free_memory(s);
+		exit (1);//return?
+	}
+	while (s[i] != NULL)
+	{
+		temp = ft_strjoin(temp, s[i]);
+		if (!temp)
+		{
+			printf("problem allocating mem for string\n");
+//			free_memory(s);
+			exit (1);//return?
+		}
+		i++;
+	}
+	return (temp);
 }

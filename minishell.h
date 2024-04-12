@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/11 17:39:31 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:26:12 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int		check_next_char(char **s, char token);
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
-t_cmd	*ft_heredoc(t_cmd *cmd);
+void	ft_heredoc(t_cmd *cmd);
+char	*make_string(char **s);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
