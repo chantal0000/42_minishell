@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/12 17:58:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/12 18:09:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	find_delimiter(char *s1, char *delim)
 
 char	*check_quotes(char *s)
 {
-	int		i;
-	int		len;
-	char	*temp;
+	int			i;
+	size_t		len;
+	char		*temp;
 
 	i = 0;
 	len = ft_strlen(s);
