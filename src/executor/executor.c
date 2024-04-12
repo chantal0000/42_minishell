@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/11 17:16:11 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:02:02 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 	int	pid;
 
 	pid = 0;
+
+	// close read end of new pipe (pipe_fd)
+	// close std_out
+	// dup2 stdout into the write end of the pipe
+	// close write end of pipe
+	// dup2 stdin in stdin
+	// close stdin
+
 	if ((node->fd_in) != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
@@ -83,6 +91,8 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 	pid = fork();
 	if (pid == 0)
 	{
+		///
+		close(pipe_fd[0]);
 		if (ft_is_builtin(node) == -1)
 		{
 			if (execute_cmd(env, node->cmd) == 127)
@@ -128,6 +138,7 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
+		close(pipe_fd[0]);
 		if (ft_is_builtin(node) == -1)
 		{
 			if (execute_cmd(env, node->cmd) == 127)
@@ -204,6 +215,7 @@ int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head)
 	int std_out = dup(STDOUT_FILENO);
 	while(node)
 	{
+		// 
 		if (node->next && node->prev)
 		{
 			printf("entering middle pipe cmd is %s\n", node->cmd[0]);
@@ -230,6 +242,7 @@ int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head)
 		node = node->next;
 	}
 	close_after(std_in, std_out, pipe_fd);
+	// close(old_pipe_in);
 	exit_status = handle_exit_status(head);
 	return(exit_status);
 }
