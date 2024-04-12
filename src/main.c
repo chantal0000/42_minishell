@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/11 16:06:34 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:13:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	print_stack(t_cmd *root)
 		printf("pid: %d\n", temp->pid);
 		printf("token: %c\n", temp->token);
 		printf("delimiter: %s\n", temp->heredoc_delimiter);
+		for (int i = 0; i < MAX_CONTENT_SIZE && temp->heredoc_content[i] != NULL; i++)
+		{
+			printf("heredoc content [%d]: %s\n", i, temp->heredoc_content[i]);
+		}
 //		printf("node->data: %d\n", root-> data);
 		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++)
 		{
@@ -75,11 +79,13 @@ int	main(int argc, char **argv, char **env)
 			free(line);
 			return (0);
 		}
-		ft_executor(list);
+//		ft_executor(list);
 		list = NULL; // here needs to be freed
+		free(line);
+		free_cmdtree(list);
 	}
 //	exit_status = ft_executor(list);
-	free(line);
-	free_cmdtree(list);
+//	free(line);
+//	free_cmdtree(list);
 //	return (exit_status);
 }
