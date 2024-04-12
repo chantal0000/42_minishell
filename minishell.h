@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/12 14:26:12 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/12 17:59:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct s_env t_env;
 
 typedef struct s_env
 {
-	//char	*env_name;
-	//char	*env_value;
+	char	*env_name;
+	char	*env_value;
 	char	*cmd_env;
 	t_env	*next; // pointer to the next node in the linked list
 
@@ -107,6 +107,8 @@ void	free_env(t_env	**env);
 char	*ft_strndup(const char *s, size_t n);
 int		ft_strcmp(char *s1, char *s2);
 int		find_delimiter(char *s1, char *delim);
+char	*check_quotes(char *s);
+char	**export_split(char	*s);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);
