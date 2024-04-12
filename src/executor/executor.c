@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/12 15:05:09 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:49:28 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env)
 	}
 	else
 	{
-		write (2, "dupping IN first pipe\n", 23);
+		// write (2, "dupping IN first pipe\n", 23);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 	}
 	close(pipe_fd[1]);
@@ -101,7 +101,7 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 		dup2(node->fd_in, STDIN_FILENO);
 	else
 	{
-		write (2, "MIDDLE PIPE: dupping IN pipe\n", 30);
+		// write (2, "MIDDLE PIPE: dupping IN pipe\n", 30);
 		dup2(old_pipe_in, STDIN_FILENO);
 	}
 	if (node->fd_out != -1)
@@ -111,7 +111,7 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 	}
 	else
 	{
-		write (2, "MIDDLE PIPE: dupping OUT pipe\n", 31);
+		// write (2, "MIDDLE PIPE: dupping OUT pipe\n", 31);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 	}
 	close(old_pipe_in);
@@ -142,7 +142,7 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 		dup2(node->fd_in, STDIN_FILENO);
 	else
 	{
-		write (2, "dupping IN last pipe\n", 22);
+		// write (2, "dupping IN last pipe\n", 22);
 		dup2(old_pipe_in, STDIN_FILENO);
 	}
 	if (node->fd_out != -1)
@@ -176,7 +176,7 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env)
 ** 7. move on to the next node in the linked list
 */
 
-int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head, int pid)
+int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head)
 {
 	int old_pipe_in = 0;
 	int pipe_fd[2];
@@ -186,23 +186,23 @@ int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head, int pid)
 	{
 		if (node->next && node->prev)
 		{
-			printf("entering middle pipe cmd is %s\n", node->cmd[0]);
+			// printf("entering middle pipe cmd is %s\n", node->cmd[0]);
 			write(2, "\nentering middle pipe\n", 22);
 			pipe(pipe_fd);
 			ft_pipe_middle(node, pipe_fd, old_pipe_in, env1);
 		}
 		else if(node->next)
 		{
-			write(2, "\nentering first pipe\n", 21);
+			// write(2, "\nentering first pipe\n", 21);
 			pipe(pipe_fd);
 			ft_pipe_first(node, pipe_fd, env1);
-			printf("entering first pipe cmd is %s\n", node->cmd[0]);
+			// printf("entering first pipe cmd is %s\n", node->cmd[0]);
 		}
 		else
 		{
-			write(2, "\nentering last pipe\n", 21);
+			// write(2, "\nentering last pipe\n", 21);
 			ft_pipe_last(node, pipe_fd, old_pipe_in, env1);
-			printf("entering last pipe, cmd is %s\n", node->cmd[0]);
+			// printf("entering last pipe, cmd is %s\n", node->cmd[0]);
 		}
 		old_pipe_in = pipe_fd[0];
 		dup2(std_in, STDIN_FILENO);
@@ -237,7 +237,7 @@ int	ft_executor(t_cmd *node)
 		exit_status = ft_simple_cmd(node, env1, exit_status, pid);
 	else
 	{
-		exit_status = loop_cmds(node, env1, exit_status, head, pid);
+		exit_status = loop_cmds(node, env1, exit_status, head);
 	}
 	// free environment here
 	return (exit_status);

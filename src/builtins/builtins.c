@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/10 19:17:51 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:51:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_is_builtin(t_cmd *cmd)
 	char *cmd_to_check;
 
 	cmd_to_check = cmd->cmd[0];
-	printf("cmd_to_check: %s\n", cmd_to_check);
+	// printf("cmd_to_check: %s\n", cmd_to_check);
 
 	if (ft_strcmp(cmd_to_check, "exit") == 0)
 		ft_exit(cmd);
@@ -47,7 +47,7 @@ int	ft_is_builtin(t_cmd *cmd)
 		printf("built-in: unset\n");
 	else
 	{
-		printf("not a built-in\nreturn with -1 \n");
+		// printf("not a built-in\nreturn with -1 \n");
 		return (-1);
 	}
 	return (0);

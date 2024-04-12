@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:16:16 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/11 10:13:31 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:04:26 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ int	ft_export(t_cmd *cmd)
 		if (ft_check_syntax(cmd->cmd[1]) == 0)
 		{
 			printf("SUCCESS\n");
+			// split string with karens function and
 			// search if it exists in env and if yes reset
+				// if (cmd->name == node->env->name)
+					//node->env->value = cmd value
+				// else
+					// create new node
+					// add node to the end
 			// else add to env lst
 		}
 		else
