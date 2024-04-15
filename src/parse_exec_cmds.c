@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/15 12:26:52 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/15 17:24:55 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ t_cmd	*parse_exec_cmds(char **s)
 		printf("cmd_tree initiation in exec failed\n");
 		exit (1);
 	}
+//	if (check_next_char(s, '\'') || check_next_char(s, '\"'))
+//		return (ft_parse_quotes(cmd_tree, *s));
 	i = 0;
 	while (i < MAXARGS)
 	{
