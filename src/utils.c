@@ -6,12 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/12 18:09:58 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/15 12:23:06 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 char	*ft_strndup(const char *s, size_t n)
 {
@@ -66,7 +65,7 @@ int	find_delimiter(char *s1, char *delim)
 
 char	*check_quotes(char *s)
 {
-	int			i;
+	size_t		i;
 	size_t		len;
 	char		*temp;
 

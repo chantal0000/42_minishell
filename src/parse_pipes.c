@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/10 04:09:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/15 14:00:31 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,23 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 		if (!in_singles)
 		*s++;
 	}
-}*/
+	if ((*s == '|' && !in_singles) || (s == '|' && (s - 1) == '\\'))
+		s = &replacement;
+	s++;
+}
 
 char	parse_for_single_quotes(char *s)
 {
-//	char	*temp;
+	char	replacement;
+	int		singles;
 
 	if (!s)
-		return (0);
+	{
+		printf("string is empty");
+		exit(1);
+	}
 //	printf("%s\n", *s);
+	replacement = '\xFD';// or '\xA7';
 	printf("now checking for single quotes\n");
 	if (!check_next_char(&s, '\''))
 	{
@@ -119,7 +127,7 @@ char	*parse_for_quotes(char *s)
 	}
 	return (s);
 }
-/*void	restore_pipes(char *s)
+void	restore_pipes(char *s)
 {
 	if (!*s || !s)
 		return ;

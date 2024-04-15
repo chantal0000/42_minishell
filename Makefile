@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/11 16:25:05 by kbolon           ###   ########.fr        #
+#    Updated: 2024/04/15 13:50:17 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = minishell
 SRCS = src/main.c \
 		src/find_tokens.c \
 		src/init_struct.c \
+		src/parse_echo_awk.c \
 		src/parse_exec_cmds.c \
 		src/parse_for_cmds.c \
 		src/parse_pipes.c \

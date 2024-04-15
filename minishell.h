@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/12 17:59:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/15 13:48:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define DELIMITER "|<>()"
 # define WHITESPACE " \n\t\r\v"
-# define MAXARGS 5
+# define MAXARGS 100
 # define MAX_CONTENT_SIZE 1000
 
 typedef struct s_cmd t_cmd;
@@ -109,6 +109,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
 char	**export_split(char	*s);
+
+void	ft_echo(t_cmd *cmd);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);

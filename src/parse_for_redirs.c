@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/12 17:58:02 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/15 12:24:31 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 	char	*file_name;
 
 	file_name = NULL;
-	printf("string in redir1: %s \n", *s);
 	if ((**s == '<' || **s == '>') && **s != '\0')
 	{
 		token = find_tokens(s, &file_name);
