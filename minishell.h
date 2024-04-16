@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/15 17:00:55 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/16 13:52:43 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token);
 t_cmd	*parse_exec_cmds(char **s);
 
 //parse_for_cmds.c
-void	parse_for_cmds(t_cmd **cmd, char *s, char **env);
+void	parse_for_cmds(t_cmd **cmd, char *s);
 int		is_token(char s);
 int		is_whitespace(char s);
 int		check_next_char(char **s, char token);
@@ -120,7 +120,7 @@ t_cmd	*ft_parse_quotes(t_cmd *cmd, char *s);
 
 // Executer | executer.c
 //void	ft_executor(t_cmd *node);
-int		ft_executor(t_cmd *node);
+int		ft_executor(t_cmd *node, t_env *env_list);
 void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
@@ -133,7 +133,7 @@ int		handle_exit_status(t_cmd *node);
 
 //environment.c
 void	*create_env_node(char *line);
-void	fill_env_struct(t_cmd *cmd, char **environment);
+t_env	*fill_env_struct(char **environment);
 char 	**ft_env_list_to_array(t_env *head);
 
 

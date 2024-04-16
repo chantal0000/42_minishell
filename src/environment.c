@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:36:23 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 16:18:13 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:55:18 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,20 @@ void	insert_end(t_env **head, char *line)
 ** @param environment: The array of strings containing environment variable lines.
 **                     The last element of the array must be NULL.
 */
-void	fill_env_struct(t_cmd *cmd, char **environment)
+t_env	*fill_env_struct(char **environment)
 {
 	int		i;
 	t_env	*env_head;
-	t_cmd	*temp;
 
 	i = 0;
-	if (!cmd || !environment)
-		return ;
+	if (!environment)
+		return (NULL);
 	env_head = NULL;
-	temp = cmd;
-	while (temp)
-	{
 		while (environment[i])
 		{
 			insert_end(&env_head, environment[i]);
 			i++;
 		}
-		temp->m_env = env_head;
-//		printf("env: %s\n", temp->m_env->cmd_env);
-		temp = temp->next;
-	}
-	cmd = temp;
 //	free (temp);
 /*	 (environment[i])
 	{
@@ -98,6 +89,7 @@ void	fill_env_struct(t_cmd *cmd, char **environment)
 	// 	printf("%s\n", env_head->env_line);
 	// 	env_head = env_head->next;
 	// }
+	return(env_head);
 }
 
 
