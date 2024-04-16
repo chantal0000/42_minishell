@@ -35,7 +35,7 @@ int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
 		ft_cd(cmd);
 	else if (ft_strcmp(cmd_to_check, "echo") == 0)
 	{
-		ft_echo(cmd);
+//		ft_echo(cmd);
 //		printf("built-in: echo\n");
 	}
 	else if (ft_strcmp(cmd_to_check, "env") == 0)

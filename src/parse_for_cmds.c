@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_for_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/16 13:53:07 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:11:19 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	index = 0;
 	if (!s)
 		return ;
-	s = parse_for_quotes(s);
+	s = check_for_quotes(s);
+//	s = parse_for_quotes(s);
 	printf("after parsing quotes: %s\n", s);
 	parse_for_pipe(&s, cmd, 0, &index);
 	update_fd(*cmd);
@@ -70,7 +71,7 @@ int	check_next_char(char **s, char token)
 	return (0);
 }
 
-char	*parse_for_quotes(char *s)
+char	*check_for_quotes(char *s)
 {
 	int		in_single;
 	int		in_double;
@@ -94,48 +95,15 @@ char	*parse_for_quotes(char *s)
 			*temp = '\xFD';
 		temp++;
 	}
+	if (in_single || in_double == -1)
+	{
+		printf("open quotes found, can't parse");
+		exit (1);
+	}
 	return (s);
 }
 
-/*t_cmd	*ft_parse_quotes(t_cmd *cmd, char *s)
-{
-	int		in_single;
-	int		in_double;
-	char	*temp;
-	int		i;
-
-	s = parse_for_quotes(s);
-	i = 0;
-	while (i < MAXARGS)
-	{
-		cmd->cmd[i] = NULL;
-		i++;
-	}
-	in_single = 0;
-	in_double = 0;
-	while (*s)
-	{
-		if (*s == '\'' && (*s - 1) != '\\' && !in_double)
-		{
-			temp = s;
-			in_single = !in_single;
-		}
-		else if (*s == '\"' && (*s - 1) != '\\' && !in_single)
-			in_double = !in_double;
-		s++;
-	}
-	if (!check_next_char(&s, '\'') && (*temp - 1) != '\\' && !in_double)
-	{
-		printf("missing closing quote\n");
-		exit (1);//bash doesn't exit here...update it to match
-	}
-	printf("\nGROUP CLOSED\n");
-	find_tokens(&s, 0);
-	cmd = parse_for_redirections(cmd, &s);
-	return (cmd);
-}
-
-t_cmd	*parse_for_groups(char **s)
+/*t_cmd	*parse_for_groups(char **s)
 {
 	t_cmd	*cmd;
 //	int		token;
