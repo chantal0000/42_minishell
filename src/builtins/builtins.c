@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
 /*   Updated: 2024/04/16 16:09:10 by kbolon           ###   ########.fr       */
@@ -22,7 +22,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int	ft_is_builtin(t_cmd *cmd)
+int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
 {
 	char *cmd_to_check;
 
@@ -39,10 +39,10 @@ int	ft_is_builtin(t_cmd *cmd)
 //		printf("built-in: echo\n");
 	}
 	else if (ft_strcmp(cmd_to_check, "env") == 0)
-		ft_env(cmd);
+		ft_env(env_list);
 	else if (ft_strcmp(cmd_to_check, "export") == 0)
 	{
-		ft_export(cmd);
+		ft_export(cmd, env_list);
 	}
 	else if (ft_strcmp(cmd_to_check, "pwd") == 0)
 		ft_pwd();

@@ -141,17 +141,17 @@ char 	**ft_env_list_to_array(t_env *head);
 
 
 //builtins/builtins.c
-int	ft_is_builtin(t_cmd *cmd);
+int	ft_is_builtin(t_cmd *cmd, t_env *env_list);
 int	ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
-int	ft_env(t_cmd *cmd);
+int	ft_env(t_env *env_list);
 //builtins/cd.c
 int	ft_cd(t_cmd *cmd);
 //builtins/exit.c
 int	ft_exit(t_cmd *cmd);
 //builtins/pwd.c
 int	ft_pwd();
-int	ft_export(t_cmd *cmd);
-
+int	ft_export(t_cmd *cmd, t_env *env_list);
+void	insert_end(t_env **head, char *line);
 #endif
