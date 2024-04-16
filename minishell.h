@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/16 13:52:43 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:59:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		is_token(char s);
 int		is_whitespace(char s);
 int		check_next_char(char **s, char token);
 char	*parse_for_quotes(char *s);
+char 	*check_for_quotes(char *s);
 
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
@@ -109,11 +110,13 @@ void	free_env(t_env	**env);
 char	*ft_strndup(const char *s, size_t n);
 int		ft_strcmp(char *s1, char *s2);
 int		find_delimiter(char *s1, char *delim);
-char	*check_quotes(char *s);
+//char	*check_quotes(char *s);
 char	**export_split(char	*s);
 
-void	ft_echo(t_cmd *cmd);
-t_cmd	*ft_parse_quotes(t_cmd *cmd, char *s);
+//parse_echo_awk.c
+t_cmd	*ft_echo(t_cmd *cmd_tree, char **s);
+
+int	is_echo_token(char s);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);
