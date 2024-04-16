@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/12 16:49:28 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:53:39 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	close_after(int std_in, int std_out, int pipe_fd[2])
 	close(pipe_fd[1]);
 }
 
-int	ft_executor(t_cmd *node)
+int	ft_executor(t_cmd *node, t_env *env_list)
 {
 	int		exit_status;
 	t_cmd	*head;
@@ -232,7 +232,8 @@ int	ft_executor(t_cmd *node)
 	exit_status = 0;
 	head = node;
 	pid = 0;
-	env1 = ft_env_list_to_array(node->m_env);
+	// env1 = ft_env_list_to_array(node->m_env);
+	env1 = ft_env_list_to_array(env_list);
 	if (!node->next && !node->prev)
 		exit_status = ft_simple_cmd(node, env1, exit_status, pid);
 	else

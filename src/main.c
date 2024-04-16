@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/15 13:58:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/16 14:02:24 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_stack(t_cmd *root)
 		printf("fd_out: %d\n", temp->fd_out);
 		printf("file_name: %s\n", temp->file_name);
 		printf("instructions: %d\n", temp->instructions);
-		printf("env: %s\n", temp->m_env->cmd_env);
+		// printf("env: %s\n", temp->m_env->cmd_env);
 		printf("pid: %d\n", temp->pid);
 		printf("token: %c\n", temp->token);
 		printf("delimiter: %s\n", temp->heredoc_delimiter);
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **env)
 	static char	*line;
 //	char	*line = " grep lady < infile.txt | nl";
 	t_cmd	*list;
+	t_env	*env_list;
 //	int exit_status = 0;
 
 	(void)argc;
@@ -62,6 +63,9 @@ int	main(int argc, char **argv, char **env)
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
 		exit(1);//is this the right error code?
 	}
+	if (!env)
+		return (0);
+	env_list = fill_env_struct(env);
 	while (1)
 	{
 		line = readline("minishell: ");
@@ -72,17 +76,17 @@ int	main(int argc, char **argv, char **env)
 		}
 		printf("line to be parsed: %s\n", line);
 //		add_history(line);
-		parse_for_cmds(&list, line, env);//need to add envp
+		parse_for_cmds(&list, line);//need to add envp
 		print_stack(list);
 		if (!list)
 		{
 			free(line);
 			return (0);
 		}
-//		ft_executor(list);
+		ft_executor(list, env_list);
 		list = NULL; // here needs to be freed
-		free(line);
-		free_cmdtree(list);
+		// free(line);
+		// free_cmdtree(list);
 	}
 //	exit_status = ft_executor(list);
 //	free(line);

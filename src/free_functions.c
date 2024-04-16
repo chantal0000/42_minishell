@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/10 02:28:50 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/16 14:00:08 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	free_cmdtree(t_cmd *tree)
 			close(temp->fd_out);
 		if (temp->pid)
 			close(temp->pid);
-		if (temp->m_env)
-			free_env(&temp->m_env);
+		// if (temp->m_env)
+		// 	free_env(&temp->m_env);
 		if (temp->file_name)
 			free(temp->file_name);
 		free_memory(temp->cmd);
