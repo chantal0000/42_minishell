@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/15 13:48:35 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:09:10 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_is_builtin(t_cmd *cmd)
 		ft_cd(cmd);
 	else if (ft_strcmp(cmd_to_check, "echo") == 0)
 	{
-		ft_echo(cmd);
+//		ft_echo(cmd);
 //		printf("built-in: echo\n");
 	}
 	else if (ft_strcmp(cmd_to_check, "env") == 0)
