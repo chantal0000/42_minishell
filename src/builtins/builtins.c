@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/16 16:09:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/17 09:58:42 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
 	else if (ft_strcmp(cmd_to_check, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd_to_check, "unset") == 0)
-		printf("built-in: unset\n");
+		ft_unset(cmd, env_list);
 	else
 	{
 		// printf("not a built-in\nreturn with -1 \n");
