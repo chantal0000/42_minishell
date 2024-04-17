@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/16 16:44:56 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/17 16:57:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,8 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 	cmd_tree = parse_for_redirections(cmd_tree, s);
 	if (!cmd_tree)
 		return (NULL);
-
-//	printf("Help\n");
-//	cmd_tree = ft_echo(cmd_tree, s);
 	while (*s && !is_token(**s))
 	{
-		if (ft_strncmp(*s, "echo", 4) == 0)
-		{
-			ft_echo(cmd_tree, s);
-			break ;
-		}
 		token = find_tokens(s, &non_token);
 		if (token == 0)
 			break ;
@@ -60,6 +52,12 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 			exit (1);
 		}
 		parse_line(cmd_tree->cmd[i]);
+		if (ft_strncmp(cmd_tree->cmd[i], "echo", 4) == 0)
+		{
+			ft_echo(cmd_tree, s);
+			cmd_tree = parse_for_redirections(cmd_tree, s);
+			return (cmd_tree);
+		}
 		i++;
 		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
@@ -88,7 +86,6 @@ t_cmd	*parse_exec_cmds(char **s)
 		cmd_tree->cmd[i] = NULL;
 		i++;
 	}
-	cmd_tree = ft_echo(cmd_tree, s);//break?
 	cmd_tree = init_exec_cmds(s, non_token);
 	if(!cmd_tree)
 		free_cmdtree(cmd_tree);

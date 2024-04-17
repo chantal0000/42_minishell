@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/17 13:02:28 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:42:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,9 @@ char	**export_split(char	*s);
 
 //parse_echo_awk.c
 t_cmd	*ft_echo(t_cmd *cmd_tree, char **s);
+int		parse_quotes_for_echo(char *s);
 
-int	is_echo_token(char s);
+int		is_echo_token(char s);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);

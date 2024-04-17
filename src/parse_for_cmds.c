@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/16 15:11:19 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/17 14:34:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,32 +103,3 @@ char	*check_for_quotes(char *s)
 	return (s);
 }
 
-/*t_cmd	*parse_for_groups(char **s)
-{
-	t_cmd	*cmd;
-//	int		token;
-
-	if (!**s || !s)
-		return (0);
-//	printf("%s\n", *s);
-//	printf("now checking for groups\n");
-	if (!check_next_char(s, '('))
-	{
-		printf("missing prev bracket");
-		exit (1);
-	}
-//	token = find_tokens(s, 0);
-	find_tokens(s, 0);
-//	printf("string in group %s\n", *s);
-//	printf("token in group %c\n", token);
-	cmd = parse_for_pipe(s);
-	if (!check_next_char(s, ')'))
-	{
-		printf("missing closing bracket\n");
-		exit (1);//bash doesn't exit here...update it to match
-	}
-	printf("\nGROUP CLOSED\n");
-	find_tokens(s, 0);
-	cmd = parse_for_redirections(cmd, s);
-	return (cmd);
-}*/

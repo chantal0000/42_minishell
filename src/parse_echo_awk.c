@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/16 17:03:20 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/17 16:57:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,27 @@
 t_cmd	*ft_echo(t_cmd *cmd_tree, char **s)
 {
 	int		i;
-	int		token;
-	char	*non_token;
+	int		len;
+	t_cmd	*temp;
 
 	i = 0;
-	cmd_tree = ft_init_struct();
-	non_token = NULL;
-	printf("string in ft_echo: %s\n", *s);
-	if (ft_strncmp(*s, "echo", 4) == 0)
+	temp = cmd_tree;
+	len = 0;
+//	printf("echo fcn\n");
+	if (ft_strncmp(temp->cmd[i], "echo", 4) == 0)
 	{
-		while (**s && !is_whitespace(**s) && !is_echo_token(**s))
-		{
-			token = find_tokens(s, &non_token);
-			if (token == 0)
-				break ;
-			cmd_tree->token = token;
-			cmd_tree->cmd[i] = ft_strdup(non_token);
-			if (!cmd_tree)
-			{
-				free_memory(s);
-				free (non_token);
-				printf("error copying cmd into array");
-				exit (1);
-			}
-			parse_line(cmd_tree->cmd[i]);
-			printf("cmd->[%d]: %s", i, cmd_tree->cmd[i]);
-			i++;
-			s++;
-		}
-		cmd_tree->cmd[i] = NULL;
+		i++;
+//		printf("echo fcn 1\n");
+		len = parse_quotes_for_echo(*s);
+//		printf("echo fcn 2\n");
+		temp->cmd[i] = strndup(*s, len + 1);
+//		printf("echo fcn 3 \n");
 	}
+	i++;
+	temp->cmd[i] = NULL;
+	cmd_tree = temp;	
+	*s += len;
+	printf("s before exit echo fcn%s\n", *s);
 	return (cmd_tree);
 }
 
@@ -69,4 +60,46 @@ int	is_echo_token(char s)
 	if (ft_strchr(tokens, s))
 		return (1);
 	return (0);
+}
+
+int	parse_quotes_for_echo(char *s)
+{
+	int		in_single;
+	int		in_double;
+	int		i;
+
+	if (!s)
+	{
+		printf("string is empty");
+		exit(1);
+	}
+	i = 0;
+	in_single = 0;
+	in_double = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\'' && (s[i - 1]) != '\\' && !in_double)
+		{
+			i++;
+			in_single = !in_single;
+			while (s[i] != '\'' && (s[i - 1]) != '\\' && s[i] != '\0' && s[i] != '|')
+				i++;
+			return (i);
+		}
+		else if (s[i] == '\"' && (s[i - 1]) != '\\' && !in_single)
+		{
+			i++;
+			in_double = !in_double;
+			while (s[i] != '\"' && (s[i - 1]) != '\\' && s[i] != '\0' && s[i] != '|')
+				i++;
+			return (i);
+		}
+		else
+		{
+			while (s[i] != '|' && s[i] != '\0')
+				i++;
+//			return (i);
+		}
+	}
+	return (i);
 }
