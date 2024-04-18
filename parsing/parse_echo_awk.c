@@ -6,36 +6,55 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/17 16:57:58 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/18 16:51:06 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+t_cmd	*echo_cmds(char **s)
+{
+	int		i;
+	t_cmd	*cmd_tree;
+
+	i = 0;
+	cmd_tree = ft_init_struct();
+	cmd_tree = parse_for_redirections(cmd_tree, s);
+	if (ft_strncmp(*s, "echo", 4) == 0)
+		cmd_tree = ft_echo(cmd_tree, s);
+	return (cmd_tree);
+}
+
+	
 t_cmd	*ft_echo(t_cmd *cmd_tree, char **s)
 {
 	int		i;
 	int		len;
 	t_cmd	*temp;
+	char	*arg_start;
+	char	*file_name;
 
 	i = 0;
 	temp = cmd_tree;
 	len = 0;
-//	printf("echo fcn\n");
-	if (ft_strncmp(temp->cmd[i], "echo", 4) == 0)
+	file_name = NULL;
+	find_tokens(s, &file_name);
+	if (ft_strncmp(file_name, "echo", 4) == 0)
 	{
+		temp->cmd[i] = parse_line(ft_strdup(file_name));
+		arg_start = *s;
+		printf("s in loop: %s\n", *s);
+		while (arg_start[len] != '|' && arg_start[len] != '\0')
+			len++; 
 		i++;
-//		printf("echo fcn 1\n");
-		len = parse_quotes_for_echo(*s);
-//		printf("echo fcn 2\n");
-		temp->cmd[i] = strndup(*s, len + 1);
-//		printf("echo fcn 3 \n");
+		temp->cmd[i] = ft_strndup(arg_start, len);
+		arg_start += len;
+		temp->cmd[3] = NULL;
+		cmd_tree = temp;
+		*s = arg_start + 1;
 	}
-	i++;
-	temp->cmd[i] = NULL;
-	cmd_tree = temp;	
-	*s += len;
-	printf("s before exit echo fcn%s\n", *s);
+	printf("in loop cmd[0]: %s\n", temp->cmd[0]);
+	printf("in loop cmd[1]: %s\n", temp->cmd[1]);
 	return (cmd_tree);
 }
 
@@ -62,7 +81,7 @@ int	is_echo_token(char s)
 	return (0);
 }
 
-int	parse_quotes_for_echo(char *s)
+/*int	parse_quotes_for_echo(char *s)
 {
 	int		in_single;
 	int		in_double;
@@ -102,4 +121,4 @@ int	parse_quotes_for_echo(char *s)
 		}
 	}
 	return (i);
-}
+}*/

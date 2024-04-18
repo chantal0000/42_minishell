@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/16 14:02:24 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:49:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **env)
 			exit(1);
 		}
 		printf("line to be parsed: %s\n", line);
-//		add_history(line);
+		add_history(line);
 		parse_for_cmds(&list, line);//need to add envp
 		print_stack(list);
 		if (!list)
@@ -85,11 +85,14 @@ int	main(int argc, char **argv, char **env)
 		}
 		ft_executor(list, env_list);
 		list = NULL; // here needs to be freed
-		// free(line);
 		// free_cmdtree(list);
 	}
+	HIST_ENTRY *entry = history_get(where_history());
+	printf("%s\n", entry->line);
 //	exit_status = ft_executor(list);
 //	free(line);
 //	free_cmdtree(list);
 //	return (exit_status);
+	free(line);
+	return (0);
 }

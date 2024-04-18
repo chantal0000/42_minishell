@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 15:13:34 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:51:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,13 @@ void	free_env(t_env	**env);
 char	*ft_strndup(const char *s, size_t n);
 int		ft_strcmp(char *s1, char *s2);
 int		find_delimiter(char *s1, char *delim);
-//char	*check_quotes(char *s);
+char	*check_quotes(char *s);
 char	**export_split(char	*s);
 
 //parse_echo_awk.c
 t_cmd	*ft_echo(t_cmd *cmd_tree, char **s);
 int		parse_quotes_for_echo(char *s);
+t_cmd	*echo_cmds(char **s);
 
 int		is_echo_token(char s);
 
