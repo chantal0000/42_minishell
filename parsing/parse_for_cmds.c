@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/17 14:34:49 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/18 15:09:59 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	if (!s)
 		return ;
 	s = check_for_quotes(s);
-//	s = parse_for_quotes(s);
 	printf("after parsing quotes: %s\n", s);
 	parse_for_pipe(&s, cmd, 0, &index);
 	update_fd(*cmd);
