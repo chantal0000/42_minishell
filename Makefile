@@ -6,7 +6,7 @@
 #    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/17 09:59:27 by chbuerge         ###   ########.fr        #
+#    Updated: 2024/04/18 15:05:00 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRCS = src/main.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
-		src/builtins/ft_unset.c
+		src/builtins/ft_unset.c \
+		src/builtins/builtins_error.c
 
 LIBFT = libft/libft.a
 CC = cc

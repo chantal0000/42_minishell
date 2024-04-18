@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:06:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/10 10:34:26 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:13:18 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cd(t_cmd *cmd)
 	array_size = ft_array_size(cd_cmd);
 	if (array_size > 2)
 	{
-		printf("error\n");
+		ft_handle_error_cd(cmd);
 		return (EXIT_FAILURE);
 	}
 	home_dir = getenv("HOME");
@@ -53,7 +53,11 @@ int	ft_cd(t_cmd *cmd)
 	else
 	{
 		if (cd_cmd[1])
-			chdir(cd_cmd[1]);
+			if (chdir(cd_cmd[1]) != 0)
+			{
+				ft_handle_error_cd(cmd);
+				return (EXIT_FAILURE);
+			}
 	}
 	return (0);
 }
