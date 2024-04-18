@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/17 16:42:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/18 15:13:34 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,4 +156,7 @@ int	ft_pwd();
 int	ft_export(t_cmd *cmd, t_env *env_list);
 void	insert_end(t_env **head, char *line);
 int	ft_unset(t_cmd *cmd, t_env *env_list);
+
+int	ft_handle_error_export(t_cmd *cmd);
+int	ft_handle_error_cd(t_cmd *cmd);
 #endif
