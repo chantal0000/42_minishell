@@ -36,7 +36,8 @@ SRCS = src/main.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
-		src/builtins/ft_unset.c
+		src/builtins/ft_unset.c \
+		src/builtins/builtins_error.c
 
 LIBFT = libft/libft.a
 CC = cc

@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:16:16 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/16 18:11:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:04:33 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,24 @@ int	ft_export(t_cmd *cmd, t_env *env_list)
 						insert_end(&env_list, cmd->cmd[1]);
 		}
 		else
-			printf("FAIL syntax\n");
+		{
+			ft_handle_error_export(cmd);
+		}
 	}
 	return (0);
 }
+
+// if (!cmd_path)
+// 	{
+// 		write(STDERR_FILENO, "Command '", 9);
+// 		while (cmd[i])
+// 		{
+// 			write(STDERR_FILENO, cmd[i], ft_strlen(cmd[i]));
+// 			i++;
+// 		}
+// 		write(STDERR_FILENO, "' not found\n", 12);
+// 		// free array function from pipex?
+// 		//if (split_cmd)
+// 		//	free_array(split_cmd);
+// 		return (127);
+// 	}
