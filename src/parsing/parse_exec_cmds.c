@@ -6,11 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 16:48:05 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 15:19:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	*parse_line(char *arr)
 {
@@ -30,16 +30,11 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 	int		i;
 	int		token;
 	t_cmd	*cmd_tree;
+	char	*temp;
 
 	i = 0;
 	token = 0;
 	cmd_tree = ft_init_struct();
-	cmd_tree = parse_for_redirections(cmd_tree, s);
-	if (ft_strncmp(*s, "echo", 4) == 0)
-	{
-		cmd_tree = echo_cmds(s);
-//		return (cmd_tree);
-	}
 	cmd_tree = parse_for_redirections(cmd_tree, s);
 	if (!cmd_tree)
 		return (NULL);
@@ -49,6 +44,13 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		if (token == 0)
 			break ;
 		cmd_tree->token = token;
+		temp = parse_line(non_token);
+		if (ft_strncmp(temp, "echo", 4) == 0)
+		{
+			printf("hehe echo found\n");
+			cmd_tree = echo_cmds(cmd_tree, s);
+			break ;
+		}
 		cmd_tree->cmd[i] = ft_strdup(non_token);
 		if (!cmd_tree)
 		{
@@ -70,7 +72,6 @@ t_cmd	*parse_exec_cmds(char **s)
 	t_cmd	*cmd_tree;
 	t_cmd	*last;
 	char	*non_token;
-	int		i;
 
 	non_token = NULL;
 	last = NULL;
@@ -80,12 +81,12 @@ t_cmd	*parse_exec_cmds(char **s)
 		printf("cmd_tree initiation in exec failed\n");
 		exit (1);
 	}
-	i = 0;
-	while (i < MAXARGS)
+/*	if (ft_strncmp(*s, "echo", 4) == 0)
 	{
-		cmd_tree->cmd[i] = NULL;
-		i++;
-	}
+		cmd_tree = echo_cmds(cmd_tree, s);
+		printf("s after echo %s\n", *s);
+//		return (cmd_tree);
+	}*/
 	cmd_tree = init_exec_cmds(s, non_token);
 	if(!cmd_tree)
 		free_cmdtree(cmd_tree);

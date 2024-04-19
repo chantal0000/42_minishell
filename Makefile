@@ -6,23 +6,21 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/18 16:47:09 by kbolon           ###   ########.fr        #
+#    Updated: 2024/04/19 12:16:23 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS = src/main.c \
-		parsing/find_tokens.c \
-		parsing/init_struct.c \
-		parsing/parse_echo_awk.c \
-		parsing/parse_exec_cmds.c \
-		parsing/parse_for_cmds.c \
-		parsing/parse_pipes.c \
-		parsing/parse_for_redirs.c \
-		parsing/parse_line.c \
-		parsing/delimiter.c \
-		src/heredoc.c \
+		src/parsing/find_tokens.c \
+		src/parsing/init_struct.c \
+		src/parsing/parse_echo_awk.c \
+		src/parsing/parse_exec_cmds.c \
+		src/parsing/parse_for_cmds.c \
+		src/parsing/parse_pipes.c \
+		src/parsing/parse_for_redirs.c \
+		src/parsing/delimiter.c \
 		src/free_functions.c \
 		src/utils.c \
 		src/executor/executor.c \

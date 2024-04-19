@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 14:49:34 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 15:36:36 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	print_stack(t_cmd *root)
 	while (temp != NULL)
 	{
 		printf("\nnode[%d]\n", temp->index);
-		printf("fd_in: %d\n", temp->fd_in);
-		printf("fd_out: %d\n", temp->fd_out);
+//		printf("fd_in: %d\n", temp->fd_in);
+//		printf("fd_out: %d\n", temp->fd_out);
 		printf("file_name: %s\n", temp->file_name);
-		printf("instructions: %d\n", temp->instructions);
+//		printf("instructions: %d\n", temp->instructions);
 		// printf("env: %s\n", temp->m_env->cmd_env);
-		printf("pid: %d\n", temp->pid);
+//		printf("pid: %d\n", temp->pid);
 		printf("token: %c\n", temp->token);
 		printf("delimiter: %s\n", temp->heredoc_delimiter);
 		for (int i = 0; i < MAX_CONTENT_SIZE && temp->heredoc_content[i] != NULL; i++)
@@ -52,12 +52,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	list = NULL;
-/*	list = ft_init_struct();
-	if (!list)
-	{
-		free(line);
-		return (0);
-	}*/
 	if (argc != 1)
 	{
 		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);

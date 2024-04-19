@@ -6,11 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 16:52:33 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 12:14:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	find_delimiter(char *s1, char *delim)
 {
@@ -60,4 +60,3 @@ char	*check_quotes(char *s)
 	}
 	return (temp);
 }
-
