@@ -6,11 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 15:09:59 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 12:15:29 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 //if (s != '\0' means we have stopped before end of string
 void	parse_for_cmds(t_cmd **cmd, char *s)

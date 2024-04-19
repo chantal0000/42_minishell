@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 16:51:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 13:08:40 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	**export_split(char	*s);
 //parse_echo_awk.c
 t_cmd	*ft_echo(t_cmd *cmd_tree, char **s);
 int		parse_quotes_for_echo(char *s);
-t_cmd	*echo_cmds(char **s);
+t_cmd	*echo_cmds(t_cmd *cmd, char **s);
 
 int		is_echo_token(char s);
 

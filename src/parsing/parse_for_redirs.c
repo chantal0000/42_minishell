@@ -6,11 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/15 12:24:31 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 12:20:44 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 {
@@ -31,7 +31,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 			node->heredoc_delimiter = parse_line(strdup(file_name));
 			ft_heredoc(node);
 //			node = redir_cmd(node, O_RDONLY | O_CREAT, 0);//fd=0 do I need create here?
-			printf("string from heredoc: %s\n", make_string(node->heredoc_content));
+			make_string(node->heredoc_content);
 		}
 		else
 			node->file_name = parse_line(strdup(file_name));
@@ -63,11 +63,11 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 	}
 	else if (fd == 1)
 	{
-		node->fd_out = open(node->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0777); // | S_IRUSR | S_IWUSR,
+		node->fd_out = open(node->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (node->fd_out < 0)
 		{
 			printf("Error Opening Outfile\n");
-			close(node->fd_out);//need to iterate through and close other fds
+			close(node->fd_out);
 			exit (1);
 		}
 		node->fd_in = -1;
@@ -94,8 +94,8 @@ void	ft_heredoc(t_cmd *cmd)
 			printf("Problems reading input for heredoc");
 			exit(1);
 		}
-		if (strcmp(str, cmd->heredoc_delimiter) == 0)
-			break;
+		if (ft_strcmp(str, cmd->heredoc_delimiter) == 0)
+			break ;
 		cmd->heredoc_content[i] = ft_strdup(str);
 		if (!cmd->heredoc_content[i])
 		{

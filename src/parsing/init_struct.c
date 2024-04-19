@@ -6,11 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/09 17:21:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 12:15:04 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 t_cmd	*ft_init_struct(void)
 {

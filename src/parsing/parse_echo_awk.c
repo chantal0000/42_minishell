@@ -6,26 +6,25 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 16:51:06 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/19 14:38:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-t_cmd	*echo_cmds(char **s)
+t_cmd	*echo_cmds(t_cmd *cmd, char **s)
 {
 	int		i;
-	t_cmd	*cmd_tree;
+//	t_cmd	*cmd_tree;
 
 	i = 0;
-	cmd_tree = ft_init_struct();
-	cmd_tree = parse_for_redirections(cmd_tree, s);
+//	cmd_tree = ft_init_struct();
+//	cmd = parse_for_redirections(cmd, s);
 	if (ft_strncmp(*s, "echo", 4) == 0)
-		cmd_tree = ft_echo(cmd_tree, s);
-	return (cmd_tree);
+		cmd = ft_echo(cmd, s);
+	return (cmd);
 }
 
-	
 t_cmd	*ft_echo(t_cmd *cmd_tree, char **s)
 {
 	int		i;
@@ -41,20 +40,25 @@ t_cmd	*ft_echo(t_cmd *cmd_tree, char **s)
 	find_tokens(s, &file_name);
 	if (ft_strncmp(file_name, "echo", 4) == 0)
 	{
+		temp->cmd[i] = (char *) malloc (sizeof(5));
+		if (!temp->cmd[i])
+			exit (1);
 		temp->cmd[i] = parse_line(ft_strdup(file_name));
 		arg_start = *s;
 		printf("s in loop: %s\n", *s);
 		while (arg_start[len] != '|' && arg_start[len] != '\0')
 			len++; 
 		i++;
+		temp->cmd[i] = (char *) malloc (sizeof(len + 1));
+		if (!temp->cmd[i])
+			exit (1);
 		temp->cmd[i] = ft_strndup(arg_start, len);
+		printf("cmd[1] %s\n", temp->cmd[i]);
 		arg_start += len;
 		temp->cmd[3] = NULL;
 		cmd_tree = temp;
 		*s = arg_start + 1;
 	}
-	printf("in loop cmd[0]: %s\n", temp->cmd[0]);
-	printf("in loop cmd[1]: %s\n", temp->cmd[1]);
 	return (cmd_tree);
 }
 
