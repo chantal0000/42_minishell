@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/19 12:15:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/22 06:39:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 		printf("check syntax\n");//check what bash returns
 		return ;
 	}
-	restore_pipes(*cmd);
+	restore_pipes_and_spaces(*cmd);
 }
 
 int	is_token(char s)
@@ -92,6 +92,8 @@ char	*check_for_quotes(char *s)
 			in_double = !in_double;
 		else if (*temp == '|' && (in_single || in_double))
 			*temp = '\xFD';
+		else if (*temp == ' ' && (in_single || in_double))
+			*temp =  '\xFE';
 		temp++;
 	}
 	if (in_single || in_double == -1)
