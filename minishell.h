@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/19 13:08:40 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/22 06:56:26 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	print_stack(t_cmd *root);
 //find_tokens.c
 int	check_for_alligators(char **s);
 int	find_tokens(char **s, char **beg_of_file);
+char	ft_check_for_echo(char **s);
 
 //init_struct.c
 t_cmd	*ft_init_struct(void);
@@ -97,7 +98,7 @@ char	*make_string(char **s);
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
 char	parse_for_single_quotes(char *s);
-void	restore_pipes(t_cmd *cmd);
+void	restore_pipes_and_spaces(t_cmd *cmd);
 void	ft_restore(char *s);
 
 

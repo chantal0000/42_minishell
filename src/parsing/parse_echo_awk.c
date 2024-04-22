@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/19 14:38:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/22 06:38:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 t_cmd	*echo_cmds(t_cmd *cmd, char **s)
 {
-	int		i;
+//	int		i;
 //	t_cmd	*cmd_tree;
 
-	i = 0;
+//	i = 0;
 //	cmd_tree = ft_init_struct();
 //	cmd = parse_for_redirections(cmd, s);
 	if (ft_strncmp(*s, "echo", 4) == 0)

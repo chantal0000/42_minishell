@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/19 15:09:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/22 06:37:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 	}
 }
 
-void	restore_pipes(t_cmd *cmd)
+void	restore_pipes_and_spaces(t_cmd *cmd)
 {
 	int		i;
 	t_cmd	*temp;
@@ -67,6 +67,8 @@ void	ft_restore(char *s)
 	{
 		if (*s == '\xFD')
 			*s = '|';
+		if (*s ==  '\xFE')
+			*s = ' ';
 		s++;
 	}
 }
