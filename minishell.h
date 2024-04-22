@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/22 06:56:26 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/22 17:16:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,13 @@ char	*check_quotes(char *s);
 char	**export_split(char	*s);
 
 //parse_echo_awk.c
-t_cmd	*ft_echo(t_cmd *cmd_tree, char **s);
-int		parse_quotes_for_echo(char *s);
-t_cmd	*echo_cmds(t_cmd *cmd, char **s);
-
-int		is_echo_token(char s);
+//t_cmd	*ft_echo(t_cmd *cmd_tree, char **s, char *non_token);
+//int		parse_quotes_for_echo(char *s);
+//t_cmd	*echo_cmds(t_cmd *cmd, char **s);
+t_cmd	*ft_parse_echo(t_cmd *cmd_tree, char **str);
+void	ft_echo(t_cmd *cmd);
+int		ft_count(char **arr);
+//int		is_echo_token(char s);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);

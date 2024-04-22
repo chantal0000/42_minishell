@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/22 06:43:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/22 17:06:23 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		if (token == 0)
 			break ;
 		cmd_tree->token = token;
+/*		if (cmd_tree->token == 'e')
+		{
+			cmd_tree = ft_parse_echo(cmd_tree, s);
+			return (cmd_tree);
+		}*/
 		cmd_tree->cmd[i] = ft_strdup(non_token);
 		if (!cmd_tree)
 		{
@@ -72,7 +77,7 @@ t_cmd	*parse_exec_cmds(char **s)
 		exit (1);
 	}
 	cmd_tree = init_exec_cmds(s, non_token);
-	if(!cmd_tree)
+	if (!cmd_tree)
 		free_cmdtree(cmd_tree);
 	return (cmd_tree);
 }

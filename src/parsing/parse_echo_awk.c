@@ -6,123 +6,144 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/22 06:38:25 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/22 17:21:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_cmd	*echo_cmds(t_cmd *cmd, char **s)
+/*t_cmd	*ft_parse_echo(t_cmd *cmd_tree, char **str)
 {
-//	int		i;
-//	t_cmd	*cmd_tree;
+	int		i;
+	char	*arg_start;
+	char	*s;
+	t_cmd	*temp;
 
-//	i = 0;
-//	cmd_tree = ft_init_struct();
-//	cmd = parse_for_redirections(cmd, s);
-	if (ft_strncmp(*s, "echo", 4) == 0)
-		cmd = ft_echo(cmd, s);
-	return (cmd);
+	i = 0;
+	s = *str;
+	temp = cmd_tree;
+	temp->cmd[i++] = ft_strdup("echo");
+	while (*s && *s != '|')
+	{
+		if (*s == '-' && *(s + 1) == 'n' && *(s + 2) == ' ')
+		{
+			temp->token = 'n';
+			s += 3;
+		}
+		else
+		{
+			arg_start = s;
+			while (*s && (*s != '|' && *(s - 1) != '\\') && *s != '\0')
+				s++;
+			temp->cmd[i++] = ft_strndup(arg_start, s - arg_start);
+		}
+	}
+	temp->cmd[i] = NULL;
+	*str = s;
+	return (temp);
+}*/
+int	ft_count(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
 }
 
-t_cmd	*ft_echo(t_cmd *cmd_tree, char **s)
+void	ft_echo(t_cmd *cmd)
+{
+	t_cmd	*temp;
+	int		index;
+	int		i;
+
+	i = ft_count(cmd->cmd);
+	temp = cmd;
+	if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
+	{
+		index = 2;
+		while (index < i)
+		{
+			printf("%s ", temp->cmd[index]);
+			index++;
+		}
+		printf("%s", temp->cmd[index]);
+	}
+	else
+	{
+		index = 1;
+		while (index < i)
+		{
+			printf("%s ", temp->cmd[index]);
+			index++;
+		}
+		printf("%s\n", temp->cmd[index]);
+	}
+}
+//parse through if no quotes
+
+/*		parse_for_pipe(&temp->cmd[1], &temp, 0, &index);
+		update_fd(*cmd);
+		// fill_env_struct(*cmd, env);
+		while (&temp->cmd[1] != '\0' && is_whitespace(&temp->cmd[1]))
+			(*temp->cmd[1])++;
+		if (*temp != '\0')
+		{
+			printf("check syntax\n");//check what bash returns
+			return ;
+		}
+		restore_pipes_and_spaces(*cmd);
+		if (cmd->token == 'e')
+			printf("\n");
+	}*/
+
+
+/*t_cmd	*ft_echo(t_cmd *cmd_tree, char **str)
 {
 	int		i;
 	int		len;
-	t_cmd	*temp;
 	char	*arg_start;
-	char	*file_name;
+	char	*s;
+	t_cmd	*temp;
 
-	i = 0;
-	temp = cmd_tree;
+	i = 1;
 	len = 0;
-	file_name = NULL;
-	find_tokens(s, &file_name);
-	if (ft_strncmp(file_name, "echo", 4) == 0)
+	s = *str;
+	arg_start = s;
+	temp = cmd_tree;
+	temp->cmd[0] = ft_strdup("echo");
+	while (s[len] != '|' && s[len - 1] != '\\' && s[len] != '\0')
 	{
-		temp->cmd[i] = (char *) malloc (sizeof(5));
-		if (!temp->cmd[i])
-			exit (1);
-		temp->cmd[i] = parse_line(ft_strdup(file_name));
-		arg_start = *s;
-		printf("s in loop: %s\n", *s);
-		while (arg_start[len] != '|' && arg_start[len] != '\0')
-			len++; 
-		i++;
-		temp->cmd[i] = (char *) malloc (sizeof(len + 1));
-		if (!temp->cmd[i])
-			exit (1);
-		temp->cmd[i] = ft_strndup(arg_start, len);
-		printf("cmd[1] %s\n", temp->cmd[i]);
-		arg_start += len;
-		temp->cmd[3] = NULL;
-		cmd_tree = temp;
-		*s = arg_start + 1;
+		if (s[len] == '-' && s[len + 1] == 'n' && s[len + 2] == ' ')
+		{
+			while (s[len] != ' ' && s[len] != '\0')
+				len++;
+			temp->cmd[i] = ft_strndup(arg_start, len);
+			s += len + 1;
+			i++;
+			len = 0;
+		}
+		len++;
 	}
+	arg_start = s;
+	temp->cmd[i] = ft_strndup(arg_start, len);
+	temp->cmd[3] = NULL;
+	*str = s + len;
+	cmd_tree = temp;
 	return (cmd_tree);
-}
+}*/
 
-char	*parse_line_echo(char *arr)
+/*char	*parse_line_echo(char *arr)
 {
 	int	i;
 
 	if (!arr)
 		return (NULL);
 	i = 0;
-	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
+	while (arr[i] != '\0' && (arr[i] != '\'' && arr[i - 1] != '\\'))
 		i++;
 	arr[i] = '\0';
 	return (arr);
-}
-
-int	is_echo_token(char s)
-{
-	char	*tokens;
-
-	tokens = "\'\"";
-	if (ft_strchr(tokens, s))
-		return (1);
-	return (0);
-}
-
-/*int	parse_quotes_for_echo(char *s)
-{
-	int		in_single;
-	int		in_double;
-	int		i;
-
-	if (!s)
-	{
-		printf("string is empty");
-		exit(1);
-	}
-	i = 0;
-	in_single = 0;
-	in_double = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '\'' && (s[i - 1]) != '\\' && !in_double)
-		{
-			i++;
-			in_single = !in_single;
-			while (s[i] != '\'' && (s[i - 1]) != '\\' && s[i] != '\0' && s[i] != '|')
-				i++;
-			return (i);
-		}
-		else if (s[i] == '\"' && (s[i - 1]) != '\\' && !in_single)
-		{
-			i++;
-			in_double = !in_double;
-			while (s[i] != '\"' && (s[i - 1]) != '\\' && s[i] != '\0' && s[i] != '|')
-				i++;
-			return (i);
-		}
-		else
-		{
-			while (s[i] != '|' && s[i] != '\0')
-				i++;
-//			return (i);
-		}
-	}
-	return (i);
 }*/
+
