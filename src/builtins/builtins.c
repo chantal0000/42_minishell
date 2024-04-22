@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/17 09:58:42 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:15:57 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
 		ft_cd(cmd);
 	else if (ft_strcmp(cmd_to_check, "echo") == 0)
 	{
-//		ft_echo(cmd);
+		ft_echo(cmd);
 //		printf("built-in: echo\n");
 	}
 	else if (ft_strcmp(cmd_to_check, "env") == 0)
