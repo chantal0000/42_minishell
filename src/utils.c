@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/18 16:54:49 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:02:57 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,33 +65,3 @@ char	**export_split(char	*s)
 	check_quotes(arr[1]);
 	return (arr);
 }
-
-/*char	*check_quotes(char *s)
-{
-	size_t		i;
-	size_t		len;
-	char		*temp;
-
-	i = 0;
-	len = ft_strlen(s);
-	temp = s;
-	if ((s[0] == '\'' && s[len - 1] == '\'') || (s[0] == '\"' && s[len - 1] == '\"'))
-	{
-		if (s[i] == s[len - 1])
-		{
-			temp = (char *)malloc(sizeof(char) * len -2);
-			if (!temp)
-			{
-				printf("problems mem alloc checkquotes");
-				exit (1);
-			}
-			while (i < len - 2)
-			{
-				temp[i] = s[i + 1];
-				i++;
-			}
-			temp[i] = '\0';
-		}
-	}
-	return (temp);
-}*/

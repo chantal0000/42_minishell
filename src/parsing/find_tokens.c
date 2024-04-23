@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:35:03 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/22 17:06:47 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:53:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,15 @@ int	find_tokens(char **s, char **beg_of_file)
 		line++;
 	else if (*line == '>' || *line == '<')
 		token = check_for_alligators(&line);
-/*	else if (ft_strncmp (line, "echo", 4) == 0)
+/*	else if (!ft_strncmp (line, "echo", 4))
 	{
 		token = 'e';
+		printf("echo token found in find_token\n");
 		while (*line != '\0' && !is_whitespace(*line) && !is_token(*line))
 			line++;
+//		line += 4;
+		printf("line after echo: %s\n", line);
+		return (token);
 	}*/
 	else
 	{

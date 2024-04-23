@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/19 15:36:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/23 17:10:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 			printf("Problems reading input");
 			exit(1);
 		}
-		printf("line to be parsed: %s\n", line);
+//		printf("line to be parsed: %s\n", line);
 		add_history(line);
 		parse_for_cmds(&list, line);//need to add envp
 		print_stack(list);
