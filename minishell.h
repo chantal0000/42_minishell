@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/22 17:16:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:04:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ typedef struct s_cmd
 
 void	print_stack(t_cmd *root);
 
+//delimiter.c
+int		find_delimiter(char *s1, char *delim);
+char	*check_quotes(char *s);
+
 //find_tokens.c
 int	check_for_alligators(char **s);
 int	find_tokens(char **s, char **beg_of_file);
@@ -122,6 +126,7 @@ t_cmd	*ft_parse_echo(t_cmd *cmd_tree, char **str);
 void	ft_echo(t_cmd *cmd);
 int		ft_count(char **arr);
 //int		is_echo_token(char s);
+void	parse_for_echo(t_cmd *cmd_tree);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);

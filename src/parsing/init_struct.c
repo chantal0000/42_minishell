@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/19 12:15:04 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:09:36 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,31 @@ void	update_fd(t_cmd *tree)
 			temp->fd_out = -1;
 		}
 		temp->pid = 0;
+		if (ft_strcmp(temp->cmd[0], "echo") == 0)
+		{
+			if (ft_strcmp(temp->cmd[1], "-n") == 0)
+				temp->token = 'n';
+			else
+				temp->token = 'e';
+		}
 		temp = temp->next;
 	}
 	tree = temp;
 }
 
+void	parse_for_echo(t_cmd *cmd_tree)
+{
+	t_cmd	*temp;
+
+	temp = cmd_tree;
+	while (temp)
+	{
+		if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
+			temp->token = 'n';
+		else if (!ft_strcmp(temp->cmd[0], "echo") && ft_strcmp(temp->cmd[1], "-n"))
+			temp->token = 'e';
+		else
+			temp = temp->next;
+	}
+//	cmd_tree = temp;
+}
