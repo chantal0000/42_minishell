@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/23 17:45:39 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/23 17:57:44 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	ft_echo(t_cmd *cmd)
 		i = 1;
 	while (i < num)
 	{
-		check_quotes(temp->cmd[i]);
-		printf("%s", temp->cmd[i]);
+		if (i == num - 1)
+			printf("%s", check_quotes(temp->cmd[i]));
+		else
+			printf("%s ", temp->cmd[i]);
 		i++;
 	}
 	if (cmd->token == 'e')
