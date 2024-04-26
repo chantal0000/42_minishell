@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/26 10:18:25 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:18:37 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	ft_simple_cmd(t_cmd *node, char **env, int exit_status, int pid, t_env *env_
 	if ((node->fd_in) != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
+	{
 		dup2(node->fd_out, STDOUT_FILENO);
+		close(node->fd_out);
+	}
 	if (ft_is_builtin(node, env_list) == 0)
 		return (exit_status);
 	else
@@ -40,7 +43,10 @@ int	ft_simple_cmd(t_cmd *node, char **env, int exit_status, int pid, t_env *env_
 			return (exit_status);
 		}
 	}
-	return (0);
+	// close fd_in??
+    // close(original_stdout); // Clo
+		// dup(STDOUT_FILENO);// somewhere set back to be stdout?
+	return (exit_status);
 }
 
 /*
@@ -216,8 +222,10 @@ int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head, t_env *env
 
 void	close_after(int std_in, int std_out, int pipe_fd[2])
 {
-	close(std_in);
-	close(std_out);
+	if (std_in >= 0)
+		close(std_in);
+	if (std_out >= 0)
+		close(std_out);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 }
@@ -241,6 +249,7 @@ int	ft_executor(t_cmd *node, t_env *env_list)
 	{
 		exit_status = loop_cmds(node, env1, exit_status, head, env_list);
 	}
+
 	// free environment here
 	return (exit_status);
 }

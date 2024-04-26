@@ -44,3 +44,5 @@ char **ft_env_list_to_array(t_env *head)
 
 	return (env_array);
 }
+
+
