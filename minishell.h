@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/26 10:19:12 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:44:29 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
 
 //find_tokens.c
-int	check_for_alligators(char **s);
-int	find_tokens(char **s, char **beg_of_file);
+int		check_for_alligators(char **s);
+int		find_tokens(char **s, char **beg_of_file);
 char	ft_check_for_echo(char **s);
 
 //init_struct.c
@@ -122,14 +122,8 @@ char	*check_quotes(char *s);
 char	**export_split(char	*s);
 
 //parse_echo_awk.c
-//t_cmd	*ft_echo(t_cmd *cmd_tree, char **s, char *non_token);
-//int		parse_quotes_for_echo(char *s);
-//t_cmd	*echo_cmds(t_cmd *cmd, char **s);
-t_cmd	*ft_parse_echo(t_cmd *cmd_tree, char **str);
-void	ft_echo(t_cmd *cmd);
 int		ft_count(char **arr);
-//int		is_echo_token(char s);
-void	parse_for_echo(t_cmd *cmd_tree);
+void	ft_echo(t_cmd *cmd);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);
