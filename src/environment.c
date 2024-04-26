@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:36:23 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/17 13:12:19 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:03:38 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	*create_env_node(char *line)
     //     free(new_node); // Free the allocated memory for the new node
     //     return NULL; // Return NULL
     // }
-	new_node->cmd_env = strdup(line);
+	// new_node->cmd_env = strdup(line);
+	new_node->cmd_env = line;
 	// new_node->env_name = env_name;
 	// new_node->env_value = env_value;
 	new_node->next = NULL;
