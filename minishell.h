@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/23 16:04:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/26 10:19:12 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+extern int	g_signal;
 
 # include <unistd.h>
 # include <stdio.h>
@@ -28,6 +30,7 @@
 # include "libft/libft.h"
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 # define DELIMITER "|<>()"
 # define WHITESPACE " \n\t\r\v"
@@ -168,4 +171,8 @@ int	ft_unset(t_cmd *cmd, t_env *env_list);
 
 int	ft_handle_error_export(t_cmd *cmd);
 int	ft_handle_error_cd(t_cmd *cmd);
+
+// signals.c
+void ft_init_signals();
+void ft_init_signals_input();
 #endif

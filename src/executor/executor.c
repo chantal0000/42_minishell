@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/16 15:05:29 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:18:25 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ int	ft_executor(t_cmd *node, t_env *env_list)
 	pid = 0;
 	// env1 = ft_env_list_to_array(node->m_env);
 	env1 = ft_env_list_to_array(env_list);
+	ft_init_signals_input();
 	if (!node->next && !node->prev)
 		exit_status = ft_simple_cmd(node, env1, exit_status, pid, env_list);
 	else

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
+#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/04/19 12:16:23 by kbolon           ###   ########.fr        #
+#    Updated: 2024/04/26 10:20:06 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRCS = src/main.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
 		src/builtins/ft_unset.c \
-		src/builtins/builtins_error.c
+		src/builtins/builtins_error.c \
+		src/signals/signals.c
 
 LIBFT = libft/libft.a
 CC = cc

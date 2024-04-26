@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/23 17:52:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/26 10:04:15 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*
+** global variable for signal communication, needs to be init in main
+*/
+int	g_signal;
 
 void	print_stack(t_cmd *root)
 {
@@ -51,6 +56,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	g_signal = 0;
 	list = NULL;
 	if (argc != 1)
 	{
@@ -62,11 +68,14 @@ int	main(int argc, char **argv, char **env)
 	env_list = fill_env_struct(env);
 	while (1)
 	{
+		ft_init_signals();
 		line = readline("minishell: ");
+		// this is basically ctrl D
 		if (!line)
 		{
-			printf("Problems reading input");
-			exit(1);
+			// free memory
+			printf("Exit\n");
+			exit(0);
 		}
 //		printf("line to be parsed: %s\n", line);
 		add_history(line);
