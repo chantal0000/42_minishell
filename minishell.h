@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/26 14:44:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:24:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ extern int	g_signal;
 
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
+typedef struct s_exp t_exp;
 
 typedef struct s_env
 {
@@ -49,10 +50,19 @@ typedef struct s_env
 
 }	t_env;
 
+typedef struct s_exp
+{
+	char	*exp_name;
+	char	*exp_value;
+	t_exp	*next;
+}	t_exp;
+
+
 typedef struct s_cmd
 {
 	int		index;
 	t_env	*m_env;
+	t_exp	*exp;
 	int		token;
 	char	*cmd[MAXARGS + 1];
 	char	*file_name;
@@ -71,6 +81,9 @@ void	print_stack(t_cmd *root);
 //delimiter.c
 int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
+char	**shell_split(char *s, char c);
+t_exp	*ft_find_var_declarations(t_cmd **cmd);
+void	ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
 
 //find_tokens.c
 int		check_for_alligators(char **s);
@@ -82,6 +95,7 @@ t_cmd	*ft_init_struct(void);
 t_cmd	*m_lstlast(t_cmd *lst);
 void	m_lstadd_back(t_cmd **lst, t_cmd *new);
 void	update_fd(t_cmd *tree);
+t_exp	*insert_exp(t_exp *head, char *name, char *value);
 
 //parse_exec_cmds.c
 char	*parse_line(char *arr);
@@ -115,11 +129,10 @@ void	free_memory(char **arr);
 void	free_env(t_env	**env);
 
 //utils.c
-char	*ft_strndup(const char *s, size_t n);
-int		ft_strcmp(char *s1, char *s2);
-int		find_delimiter(char *s1, char *delim);
-char	*check_quotes(char *s);
+//char	*ft_strndup(const char *s, size_t n);
+//int		ft_strcmp(char *s1, char *s2);
 char	**export_split(char	*s);
+//char	**shell_split(char	*s, char c);
 
 //parse_echo_awk.c
 int		ft_count(char **arr);

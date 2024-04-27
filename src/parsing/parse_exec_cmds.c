@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/26 14:45:30 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/27 14:59:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
+//		printf("non_token %s\n", non_token);
+/*		if (ft_strchr(non_token, '='))
+		{
+			printf("variable declaration found\n");
+//			if(ft_find_var_declarations(&cmd_tree))
+//				token = find_tokens(s, &non_token);
+		}*/
 		if (token == 0)
 			break ;
 		cmd_tree->token = token;
