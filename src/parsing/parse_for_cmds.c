@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/26 15:45:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:28:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,24 @@
 //if (s != '\0' means we have stopped before end of string
 void	parse_for_cmds(t_cmd **cmd, char *s)
 {
-	int	index;
+	int		index;
+	t_exp	*exp;
 
 	index = 0;
+	exp = NULL;
 	if (!s)
 		return ;
 	s = check_for_quotes(s);
-	s = check_for_expansions(s);
-//	printf("after parsing quotes: %s\n", s);
 	parse_for_pipe(&s, cmd, 0, &index);
 	update_fd(*cmd);
+//	exp = ft_find_var_declarations(cmd);
+//	ft_find_var_expansions(cmd, exp);
+	while (exp)
+	{
+		printf("exp name: %s\n", exp->exp_name);
+		printf("expvalue : %s\n", exp->exp_value);
+		exp = exp->next;
+	}
 	// fill_env_struct(*cmd, env);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;

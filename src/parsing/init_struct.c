@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/23 16:09:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/27 13:42:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,24 @@ void	parse_for_echo(t_cmd *cmd_tree)
 			temp = temp->next;
 	}
 //	cmd_tree = temp;
+}
+
+t_exp	*insert_exp(t_exp *head, char *name, char *value)
+{
+	t_exp	*new_node;
+	t_exp	*temp;
+
+	new_node = (t_exp *)calloc(1, sizeof(t_exp));
+	if (!new_node)
+		return (NULL);
+	new_node->exp_name = strdup(name);
+	new_node->exp_value = strdup(value);
+	new_node->next = NULL;
+	if(!head)
+		return (new_node);
+	temp = head;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = new_node;
+	return (head);
 }
