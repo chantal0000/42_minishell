@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/27 15:28:17 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:10:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,13 @@
 void	parse_for_cmds(t_cmd **cmd, char *s)
 {
 	int		index;
-	t_exp	*exp;
 
-	index = 0;
-	exp = NULL;
 	if (!s)
 		return ;
+	index = 0;
 	s = check_for_quotes(s);
 	parse_for_pipe(&s, cmd, 0, &index);
 	update_fd(*cmd);
-//	exp = ft_find_var_declarations(cmd);
-//	ft_find_var_expansions(cmd, exp);
-	while (exp)
-	{
-		printf("exp name: %s\n", exp->exp_name);
-		printf("expvalue : %s\n", exp->exp_value);
-		exp = exp->next;
-	}
-	// fill_env_struct(*cmd, env);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
 	if (*s != '\0')
@@ -60,7 +49,7 @@ int	is_whitespace(char s)
 
 	whitespace = " \n\t\r\v";
 	if (ft_strchr(whitespace, s))
-		return (1);//returns 1 if a whitespace
+		return (1);
 	return (0);
 }
 
@@ -105,7 +94,7 @@ char	*check_for_quotes(char *s)
 			*temp =  '\xFE';
 		temp++;
 	}
-	if (in_single || in_double == -1)
+	if (in_single || in_double)// == -1)
 	{
 		printf("open quotes found, can't parse");
 		exit (1);
