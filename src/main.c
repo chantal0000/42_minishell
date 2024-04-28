@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/26 18:44:05 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/28 18:39:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	print_stack(t_cmd *root)
 int	main(int argc, char **argv, char **env)
 {
 	static char	*line;
-//	char	*line = " grep lady < infile.txt | nl";
 	t_cmd	*list;
+	t_exp	*exp;
 	t_env	*env_list;
 	int original_stdout = dup(STDOUT_FILENO);
 	int original_stdin = dup(STDIN_FILENO);
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	g_signal = 0;
+	exp = NULL;
 	list = NULL;
 	if (argc != 1)
 	{
@@ -70,7 +71,6 @@ int	main(int argc, char **argv, char **env)
 	env_list = fill_env_struct(env);
 	while (1)
 	{
-
 		ft_init_signals();
 		line = readline("minishell: ");
 		// this is basically ctrl D
@@ -89,7 +89,26 @@ int	main(int argc, char **argv, char **env)
 		}
 //		printf("line to be parsed: %s\n", line);
 		add_history(line);
+		if (ft_strchr(line, '='))
+		{
+			ft_find_var_declarations(&line, &exp);
+//		int	len = ft_strlen(line);
+//		printf("len line main: %d\n", len);
+//			if (len == 0)
+//				break ;
+			if (exp)
+			{
+				t_exp  *temp = exp;
+				while (temp)
+				{
+					printf("exp name: %s\n", temp->exp_name);
+					printf("exp value: %s\n", temp->exp_value);
+					temp = temp->next;
+				}
+			}
+		}
 		parse_for_cmds(&list, line);//need to add envp
+//		parse list for expansions???	
 		print_stack(list);
 		if (!list)
 		{

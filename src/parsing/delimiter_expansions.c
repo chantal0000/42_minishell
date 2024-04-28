@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/27 15:27:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/28 18:35:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,49 +81,62 @@ char	**shell_split(char *s, char c)
 		printf("problems mem alloc in ex split");
 		exit (1);
 	}
-	arr[1] = strndup(s + i + 1, strlen(s) - i - 1);
+	s += i;
+	i = 0;
+	while (s[i] != '\0' && s[i] != ' ' && s[i] != '|')
+		i++;
+	arr[1] = strndup(s + 1, i);
 	if (!arr[1])
 	{
-//		free_memory(arr);
+		free(arr[0]);
 		printf("problems mem alloc in ex split");
 		exit (1);
 	}
 	arr[2] = NULL;
 	check_quotes(arr[1]);
+	s += i;
 	return (arr);
 }
 
-t_exp	*ft_find_var_declarations(t_cmd **cmd)
+void	ft_find_var_declarations(char **s, t_exp **exp)
 {
 	int		i;
+	int		j;
 	char	**arr;
-	t_exp	*exp;
-	t_cmd	**temp;
+	char	*temp;
 
 	i = 0;
-	exp = NULL;
-	temp = cmd;
-	while (temp[0]->cmd[0][i] != '\0')
+	temp = *s;
+	while (temp[i] != '\0')
 	{
-		if (temp[0]->cmd[0][i] == '=')
+		if (temp[i] == '=')
 		{
-			arr = shell_split(temp[0]->cmd[0], '=');
+			j = i - 1;
+			while (j >= 0 && (temp[j] == ' ' || temp[j] == '|'))
+				j--;
+			if (j >= 0)
+			{
+				arr = shell_split(*s, '=');
 				if (!arr)
-					return (NULL);
-			exp = insert_exp(exp, arr[0], arr[1]);
-			temp[0]->token = 'v';
-			printf("what to do\n");
-			temp[0]->cmd[0] = "";
+				{
+					printf("problems splitting shell in exp finder\n");
+					exit (0);
+				}
+				*exp = insert_exp(*exp, arr[0], arr[1]);
+				printf("exp n : %s\n", exp[0]->exp_name);
+				printf("exp v : %s\n", exp[0]->exp_value);
+			}
 		}
 		i++;
 	}
-	cmd = temp;
-	return (exp);
+	temp += i;
+	(*s) = temp;
 }
 
-void	ft_find_var_expansions(t_cmd **cmd, t_exp *exp)
+t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp)
 {
 	int		i;
+	int		j;
 	t_cmd	**temp;
 
 	temp = cmd;
@@ -132,15 +145,23 @@ void	ft_find_var_expansions(t_cmd **cmd, t_exp *exp)
 		i = 0;
 		while ((*temp)->cmd[i])
 		{
+			j = 0;
 			if (ft_strchr((*temp)->cmd[i], '$'))
 			{
 				printf("$ found: %s\n", (*temp)->cmd[i]);
-				printf("cmd[%d]: %s\n", i, (*temp)->cmd[i]);
 				printf("exp: %s\n", exp->exp_name);
+				(*temp)->cmd[i] = expansion_time((*temp)->cmd[i], exp);
+			}
+			while ((*temp)->cmd[i][j])
+			{
+				if ((*temp)->cmd[i][j] != ' ')
+					break ;
+				j++;
 			}
 			i++;
 		}
 		*temp = (*temp)->next;
 		cmd = temp;
 	}
+	return (cmd);
 }

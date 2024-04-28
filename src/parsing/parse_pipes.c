@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/23 17:42:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:07:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	restore_pipes_and_spaces(t_cmd *cmd)
 {
 	int		i;
 	t_cmd	*temp;
-//	int		len;
 
 	i = 0;
 	temp = cmd;
@@ -53,7 +52,6 @@ void	restore_pipes_and_spaces(t_cmd *cmd)
 	{
 		while (temp->cmd[i])
 		{
-//			len = ft_strlen(temp->cmd[i]);
 			ft_restore(temp->cmd[i]);
 			i++;
 		}
@@ -63,16 +61,10 @@ void	restore_pipes_and_spaces(t_cmd *cmd)
 
 void	ft_restore(char *s)
 {
-//	int		len;
-//	char	*temp;
-
 	if (!s)
 		return ;
-//	len = ft_strlen(s);
-//	temp = (char *) malloc (sizeof(char) * l)
 	while (*s)
 	{
-		
 		if (*s == '\xFD')
 			*s = '|';
 		if (*s == '\xFE')

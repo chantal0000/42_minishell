@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/27 15:24:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/28 18:31:19 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,14 @@ void	print_stack(t_cmd *root);
 int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
 char	**shell_split(char *s, char c);
-t_exp	*ft_find_var_declarations(t_cmd **cmd);
-void	ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
+void	ft_find_var_declarations(char **s, t_exp **exp);
+t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
+
+//expansions.c
+char	*expansion_time(char *s, t_exp *exp);
+int		expansion_quotes(char *s);
+char	*apply_expansion_magic(char *s, int *i, t_exp *exp);
+char	*ft_var_name(char *s, t_exp *exp);
 
 //find_tokens.c
 int		check_for_alligators(char **s);
