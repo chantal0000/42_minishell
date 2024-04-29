@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/28 18:39:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/29 19:18:05 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,11 @@ int	main(int argc, char **argv, char **env)
 		}
 //		printf("line to be parsed: %s\n", line);
 		add_history(line);
-		if (ft_strchr(line, '='))
-		{
-			ft_find_var_declarations(&line, &exp);
-//		int	len = ft_strlen(line);
-//		printf("len line main: %d\n", len);
-//			if (len == 0)
-//				break ;
-			if (exp)
+//		if (ft_strchr(line, '='))
+//		{
+//			exp = *ft_find_var_declarations(&line, &exp);
+//			break ;
+/*			if (exp)
 			{
 				t_exp  *temp = exp;
 				while (temp)
@@ -105,15 +102,28 @@ int	main(int argc, char **argv, char **env)
 					printf("exp value: %s\n", temp->exp_value);
 					temp = temp->next;
 				}
+			}*/
+//		}
+		if (exp)
+		{
+			t_exp  *temp = exp;
+			while (temp)
+			{
+				printf("exp name: %s\n", temp->exp_name);
+				printf("exp value: %s\n", temp->exp_value);
+				temp = temp->next;
 			}
 		}
-		parse_for_cmds(&list, line);//need to add envp
-//		parse list for expansions???	
-		print_stack(list);
-		if (!list)
+		else
 		{
-			free(line);
-			return (0);
+			parse_for_cmds(&list, line);//need to add envp
+//			parse list for expansions???	
+			print_stack(list);
+			if (!list)
+			{
+				free(line);
+				return (0);
+			}
 		}
 		ft_executor(list, env_list);
 		dup2(original_stdin, STDIN_FILENO);
@@ -130,5 +140,6 @@ int	main(int argc, char **argv, char **env)
 	free_cmdtree(list);
 //	return (exit_status);
 	free(line);
+	free_exp(exp);
 	return (0);
 }

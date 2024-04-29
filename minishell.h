@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/28 18:31:19 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/29 19:01:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ extern int	g_signal;
 # include <stdio.h>
 //MACOS
 //# include <editline/readline.h>
+//# include <histedit.h>
 //Linux
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stddef.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
 # include "libft/libft.h"
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
 
 # define DELIMITER "|<>()"
 # define WHITESPACE " \n\t\r\v"
@@ -133,12 +133,11 @@ void	ft_restore(char *s);
 void	free_cmdtree(t_cmd *tree);
 void	free_memory(char **arr);
 void	free_env(t_env	**env);
+void	free_exp(t_exp *exp);
 
 //utils.c
-//char	*ft_strndup(const char *s, size_t n);
-//int		ft_strcmp(char *s1, char *s2);
+char	*ft_strndup(const char *s, size_t n);
 char	**export_split(char	*s);
-//char	**shell_split(char	*s, char c);
 
 //parse_echo_awk.c
 int		ft_count(char **arr);
