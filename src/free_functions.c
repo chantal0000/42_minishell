@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/16 14:00:08 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:33:33 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,27 @@ void	free_cmdtree(t_cmd *tree)
 		return ;
 	while (tree)
 	{
-		temp = tree;
-		if (temp->fd_in)
-			close(temp->fd_in);
-		if (temp->fd_out)
-			close(temp->fd_out);
-		if (temp->pid)
-			close(temp->pid);
+		temp = tree->next;
+		if (tree->fd_in)
+			close(tree->fd_in);
+		if (tree->fd_out)
+			close(tree->fd_out);
+		if (tree->pid)
+		{
+			close(tree->pid);
+//			kill(tree->pid, SIGKILL); should I use this?
+		}
 		// if (temp->m_env)
 		// 	free_env(&temp->m_env);
-		if (temp->file_name)
-			free(temp->file_name);
-		free_memory(temp->cmd);
-		tree = tree->next;
+		if (tree->file_name)
+			free(tree->file_name);
+		free_memory(tree->cmd);
+		if (tree->heredoc_delimiter)
+			free (tree->heredoc_delimiter);
+		free_memory(tree->heredoc_content);
+		free(tree);
+		tree = temp;
 	}
-	free(temp);
 	free(tree);
 }
 
@@ -66,4 +72,21 @@ void	free_env(t_env **env)
 		i++;
 	}
 	free (env);
+}
+
+void	free_exp(t_exp *exp)
+{
+	t_exp	*temp;
+
+	while (exp)
+	{
+		temp = exp;
+		if (temp->exp_name)
+			free(temp->exp_name);
+		if (temp->exp_value)
+			free (temp->exp_value);
+		free (temp);
+		exp = exp->next;
+	}
+	free (exp);
 }
