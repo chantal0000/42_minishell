@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/29 19:18:05 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:32:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,14 @@ int	main(int argc, char **argv, char **env)
 		if (!line)
 		{
 			// free memory
+			ft_free_env_list(env_list);
 			// free(env_list);
-			while (env_list != NULL)
-			{
-			t_env *next = env_list->next;
-			free(env_list);
-			env_list = next;
-			}
+			// while (env_list != NULL)
+			// {
+			// t_env *next = env_list->next;
+			// free(env_list);
+			// env_list = next;
+			// }
 			printf("exit\n");
 			exit(0);
 		}
@@ -130,15 +131,16 @@ int	main(int argc, char **argv, char **env)
 		// close(original_stdin);
 		dup2(original_stdout, STDOUT_FILENO);
 		// close(original_stdout);
-		list = NULL; // here needs to be freed
-		free_cmdtree(list);
+		// list = NULL; // here needs to be freed
+		// free_cmdtree(list);
 	}
 	HIST_ENTRY *entry = history_get(where_history());
 	printf("%s\n", entry->line);
 //	exit_status = ft_executor(list);
 	free(line);
-	free_cmdtree(list);
-//	return (exit_status);
+	// free_cmdtree(list);
+	// free(line);
+=======
 	free(line);
 	free_exp(exp);
 	return (0);

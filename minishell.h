@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/29 19:01:48 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:19:40 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,9 @@ void	ft_restore(char *s);
 //free_functions.c
 void	free_cmdtree(t_cmd *tree);
 void	free_memory(char **arr);
+void	free_env(char	**env);
+void	ft_free_env_list(t_env *env_list);
+void	ft_free_cmd_struct(t_cmd *cmd);
 void	free_env(t_env	**env);
 void	free_exp(t_exp *exp);
 
@@ -183,6 +186,8 @@ int	ft_unset(t_cmd *cmd, t_env *env_list);
 
 int	ft_handle_error_export(t_cmd *cmd);
 int	ft_handle_error_cd(t_cmd *cmd);
+
+
 
 // signals.c
 void ft_init_signals();
