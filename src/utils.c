@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/27 08:25:01 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/30 17:11:59 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,3 +100,23 @@ char	**export_split(char	*s)
 	check_quotes(arr[1]);
 	return (arr);
 }*/
+
+void	parse_string(char *s)
+{
+	char	*temp;
+
+	temp = s;
+	if (*temp != '\0')
+	{
+		while (*temp != '\0')
+		{
+			if (*temp != '\0' && is_whitespace(*temp))
+			{
+				printf("open heredoc?\n");//check what bash returns
+				return ;
+			}
+			temp++;
+		}
+	}
+	s = temp;
+}
