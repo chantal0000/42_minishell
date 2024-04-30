@@ -6,11 +6,28 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 13:03:09 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/28 13:24:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/30 16:40:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	check_for_var(char **line, t_exp **exp)
+{
+	char	*temp;
+
+	temp = *line;
+	while (*temp && *temp == ' ')
+		temp++;
+	if ((*temp) == '\'' || *temp == '\"' || *temp == '|')
+	{
+		printf("found quotes\n");
+		return ;
+	}
+	if (ft_strchr(temp, '='))
+		ft_find_var_declarations(line, exp);
+	line = &temp;
+}
 
 char	*expansion_time(char *s, t_exp *exp)
 {

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/28 18:32:47 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/30 16:45:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,17 @@ t_exp	*insert_exp(t_exp *head, char *name, char *value)
 	if (!new_node)
 		return (NULL);
 	new_node->exp_name = ft_strdup(name);
+/*	if (!new_node->exp_name)
+	{
+		free (new_node);
+		return (NULL);
+	}*/
 	new_node->exp_value = ft_strdup(value);
+/*	if (!new_node->exp_value)
+	{
+		free (new_node);
+		return (NULL);
+	}*/
 	new_node->next = NULL;
 	if(!head)
 		return (new_node);

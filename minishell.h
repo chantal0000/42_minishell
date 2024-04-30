@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/30 15:19:40 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:12:16 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	ft_find_var_declarations(char **s, t_exp **exp);
 t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
 
 //expansions.c
+void	check_for_var(char **line, t_exp **exp);
 char	*expansion_time(char *s, t_exp *exp);
 int		expansion_quotes(char *s);
 char	*apply_expansion_magic(char *s, int *i, t_exp *exp);
@@ -135,12 +136,13 @@ void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env *env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
-void	free_env(t_env	**env);
+void	free_env(char	**env);
 void	free_exp(t_exp *exp);
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
 char	**export_split(char	*s);
+void	parse_string(char *s);
 
 //parse_echo_awk.c
 int		ft_count(char **arr);

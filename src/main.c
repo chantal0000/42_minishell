@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/30 15:32:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:24:45 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,21 @@ void	print_stack(t_cmd *root)
 		temp = temp -> next;
 	}
 }
+
+void	print_exp(t_exp *exp)
+{
+	t_exp  *temp = exp;
+	
+	if (!exp)
+		return ;
+	while (temp)
+	{
+		printf("exp name: %s\n", temp->exp_name);
+		printf("exp value: %s\n", temp->exp_value);
+		temp = temp->next;
+	}
+}	
+
 
 int	main(int argc, char **argv, char **env)
 {
@@ -90,32 +105,9 @@ int	main(int argc, char **argv, char **env)
 		}
 //		printf("line to be parsed: %s\n", line);
 		add_history(line);
-//		if (ft_strchr(line, '='))
-//		{
-//			exp = *ft_find_var_declarations(&line, &exp);
-//			break ;
-/*			if (exp)
-			{
-				t_exp  *temp = exp;
-				while (temp)
-				{
-					printf("exp name: %s\n", temp->exp_name);
-					printf("exp value: %s\n", temp->exp_value);
-					temp = temp->next;
-				}
-			}*/
-//		}
-		if (exp)
-		{
-			t_exp  *temp = exp;
-			while (temp)
-			{
-				printf("exp name: %s\n", temp->exp_name);
-				printf("exp value: %s\n", temp->exp_value);
-				temp = temp->next;
-			}
-		}
-		else
+		check_for_var(&line, &exp);
+		print_exp(exp);	
+		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
 //			parse list for expansions???	
@@ -133,15 +125,12 @@ int	main(int argc, char **argv, char **env)
 		// close(original_stdout);
 		// list = NULL; // here needs to be freed
 		// free_cmdtree(list);
-	}
-	HIST_ENTRY *entry = history_get(where_history());
-	printf("%s\n", entry->line);
+		}
+//	HIST_ENTRY *entry = history_get(where_history());
+//	printf("%s\n", entry->line);
 //	exit_status = ft_executor(list);
 	free(line);
 	// free_cmdtree(list);
-	// free(line);
-=======
-	free(line);
 	free_exp(exp);
 	return (0);
 }

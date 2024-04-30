@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/29 19:17:38 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/30 17:10:26 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,65 +38,27 @@ char	*check_quotes(char *s)
 	char		*temp;
 
 	i = 0;
-	len = ft_strlen(s);
+	len = strlen(s);
 	temp = s;
 	if ((s[0] == '\'' && s[len - 1] == '\'') || (s[0] == '\"' && s[len - 1] == '\"'))
 	{
-		if (s[i] == s[len - 1])
+		temp = (char *)malloc(sizeof(char) * (len - 2));
+		if (!temp)
 		{
-			temp = (char *)malloc(sizeof(char) * len - 2);
-			if (!temp)
-			{
-				printf("problems mem alloc checkquotes");
-				exit (1);
-			}
-			while (i < len - 2)
-			{
-				temp[i] = s[i + 1];
-				i++;
-			}
-			temp[i] = '\0';
+			printf("problems mem alloc checkquotes");
+			exit (1);
 		}
+		while (i < len - 2)
+		{
+			temp[i] = s[i + 1];
+			i++;
+		}
+		temp[i] = '\0';
 	}
-	return (temp);
+	s = temp;
+	free(temp);
+	return (s);
 }
-
-/*char	**shell_split(char *s, char c)
-{
-	int		i;
-	char	**arr;
-
-	i = 0;
-	arr = (char **)ft_calloc(3, sizeof(char *));
-	if (!arr)
-	{
-		printf("problems allocating mem in export split\n");
-		exit (1);
-	}
-	while (s[i] != '\0' && s[i] != c)
-		i++;
-	arr[0] = ft_strndup(s, i);
-	if (!arr[0])
-	{
-		printf("problems mem alloc in ex split");
-		exit (1);
-	}
-	s += i;
-	i = 0;
-	while (s[i] != '\0' && s[i] != ' ' && s[i] != '|')
-		i++;
-	arr[1] = ft_strndup(s + 1, i);
-	if (!arr[1])
-	{
-		free(arr[0]);
-		printf("problems mem alloc in ex split");
-		exit (1);
-	}
-	arr[2] = NULL;
-	arr[1] = check_quotes(arr[1]);
-	s += i;
-	return (arr);
-}*/
 
 char	**shell_split(char *s, char delimiter)
 {
@@ -141,13 +103,11 @@ char	**shell_split(char *s, char delimiter)
 	return (arr);
 }
 
-void	ft_find_var_declarations(char **s, t_exp **exp)
+/*void	ft_find_var_declarations(char **s, t_exp **exp)
 {
 	int		i;
 	int		j;
 	char	**arr;
-	char	*temp;
-//	char	*str;
 
 	i = 0;
 	temp = *s;
@@ -176,13 +136,47 @@ void	ft_find_var_declarations(char **s, t_exp **exp)
 		}
 		i++;
 	}
-/*	while (temp[i] != '\0' && is_whitespace(temp[i]))
-		i++;*/
+	while (temp[i] != '\0' && is_whitespace(temp[i]))
+		i++;
 	if (temp[i] != '\0' && !is_whitespace(temp[i]))
 		printf("open heredoc?\n");//check what bash returns
 	temp += i;
 	*s = temp;
 //	return (exp);
+}*/
+
+void ft_find_var_declarations(char **s, t_exp **exp)
+{
+	char *temp;
+	char *start;
+	char *value_start;
+
+	temp = *s;
+	while (*temp && is_whitespace(*temp))//while not at end and is a whitespace
+		temp++;
+	while (*temp)//while not at end
+	{
+		start = temp; 
+//		while (*temp && *temp != '=' && !is_whitespace(*temp))
+//			temp++;
+		if (*temp == '=')
+		{
+			temp++;
+			value_start = temp;
+			while (*temp && !is_whitespace(*temp))
+				temp++;
+			char *name = strndup(start, value_start - start - 1);
+			char *value = strndup(value_start, temp - value_start);
+			*exp = insert_exp(*exp, name, value);
+			free(name);
+			free(value);
+			while (*temp && is_whitespace(*temp))
+				temp++;
+		} 
+		else
+			break;
+	}
+	*s = temp;
 }
 
 t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp)
