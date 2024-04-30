@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/23 15:02:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/27 08:25:01 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,3 +65,38 @@ char	**export_split(char	*s)
 	check_quotes(arr[1]);
 	return (arr);
 }
+/*char	*shell_split(t_exp exp, char *s, char c)
+{
+	int		i;
+	char	**arr;
+
+	i = 0;
+	arr = (char **)ft_calloc(3, sizeof(char *));
+	if (!arr)
+	{
+		printf("problems allocating mem in export split\n");
+		exit (1);
+	}
+	while (s[i] != '\0' && s[i] != c)
+		i++;
+	arr[0] = ft_calloc(i + 1, sizeof(char));
+	if (!arr[0])
+	{
+		printf("problems mem alloc in ex split");
+		exit (1);
+	}
+	ft_memcpy(arr[0], s, i);
+	arr[0][i + 1] = '\0';
+	arr[1] = ft_calloc(ft_strlen(s) - i + 1, sizeof(char));
+	if (!arr[1])
+	{
+		free_memory(arr);
+		printf("problems mem alloc in ex split");
+		exit (1);
+	}
+	ft_memcpy(arr[1], &s[i + 1], ft_strlen(s) - i);
+	arr[1][ft_strlen(s) - 1] = '\0';
+	arr[2] = NULL;
+	check_quotes(arr[1]);
+	return (arr);
+}*/

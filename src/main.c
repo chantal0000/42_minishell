@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
 /*   Updated: 2024/04/30 15:32:45 by chbuerge         ###   ########.fr       */
@@ -49,8 +49,8 @@ void	print_stack(t_cmd *root)
 int	main(int argc, char **argv, char **env)
 {
 	static char	*line;
-//	char	*line = " grep lady < infile.txt | nl";
 	t_cmd	*list;
+	t_exp	*exp;
 	t_env	*env_list;
 	int original_stdout = dup(STDOUT_FILENO);
 	int original_stdin = dup(STDIN_FILENO);
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	g_signal = 0;
+	exp = NULL;
 	list = NULL;
 	if (argc != 1)
 	{
@@ -89,12 +90,41 @@ int	main(int argc, char **argv, char **env)
 		}
 //		printf("line to be parsed: %s\n", line);
 		add_history(line);
-		parse_for_cmds(&list, line);//need to add envp
-		print_stack(list);
-		if (!list)
+//		if (ft_strchr(line, '='))
+//		{
+//			exp = *ft_find_var_declarations(&line, &exp);
+//			break ;
+/*			if (exp)
+			{
+				t_exp  *temp = exp;
+				while (temp)
+				{
+					printf("exp name: %s\n", temp->exp_name);
+					printf("exp value: %s\n", temp->exp_value);
+					temp = temp->next;
+				}
+			}*/
+//		}
+		if (exp)
 		{
-			free(line);
-			return (0);
+			t_exp  *temp = exp;
+			while (temp)
+			{
+				printf("exp name: %s\n", temp->exp_name);
+				printf("exp value: %s\n", temp->exp_value);
+				temp = temp->next;
+			}
+		}
+		else
+		{
+			parse_for_cmds(&list, line);//need to add envp
+//			parse list for expansions???	
+			print_stack(list);
+			if (!list)
+			{
+				free(line);
+				return (0);
+			}
 		}
 		ft_executor(list, env_list);
 		dup2(original_stdin, STDIN_FILENO);
@@ -109,7 +139,9 @@ int	main(int argc, char **argv, char **env)
 //	exit_status = ft_executor(list);
 	free(line);
 	// free_cmdtree(list);
-//	return (exit_status);
 	// free(line);
+=======
+	free(line);
+	free_exp(exp);
 	return (0);
 }

@@ -19,18 +19,18 @@ extern int	g_signal;
 # include <stdio.h>
 //MACOS
 //# include <editline/readline.h>
+//# include <histedit.h>
 //Linux
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stddef.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
 # include "libft/libft.h"
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
 
 # define DELIMITER "|<>()"
 # define WHITESPACE " \n\t\r\v"
@@ -39,6 +39,7 @@ extern int	g_signal;
 
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
+typedef struct s_exp t_exp;
 
 typedef struct s_env
 {
@@ -49,10 +50,19 @@ typedef struct s_env
 
 }	t_env;
 
+typedef struct s_exp
+{
+	char	*exp_name;
+	char	*exp_value;
+	t_exp	*next;
+}	t_exp;
+
+
 typedef struct s_cmd
 {
 	int		index;
 	t_env	*m_env;
+	t_exp	*exp;
 	int		token;
 	char	*cmd[MAXARGS + 1];
 	char	*file_name;
@@ -71,6 +81,15 @@ void	print_stack(t_cmd *root);
 //delimiter.c
 int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
+char	**shell_split(char *s, char c);
+void	ft_find_var_declarations(char **s, t_exp **exp);
+t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
+
+//expansions.c
+char	*expansion_time(char *s, t_exp *exp);
+int		expansion_quotes(char *s);
+char	*apply_expansion_magic(char *s, int *i, t_exp *exp);
+char	*ft_var_name(char *s, t_exp *exp);
 
 //find_tokens.c
 int		check_for_alligators(char **s);
@@ -82,6 +101,7 @@ t_cmd	*ft_init_struct(void);
 t_cmd	*m_lstlast(t_cmd *lst);
 void	m_lstadd_back(t_cmd **lst, t_cmd *new);
 void	update_fd(t_cmd *tree);
+t_exp	*insert_exp(t_exp *head, char *name, char *value);
 
 //parse_exec_cmds.c
 char	*parse_line(char *arr);
@@ -115,11 +135,11 @@ void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env *env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
+void	free_env(t_env	**env);
+void	free_exp(t_exp *exp);
+
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
-int		ft_strcmp(char *s1, char *s2);
-int		find_delimiter(char *s1, char *delim);
-char	*check_quotes(char *s);
 char	**export_split(char	*s);
 
 //parse_echo_awk.c
