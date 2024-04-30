@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/26 17:18:37 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:08:43 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,9 @@ int	ft_executor(t_cmd *node, t_env *env_list)
 	}
 
 	// free environment here
+	// free cmd struct
+	free_env(env1);
+	ft_free_cmd_struct(node);
 	return (exit_status);
 }
 
