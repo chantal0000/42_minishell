@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/30 17:12:16 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/01 20:57:23 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,16 @@ void	print_stack(t_cmd *root);
 //delimiter.c
 int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
-char	**shell_split(char *s, char c);
+
+//parse_for_expansions.c
+//char	*check_quotes_var(char **s);
+int		check_for_var(char **line, t_exp **exp);
+char	**shell_split(char **s, char c);
+char	**fill_array(char **arr, char **s, char *end);
 void	ft_find_var_declarations(char **s, t_exp **exp);
-t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
 
 //expansions.c
-void	check_for_var(char **line, t_exp **exp);
+t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
 char	*expansion_time(char *s, t_exp *exp);
 int		expansion_quotes(char *s);
 char	*apply_expansion_magic(char *s, int *i, t_exp *exp);
