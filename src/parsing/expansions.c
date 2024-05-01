@@ -6,28 +6,45 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 13:03:09 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/30 16:40:34 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/01 12:02:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	check_for_var(char **line, t_exp **exp)
+t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp)
 {
-	char	*temp;
+	int		i;
+	int		j;
+	t_cmd	**temp;
 
-	temp = *line;
-	while (*temp && *temp == ' ')
-		temp++;
-	if ((*temp) == '\'' || *temp == '\"' || *temp == '|')
+	temp = cmd;
+	while(*temp)
 	{
-		printf("found quotes\n");
-		return ;
+		i = 0;
+		while ((*temp)->cmd[i])
+		{
+			j = 0;
+			if (ft_strchr((*temp)->cmd[i], '$'))
+			{
+				printf("$ found: %s\n", (*temp)->cmd[i]);
+				printf("exp: %s\n", exp->exp_name);
+				(*temp)->cmd[i] = expansion_time((*temp)->cmd[i], exp);
+			}
+			while ((*temp)->cmd[i][j])
+			{
+				if ((*temp)->cmd[i][j] != ' ')
+					break ;
+				j++;
+			}
+			i++;
+		}
+		*temp = (*temp)->next;
+		cmd = temp;
 	}
-	if (ft_strchr(temp, '='))
-		ft_find_var_declarations(line, exp);
-	line = &temp;
+	return (cmd);
 }
+
 
 char	*expansion_time(char *s, t_exp *exp)
 {
