@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/30 15:08:43 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:27:50 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ void	close_after(int std_in, int std_out, int pipe_fd[2]);
 int	ft_simple_cmd(t_cmd *node, char **env, int exit_status, int pid, t_env *env_list)
 {
 	if ((node->fd_in) != -1)
+	{
+		printf("fd_in in exec %d \n", node->fd_in);
 		dup2(node->fd_in, STDIN_FILENO);
+	}
+	//next line only added for test purpse pls delete
+	node->fd_out = -1;
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
@@ -253,7 +258,8 @@ int	ft_executor(t_cmd *node, t_env *env_list)
 	// free environment here
 	// free cmd struct
 	free_env(env1);
-	ft_free_cmd_struct(node);
+	//seg faults for heredoc
+	// ft_free_cmd_struct(node);
 	return (exit_status);
 }
 
