@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_for_redirs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/22 10:19:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/02 15:06:20 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,38 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 	return (node);
 }
 
+//NOTE FOR KAREN
+// fd below seems to be overwritten somewhere?
+
+
+// I think the problem is that at some point after this maybe it is set to -1
+// also need to delete the file at some point but when?
+// do we need to do something about mult heredocs, what if cat <<eof | wc <<eof
+void	ft_create_temp_file(char *str, t_cmd *cmd)
+{
+	char	temp_file[] = "src/tempfile21008";
+	int fd = -1;
+	fd = open(temp_file,  O_RDWR | O_CREAT | O_TRUNC, 0777);
+	if (fd == -1)
+	{
+		perror("Failed to create temporary file");
+		return;
+	}
+	printf("fd in heredoc %d\n", fd);
+	ssize_t bytes_written = write(fd, str, ft_strlen(str));
+	if (bytes_written == -1) {
+        perror("Failed to write to temporary file");
+        close(fd);
+        unlink(temp_file); // Delete the temporary file
+        return;
+    }
+	cmd->fd_in = fd;
+	printf("fd_in heredoc red %d\n", cmd->fd_in);
+    // Close the file descriptor
+    //close(fd);
+}
+
+
 void	ft_heredoc(t_cmd *cmd)
 {
 	static char	*str;
@@ -97,6 +129,7 @@ void	ft_heredoc(t_cmd *cmd)
 		if (ft_strcmp(str, cmd->heredoc_delimiter) == 0)
 			break ;
 		cmd->heredoc_content[i] = ft_strdup(str);
+		ft_create_temp_file(str, cmd);
 		if (!cmd->heredoc_content[i])
 		{
 			printf("Memory allocation failed in heredoc\n");

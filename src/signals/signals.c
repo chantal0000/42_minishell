@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:34:15 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/26 19:35:00 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:24:28 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,3 +69,11 @@ void ft_init_signals_input()
 	signal(SIGINT, ft_ctrl_c_signals_input);
 	signal(SIGQUIT, ft_quit_signals_input);
 }
+
+
+/* SIGNALS IN HEREDOC
+** CTRL C -> exits
+** CTRL \ -> nothing
+** CTRL D (which is not actually a signal) bash: warning: here-document at line 9 delimited by end-of-file (wanted `eof')
+*/
+
