@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/01 20:57:23 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/02 19:21:01 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ char	*check_quotes(char *s);
 
 //parse_for_expansions.c
 //char	*check_quotes_var(char **s);
-int		check_for_var(char **line, t_exp **exp);
+void	check_for_var(char **line, t_exp **exp);
+int		check_for_breaks(char **line);
 char	**shell_split(char **s, char c);
 char	**fill_array(char **arr, char **s, char *end);
 void	ft_find_var_declarations(char **s, t_exp **exp);
