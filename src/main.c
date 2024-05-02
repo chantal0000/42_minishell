@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/01 21:06:06 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/02 17:25:27 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_stack(t_cmd *root)
 	while (temp != NULL)
 	{
 		printf("\nnode[%d]\n", temp->index);
-//		printf("fd_in: %d\n", temp->fd_in);
+		printf("fd_in: %d\n", temp->fd_in);
 //		printf("fd_out: %d\n", temp->fd_out);
 		printf("file_name: %s\n", temp->file_name);
 //		printf("instructions: %d\n", temp->instructions);
@@ -49,7 +49,7 @@ void	print_stack(t_cmd *root)
 void	print_exp(t_exp *exp)
 {
 	t_exp  *temp = exp;
-	
+
 	if (!exp)
 		return ;
 	while (temp)
@@ -58,7 +58,7 @@ void	print_exp(t_exp *exp)
 		printf("exp value: %s\n", temp->exp_value);
 		temp = temp->next;
 	}
-}	
+}
 
 
 int	main(int argc, char **argv, char **env)
@@ -107,13 +107,13 @@ int	main(int argc, char **argv, char **env)
 		add_history(line);
 		if (check_for_var(&line, &exp) == 1)
 		{
-			print_exp(exp);	
+			print_exp(exp);
 			break ;
 		}
 		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
-//			parse list for expansions???	
+//			parse list for expansions???
 			print_stack(list);
 			if (!list)
 			{
@@ -126,7 +126,7 @@ int	main(int argc, char **argv, char **env)
 		// close(original_stdin);
 		dup2(original_stdout, STDOUT_FILENO);
 		// close(original_stdout);
-		// list = NULL; // here needs to be freed
+		list = NULL; // here needs to be freed
 		// free_cmdtree(list);
 		}
 //	HIST_ENTRY *entry = history_get(where_history());
