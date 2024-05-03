@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/02 17:27:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/03 06:04:46 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,8 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 void	free_exp(t_exp *exp)
 {
 	t_exp	*temp;
-
+	if (!exp)
+		return ;
 	while (exp)
 	{
 		temp = exp;
@@ -142,7 +143,6 @@ void	free_exp(t_exp *exp)
 			free(temp->exp_name);
 		if (temp->exp_value)
 			free (temp->exp_value);
-		free (temp);
 		exp = exp->next;
 	}
 	free (exp);

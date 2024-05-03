@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/02 19:21:01 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/03 06:33:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,13 @@ t_cmd	*parse_exec_cmds(char **s);
 
 //parse_for_cmds.c
 void	parse_for_cmds(t_cmd **cmd, char *s);
+void	parse_for_exp2(t_exp **exp, char *s);
 int		is_token(char s);
 int		is_whitespace(char s);
 int		check_next_char(char **s, char token);
 char	*parse_for_quotes(char *s);
 char 	*check_for_quotes(char *s);
+void	quote_work(char *ptr, int *in_single, int *in_double);
 
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
