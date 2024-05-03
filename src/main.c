@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/02 19:39:04 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/03 06:37:22 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,56 +138,3 @@ int	main(int argc, char **argv, char **env)
 	free_exp(exp);
 	return (0);
 }
-/*
-int	main(int argc, char **argv, char **env)
-{
-	static char	*line;
-//	char	*line = " grep lady < infile.txt | nl";
-	t_cmd	*list;
-	t_env	*env_list;
-//	int exit_status = 0;
-
-	(void)argc;
-	(void)argv;
-	list = NULL;*/
-/*	list = ft_init_struct();
-	if (!list)
-	{
-		free(line);
-		return (0);
-	}*/
-/*	if (argc != 1)
-	{
-		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
-		exit(1);//is this the right error code?
-	}
-	if (!env)
-		return (0);
-	env_list = fill_env_struct(env);
-	while (1)
-	{
-		line = readline("minishell: ");
-		if (!line)
-		{
-			printf("Problems reading input");
-			exit(1);
-		}
-		printf("line to be parsed: %s\n", line);
-//		add_history(line);
-		parse_for_cmds(&list, line);//need to add envp
-		print_stack(list);
-		if (!list)
-		{
-			free(line);
-			return (0);
-		}
-		ft_executor(list, env_list);
-		list = NULL; // here needs to be freed
-		// free(line);
-		// free_cmdtree(list);
-	}
-//	exit_status = ft_executor(list);
-//	free(line);
-//	free_cmdtree(list);
-//	return (exit_status);
-}*/
