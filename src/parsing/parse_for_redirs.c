@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/03 17:48:56 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:54:53 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,38 +87,7 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 // I think the problem is that at some point after this maybe it is set to -1
 // also need to delete the file at some point but when?
 // do we need to do something about mult heredocs, what if cat <<eof | wc <<eof
-// void	ft_create_temp_file(t_cmd *cmd)
-// {
-// 	char	temp_file[] = "/tmp/tempfile21008";
-// 	ssize_t bytes_written;
-// 	int i = 0;
-// 	int fd = -1;
-// 	bytes_written = -1;
-// 	fd = open(temp_file,  O_RDWR | O_CREAT | O_TRUNC, 0777);
-// 	if (fd == -1)
-// 	{
-// 		perror("Failed to create temporary file");
-// 		return;
-// 	}
-// 	while(cmd->heredoc_content[i])
-// 	{
-// 		bytes_written = write(fd, cmd->heredoc_content[i], ft_strlen(cmd->heredoc_content[i]));
-// 		write(fd, "\n", 1);
-// 		i++;
-// 	}
-// 	if (bytes_written == -1) {
-//         perror("Failed to write to temporary file");
-//         // close(fd);
-//         unlink(temp_file); // Delete the temporary file
-//         return;
-//     }
-// 	cmd->file_name = "/tmp/tempfile21008";
-// 	close(fd);
-// 	cmd->fd_in = open(cmd->file_name, O_RDONLY, 0777);
-// 	// cmd->fd_in = fd;
-//     // Close the file descriptor
-//     // close(fd);
-// }
+
 void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
 {
 	char	temp_file[] = "/tmp/tempfile21008";
@@ -153,34 +122,6 @@ void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
     // close(cmd->fd_in);
 }
 
-// void	ft_heredoc(t_cmd *cmd)
-// {
-// 	static char	*str;
-// 	int			i;
-
-// 	i = 0;
-// 	while (i < MAX_CONTENT_SIZE)
-// 	{
-// 		str = readline("> ");
-// 		if (!str)
-// 		{
-// 			printf("Problems reading input for heredoc");
-// 			exit(1);
-// 		}
-// 		if (ft_strcmp(str, cmd->heredoc_delimiter) == 0)
-// 			break ;
-// 		cmd->heredoc_content[i] = ft_strdup(str);
-// 		str = ft_strdup(str);
-// 		ft_create_temp_file(cmd);
-// 		if (!cmd->heredoc_content[i])
-// 		{
-// 			printf("Memory allocation failed in heredoc\n");
-// 			exit (1);
-// 		}
-// 		i++;
-// 	}
-// 	cmd->heredoc_content[i] = NULL;
-// }
 /*
 ** reads input from the user until a specific delimiter is entered
 ** and stores the input line into an array
