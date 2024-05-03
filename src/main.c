@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/03 06:37:22 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:30:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,8 @@ int	main(int argc, char **argv, char **env)
 		}
 //		printf("line to be parsed: %s\n", line);
 		add_history(line);
-		check_for_var(&line, &exp);
-		printf("string after check_for_var: %s\n", line);
-		printf("string len: %lu\n", strlen(line));
-		if (strlen(line) > 0)
+		if (line)
 		{
-			printf("command found\n");
 			parse_for_cmds(&list, line);//need to add envp
 //			parse list for expansions???
 			print_stack(list);
@@ -120,8 +116,6 @@ int	main(int argc, char **argv, char **env)
 				return (0);
 			}
 		}
-		if (exp)
-			print_exp(exp);
 		ft_executor(list, env_list);
 		dup2(original_stdin, STDIN_FILENO);
 		// close(original_stdin);

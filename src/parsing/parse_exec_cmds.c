@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/02 19:31:05 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:08:06 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,6 @@ char	*parse_line(char *arr)
 	arr[i] = '\0';
 	return (arr);
 }
-
-/*char	*parse_line(char *arr)
-{
-	int		i;
-	char	*temp;
-
-	i = 0;
-	if (!arr)
-		return (NULL);
-	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
-		i++;
-	temp = (char *)malloc(sizeof(char) * (i + 1));
-	if (!temp)
-		return (NULL);
-	i = 0;
-	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
-	{
-		temp[i] = arr[i];
-		i++;
-	}
-	temp[i] = '\0';
-	free (arr);
-	return (temp);
-}*/
 
 t_cmd	*init_exec_cmds(char **s, char *non_token)
 {
