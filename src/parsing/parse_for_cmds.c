@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/03 18:03:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/05 11:17:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_next_char(char **s, char token)
 		return (1);
 	return (0);
 }
-char	*check_for_quotes(char *s)
+/*char	*check_for_quotes(char *s)
 {
 	int		in_single;
 	int		in_double;
@@ -111,9 +111,9 @@ void	quote_work(char *ptr, int *in_single, int *in_double)
 		temp++;
 	}
 	ptr = temp;
-}
+}*/
 
-/*char	*check_for_quotes(char *s)
+char	*check_for_quotes(char *s)
 {
 	int		in_single;
 	int		in_double;
@@ -135,16 +135,13 @@ void	quote_work(char *ptr, int *in_single, int *in_double)
 			in_double = !in_double;
 		else if (*temp == '|' && (in_single || in_double))
 			*temp = '\xFD';
-		else if (*temp == ' ' && (in_single || in_double))
-			*temp =  '\xFE';
 		temp++;
 	}
-	if (in_single || in_double)// == -1)
+	if (in_single || in_double)
 	{
-		printf("open quotes found, can't parse");
+		printf("open quotes found, can't parse\n");
 		exit (1);
 	}
-//	s = temp;
 	return (s);
-}*/
+}
 

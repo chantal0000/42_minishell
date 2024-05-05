@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/28 15:08:06 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/05 11:23:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 			exit (1);
 		}
 		parse_line(cmd_tree->cmd[i]);
+		cmd_tree->cmd[i] = check_quotes(cmd_tree->cmd[i]);
 		i++;
 		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
