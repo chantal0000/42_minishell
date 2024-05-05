@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/03 17:32:14 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/05 12:31:48 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = src/main.c \
 		src/parsing/parse_for_cmds.c \
 		src/parsing/parse_for_redirs.c \
 		src/parsing/parse_pipes.c \
+		src/parsing/parse_for_variable_exp.c \
 		src/free_functions.c \
 		src/utils.c \
 		src/executor/executor.c \
