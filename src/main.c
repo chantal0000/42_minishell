@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/03 17:30:52 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/05 13:25:01 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ void	print_stack(t_cmd *root)
 		temp = temp -> next;
 	}
 }
-
 void	print_exp(t_exp *exp)
 {
-	t_exp  *temp = exp;
+	t_exp	*temp;
 
-	if (!exp)
-		return ;
+	temp = exp;
 	while (temp)
 	{
 		printf("exp name: %s\n", temp->exp_name);
@@ -59,6 +57,7 @@ void	print_exp(t_exp *exp)
 		temp = temp->next;
 	}
 }
+
 
 
 int	main(int argc, char **argv, char **env)
@@ -103,32 +102,32 @@ int	main(int argc, char **argv, char **env)
 			printf("exit\n");
 			exit(0);
 		}
-//		printf("line to be parsed: %s\n", line);
 		add_history(line);
+		parse_for_expansions(&exp, &line);
+		print_exp(exp);
 		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
-//			parse list for expansions???
 			print_stack(list);
-			if (!list)
-			{
-				free(line);
-				return (0);
-			}
 		}
-		ft_executor(list, env_list);
-		dup2(original_stdin, STDIN_FILENO);
-		// close(original_stdin);
-		dup2(original_stdout, STDOUT_FILENO);
-		// close(original_stdout);
+		if (list)
+		{
+			ft_executor(list, env_list);
+			dup2(original_stdin, STDIN_FILENO);
+			// close(original_stdin);
+			dup2(original_stdout, STDOUT_FILENO);
+			// close(original_stdout);
+		}
 		list = NULL; // here needs to be freed
 		// free_cmdtree(list);
-		}
+	}
 //	HIST_ENTRY *entry = history_get(where_history());
 //	printf("%s\n", entry->line);
 //	exit_status = ft_executor(list);
-	free(line);
+//	print_exp(exp);
+//	free(line);
 	// free_cmdtree(list);
-	free_exp(exp);
+	ft_free_env_list(env_list);
+	free_exp(&exp);
 	return (0);
 }

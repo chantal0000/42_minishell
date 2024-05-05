@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/02 17:27:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:03:55 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,20 +131,44 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 	}
 }
 
-void	free_exp(t_exp *exp)
+/*void	free_exp(t_exp **exp)
 {
-	t_exp	*temp;
+	t_exp	*current;
+	t_exp	*next;
 
-	while (exp)
+	current = *exp;
+	while (current != NULL)
 	{
-		temp = exp;
-		if (temp->exp_name)
-			free(temp->exp_name);
-		if (temp->exp_value)
-			free (temp->exp_value);
-		free (temp);
-		exp = exp->next;
+		next = current->next;
+		if (current->exp_name)
+			free(current->exp_name);
+		if (current->exp_value)
+			free (current->exp_value);
+		free (current);
+		current = next;
 	}
-	free (exp);
+	*exp = NULL;
+}*/
+
+
+void free_exp(t_exp **exp)
+{
+    t_exp *current = *exp;
+    t_exp *next;
+
+    while (current != NULL)
+    {
+        next = current->next;
+
+        if (current->exp_name)
+            free(current->exp_name);
+        if (current->exp_value)
+            free(current->exp_value);
+        free(current);
+
+        current = next;
+    }
+
+    *exp = NULL; // Set the original pointer to NULL after freeing all nodes
 }
 

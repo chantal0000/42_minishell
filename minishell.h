@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/03 06:33:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/05 12:30:26 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,6 @@ void	print_stack(t_cmd *root);
 int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
 
-//parse_for_expansions.c
-//char	*check_quotes_var(char **s);
-void	check_for_var(char **line, t_exp **exp);
-int		check_for_breaks(char **line);
-char	**shell_split(char **s, char c);
-char	**fill_array(char **arr, char **s, char *end);
-void	ft_find_var_declarations(char **s, t_exp **exp);
-
 //expansions.c
 t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
 char	*expansion_time(char *s, t_exp *exp);
@@ -136,6 +128,13 @@ char	parse_for_single_quotes(char *s);
 void	restore_pipes_and_spaces(t_cmd *cmd);
 void	ft_restore(char *s);
 
+//parse_for_variable_exp.c
+t_exp	*insert_exp(t_exp *head, char *name, char *value);
+int		search_string_for_equal(char *s);
+char	*find_name(char **s);
+char	*find_value(char **s);
+void	parse_for_expansions(t_exp **exp, char **s);
+
 
 //free_functions.c
 void	free_cmdtree(t_cmd *tree);
@@ -144,7 +143,7 @@ void	free_env(char	**env);
 void	ft_free_env_list(t_env *env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
 void	free_env(char	**env);
-void	free_exp(t_exp *exp);
+void	free_exp(t_exp **exp);
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
