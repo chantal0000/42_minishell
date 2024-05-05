@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:25:16 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 13:26:23 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/05 20:36:44 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,17 @@ t_exp	*insert_exp(t_exp *head, char *name, char *value)
 	t_exp	*new_node;
 	t_exp	*temp;
 
+	temp = head;
+	while (temp)
+	{
+		if (ft_strcmp(temp->exp_name, name) == 0)
+		{
+			free (temp->exp_value);
+			temp->exp_value = ft_strdup(value);
+			return (head);
+		}
+		temp = temp->next;
+	}
 	new_node = (t_exp *)ft_calloc(1, sizeof(t_exp));
 	if (!new_node)
 		return (NULL);
@@ -25,7 +36,6 @@ t_exp	*insert_exp(t_exp *head, char *name, char *value)
 	new_node->next = NULL;
 	if (!head)
 		return (new_node);
-	temp = head;
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new_node;
@@ -43,7 +53,7 @@ int	search_string_for_equal(char *s)
 	temp = s;
 	while (is_whitespace(*temp))
 		temp++;
-	if (strchr(temp, '='))
+	if (ft_strchr(temp, '='))
 	{
 		while (temp[i] != '\0' && temp[i] != '=' && temp[i] != '\'' && \
 			temp[i] != '\"' && !is_token(temp[i]))
@@ -66,7 +76,7 @@ char	*find_name(char **s)
 		temp++;
 	while (temp[i] != '\0' && temp[i] != '=')
 		i++;
-	name = ft_strndup(temp, i + 1);
+	name = ft_strndup(temp, i);
 	if (!name)
 		return (NULL);
 	*s = &temp[i];
@@ -85,13 +95,13 @@ char	*find_value(char **s)
 		temp++;
 	while (temp[i] != '\0' && !is_token(temp[i]) && !is_whitespace(temp[i]))
 		i++;
-	value = ft_strndup(temp, i + 1);
+	value = ft_strndup(temp, i);
 	if (!value)
 		return (NULL);
 	value = check_quotes(value);
 	if (!value)
 		return (NULL);
-	while (temp[i] != '\0' && is_whitespace(temp[i]))
+	while (temp[i] != '\0' && !is_whitespace(temp[i]))
 		i++;
 	*s = &temp[i];
 	return (value);
