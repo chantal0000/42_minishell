@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 15:33:00 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:14:25 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 ** if only "exit"
 ** EXIT CODE 0
 */
-int	ft_exit(t_cmd *cmd)
+int	ft_exit(t_cmd *cmd, t_env *env_list)
 {
 	char	**exit_cmd;
 	int		i;
@@ -68,6 +68,8 @@ int	ft_exit(t_cmd *cmd)
 		}
 		else
 		{
+			// ft_free_cmd_struct(cmd);
+			ft_free_env_list(env_list);
 			printf("exit\n");
 			exit (ft_atoi(exit_cmd[1]));
 		}
@@ -77,6 +79,8 @@ int	ft_exit(t_cmd *cmd)
 	// there is no arg then exit & code 0
 	else
 	{
+		ft_free_cmd_struct(cmd);
+		ft_free_env_list(env_list);
 		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}

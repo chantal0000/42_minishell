@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/02 17:27:50 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:01:48 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@
 ** Executes a simple command. If it's a built-in command, it's executed directly.
 ** Otherwise, it handles redirections and executes using execve().
 */
-void	close_after(int std_in, int std_out, int pipe_fd[2]);
 
-int	ft_simple_cmd(t_cmd *node, char **env, int exit_status, int pid, t_env *env_list)
+int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 {
 	if ((node->fd_in) != -1)
 	{
 		printf("fd_in in exec %d \n", node->fd_in);
 		dup2(node->fd_in, STDIN_FILENO);
 	}
-	//next line only added for test purpse pls delete
-	node->fd_out = -1;
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
@@ -39,7 +36,8 @@ int	ft_simple_cmd(t_cmd *node, char **env, int exit_status, int pid, t_env *env_
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execute_cmd(env, node->cmd) == 127)
+			// env1 = ft_env_list_to_array(env_list);
+			if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 				exit (127);
 		}
 		else
@@ -68,7 +66,7 @@ int	ft_simple_cmd(t_cmd *node, char **env, int exit_status, int pid, t_env *env_
 // close write end of pipe
 // dup2 stdin in stdin
 // close stdin
-int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env, t_env *env_list)
+int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 {
 	int	pid;
 
@@ -92,7 +90,7 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env, t_env *env_list)
 		close(pipe_fd[0]);
 		if (ft_is_builtin(node, env_list) == 0)
 			exit (0);
-		else if (execute_cmd(env, node->cmd) == 127)
+		else if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			exit (127);
 	}
 	node->pid = pid;
@@ -103,7 +101,7 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], char **env, t_env *env_list)
 ** Handles the execution of commands in the middle of a pipeline.
 ** Handles input/output redirection and executes the command.
 */
-int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env, t_env *env_list)
+int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list)
 {
 	int	pid;
 
@@ -133,7 +131,7 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env, t_e
 		close(pipe_fd[0]);
 		if (ft_is_builtin(node, env_list) == 0)
 			exit (0);
-		else if (execute_cmd(env, node->cmd) == 127)
+		else if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			exit (127);
 	}
 	node->pid = pid;
@@ -144,7 +142,7 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env, t_e
 ** Handles the execution of the last command in a pipeline.
 ** Handles input/output redirection and executes the command.
 */
-int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env, t_env *env_list)
+int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list)
 {
 	int	pid;
 
@@ -168,7 +166,7 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env, t_env
 		close(pipe_fd[0]);
 		if (ft_is_builtin(node, env_list) == 0)
 			exit (0);
-		if (execute_cmd(env, node->cmd) == 127)
+		if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			exit (127);
 	}
 	node->pid = pid;
@@ -187,7 +185,7 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, char **env, t_env
 ** 7. move on to the next node in the linked list
 */
 
-int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head, t_env *env_list)
+int	loop_cmds(t_cmd *node, int exit_status, t_cmd *head, t_env *env_list)
 {
 	int old_pipe_in = 0;
 	int pipe_fd[2];
@@ -200,19 +198,19 @@ int	loop_cmds(t_cmd *node, char **env1, int exit_status, t_cmd *head, t_env *env
 			// printf("entering middle pipe cmd is %s\n", node->cmd[0]);
 			write(2, "\nentering middle pipe\n", 22);
 			pipe(pipe_fd);
-			ft_pipe_middle(node, pipe_fd, old_pipe_in, env1, env_list);
+			ft_pipe_middle(node, pipe_fd, old_pipe_in, env_list);
 		}
 		else if(node->next)
 		{
 			// write(2, "\nentering first pipe\n", 21);
 			pipe(pipe_fd);
-			ft_pipe_first(node, pipe_fd, env1, env_list);
+			ft_pipe_first(node, pipe_fd, env_list);
 			// printf("entering first pipe cmd is %s\n", node->cmd[0]);
 		}
 		else
 		{
 			// write(2, "\nentering last pipe\n", 21);
-			ft_pipe_last(node, pipe_fd, old_pipe_in, env1, env_list);
+			ft_pipe_last(node, pipe_fd, old_pipe_in, env_list);
 			// printf("entering last pipe, cmd is %s\n", node->cmd[0]);
 		}
 		old_pipe_in = pipe_fd[0];
@@ -239,85 +237,27 @@ int	ft_executor(t_cmd *node, t_env *env_list)
 {
 	int		exit_status;
 	t_cmd	*head;
-	char	**env1;
+	// char	**env1;
 	int		pid;
 
 	exit_status = 0;
 	head = node;
 	pid = 0;
+	// env1 = NULL;
 	// env1 = ft_env_list_to_array(node->m_env);
-	env1 = ft_env_list_to_array(env_list);
+	// env1 = ft_env_list_to_array(env_list);
 	ft_init_signals_input();
 	if (!node->next && !node->prev)
-		exit_status = ft_simple_cmd(node, env1, exit_status, pid, env_list);
+		exit_status = ft_simple_cmd(node, exit_status, pid, env_list);
 	else
 	{
-		exit_status = loop_cmds(node, env1, exit_status, head, env_list);
+		exit_status = loop_cmds(node, exit_status, head, env_list);
 	}
 
 	// free environment here
 	// free cmd struct
-	free_env(env1);
+	// free_env(env1);
 	//seg faults for heredoc
-	// ft_free_cmd_struct(node);
+	ft_free_cmd_struct(node);
 	return (exit_status);
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-	// t_exec	*first;
-	// t_exec	*last;
-	// t_exec	*middle1;
-	// t_exec	*middle2;
-//
-	// first = malloc(sizeof(t_exec) * 1);
-	// middle1 = malloc(sizeof(t_exec) * 1);
-	// middle2 = malloc(sizeof(t_exec) * 1);
-	// last = malloc(sizeof(t_exec) * 1);
-//
-	// int outfile = open("test2", O_TRUNC | O_CREAT | O_RDWR, 0644);
-    // int infile = open("test_in.txt", O_RDONLY, 0644);
-//
-	// first->cmd[0] = strdup("ls");
-	// first->cmd[1] = strdup("-l");
-	// first->cmd[2] = NULL;
-	// first->cmd[2] = strdup(NULL);
-	// first->fd_in = -1;
-	// first->fd_out = -1;
-	// first->prev = NULL;
-	// first->next = middle1;
-    // // first->env = env;
-//
-	// middle1->cmd[0] = strdup("cat");
-	// middle1->cmd[1] = NULL;
-	// middle1->fd_in = -1;
-	// middle1->fd_out = -1;
-	// middle1->prev = first;
-	// middle1->next = middle2;
-    // // middle1->env = env;
-//
-//
-	// middle2->cmd[0] = strdup("/bin/nl");
-	// middle2->cmd[1] = NULL;
-	// middle2->fd_in = -1;
-	// middle2->fd_out = -1;
-	// middle2->prev = middle1;
-	// middle2->next = last;
-    // // middle2->env = env;
-//
-//
-	// last->cmd[0] = strdup("nl");
-	// last->cmd[1] = NULL;
-	// last->fd_in = -1;
-	// last->fd_out = -1;
-	// last->prev = middle2;
-	// last->next = NULL;
-    // // last->env = env;
-//
-//
-	// return (ft_executor(first));
-
-// ls | wc -> does not work?
-// grep also doesnt work
-
-// }

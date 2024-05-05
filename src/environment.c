@@ -6,37 +6,11 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:36:23 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/26 14:03:38 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/05 15:31:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/// ENV utils
-
-// int	ft_split_env_line(char *line, char **env_name, char **env_value)
-// {
-// 	char	*delimiter;
-
-// 	delimiter = ft_strchr(line, '=');
-// 	if (!delimiter)
-// 		return (0);
-// 	*env_name = (char *)malloc((delimiter - line + 1) * sizeof(char));
-// 	if (!(*env_name)) {
-// 	return (0); // Return failure
-// 	ft_strncmp(*env_name, line, delimiter - line);
-// 	 (*env_name)[delimiter - line] = '\0';
-// 	     // Allocate memory for env_value
-//     *env_value = strdup(delimiter + 1);
-//     if (!(*env_value)) {
-//         free(*env_name); // Free previously allocated memory
-//         return 0; // Return failure
-//     }
-
-//     }
-// 	    return 1; // Return success
-
-// }
-
 
 /*
 ** Creates a new node for the linked list representing an environment
@@ -53,18 +27,9 @@ void	*create_env_node(char *line)
 	new_node = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	    // Split the line into env_name and env_value
-    // if (!ft_split_env_line(line, &env_name, &env_value)) {
-    //     // Splitting failed
-    //     free(new_node); // Free the allocated memory for the new node
-    //     return NULL; // Return NULL
-    // }
 	// new_node->cmd_env = strdup(line);
 	new_node->cmd_env = line;
-	// new_node->env_name = env_name;
-	// new_node->env_value = env_value;
 	new_node->next = NULL;
-
 	return (new_node);
 }
 
@@ -130,11 +95,3 @@ t_env	*fill_env_struct(char **environment)
 	// }
 	return(env_head);
 }
-
-
-// test main
-// int main(int argc, char **argv, char **env)
-// {
-// 	fill_env_struct(env);
-// 	return (0);
-// }

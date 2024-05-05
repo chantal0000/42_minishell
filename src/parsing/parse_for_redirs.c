@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/03 17:54:53 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:15:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
 		write(cmd->fd_in, "\n", 1);
 		i++;
 	}
+
 	if (bytes_written == -1) {
         perror("Failed to write to temporary file");
         // close(fd);
@@ -121,6 +122,9 @@ void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
     // Close the file descriptor
     // close(cmd->fd_in);
 }
+
+
+
 
 /*
 ** reads input from the user until a specific delimiter is entered
@@ -162,6 +166,7 @@ void	ft_heredoc(t_cmd *cmd)
 	}
 	heredoc_content[i] = NULL;
 	ft_create_temp_file(heredoc_content, cmd);
+	free_memory(heredoc_content);
 	// handle fd_out?? but is it okay as the soltuin?
 	cmd->fd_out = -1;
 }
