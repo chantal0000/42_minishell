@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/05 14:45:49 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:14:25 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	ft_exit(t_cmd *cmd, t_env *env_list)
 		}
 		else
 		{
+			// ft_free_cmd_struct(cmd);
+			ft_free_env_list(env_list);
 			printf("exit\n");
 			exit (ft_atoi(exit_cmd[1]));
 		}
