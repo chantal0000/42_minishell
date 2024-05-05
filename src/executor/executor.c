@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/05 14:54:55 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:01:48 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 		printf("fd_in in exec %d \n", node->fd_in);
 		dup2(node->fd_in, STDIN_FILENO);
 	}
-	//next line only added for test purpse pls delete
-	node->fd_out = -1;
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
