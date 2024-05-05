@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 12:30:26 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/05 14:46:26 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ int		ft_executor(t_cmd *node, t_env *env_list);
 void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
+void	close_after(int std_in, int std_out, int pipe_fd[2]);
 
 //execute_utils.c
 int		execute_cmd(char **env, char **cmd);
@@ -185,7 +186,7 @@ int	ft_env(t_env *env_list);
 //builtins/cd.c
 int	ft_cd(t_cmd *cmd);
 //builtins/exit.c
-int	ft_exit(t_cmd *cmd);
+int	ft_exit(t_cmd *cmd, t_env *env_list);
 //builtins/pwd.c
 int	ft_pwd();
 int	ft_export(t_cmd *cmd, t_env *env_list);
