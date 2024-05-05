@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 12:30:26 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/05 20:34:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,11 @@ char	*parse_for_quotes(char *s);
 char 	*check_for_quotes(char *s);
 void	quote_work(char *ptr, int *in_single, int *in_double);
 
+//parse_for_expanders.c
+char	*ft_var_name2(char *s, t_exp *exp);
+char	*parse_string_for_expansions(char *s, t_exp *exp);
+void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp);
+
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
@@ -134,6 +139,7 @@ int		search_string_for_equal(char *s);
 char	*find_name(char **s);
 char	*find_value(char **s);
 void	parse_for_expansions(t_exp **exp, char **s);
+int		ft_check_for_dups(t_exp *head, char *name, char *value);
 
 
 //free_functions.c
