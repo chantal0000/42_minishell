@@ -8,7 +8,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 && !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * ((strlen(s1) + strlen(s2)) + 1));
+	str = (char *)malloc(sizeof(char) *(strlen(s1) + strlen(s2) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -120,7 +120,7 @@ char	*find_name(char **s)
 	return (name);
 }
 
-char	*check_quotes(char *s)
+/*char	*check_quotes(char *s)
 {
 	size_t		i;
 	size_t		len;
@@ -133,11 +133,11 @@ char	*check_quotes(char *s)
 	{
 		if (s[i] == s[len - 1])
 		{
-			temp = (char *)malloc(sizeof(char) * (len - 1));
+			temp = (char *)ft_calloc(1, sizeof(len - 1));
 			if (!temp)
 			{
 				printf("problems mem alloc checkquotes");
-				exit (1);
+				return (NULL);
 			}
 			while (i < len - 2)
 			{
@@ -147,7 +147,29 @@ char	*check_quotes(char *s)
 			temp[i] = '\0';
 		}
 	}
-	return (temp);
+	s = temp;
+	free (temp);
+	return (s);
+}*/
+
+char *check_quotes(char *s) 
+{
+    size_t len = strlen(s);
+    // Check if the string starts and ends with the same type of quote
+    if ((s[0] == '\'' && s[len - 1] == '\'') || (s[0] == '\"' && s[len - 1] == '\"')) {
+        // Allocate memory for the new string, which excludes the quotes
+        char *stripped = malloc(len - 1);  // Length minus the two quotes
+        if (!stripped) {
+            printf("problems mem alloc checkquotes");
+            exit(1);
+        }
+        // Copy characters between the quotes
+        memcpy(stripped, s + 1, len - 2);  // Copy the middle part, excluding quotes
+        stripped[len - 2] = '\0';          // Null-terminate the new string
+        return stripped;
+    }
+    // If no quotes or other conditions, return a copy of the original string
+    return strdup(s);
 }
 
 char	*find_value(char **s)
@@ -346,6 +368,7 @@ int	main()
 	if (strlen(s))
 		printf("items left in string, try command\n");
 	name = ft_var_name2(test, exp);
+	print_exp(exp);
 	if (exp)
 	{
 		free_exp(&exp);

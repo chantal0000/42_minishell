@@ -6,13 +6,13 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 16:43:02 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:27:46 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_cmdtree(t_cmd *tree)
+/*void	free_cmdtree(t_cmd *tree)
 {
 	t_cmd	*temp;
 
@@ -49,11 +49,11 @@ void	free_cmdtree(t_cmd *tree)
 		tree = temp;
 	}
 	free(tree);
-}
+}*/
 
 void	free_memory(char **arr)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!*arr || !arr)
@@ -68,7 +68,7 @@ void	free_memory(char **arr)
 
 /* free the array of env, in every loop*/
 
-void	free_env(char **env)
+/*void	free_env(char **env)
 {
 	int		i;
 
@@ -81,7 +81,7 @@ void	free_env(char **env)
 		i++;
 	}
 	free (env);
-}
+}*/
 
 
 /*chantal added functions
@@ -129,43 +129,23 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 	}
 }
 
-/*void	free_exp(t_exp **exp)
-{
-	t_exp	*current;
-	t_exp	*next;
-
-	current = *exp;
-	while (current != NULL)
-	{
-		next = current->next;
-		if (current->exp_name)
-			free(current->exp_name);
-		if (current->exp_value)
-			free (current->exp_value);
-		free (current);
-		current = next;
-	}
-	*exp = NULL;
-}*/
-
 
 void free_exp(t_exp **exp)
 {
-    t_exp *current = *exp;
-    t_exp *next;
+	t_exp *current = *exp;
+	t_exp *next;
 
-    while (current != NULL)
-    {
-        next = current->next;
+	while (current != NULL)
+	{
+		next = current->next;
 
-        if (current->exp_name)
-            free(current->exp_name);
-        if (current->exp_value)
-            free(current->exp_value);
-        free(current);
+		if (current->exp_name)
+			free(current->exp_name);
+		if (current->exp_value)
+			free(current->exp_value);
+		free(current);
 
-        current = next;
-    }
-
-    *exp = NULL; // Set the original pointer to NULL after freeing all nodes
+		current = next;
+	}
+	*exp = NULL; // Set the original pointer to NULL after freeing all nodes
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delimiter_expansions.c                             :+:      :+:    :+:   */
+/*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/01 11:59:03 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 18:50:55 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	find_delimiter(char *s1, char *delim)
 
 	i = 0;
 	j = 0;
-	printf("in find delimiter \n");
 	while (s1[i] != '\0' && delim[j] != '\0' && s1[i] == delim[j])
 	{
 		i++;
@@ -27,7 +26,6 @@ int	find_delimiter(char *s1, char *delim)
 	}
 	if (delim[j] == '\0')
 		return (1);
-	printf("out find delimiter \n");
 	return (0);
 }
 
@@ -44,11 +42,11 @@ char	*check_quotes(char *s)
 	{
 		if (s[i] == s[len - 1])
 		{
-			temp = (char *)malloc(sizeof(char) * len -2);
+			temp = (char *)ft_calloc(len - 2, sizeof(char));
 			if (!temp)
 			{
 				printf("problems mem alloc checkquotes");
-				exit (1);
+				return (NULL);
 			}
 			while (i < len - 2)
 			{
