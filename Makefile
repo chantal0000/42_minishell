@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/05 20:05:45 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/06 18:57:41 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,17 +38,18 @@ SRCS = src/main.c \
 		src/builtins/ft_export.c \
 		src/builtins/ft_unset.c \
 		src/builtins/builtins_error.c \
-		src/signals/signals.c
+		src/signals/signals.c \
+		src/errors/error_handling.c
 
 LIBFT = libft/libft.a
-CC = cc
+CC = cc 
 OBJS = $(SRCS:.c=.o)
 #LINUX
 #COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
 #LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-CFLAGS = -Wall -Wextra -Werror -ggdb3 #-I/opt/homebrew/opt/readline/include #could be -leditline
+CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
 COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
 LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
 

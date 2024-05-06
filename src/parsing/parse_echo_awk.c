@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/02 15:02:07 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 19:17:11 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_count(char **arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+		return (0);
 	while (arr[i])
 		i++;
 	return (i);
@@ -28,6 +30,8 @@ void	ft_echo(t_cmd *cmd)
 	int		num;
 	int		i;
 
+	if (!cmd)
+		return ;
 	temp = cmd;
 	num = ft_count(temp->cmd);
 	if (temp->token == 'n')
@@ -44,6 +48,5 @@ void	ft_echo(t_cmd *cmd)
 	}
 	if (cmd->token == 'e')
 		printf("\n");
+//	ft_free_cmd_struct(cmd);
 }
-
-

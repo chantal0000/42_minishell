@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/04/28 15:07:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 19:22:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 	{
 		temp = parse_exec_cmds(str);
 		if (!temp)
-			return ;
+			error_message("parse exec failed", 1);
 		temp->index = *index;
 		m_lstadd_back(cmd, temp);
 	}
@@ -47,6 +47,8 @@ void	restore_pipes_and_spaces(t_cmd *cmd)
 	t_cmd	*temp;
 
 	i = 0;
+	if (!cmd)
+		return ;
 	temp = cmd;
 	while (temp)
 	{

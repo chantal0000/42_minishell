@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 20:34:25 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 19:28:24 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ extern int	g_signal;
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
 //MACOS
 //# include <editline/readline.h>
 //# include <histedit.h>
@@ -24,13 +25,13 @@ extern int	g_signal;
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stddef.h>
-# include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
 # include "libft/libft.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <errno.h>
 
 # define DELIMITER "|<>()"
 # define WHITESPACE " \n\t\r\v"
@@ -120,6 +121,7 @@ void	quote_work(char *ptr, int *in_single, int *in_double);
 char	*ft_var_name2(char *s, t_exp *exp);
 char	*parse_string_for_expansions(char *s, t_exp *exp);
 void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp);
+char	*check_for_question_mark(char *s);
 
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
@@ -143,12 +145,11 @@ int		ft_check_for_dups(t_exp *head, char *name, char *value);
 
 
 //free_functions.c
-void	free_cmdtree(t_cmd *tree);
+//void	free_cmdtree(t_cmd *tree);
 void	free_memory(char **arr);
-void	free_env(char	**env);
+//void	free_env(char	**env);
 void	ft_free_env_list(t_env *env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
-void	free_env(char	**env);
 void	free_exp(t_exp **exp);
 
 //utils.c
@@ -170,6 +171,9 @@ void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
 void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
 void	close_after(int std_in, int std_out, int pipe_fd[2]);
+
+//error_handling.c
+void	error_message(char *str, int i);
 
 //execute_utils.c
 int		execute_cmd(char **env, char **cmd);

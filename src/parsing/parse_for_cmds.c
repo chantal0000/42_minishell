@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 11:19:15 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 19:22:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
 	if (*s != '\0')
-	{
-		printf("check syntax\n");//check what bash returns
-		return ;
-	}
+		error_message("check syntax", 1);
 	restore_pipes_and_spaces(*cmd);
 }
 
@@ -120,10 +117,7 @@ char	*check_for_quotes(char *s)
 	char	*temp;
 
 	if (!s)
-	{
-		printf("string is empty");
-		exit(1);
-	}
+		return (NULL);
 	in_single = 0;
 	in_double = 0;
 	temp = s;
@@ -140,10 +134,7 @@ char	*check_for_quotes(char *s)
 		temp++;
 	}
 	if (in_single || in_double)
-	{
-		printf("open quotes found, can't parse\n");
-		exit (1);
-	}
+		error_message("open quotes found, can't parse", 1);
 	return (s);
 }
 
