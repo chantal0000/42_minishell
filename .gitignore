@@ -1,6 +1,6 @@
 .DS_Store
 /kb_pipex
-/sandbox
+#/sandbox
 .vscode
 minishell
 notes.txt

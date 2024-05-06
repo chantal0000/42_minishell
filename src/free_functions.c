@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 16:06:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:33:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 void	free_cmdtree(t_cmd *tree)
 {
@@ -171,4 +169,3 @@ void free_exp(t_exp **exp)
 
     *exp = NULL; // Set the original pointer to NULL after freeing all nodes
 }
-

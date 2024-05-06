@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 20:08:53 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:41:26 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	print_exp(t_exp *exp)
 		temp = temp->next;
 	}
 }
-
-
 
 int	main(int argc, char **argv, char **env)
 {
