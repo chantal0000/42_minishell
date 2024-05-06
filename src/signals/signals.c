@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:34:15 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/02 11:24:28 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:35:03 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,3 +77,17 @@ void ft_init_signals_input()
 ** CTRL D (which is not actually a signal) bash: warning: here-document at line 9 delimited by end-of-file (wanted `eof')
 */
 
+void	ft_init_signals_heredoc(int sig)
+{
+	// (void)signal;
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// write(STDERR_FILENO, "\n", 1);
+	// g_signal = sig;
+	write(1, "\n", 2);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	(void) sig;
+	g_signal = 130;
+	exit(130);
+}

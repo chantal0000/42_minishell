@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 17:15:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:35:48 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void	ft_heredoc(t_cmd *cmd)
 
 	i = 0;
 	// ft_init_signals_heredoc();
+	signal(SIGINT, ft_init_signals_heredoc);
 	while (i < MAX_CONTENT_SIZE)
 	{
 
