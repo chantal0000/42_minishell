@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 11:23:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 12:13:32 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,13 @@ t_cmd	*parse_exec_cmds(char **s)
 	char	*non_token;
 
 	non_token = NULL;
-	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	if (!cmd_tree)
+//	cmd_tree = NULL;
+//	cmd_tree = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+/*	if (!cmd_tree)
 	{
 		printf("cmd_tree initiation in exec failed\n");
 		exit (1);
-	}
+	}*/
 	cmd_tree = init_exec_cmds(s, non_token);
 	if (!cmd_tree)
 		free_cmdtree(cmd_tree);

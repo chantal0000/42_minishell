@@ -6,19 +6,18 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 20:19:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 11:09:50 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*ft_var_name2(char *s, t_exp *exp)
+/*char	*ft_var_name2(char *s, t_exp *exp)
 {
 	char	*var_exp;
 	int		var_len;
 	t_exp	*temp;
 	int 	cmd_len;
-//	char	*str_temp;
 	char	*result;
 
 	var_exp = NULL;
@@ -46,9 +45,44 @@ char	*ft_var_name2(char *s, t_exp *exp)
 	if (!result)
 		return (NULL);
 	return (result);
+}*/
+
+char	*ft_var_name2(char *s, t_exp *exp)
+{
+	char	*var_exp;
+	int		var_len;
+	t_exp	*temp;
+	int		cmd_len;
+	char	*result;
+
+	var_exp = NULL;
+	cmd_len = 0;
+	var_len = 0;
+	if (*s == '$')
+		s++;
+	while (isalnum(s[cmd_len])) // Check if the character is alphanumeric
+		cmd_len++;
+	temp = exp;
+	while (temp)
+	{
+		var_len = strlen(temp->exp_name);
+		if (ft_strncmp(s, temp->exp_name, var_len) == 0 && var_len == cmd_len)
+		{
+			if (temp->exp_value != NULL)
+				var_exp = ft_strdup(temp->exp_value);
+			break;
+		}
+		temp = temp->next;
+	}
+	if (var_exp == NULL)
+		return (ft_strdup(""));
+	result = ft_strjoin(var_exp, s + cmd_len);
+	if (!result)
+		return (NULL);
+	return (result);
 }
 
-char	*parse_string_for_expansions(char *s, t_exp *exp)
+/*char	*parse_string_for_expansions(char *s, t_exp *exp)
 {
 	char	*temp;
 	char	*str;
@@ -68,8 +102,8 @@ char	*parse_string_for_expansions(char *s, t_exp *exp)
 		temp = ft_var_name2(temp, exp);
 		if (!temp)
 			return (NULL);
-		len = strlen(temp);
-		str = strndup(s, i);
+		len = strlen(temp) + i;
+		str = ft_strndup(s, i);
 		if (!str)
 		{
 			free (temp);
@@ -79,6 +113,43 @@ char	*parse_string_for_expansions(char *s, t_exp *exp)
 		free (temp);
 		free (str);
 		return (new_str);
+	}
+	return (s);
+}*/
+
+char	*parse_string_for_expansions(char *s, t_exp *exp)
+{
+	char	*temp;
+	char	*str;
+	int		i;
+	int		len;
+	char	*new_str;
+
+	str = s;
+	i = 0;
+	len = 0;
+	new_str = NULL;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			temp = &str[i];
+			temp = ft_var_name2(temp, exp);
+			if (!temp)
+				return (NULL);
+			len = strlen(temp) + i;
+			str = strndup(s, i);
+			if (!str)
+			{
+				free(temp);
+				return (NULL);
+			}
+			new_str = ft_strjoin(str, temp);
+			free(temp);
+			free(str);
+			return (new_str);
+		}
+		i++;
 	}
 	return (s);
 }

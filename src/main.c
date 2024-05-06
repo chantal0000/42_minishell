@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 20:08:53 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:33:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,87 @@ void	print_exp(t_exp *exp)
 		temp = temp->next;
 	}
 }
+
+
+
+/*int	main(int argc, char **argv, char **env)
+{
+	static char	*line;
+	t_cmd	*list;
+	t_exp	*exp;
+	t_env	*env_list;
+	int original_stdout = dup(STDOUT_FILENO);
+	int original_stdin = dup(STDIN_FILENO);
+//	int exit_status = 0;
+
+	(void)argc;
+	(void)argv;
+	g_signal = 0;
+	exp = NULL;
+	list = NULL;
+	if (argc != 1)
+	{
+		write(STDERR_FILENO, "invalid arguments: ambiguous redirect\n", 38);
+		exit(1);//is this the right error code?
+	}
+	if (!env)
+		return (0);
+	env_list = fill_env_struct(env);
+	while (1)
+	{
+		ft_init_signals();
+		line = readline("minishell: ");
+		// this is basically ctrl D
+		if (!line)
+		{
+			// free memory
+			ft_free_env_list(env_list);
+			// free(env_list);
+			// while (env_list != NULL)
+			// {
+			// t_env *next = env_list->next;
+			// free(env_list);
+			// env_list = next;
+			// }
+			printf("exit\n");
+			exit(0);
+		}
+		add_history(line);
+		parse_for_expansions(&exp, &line);
+		print_exp(exp);
+		if (line)
+		{
+			parse_for_cmds(&list, line);//need to add envp
+			print_stack(list);
+			parse_cmds_for_expansions(&list, exp);
+			printf("\nafter expansion\n");
+			print_stack(list);
+		}
+		if (list)
+		{
+			ft_executor(list, env_list);
+			dup2(original_stdin, STDIN_FILENO);
+			// close(original_stdin);
+			dup2(original_stdout, STDOUT_FILENO);
+			// close(original_stdout);
+		}
+		if (list)
+			ft_free_cmd_struct(list);
+		list = NULL; // here needs to be freed
+		// free_cmdtree(list);
+	}
+//	HIST_ENTRY *entry = history_get(where_history());
+//	printf("%s\n", entry->line);
+//	exit_status = ft_executor(list);
+//	print_exp(exp);
+//	free(line);
+	// free_cmdtree(list);
+	ft_free_env_list(env_list);
+	free (list);
+	free_exp(&exp);
+	return (0);
+}*/
+
 
 
 
