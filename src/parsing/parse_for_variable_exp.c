@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:25:16 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 20:36:44 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:55:09 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_exp	*insert_exp(t_exp *head, char *name, char *value)
 	t_exp	*new_node;
 	t_exp	*temp;
 
+	if (!name || !value)
+		return (NULL);
 	temp = head;
 	while (temp)
 	{
@@ -41,6 +43,7 @@ t_exp	*insert_exp(t_exp *head, char *name, char *value)
 	temp->next = new_node;
 	return (head);
 }
+
 
 //function returns 1 if a parsable '=' is found
 //parsable means not in quotes or token found before '='
