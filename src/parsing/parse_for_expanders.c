@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 11:09:50 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:45:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,25 @@ char	*ft_var_name2(char *s, t_exp *exp)
 	cmd_len = 0;
 	var_len = 0;
 	if (*s == '$')
+	{
+		if (*(s + 1) == '?')
+		{
+			printf("question mark found\n");
+			s++;
+		}
 		s++;
+	}
 	while (isalnum(s[cmd_len])) // Check if the character is alphanumeric
 		cmd_len++;
 	temp = exp;
 	while (temp)
 	{
-		var_len = strlen(temp->exp_name);
+		var_len = ft_strlen(temp->exp_name);
 		if (ft_strncmp(s, temp->exp_name, var_len) == 0 && var_len == cmd_len)
 		{
 			if (temp->exp_value != NULL)
 				var_exp = ft_strdup(temp->exp_value);
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}
