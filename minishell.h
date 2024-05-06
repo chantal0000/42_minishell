@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/05 20:34:25 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:37:43 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,4 +207,6 @@ int	ft_handle_error_cd(t_cmd *cmd);
 // signals.c
 void ft_init_signals();
 void ft_init_signals_input();
+void	ft_init_signals_heredoc(int sig);
+void	ft_ctrl_c_signals_input(int sig);
 #endif
