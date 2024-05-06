@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
 /*   Updated: 2024/05/06 18:27:46 by kbolon           ###   ########.fr       */
@@ -118,8 +118,8 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		// free cmd string
 		// if (current->cmd)
 		free_memory(current->cmd);
-		// if (current->file_name)
-		// 	free(current->file_name);
+		if (current->file_name && ft_strcmp(current->file_name, "/tmp/tempfile21008") != 0)
+			free(current->file_name);
 		if (current->heredoc_delimiter)
 			free(current->heredoc_delimiter);
 		// if (current->heredoc_content)
@@ -147,6 +147,5 @@ void free_exp(t_exp **exp)
 
 		current = next;
 	}
-
 	*exp = NULL; // Set the original pointer to NULL after freeing all nodes
 }

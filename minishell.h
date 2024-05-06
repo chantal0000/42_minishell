@@ -211,4 +211,6 @@ int	ft_handle_error_cd(t_cmd *cmd);
 // signals.c
 void ft_init_signals();
 void ft_init_signals_input();
+void	ft_init_signals_heredoc(int sig);
+void	ft_ctrl_c_signals_input(int sig);
 #endif
