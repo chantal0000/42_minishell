@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 16:35:48 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:57:46 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,8 @@ void	ft_heredoc(t_cmd *cmd)
 		if (!str)
 		{
 			printf("minishell: warning: here-document delimited by end-of-file\n");
-			exit(0);
+			// exit(0);
+			break ;
 		}
 		//how do i know the heredoc_delimiter?
 		if (ft_strcmp(str, cmd->heredoc_delimiter) == 0)
