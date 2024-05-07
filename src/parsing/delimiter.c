@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 18:50:55 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 06:11:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ char	*check_quotes(char *s)
 		{
 			temp = (char *)ft_calloc(len - 2, sizeof(char));
 			if (!temp)
-			{
-				printf("problems mem alloc checkquotes");
 				return (NULL);
-			}
 			while (i < len - 2)
 			{
 				temp[i] = s[i + 1];

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 19:22:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 06:25:03 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,51 +64,6 @@ int	check_next_char(char **s, char token)
 		return (1);
 	return (0);
 }
-/*char	*check_for_quotes(char *s)
-{
-	int		in_single;
-	int		in_double;
-	char	*ptr;
-
-	if (!s)
-	{
-		printf("string is empty\n");
-		return (NULL);
-	}
-	in_single = 0;
-	in_double = 0;
-	ptr = strdup(s);
-	if (!ptr)
-		return (NULL);
-	quote_work(ptr, &in_single, &in_double);
-	if (in_single || in_double)// == -1)
-	{
-		printf("open quotes found, can't parse\n");
-		free (ptr);
-		return (NULL);
-	}
-	return (ptr);
-}
-
-void	quote_work(char *ptr, int *in_single, int *in_double)
-{
-	char *temp;
-
-	temp = ptr;
-	while (*temp)
-	{
-		if (*temp == '\'' && (*temp - 1) != '\\' && !(*in_double))
-			*in_single = !(*in_single);
-		else if (*temp == '\"' && (*temp - 1) != '\\' && !(*in_single))
-			*in_double = !(*in_double);
-		else if (*temp == '|' && (in_single || in_double))
-			*temp = '\xFD';
-		else if (*temp == ' ' && (in_single || in_double))
-			*temp =  '\xFE';
-		temp++;
-	}
-	ptr = temp;
-}*/
 
 char	*check_for_quotes(char *s)
 {

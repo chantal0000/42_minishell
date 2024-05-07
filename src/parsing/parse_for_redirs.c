@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_for_redirs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 16:57:46 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/07 07:03:02 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,37 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 	node->instructions = instructions;
 	if (fd == 0)
 	{
-		node->fd_in = open(node->file_name, O_RDONLY, 0777);
-		if (node->fd_in < 0)
-		{
-			printf("Error Opening Infile\n");//need to iterate through and close other fds
-			close(node->fd_in);
-			exit (1);
-		}
+		node->fd_in = ft_open_fcn(node, instructions, 0777);
 		node->fd_out = -1;
 	}
 	else if (fd == 1)
 	{
-		node->fd_out = open(node->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		if (node->fd_out < 0)
-		{
-			printf("Error Opening Outfile\n");
-			close(node->fd_out);
-			exit (1);
-		}
+		node->fd_out = ft_open_fcn(node, instructions, 0777);
 		node->fd_in = -1;
 	}
-	else
+	else if (!fd)
 	{
 		node->fd_in = -1;
 		node->fd_out = -1;
 	}
 	return (node);
+}
+
+int		ft_open_fcn(t_cmd *node, int instructions, int num)
+{
+	int		fd;
+
+	fd = 0;
+	{
+		fd = open(node->file_name, instructions, num);
+		if (fd < 0)
+		{
+			printf("Error Opening file\n");
+			close(fd);
+			exit (1);
+		}
+	}
+	return (fd);
 }
 
 //NOTE FOR KAREN
@@ -96,6 +101,7 @@ void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
 	// int fd = -1;
 	bytes_written = -1;
 	cmd->fd_in = open(temp_file,  O_RDWR | O_CREAT | O_TRUNC, 0777);
+	printf("fd_in on heredoc 1: %d\n", cmd->fd_in);
 	if (cmd->fd_in == -1)
 	{
 		perror("Failed to create temporary file");
@@ -117,6 +123,7 @@ void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
 	cmd->file_name = "/tmp/tempfile21008";
 	close(cmd->fd_in);
 	cmd->fd_in = open(cmd->file_name, O_RDONLY, 0777);
+	printf("fd_in on heredoc 2: %d\n", cmd->fd_in);
 	// change this
 	cmd->fd_out = -1;
     // Close the file descriptor

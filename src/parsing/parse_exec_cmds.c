@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 19:03:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 06:23:03 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,13 @@ char	*parse_line(char *arr)
 	return (arr);
 }
 
-t_cmd	*init_exec_cmds(char **s, char *non_token)
+t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token)
 {
 	int		i;
 	int		token;
-	t_cmd	*cmd_tree;
 
 	i = 0;
 	token = 0;
-	cmd_tree = ft_init_struct();
-	cmd_tree = parse_for_redirections(cmd_tree, s);
-	if (!cmd_tree)
-		return (NULL);
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
@@ -48,7 +43,7 @@ t_cmd	*init_exec_cmds(char **s, char *non_token)
 		{
 			free_memory(s);
 			free (non_token);
-			error_message("error copying cmd into array", 1);
+			return (NULL);
 		}
 		parse_line(cmd_tree->cmd[i]);
 		cmd_tree->cmd[i] = check_quotes(cmd_tree->cmd[i]);
@@ -65,7 +60,13 @@ t_cmd	*parse_exec_cmds(char **s)
 	char	*non_token;
 
 	non_token = NULL;
-	cmd_tree = init_exec_cmds(s, non_token);
+	cmd_tree = ft_init_struct();
+	if (!cmd_tree)
+		return (NULL);
+	cmd_tree = parse_for_redirections(cmd_tree, s);
+	if (!cmd_tree)
+		return (NULL);
+	cmd_tree = init_exec_cmds(cmd_tree, s, non_token);
 	if (!cmd_tree)
 		ft_free_cmd_struct(cmd_tree);
 	return (cmd_tree);
