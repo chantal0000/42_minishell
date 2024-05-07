@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 19:28:24 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 07:03:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,66 +83,61 @@ void	print_stack(t_cmd *root);
 int		find_delimiter(char *s1, char *delim);
 char	*check_quotes(char *s);
 
-//expansions.c
-t_cmd	**ft_find_var_expansions(t_cmd **cmd, t_exp *exp);
-char	*expansion_time(char *s, t_exp *exp);
-int		expansion_quotes(char *s);
-char	*apply_expansion_magic(char *s, int *i, t_exp *exp);
-char	*ft_var_name(char *s, t_exp *exp);
-
 //find_tokens.c
 int		check_for_alligators(char **s);
 int		find_tokens(char **s, char **beg_of_file);
-char	ft_check_for_echo(char **s);
 
 //init_struct.c
 t_cmd	*ft_init_struct(void);
 t_cmd	*m_lstlast(t_cmd *lst);
 void	m_lstadd_back(t_cmd **lst, t_cmd *new);
 void	update_fd(t_cmd *tree);
-t_exp	*insert_exp(t_exp *head, char *name, char *value);
+
+//parse_echo_awk.c
+void	parse_for_echo(t_cmd *cmd_tree);
+int		ft_count(char **arr);
+void	ft_echo(t_cmd *cmd);
 
 //parse_exec_cmds.c
 char	*parse_line(char *arr);
-t_cmd	*init_exec_cmds(char **s, char *non_token);
+t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token);
 t_cmd	*parse_exec_cmds(char **s);
 
 //parse_for_cmds.c
 void	parse_for_cmds(t_cmd **cmd, char *s);
-void	parse_for_exp2(t_exp **exp, char *s);
 int		is_token(char s);
 int		is_whitespace(char s);
 int		check_next_char(char **s, char token);
-char	*parse_for_quotes(char *s);
 char 	*check_for_quotes(char *s);
-void	quote_work(char *ptr, int *in_single, int *in_double);
 
 //parse_for_expanders.c
-char	*ft_var_name2(char *s, t_exp *exp);
+char	*ft_var_name(char *s, t_exp *exp);
+char	*parse_for_duplicate_names(t_exp *exp, char *s, size_t cmd_len);
+char	*check_for_question_mark(char *s);
 char	*parse_string_for_expansions(char *s, t_exp *exp);
 void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp);
-char	*check_for_question_mark(char *s);
 
 //parse_for_redir.c
+//not checked for long functions and notes
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
+int		ft_open_fcn(t_cmd *node, int instructions, int num);
+void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd);
 void	ft_heredoc(t_cmd *cmd);
 char	*make_string(char **s);
 
-//parse_pipes_and_groups.c
-void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
-char	parse_for_single_quotes(char *s);
-void	restore_pipes_and_spaces(t_cmd *cmd);
-void	ft_restore(char *s);
-
 //parse_for_variable_exp.c
+//not checked for long functions and notes
 t_exp	*insert_exp(t_exp *head, char *name, char *value);
 int		search_string_for_equal(char *s);
 char	*find_name(char **s);
 char	*find_value(char **s);
 void	parse_for_expansions(t_exp **exp, char **s);
-int		ft_check_for_dups(t_exp *head, char *name, char *value);
 
+//parse_pipes_and_groups.c
+void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
+void	restore_pipes_and_spaces(t_cmd *cmd);
+void	ft_restore(char *s);
 
 //free_functions.c
 //void	free_cmdtree(t_cmd *tree);
@@ -156,10 +151,6 @@ void	free_exp(t_exp **exp);
 char	*ft_strndup(const char *s, size_t n);
 char	**export_split(char	*s);
 void	parse_string(char *s);
-
-//parse_echo_awk.c
-int		ft_count(char **arr);
-void	ft_echo(t_cmd *cmd);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);

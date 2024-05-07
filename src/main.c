@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 19:18:05 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 06:22:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **env)
 //			print_stack(list);
 			parse_cmds_for_expansions(&list, exp);
 //			printf("\nafter expansion\n");
-//			print_stack(list);
+			print_stack(list);
 		}
 		if (list)
 		{
