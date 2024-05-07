@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 06:25:03 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 13:45:39 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,25 @@
 void	parse_for_cmds(t_cmd **cmd, char *s)
 {
 	int		index;
+//	char	*temp;
 
 	if (!s)
 		return ;
+//	temp = s;
 	index = 0;
-	s = check_for_quotes(s);
-	parse_for_pipe(&s, cmd, 0, &index);
-	update_fd(*cmd);
-	while (*s != '\0' && is_whitespace(*s))
-		(*s)++;
+//	while (*s != '\0')
+//	{
+		s = check_for_quotes(s);
+		parse_for_pipe(&s, cmd, 0, &index);
+		update_fd(*cmd);
+		while (*s != '\0' && is_whitespace(*s))
+			(*s)++;
+		restore_pipes_and_spaces(*cmd);
+//		(*s)++;
+//	}
 	if (*s != '\0')
 		error_message("check syntax", 1);
-	restore_pipes_and_spaces(*cmd);
+	
 }
 
 int	is_token(char s)

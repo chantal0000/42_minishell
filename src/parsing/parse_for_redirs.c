@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 07:03:02 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 13:21:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
 	cmd->fd_in = open(cmd->file_name, O_RDONLY, 0777);
 	printf("fd_in on heredoc 2: %d\n", cmd->fd_in);
 	// change this
-	cmd->fd_out = -1;
+	// cmd->fd_out = -1;
     // Close the file descriptor
     // close(cmd->fd_in);
 }
