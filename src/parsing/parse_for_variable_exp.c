@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:25:16 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 14:55:09 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:00:46 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@ t_exp	*insert_exp(t_exp *head, char *name, char *value)
 	new_node = (t_exp *)ft_calloc(1, sizeof(t_exp));
 	if (!new_node)
 		return (NULL);
-	new_node->exp_name = ft_strdup(name);
-	new_node->exp_value = ft_strdup(value);
+	new_node->exp_name = ft_strdup(name);//mem issues
+	if (!new_node->exp_name)
+		return (NULL);
+	new_node->exp_value = ft_strdup(value);//mem issues
+	if (!new_node->exp_value)
+		return (NULL);
 	new_node->next = NULL;
 	if (!head)
 		return (new_node);
@@ -110,7 +114,7 @@ char	*find_value(char **s)
 	return (value);
 }
 
-void	parse_for_expansions(t_exp **exp, char **s)
+void	parse_for_variables(t_exp **exp, char **s)
 {
 	char	*name;
 	char	*value;

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 06:22:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:00:29 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ int	main(int argc, char **argv, char **env)
 			exit(0);
 		}
 		add_history(line);
-		parse_for_expansions(&exp, &line);
+		parse_for_variables(&exp, &line);
 		print_exp(exp);
 		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
-//			print_stack(list);
+			print_stack(list);
 			parse_cmds_for_expansions(&list, exp);
-//			printf("\nafter expansion\n");
+			printf("\nafter expansion\n");
 			print_stack(list);
 		}
 		if (list)
@@ -127,7 +127,7 @@ int	main(int argc, char **argv, char **env)
 //	printf("%s\n", entry->line);
 //	exit_status = ft_executor(list);
 //	print_exp(exp);
-//	free(line);
+	free(line);
 	// free_cmdtree(list);
 	ft_free_env_list(env_list);
 	free_exp(&exp);

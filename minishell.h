@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 07:03:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:00:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ t_exp	*insert_exp(t_exp *head, char *name, char *value);
 int		search_string_for_equal(char *s);
 char	*find_name(char **s);
 char	*find_value(char **s);
-void	parse_for_expansions(t_exp **exp, char **s);
+void	parse_for_variables(t_exp **exp, char **s);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
