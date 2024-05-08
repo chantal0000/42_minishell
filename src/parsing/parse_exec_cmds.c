@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_exec_cmds.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 06:57:34 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 10:20:59 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token)
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
-		printf("token found: %c\n", token);
+		// printf("token found: %c\n", token);
 		if (token == 0)
 			break ;
 		cmd_tree->token = token;

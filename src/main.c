@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 06:55:52 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 14:03:56 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **env)
 	t_env	*env_list;
 	int original_stdout = dup(STDOUT_FILENO);
 	int original_stdin = dup(STDIN_FILENO);
-//	int exit_status = 0;
+	int exit_status = 0;
 
 	(void)argc;
 	(void)argv;
@@ -106,14 +106,14 @@ int	main(int argc, char **argv, char **env)
 		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
-//			print_stack(list);
-			parse_cmds_for_expansions(&list, exp);
+			// print_stack(list);
+			parse_cmds_for_expansions(&list, exp, exit_status);
 //			printf("\nafter expansion\n");
 			print_stack(list);
 		}
 		if (list)
 		{
-			ft_executor(list, env_list);
+		exit_status =	ft_executor(list, env_list);
 			dup2(original_stdin, STDIN_FILENO);
 			// close(original_stdin);
 			dup2(original_stdout, STDOUT_FILENO);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
+#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/06 18:57:41 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/08 11:37:50 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,16 +42,17 @@ SRCS = src/main.c \
 		src/errors/error_handling.c
 
 LIBFT = libft/libft.a
-CC = cc 
+CC = cc
 OBJS = $(SRCS:.c=.o)
 #LINUX
-#COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
-#LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
+CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
+COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
-COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
-LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
+#CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
+#COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
+#LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
 
 all: $(NAME)
 
