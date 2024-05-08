@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 14:59:42 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:12:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	free_memory(char **arr)
 
 void	free_env(char **env)
 {
+// THIS IS ACTUALLY JUST A FREE ARRAY FUNCTION SO MAYBE CHANGE NAME CHANTAL
 	int		i;
 
 	i = 0;

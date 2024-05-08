@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/08 17:12:00 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:41:51 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 ** Otherwise, it handles redirections and executes using execve().
 */
 
+t_cmd *first_node(t_cmd *node)
+{
+	while (node->prev != NULL)
+		node = node->prev;
+
+	return (node);
+}
 int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 {
 	if ((node->fd_in) != -1)
-	{
 		dup2(node->fd_in, STDIN_FILENO);
-	}
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
@@ -38,6 +43,7 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 		{
 			if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			{
+				ft_free_env_list(env_list);
 				ft_free_cmd_struct(node);
 				exit (127);
 			}
@@ -49,10 +55,6 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 			return (exit_status);
 		}
 	}
-	// close fd_in??
-    // close(original_stdout); // Clo
-		// dup(STDOUT_FILENO);// somewhere set back to be stdout?
-	// printf("exit_status single: %d", exit_status);
 	return (exit_status);
 }
 
@@ -95,7 +97,11 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 		if (exit_status != -1)
 			exit (exit_status);
 		else if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
+		{
+			ft_free_env_list(env_list);
+			ft_free_cmd_struct(node);
 			exit (127);
+		}
 	}
 	node->pid = pid;
 	return (0);
@@ -139,7 +145,11 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list
 		if (exit_status != -1)
 			exit (exit_status);
 		else if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
+		{
+			ft_free_env_list(env_list);
+			ft_free_cmd_struct(first_node(node));
 			exit (127);
+		}
 	}
 	node->pid = pid;
 	return (0);
@@ -177,7 +187,12 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list)
 		if (exit_status != -1)
 			exit (exit_status);
 		if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
+		{
+			printf("HI\n\n");
+			ft_free_env_list(env_list);
+			ft_free_cmd_struct(first_node(node));
 			exit (127);
+		}
 	}
 	node->pid = pid;
 	return (0);
@@ -243,32 +258,31 @@ void	close_after(int std_in, int std_out, int pipe_fd[2])
 	close(pipe_fd[1]);
 }
 
+/*
+** beginning of execution
+** inits signals (second time)
+** checks if we have just one single command and proceeds
+** or if we have multiple goes to the loop of commands
+** if successful we free the linked list -> cmd structure
+** and return the exit status to our main function
+*/
 int	ft_executor(t_cmd *node, t_env *env_list)
 {
 	int		exit_status;
 	t_cmd	*head;
-	// char	**env1;
 	int		pid;
 
 	exit_status = 0;
 	head = node;
 	pid = 0;
-	// env1 = NULL;
-	// env1 = ft_env_list_to_array(node->m_env);
-	// env1 = ft_env_list_to_array(env_list);
+
 	ft_init_signals_input();
 	if (!node->next && !node->prev)
 		exit_status = ft_simple_cmd(node, exit_status, pid, env_list);
 	else
-	{
 		exit_status = loop_cmds(node, exit_status, head, env_list);
-	}
 
-	// free environment here
-	// free cmd struct
-	// free_env(env1);
-	//seg faults for heredoc
-	// g_signal = exit_status;
+	printf("freeing\n");
 	ft_free_cmd_struct(node);
 	return (exit_status);
 }
