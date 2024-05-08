@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/06 18:27:46 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 14:59:42 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	free_memory(char **arr)
 
 /* free the array of env, in every loop*/
 
-/*void	free_env(char **env)
+void	free_env(char **env)
 {
 	int		i;
 
@@ -81,7 +81,7 @@ void	free_memory(char **arr)
 		i++;
 	}
 	free (env);
-}*/
+}
 
 
 /*chantal added functions

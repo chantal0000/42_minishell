@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 14:03:56 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:07:57 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,7 @@ int	main(int argc, char **argv, char **env)
 		// this is basically ctrl D
 		if (!line)
 		{
-			// free memory
 			ft_free_env_list(env_list);
-			// free(env_list);
-			// while (env_list != NULL)
-			// {
-			// t_env *next = env_list->next;
-			// free(env_list);
-			// env_list = next;
-			// }
 			printf("exit\n");
 			exit(0);
 		}
@@ -114,9 +106,9 @@ int	main(int argc, char **argv, char **env)
 		if (list)
 		{
 		exit_status =	ft_executor(list, env_list);
-			dup2(original_stdin, STDIN_FILENO);
+		dup2(original_stdin, STDIN_FILENO);
 			// close(original_stdin);
-			dup2(original_stdout, STDOUT_FILENO);
+		dup2(original_stdout, STDOUT_FILENO);
 			// close(original_stdout);
 		}
 		list = NULL; // here needs to be freed
