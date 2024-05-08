@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 13:45:39 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 19:12:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	check_next_char(char **s, char token)
 {
 	char	*temp;
 
+	if (!*s)
+		return (0);
 	temp = *s;
 	while (*temp != '\0' && is_whitespace(*temp))
 		temp++;

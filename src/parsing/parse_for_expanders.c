@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 15:49:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/07 18:56:22 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ char	*parse_string_for_expansions(char *s, t_exp *exp)
 	char	*temp;
 	char	*str;
 	int		i;
-	int		len;
 	char	*new_str;
 
 	str = s;
 	i = 0;
-	len = 0;
 	new_str = NULL;
 	while (str[i] != '\0')
 	{
@@ -74,7 +72,6 @@ char	*parse_string_for_expansions(char *s, t_exp *exp)
 			temp = ft_var_name2(temp, exp);
 			if (!temp)
 				return (NULL);
-			len = ft_strlen(temp) + i;
 			str = ft_strndup(s, i);
 			if (!str)
 			{
