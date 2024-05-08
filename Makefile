@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
+#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/08 11:37:50 by chbuerge         ###   ########.fr        #
+#    Updated: 2024/05/08 15:55:43 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = src/main.c \
+SRCS = 	src/main.c \
 		src/parsing/delimiter.c \
 		src/parsing/find_tokens.c \
 		src/parsing/init_struct.c \
