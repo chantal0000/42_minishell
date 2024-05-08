@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 15:00:58 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 13:40:55 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ char 	*check_for_quotes(char *s);
 char	*ft_var_name(char *s, t_exp *exp);
 char	*parse_for_duplicate_names(t_exp *exp, char *s, size_t cmd_len);
 char	*check_for_question_mark(char *s);
-char	*parse_string_for_expansions(char *s, t_exp *exp);
-void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp);
+char	*parse_string_for_expansions(char *s, t_exp *exp, int exit_status);
+void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status);
 
 //parse_for_redir.c
 //not checked for long functions and notes

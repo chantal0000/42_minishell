@@ -6,12 +6,11 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:56:37 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/12 13:11:43 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:42:53 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
 
 int	handle_exit_status(t_cmd *node)
 {
@@ -30,6 +29,6 @@ int	handle_exit_status(t_cmd *node)
 		}
 		temp = temp->next;
 	}
-	printf("exit_status: %d\n", exit_status);
+	// g_signal = exit_status;
 	return (exit_status);
 }

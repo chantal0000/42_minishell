@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_for_expanders.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 18:56:22 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 13:39:51 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*ft_var_name2(char *s, t_exp *exp)
+char	*ft_var_name2(char *s, t_exp *exp, int exit_status)
 {
 	char	*var_exp;
 	int		var_len;
@@ -27,7 +27,7 @@ char	*ft_var_name2(char *s, t_exp *exp)
 	{
 		if (*(s + 1) == '?')
 		{
-			result = ft_strdup(ft_itoa(g_signal));
+			result = ft_strdup(ft_itoa(exit_status));
 			return (result);
 		}
 		s++;
@@ -54,7 +54,7 @@ char	*ft_var_name2(char *s, t_exp *exp)
 	return (result);
 }
 
-char	*parse_string_for_expansions(char *s, t_exp *exp)
+char	*parse_string_for_expansions(char *s, t_exp *exp, int exit_status)
 {
 	char	*temp;
 	char	*str;
@@ -69,7 +69,7 @@ char	*parse_string_for_expansions(char *s, t_exp *exp)
 		if (str[i] == '$')
 		{
 			temp = &str[i];
-			temp = ft_var_name2(temp, exp);
+			temp = ft_var_name2(temp, exp, exit_status);
 			if (!temp)
 				return (NULL);
 			str = ft_strndup(s, i);
@@ -89,7 +89,7 @@ char	*parse_string_for_expansions(char *s, t_exp *exp)
 }
 
 
-void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp)
+void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status)
 {
 	t_cmd	*temp;
 	int		i;
@@ -103,7 +103,7 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp)
 		i = 0;
 		while (temp->cmd[i] != NULL)
 		{
-			string = ft_var_name2(temp->cmd[i], exp);
+			string = ft_var_name2(temp->cmd[i], exp, exit_status);
 			if (string && *string != '\0')
 			{
 				free (temp->cmd[i]);

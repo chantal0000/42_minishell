@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/05 14:45:21 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:55:10 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,37 @@ int	ft_strcmp(char *s1, char *s2)
 int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
 {
 	char *cmd_to_check;
+	int exit_status;
 
+	exit_status = 0;
 	cmd_to_check = cmd->cmd[0];
 	// printf("cmd_to_check: %s\n", cmd_to_check);
 
 	if (ft_strcmp(cmd_to_check, "exit") == 0)
-		ft_exit(cmd, env_list);
+		exit_status = ft_exit(cmd, env_list);
 	else if (ft_strcmp(cmd_to_check, "cd") == 0)
-		ft_cd(cmd);
+		exit_status = ft_cd(cmd);
 	else if (ft_strcmp(cmd_to_check, "echo") == 0)
 	{
-		ft_echo(cmd);
+		// handle exit status
+		 ft_echo(cmd);
 //		printf("built-in: echo\n");
 	}
 	else if (ft_strcmp(cmd_to_check, "env") == 0)
-		ft_env(env_list);
+		exit_status = ft_env(env_list);
 	else if (ft_strcmp(cmd_to_check, "export") == 0)
 	{
-		ft_export(cmd, env_list);
+		exit_status = ft_export(cmd, env_list);
 	}
 	else if (ft_strcmp(cmd_to_check, "pwd") == 0)
-		ft_pwd();
+		exit_status = ft_pwd();
 	else if (ft_strcmp(cmd_to_check, "unset") == 0)
-		ft_unset(cmd, env_list);
+		exit_status = ft_unset(cmd, env_list);
 	else
 	{
 		// printf("not a built-in\nreturn with -1 \n");
 		return (-1);
 	}
-	return (0);
+	// g_signal = exit_status;
+	return (exit_status);
 }

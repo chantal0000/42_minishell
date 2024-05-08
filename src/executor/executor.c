@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/05 16:01:48 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 14:10:08 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 		dup2(node->fd_out, STDOUT_FILENO);
 		close(node->fd_out);
 	}
-	if (ft_is_builtin(node, env_list) == 0)
+	exit_status = ft_is_builtin(node, env_list);
+	if (exit_status != -1)
 		return (exit_status);
 	else
 	{
@@ -38,17 +39,22 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 		{
 			// env1 = ft_env_list_to_array(env_list);
 			if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
+			{
+				// g_signal = 127;
 				exit (127);
+			}
 		}
 		else
 		{
 			waitpid(pid, &exit_status, WUNTRACED);
+			exit_status = WEXITSTATUS(exit_status);
 			return (exit_status);
 		}
 	}
 	// close fd_in??
     // close(original_stdout); // Clo
 		// dup(STDOUT_FILENO);// somewhere set back to be stdout?
+	// printf("exit_status single: %d", exit_status);
 	return (exit_status);
 }
 
@@ -69,8 +75,10 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 {
 	int	pid;
+	int	exit_status;
 
 	pid = 0;
+	exit_status = 0;
 	if ((node->fd_in) != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	if (node->fd_out != -1)
@@ -88,8 +96,9 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		if (ft_is_builtin(node, env_list) == 0)
-			exit (0);
+		exit_status = ft_is_builtin(node, env_list);
+		if (exit_status != -1)
+			exit (exit_status);
 		else if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			exit (127);
 	}
@@ -104,8 +113,10 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list)
 {
 	int	pid;
+	int	exit_status;
 
 	pid = 0;
+	exit_status = 0;
 	if (node->fd_in != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	else
@@ -129,8 +140,9 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		if (ft_is_builtin(node, env_list) == 0)
-			exit (0);
+		exit_status = ft_is_builtin(node, env_list);
+		if (exit_status != -1)
+			exit (exit_status);
 		else if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			exit (127);
 	}
@@ -145,8 +157,10 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list
 int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list)
 {
 	int	pid;
+	int	exit_status;
 
 	pid = 0;
+	exit_status = 0;
 	if (node->fd_in != -1)
 		dup2(node->fd_in, STDIN_FILENO);
 	else
@@ -164,8 +178,9 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_pipe_in, t_env *env_list)
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		if (ft_is_builtin(node, env_list) == 0)
-			exit (0);
+		exit_status = ft_is_builtin(node, env_list);
+		if (exit_status != -1)
+			exit (exit_status);
 		if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			exit (127);
 	}
@@ -258,6 +273,7 @@ int	ft_executor(t_cmd *node, t_env *env_list)
 	// free cmd struct
 	// free_env(env1);
 	//seg faults for heredoc
+	// g_signal = exit_status;
 	ft_free_cmd_struct(node);
 	return (exit_status);
 }
