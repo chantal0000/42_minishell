@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 06:55:52 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 12:25:45 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_stack(t_cmd *root)
 	{
 		printf("\nnode[%d]\n", temp->index);
 		printf("fd_in: %d\n", temp->fd_in);
-//		printf("fd_out: %d\n", temp->fd_out);
+		printf("fd_out: %d\n", temp->fd_out);
 		printf("file_name: %s\n", temp->file_name);
 //		printf("instructions: %d\n", temp->instructions);
 		// printf("env: %s\n", temp->m_env->cmd_env);
