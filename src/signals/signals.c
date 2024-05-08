@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:34:15 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/06 16:35:03 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:21:38 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*
 ** signals in process before there is any input
 */
-
 void	ft_ctrl_c_signals(int sig)
 {
 	(void)sig;
@@ -30,7 +29,7 @@ void	ft_ctrl_c_signals(int sig)
 ** Ctrl C -> SIGINT
 ** Ctrl \ -> SIGQUIT (SIG_IGN function)
 */
-void ft_init_signals()
+void ft_init_signals(void)
 {
 	signal(SIGINT, ft_ctrl_c_signals);
 	signal(SIGQUIT, SIG_IGN);
@@ -64,7 +63,7 @@ void	ft_quit_signals_input(int sig)
 ** Ctrl C -> SIGINT
 ** Ctrl \ -> SIGQUIT (SIG_IGN function)
 */
-void ft_init_signals_input()
+void ft_init_signals_input(void)
 {
 	signal(SIGINT, ft_ctrl_c_signals_input);
 	signal(SIGQUIT, ft_quit_signals_input);
@@ -76,14 +75,8 @@ void ft_init_signals_input()
 ** CTRL \ -> nothing
 ** CTRL D (which is not actually a signal) bash: warning: here-document at line 9 delimited by end-of-file (wanted `eof')
 */
-
 void	ft_init_signals_heredoc(int sig)
 {
-	// (void)signal;
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// write(STDERR_FILENO, "\n", 1);
-	// g_signal = sig;
 	write(1, "\n", 2);
 	rl_replace_line("", 0);
 	rl_on_new_line();

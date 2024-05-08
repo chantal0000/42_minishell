@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 15:21:05 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:20:56 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,8 @@ int	ft_handle_error_cd(t_cmd *cmd);
 
 
 // signals.c
-void ft_init_signals();
-void ft_init_signals_input();
+void	ft_init_signals(void);
+void	ft_init_signals_input(void);
 void	ft_init_signals_heredoc(int sig);
 void	ft_ctrl_c_signals_input(int sig);
 #endif
