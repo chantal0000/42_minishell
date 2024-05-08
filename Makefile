@@ -51,6 +51,7 @@ LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
 #CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
+CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
 #COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
 #LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
 
