@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 13:40:55 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:16:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,11 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status);
 //parse_for_redir.c
 //not checked for long functions and notes
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
+t_cmd	*parse_multiple_redirections(t_cmd *cmd, char **s, char *filename, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 int		ft_open_fcn(t_cmd *node, int instructions, int num);
-void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd);
-void	ft_heredoc(t_cmd *cmd);
+void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
+void	ft_heredoc(t_cmd *cmd, char * file_name);
 char	*make_string(char **s);
 
 //parse_for_variable_exp.c
