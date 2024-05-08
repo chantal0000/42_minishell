@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 06:23:03 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 06:57:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token)
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
+		printf("token found: %c\n", token);
 		if (token == 0)
 			break ;
 		cmd_tree->token = token;
 		cmd_tree->cmd[i] = ft_strdup(non_token);
-		if (!cmd_tree)
+		if (!cmd_tree->cmd[i])
 		{
 			free_memory(s);
 			free (non_token);
@@ -68,6 +69,9 @@ t_cmd	*parse_exec_cmds(char **s)
 		return (NULL);
 	cmd_tree = init_exec_cmds(cmd_tree, s, non_token);
 	if (!cmd_tree)
+	{
 		ft_free_cmd_struct(cmd_tree);
+		return (NULL);
+	}
 	return (cmd_tree);
 }

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 15:00:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/08 06:55:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ int	main(int argc, char **argv, char **env)
 		}
 		add_history(line);
 		parse_for_variables(&exp, &line);
-		print_exp(exp);
+//		print_exp(exp);
 		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
-			print_stack(list);
+//			print_stack(list);
 			parse_cmds_for_expansions(&list, exp);
-			printf("\nafter expansion\n");
+//			printf("\nafter expansion\n");
 			print_stack(list);
 		}
 		if (list)
