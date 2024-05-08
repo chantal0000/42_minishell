@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 13:40:55 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:21:05 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	ft_restore(char *s);
 //free_functions.c
 //void	free_cmdtree(t_cmd *tree);
 void	free_memory(char **arr);
-//void	free_env(char	**env);
+void	free_env(char	**env);
 void	ft_free_env_list(t_env *env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
 void	free_exp(t_exp **exp);

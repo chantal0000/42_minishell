@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/08 14:10:08 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:12:00 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 {
 	if ((node->fd_in) != -1)
 	{
-		printf("fd_in in exec %d \n", node->fd_in);
 		dup2(node->fd_in, STDIN_FILENO);
 	}
 	if (node->fd_out != -1)
@@ -37,10 +36,9 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, int pid, t_env *env_list)
 		pid = fork();
 		if (pid == 0)
 		{
-			// env1 = ft_env_list_to_array(env_list);
 			if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 			{
-				// g_signal = 127;
+				ft_free_cmd_struct(node);
 				exit (127);
 			}
 		}
@@ -87,10 +85,7 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 		close(pipe_fd[1]);
 	}
 	else
-	{
-		// write (2, "dupping IN first pipe\n", 23);
 		dup2(pipe_fd[1], STDOUT_FILENO);
-	}
 	close(pipe_fd[1]);
 	pid = fork();
 	if (pid == 0)
