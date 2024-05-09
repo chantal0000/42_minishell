@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 10:49:50 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/09 11:16:00 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,16 @@ char	*check_for_question_mark(char *s);
 char	*parse_string_for_expansions(char *s, t_exp *exp, int exit_status);
 void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status);
 
-//parse_for_redir.c
-//not checked for long functions and notes
-t_cmd	*parse_for_redirections(t_cmd *node, char **s);
-t_cmd	*parse_multiple_redirections(t_cmd *cmd, char **s, char *filename, int token);
-t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
-t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
-int		ft_open_fcn(t_cmd *node, int instructions, int num);
+//parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
 void	ft_heredoc(t_cmd *cmd, char * file_name);
 char	*make_string(char **s);
+
+//parse_for_redir.c
+t_cmd	*parse_for_redirections(t_cmd *node, char **s);
+t_cmd	*parse_multiple_redirections(t_cmd *cmd, char **s, char *filename, int token);
+t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
+t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
 //parse_for_variable_exp.c
 //not checked for long functions and notes
