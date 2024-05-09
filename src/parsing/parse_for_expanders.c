@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_for_expanders.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 13:39:51 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/09 06:18:53 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_var_name2(char *s, t_exp *exp, int exit_status)
 		}
 		s++;
 	}
-	while (isalnum(s[cmd_len])) // Check if the character is alphanumeric
+	while (ft_isalnum(s[cmd_len])) // Check if the character is alphanumeric
 		cmd_len++;
 	temp = exp;
 	while (temp)
