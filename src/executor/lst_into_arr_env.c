@@ -1,5 +1,14 @@
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_into_arr_env.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/09 14:32:58 by chbuerge          #+#    #+#             */
+/*   Updated: 2024/05/09 14:40:08 by chbuerge         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../minishell.h"
 
@@ -9,8 +18,11 @@
 */
 int	ft_list_size(t_env *head)
 {
-	int count = 0;
-	t_env *current = head;
+	int		count;
+	t_env	*current;
+
+	count = 0;
+	current = head;
 	while (current)
 	{
 		count++;
@@ -19,30 +31,27 @@ int	ft_list_size(t_env *head)
 	return (count);
 }
 
-char **ft_env_list_to_array(t_env *head)
+char	**ft_env_list_to_array(t_env *head)
 {
-	t_env *current;
-	int i = 0;
-	int count = ft_list_size(head);
-	char **env_array = malloc((count + 1) * sizeof(char *));
+	t_env	*current;
+	int		i;
+	int		count;
+	char	**env_array;
+
+	i = 0;
+	count = ft_list_size(head);
+	env_array = malloc((count + 1) * sizeof(char *));
 	if (!env_array)
-	{
-		//handle error
-	}
+		return (NULL);
 	current = head;
 	while (current)
 	{
 		env_array[i] = strdup(current->cmd_env);
 		if (env_array[i] == NULL)
-		{
-			// error
-		}
+			return (NULL);
 		i++;
 		current = current->next;
 	}
 	env_array[count] = NULL;
-
 	return (env_array);
 }
-
-
