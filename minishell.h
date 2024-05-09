@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 17:20:56 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/09 10:49:50 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status);
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*parse_multiple_redirections(t_cmd *cmd, char **s, char *filename, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
+t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
 int		ft_open_fcn(t_cmd *node, int instructions, int num);
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
 void	ft_heredoc(t_cmd *cmd, char * file_name);
@@ -165,7 +166,9 @@ void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
 void	close_after(int std_in, int std_out, int pipe_fd[2]);
 
 //error_handling.c
-void	error_message(char *str, int i);
+void	error_message(char *str, int i, int fd);
+void	error_temp(char *str, char *temp);
+void	error_general(char *str);
 
 //execute_utils.c
 int		execute_cmd(char **env, char **cmd);
