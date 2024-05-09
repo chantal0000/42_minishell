@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 15:07:57 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:53:15 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_stack(t_cmd *root)
 		temp = temp -> next;
 	}
 }
-void	print_exp(t_exp *exp)
+/*void	print_exp(t_exp *exp)
 {
 	t_exp	*temp;
 
@@ -56,13 +56,25 @@ void	print_exp(t_exp *exp)
 		printf("exp value: %s\n", temp->exp_value);
 		temp = temp->next;
 	}
+}*/
+
+void	print_env(t_env *env)
+{
+	t_env	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		printf("env name: %s\n", temp->env_name);
+		printf("env value: %s\n", temp->env_value);
+		temp = temp->next;
+	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	static char	*line;
 	t_cmd	*list;
-	t_exp	*exp;
 	t_env	*env_list;
 	int original_stdout = dup(STDOUT_FILENO);
 	int original_stdin = dup(STDIN_FILENO);
@@ -71,7 +83,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	g_signal = 0;
-	exp = NULL;
 	list = NULL;
 	if (argc != 1)
 	{
@@ -81,6 +92,7 @@ int	main(int argc, char **argv, char **env)
 	if (!env)
 		return (0);
 	env_list = fill_env_struct(env);
+	print_env(env_list);
 	while (1)
 	{
 		ft_init_signals();
@@ -93,14 +105,14 @@ int	main(int argc, char **argv, char **env)
 			exit(0);
 		}
 		add_history(line);
-		parse_for_variables(&exp, &line);
+//		parse_for_variables(&exp, &line);
 //		print_exp(exp);
 		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
-			// print_stack(list);
-			parse_cmds_for_expansions(&list, exp, exit_status);
-//			printf("\nafter expansion\n");
+			print_stack(list);
+			parse_cmds_env_expansions(&list, env_list, exit_status);
+			printf("\nafter expansion\n");
 			print_stack(list);
 		}
 		if (list)
@@ -122,6 +134,6 @@ int	main(int argc, char **argv, char **env)
 	free(line);
 	// free_cmdtree(list);
 	ft_free_env_list(env_list);
-	free_exp(&exp);
+//	free_exp(&exp);
 	return (0);
 }

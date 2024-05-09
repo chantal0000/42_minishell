@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 14:01:50 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/09 14:39:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_echo(t_cmd *cmd)
 	int		i;
 
 	if (!cmd)
-		return ;
+		return (1);
 	temp = cmd;
 	check_echo_flags(temp);
 	num = ft_count(temp->cmd);

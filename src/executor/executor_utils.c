@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/09 14:31:05 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:07:22 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ int	execute_cmd(char **env, char **cmd)
 		}
 		write(STDERR_FILENO, "' not found\n", 12);
 		free_env(env);
+		// free array function from pipex?
+		// if (split_cmd)
+			// free_memory(split_cmd);
 		return (127);
 	}
 	if (execve(cmd_path, split_cmd, env) == -1)
