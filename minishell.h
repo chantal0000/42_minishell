@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 14:41:31 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:15:18 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ t_cmd	*m_lstlast(t_cmd *lst);
 void	m_lstadd_back(t_cmd **lst, t_cmd *new);
 void	update_fd(t_cmd *tree);
 
-//parse_echo_awk.c
+//parse_echo.c
 void	parse_for_echo(t_cmd *cmd_tree);
 int		ft_count(char **arr);
-void	ft_echo(t_cmd *cmd);
+int		ft_echo(t_cmd *cmd);
+void	ft_write_echo(t_cmd *cmd, int num, int i);
+void	check_echo_flags(t_cmd *cmd);
 
 //parse_exec_cmds.c
 char	*parse_line(char *arr);
