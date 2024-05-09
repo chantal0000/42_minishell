@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 11:16:00 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/09 14:41:31 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,12 @@ void	parse_string(char *s);
 // Executer | executer.c
 //void	ft_executor(t_cmd *node);
 int		ft_executor(t_cmd *node, t_env *env_list);
-void	ft_cmd_last(t_cmd *node, int pipe_fd[2], int old_pipe_in);
-void	ft_cmd_middle(t_cmd *node, int pipe_fd[2], int old_pipe_in);
-void	ft_cmd_first(t_cmd *node, int pipe_fd[2]);
+int		ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list);
+int		ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list);
+int		ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list);
 void	close_after(int std_in, int std_out, int pipe_fd[2]);
+void	ft_start_exec(t_env *env_list, t_cmd *node);
+void	ft_reset_std(int std_in, int std_out);
 
 //error_handling.c
 void	error_message(char *str, int i, int fd);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
+#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/09 11:16:24 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/09 14:23:22 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,9 @@ SRCS = 	src/main.c \
 		src/builtins/ft_unset.c \
 		src/builtins/builtins_error.c \
 		src/signals/signals.c \
-		src/errors/error_handling.c
+		src/errors/error_handling.c \
+		src/executor/executor_pipes.c \
+		src/executor/executor_main_utils.c
 
 LIBFT = libft/libft.a
 CC = cc
