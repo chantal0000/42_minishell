@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_for_expanders.c                              :+:      :+:    :+:   */
+/*   parse_for_environ_var.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 15:53:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:47:35 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/*char	*ft_var_name2(char *s, t_exp *exp, int exit_status)
+char	*ft_environ_var(char *s, t_env *env, int exit_status)
 {
-	char	*var_exp;
+	char	*variable;
 	int		var_len;
-	t_exp	*temp;
+	t_env	*temp;
 	int		cmd_len;
 	char	*result;
 
-	var_exp = NULL;
+	variable = NULL;
 	cmd_len = 0;
 	var_len = 0;
 	if (*s == '$')
@@ -34,27 +34,27 @@
 	}
 	while (ft_isalnum(s[cmd_len])) // Check if the character is alphanumeric
 		cmd_len++;
-	temp = exp;
+	temp = env;
 	while (temp)
 	{
-		var_len = ft_strlen(temp->exp_name);
-		if (ft_strncmp(s, temp->exp_name, var_len) == 0 && var_len == cmd_len)
+		var_len = ft_strlen(temp->env_name);
+		if (ft_strncmp(s, temp->env_name, var_len) == 0 && var_len == cmd_len)
 		{
-			if (temp->exp_value != NULL)
-				var_exp = ft_strdup(temp->exp_value);
+			if (temp->env_value != NULL)
+				variable = ft_strdup(temp->env_value);
 			break ;
 		}
 		temp = temp->next;
 	}
-	if (var_exp == NULL)
+	if (variable == NULL)
 		return (ft_strdup(""));
-	result = ft_strjoin(var_exp, s + cmd_len);
+	result = ft_strjoin(variable, s + cmd_len);
 	if (!result)
 		return (NULL);
 	return (result);
 }
 
-char	*parse_string_for_expansions(char *s, t_exp *exp, int exit_status)
+/*char	*parse_string_for_expansions(char *s, t_exp *exp, int exit_status)
 {
 	char	*temp;
 	char	*str;
@@ -86,10 +86,10 @@ char	*parse_string_for_expansions(char *s, t_exp *exp, int exit_status)
 		i++;
 	}
 	return (s);
-}
+}*/
 
 
-void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status)
+void	parse_cmds_env_expansions(t_cmd **cmd, t_env *env, int exit_status)
 {
 	t_cmd	*temp;
 	int		i;
@@ -103,7 +103,7 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status)
 		i = 0;
 		while (temp->cmd[i] != NULL)
 		{
-			string = ft_var_name2(temp->cmd[i], exp, exit_status);
+			string = ft_environ_var(temp->cmd[i], env, exit_status);
 			if (string && *string != '\0')
 			{
 				free (temp->cmd[i]);
@@ -115,4 +115,4 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status)
 		}
 		temp = temp->next;
 	}
-}*/
+}
