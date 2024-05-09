@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 19:12:56 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/09 10:36:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,18 @@
 void	parse_for_cmds(t_cmd **cmd, char *s)
 {
 	int		index;
-//	char	*temp;
 
 	if (!s)
 		return ;
-//	temp = s;
 	index = 0;
-//	while (*s != '\0')
-//	{
-		s = check_for_quotes(s);
-		parse_for_pipe(&s, cmd, 0, &index);
-		update_fd(*cmd);
-		while (*s != '\0' && is_whitespace(*s))
-			(*s)++;
-		restore_pipes_and_spaces(*cmd);
-//		(*s)++;
-//	}
+	s = check_for_quotes(s);
+	parse_for_pipe(&s, cmd, 0, &index);
+	update_fd(*cmd);
+	while (*s != '\0' && is_whitespace(*s))
+		(*s)++;
+	restore_pipes_and_spaces(*cmd);
 	if (*s != '\0')
-		error_message("check syntax", 1);
+		error_message("check syntax", 1, 0);
 	
 }
 
@@ -98,7 +92,7 @@ char	*check_for_quotes(char *s)
 		temp++;
 	}
 	if (in_single || in_double)
-		error_message("open quotes found, can't parse", 1);
+		error_message("open quotes found, can't parse", 1, 0);
 	return (s);
 }
 
