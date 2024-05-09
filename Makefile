@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
+#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/09 15:15:03 by chbuerge         ###   ########.fr        #
+#    Updated: 2024/05/09 16:17:54 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ SRCS = 	src/main.c \
 		src/parsing/delimiter.c \
 		src/parsing/find_tokens.c \
 		src/parsing/init_struct.c \
-		src/parsing/parse_echo.c \
 		src/parsing/parse_exec_cmds.c \
 		src/parsing/parse_for_cmds.c \
 		src/parsing/parse_for_expanders.c \
@@ -34,6 +33,7 @@ SRCS = 	src/main.c \
 		src/builtins/builtins.c \
 		src/builtins/ft_env.c \
 		src/builtins/ft_cd.c \
+		src/builtins/ft_echo.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
@@ -49,14 +49,14 @@ CC = cc
 OBJS = $(SRCS:.c=.o)
 #LINUX
 CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
-#COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
-#LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
+COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
 #CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
 #CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
-COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
-LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
+#COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
+#LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
 
 all: $(NAME)
 

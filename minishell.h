@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 15:15:18 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:19:44 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ typedef struct s_env
 
 }	t_env;
 
-typedef struct s_exp
+/*typedef struct s_exp
 {
 	char	*exp_name;
 	char	*exp_value;
 	t_exp	*next;
-}	t_exp;
+}	t_exp;*/
 
 
 typedef struct s_cmd
