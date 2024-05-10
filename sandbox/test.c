@@ -1,332 +1,148 @@
 #include "../minishell.h"
 
-void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
-char	*check_quotes(char *s);
-
-int	is_token(char s)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*tokens;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	tokens = "|<>()";
-	if (strchr(tokens, s))
-		return (1);
-	return (0);
-}
-
-int	is_whitespace(char s)
-{
-	char	*whitespace;
-
-	whitespace = " \n\t\r\v";
-	if (strchr(whitespace, s))
-		return (1);
-	return (0);
-}
-
-
-void	free_cmdtree(t_cmd *tree)
-{
-	t_cmd	*temp;
-
-	if (!tree)
-		return ;
-	while (tree)
-	{
-		temp = tree;
-		temp = tree->next;
-		if (tree->fd_in)
-			close(tree->fd_in);
-		if (tree->fd_out)
-			close(tree->fd_out);
-		if (tree->pid)
-		{
-			close(tree->pid);
-		}
-		if (tree->file_name)
-			free(tree->file_name);
-		free_memory(tree->cmd);
-		free(tree);
-		tree = temp;
-	}
-	free(tree);
-}
-
-void	free_memory(char **arr)
-{
-	int	i;
-
+	if (!s1 && !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * ((strlen(s1) + strlen(s2)) + 1));
+	if (!str)
+		return (NULL);
 	i = 0;
-	if (!*arr || !arr)
-		return ;
-	while (arr[i] != NULL)
+	j = 0;
+	while (s1[i] != '\0')
 	{
-		free(arr[i]);
+		str[i] = s1[i];
 		i++;
 	}
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	return (str);
 }
-t_cmd	*ft_init_struct(void)
+//this function iterates through the nodes searching for the 
+//'=' sign and then returns the string that matches.
+char	*ft_find_environ_name(t_env *env)
 {
-	t_cmd	*cmd_tree;
+	t_env	*temp;
+	char	*s;
+	int		i;
 
-	cmd_tree = (t_cmd *)calloc(1, sizeof(t_cmd));
-	if (!cmd_tree)
-		return (NULL);
-	return (cmd_tree);
-}
-
-t_cmd	*m_lstlast(t_cmd *lst)
-{
-	if (!lst)
-		return (0);
-	while (lst->next != 0)
-		lst = lst -> next;
-	return (lst);
-}
-
-void	m_lstadd_back(t_cmd **lst, t_cmd *new)
-{
-	if (!lst || !new)
-		return ;
-	if (*lst)
+	i = 0;
+	temp = env;
+	while (temp)
 	{
-		new->prev = m_lstlast(*lst);
-		new->next = NULL;
-		m_lstlast(*lst)->next = new;
+		s = temp->cmd_env;
+		while (s[i] != '\0' && s[i] != '=' && s[i] != '\n')
+			i++;
+		temp = temp->next;
 	}
-	else
-	{
-		new->next = NULL;
-		new->prev = NULL;
-		*lst = new;
-	}
+	return (s);
 }
 
-int	check_for_alligators(char **s)
+int	find_dollar_sign(char *s)
 {
-	int	token;
-
-	token = **s;
-	if (**s == '>')
-	{
-		(*s)++;
-		if (**s == '>')
-		{
-			token = '+';
-			(*s)++;
-		}
-	}
-	else if (**s == '<')
-	{
-		(*s)++;
-		if (**s == '<')
-		{
-			token = '-';
-			(*s)++;
-		}
-	}
-	return (token);
-}
-
-int	find_tokens(char **s, char **beg_of_file)
-{
-	int		token;
-	char	*line;
-
-	line = *s;
-	while (*line != '\0' && is_whitespace(*line))
-		line++;
-	if (beg_of_file)
-		*beg_of_file = line;
-	token = *line;
-	if (*line == '\0')
-		return (token);
-	else if (*line == '|' || *line == '(' || *line == ')')
-		line++;
-	else if (*line == '>' || *line == '<')
-		token = check_for_alligators(&line);
-	else
-	{
-		token = 'a';
-		while (*line != '\0' && !is_whitespace(*line) && !is_token(*line))
-			line++;
-	}
-	while (*line != '\0' && is_whitespace(*line))
-		line++;
-	*s = line;
-	return (token);
-}
-
-void	parse_for_cmds(t_cmd **cmd, char *s)
-{
-	int		index;
-
-	if (!s)
-		return ;
-	index = 0;
-	parse_for_pipe(&s, cmd, 0, &index);
-	while (*s != '\0' && is_whitespace(*s))
-		(*s)++;
-	if (*s != '\0')
-	{
-		printf("check syntax\n");//check what bash returns
-		return ;
-	}
-	restore_pipes_and_spaces(*cmd);
-}
-
-int	check_next_char(char **s, char token)
-{
-	char	*temp;
-
-	temp = *s;
-	while (*temp != '\0' && is_whitespace(*temp))
-		temp++;
-	*s = temp;
-	if (**s != '\0' && **s == token)
+	while (*s != '\0' && *s != '$')
+		s++;
+	if (*s == '$')
 		return (1);
 	return (0);
 }
 
-void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
+/*char	*ft_find_variable(char *s, t_env *env, int exit_status)
 {
-	t_cmd	*temp;
-	t_cmd	*temp2;
-	char	*copy;
+	char	*var_env;
+	int		var_len;
+	t_env	*temp;
+	int		cmd_len;
+	char	*result;
+	char	*s_temp;
 
-	temp2 = NULL;
-	if (!**str || !str)
-		return ;
-	if (prev_pipe == 0)
+	var_env = NULL;
+	cmd_len = 0;
+	var_len = 0;
+	s_temp = NULL;
+	while (*s != '\0' && *s != '\n')
 	{
-		temp = parse_exec_cmds(str);
-		if (!temp)
-			return ;
-		temp->index = *index;
-		m_lstadd_back(cmd, temp);
+		if (*s == '$')
+		{
+			printf("in ft_find_variable \n");
+			printf("$ found!\n");
+			if (*(s + 1) == '?')
+			{
+				result = strdup(ft_itoa(exit_status));
+				return (result);
+			}
+			s++;
+		}
+		while (ft_isalnum(s[cmd_len]))
+			cmd_len++;
+		s++;
 	}
-	(*index)++;
-	if (check_next_char(str, '|'))
-	{
-		str_copy = strdup(*str);
-		find_tokens(&str_copy, NULL);
-		temp2 = parse_exec_cmds(str);
-		temp2->index = *index;
-		m_lstadd_back(cmd, temp2);
-		parse_for_pipe(&str_copy, cmd, 1, index);
-		free(str_copy);
-	}
-}
-
-void	restore_pipes_and_spaces(t_cmd *cmd)
-{
-	int		i;
-	t_cmd	*temp;
-
-	i = 0;
-	temp = cmd;
+	temp = env;
 	while (temp)
 	{
-		while (temp->cmd[i])
+		s_temp = ft_find_environ_name(env);
+		printf ("s_temp: %s\n", s_temp);
+		var_len = ft_strlen(s_temp);
+		if (ft_strncmp(s, s_temp, var_len) == 0 && var_len == cmd_len)
 		{
-			ft_restore(temp->cmd[i]);
-			i++;
+//			if (temp->env_value != NULL)
+			var_env = ft_strdup(temp->cmd_env + var_len);
+			break ;
 		}
 		temp = temp->next;
 	}
-}
-
-void	ft_restore(char *s)
-{
-	if (!s)
-		return ;
-	while (*s)
-	{
-		if (*s == '\xFD')
-			*s = '|';
-//		if (*s == '\xFE')
-  		if (*s == '\x7F')
-			*s = ' ';
-		s++;
-	}
-}
-
-char	*parse_line(char *arr)
-{
-	int	i;
-
-	if (!arr)
+	if (var_env == NULL)
+		return (ft_strdup(""));
+	result = ft_strjoin(var_env, s + cmd_len);
+	if (!result)
 		return (NULL);
-	i = 0;
-	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
-		i++;
-	arr[i] = '\0';
-	return (arr);
-}
+	return (result);
+}*/
 
-t_cmd	*init_exec_cmds(char **s, char *non_token)
+char	*parse_string_for_expansions(char *s, t_env *env, int exit_status)
 {
+	char	*temp;
+	char	*str;
 	int		i;
-	int		token;
-	t_cmd	*cmd_tree;
+	char	*new_str;
 
+	str = s;
 	i = 0;
-	token = 0;
-	cmd_tree = ft_init_struct();
-//	cmd_tree = parse_for_redirections(cmd_tree, s);
-	if (!cmd_tree)
-		return (NULL);
-	while (*s && !is_token(**s))
+	new_str = NULL;
+	while (str[i] != '\0')
 	{
-		token = find_tokens(s, &non_token);
-		if (token == 0)
-			break ;
-		cmd_tree->token = token;
-		cmd_tree->cmd[i] = strdup(non_token);
-		if (!cmd_tree)
+		if (str[i] == '$')
 		{
-			free_memory(s);
-			free (non_token);
-			printf("error copying cmd into array");
-			exit (1);
+			temp = &str[i];
+//			temp = ft_find_variable(temp, env, exit_status);
+			printf("ok\n");
+			if (!temp)
+				return (NULL);
+			str = strndup(s, i);
+			if (!str)
+			{
+				free(temp);
+				return (NULL);
+			}
+			new_str = ft_strjoin(str, temp);
+			free(temp);
+			free(str);
+			return (new_str);
 		}
-		parse_line(cmd_tree->cmd[i]);
-//		cmd_tree->cmd[i] = check_quotes(cmd_tree->cmd[i]);
 		i++;
-//		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
-	cmd_tree->cmd[i] = NULL;
-	return (cmd_tree);
-}
-
-t_cmd	*parse_exec_cmds(char **s)
-{
-	t_cmd	*cmd_tree;
-	char	*non_token;
-
-	non_token = NULL;
-	cmd_tree = (t_cmd *)calloc(1, sizeof(t_cmd));
-	if (!cmd_tree)
-	{
-		printf("cmd_tree initiation in exec failed\n");
-		exit (1);
-	}
-	cmd_tree = init_exec_cmds(s, non_token);
-	if (!cmd_tree)
-		free_cmdtree(cmd_tree);
-	return (cmd_tree);
+	return (s);
 }
 
 int	main()
 {
-	static char	*line = "ls | wc";
-	t_cmd	*list;
+	char	*s = "echo $PATH";
 
-	list = NULL;
-	while (1)
-	{
-		parse_for_cmds(&list, line);//need to add envp
-		free_cmdtree(list);
-		list = NULL; // here needs to be freed
-	}
+	printf("%d\n", find_dollar_sign(s));
 	return (0);
 }

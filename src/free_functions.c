@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 18:12:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:50:05 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 }
 
 
-void free_exp(t_exp **exp)
+/*void free_exp(t_exp **exp)
 {
 	t_exp *current = *exp;
 	t_exp *next;
@@ -149,4 +149,4 @@ void free_exp(t_exp **exp)
 		current = next;
 	}
 	*exp = NULL; // Set the original pointer to NULL after freeing all nodes
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 12:21:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:11:45 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,29 @@ extern int	g_signal;
 
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
-typedef struct s_exp t_exp;
 
 typedef struct s_env
 {
-	char	*env_name;
-	char	*env_value;
+//	char	*env_name;
+//	char	*env_value;
 	char	*cmd_env;
 	t_env	*next; // pointer to the next node in the linked list
 
 }	t_env;
 
-typedef struct s_exp
+/*typedef struct s_exp
 {
 	char	*exp_name;
 	char	*exp_value;
 	t_exp	*next;
-}	t_exp;
+}	t_exp;*/
 
 
 typedef struct s_cmd
 {
 	int		index;
 	t_env	*m_env;
-	t_exp	*exp;
+//	t_exp	*exp;
 	int		token;
 	char	*cmd[MAXARGS + 1];
 	char	*file_name;
@@ -106,12 +105,10 @@ int		check_next_char(char **s, char token);
 char 	*check_for_quotes(char *s);
 char	ft_replace(char *c);
 
-//parse_for_expanders.c
-char	*ft_var_name(char *s, t_exp *exp);
-char	*parse_for_duplicate_names(t_exp *exp, char *s, size_t cmd_len);
-char	*check_for_question_mark(char *s);
-char	*parse_string_for_expansions(char *s, t_exp *exp, int exit_status);
-void	parse_cmds_for_expansions(t_cmd **cmd, t_exp *exp, int exit_status);
+//parse_environ_variables.c
+char	*ft_find_variable(char *s, t_env *env, int exit_status);
+char	*parse_string_for_expansions(char *s, t_env *env, int exit_status);
+void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int exit_status);
 
 //parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
@@ -126,11 +123,11 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
 //parse_for_variable_exp.c
 //not checked for long functions and notes
-t_exp	*insert_exp(t_exp *head, char *name, char *value);
+/*t_exp	*insert_exp(t_exp *head, char *name, char *value);
 int		search_string_for_equal(char *s);
 char	*find_name(char **s);
 char	*find_value(char **s);
-void	parse_for_variables(t_exp **exp, char **s);
+void	parse_for_variables(t_exp **exp, char **s);*/
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
@@ -143,7 +140,6 @@ void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env *env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
-void	free_exp(t_exp **exp);
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
