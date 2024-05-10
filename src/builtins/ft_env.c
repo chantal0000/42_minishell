@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:35:02 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/10 12:35:56 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:56:50 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_env(t_cmd *cmd, t_env *env_list)
 {
 	t_env	*current;
 
-	if(cmd->cmd[1] != NULL)
+	if (cmd->cmd[1] != NULL)
 	{
 		if (ft_handle_error_cd(cmd) == 1)
 			return (1);
