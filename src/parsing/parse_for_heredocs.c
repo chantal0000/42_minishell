@@ -6,26 +6,29 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:02 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 11:15:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:40:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
+void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd)
 {
 	char	temp_file[] = "/tmp/tempfile21008";
-	ssize_t bytes_written;
-	int i = 0;
+	ssize_t	bytes_written;
+	int		i;
+	int		len;
 
+	i = 0;
+	len = 0;
 	bytes_written = -1;
 	cmd->fd_in = open(temp_file,  O_RDWR | O_CREAT | O_TRUNC, 0777);
-	printf("fd_in on heredoc 1: %d\n", cmd->fd_in);
 	if (cmd->fd_in == -1)
 		error_general("Failed to create temporary file");
-	while(heredoc_content[i])
+	while (heredoc_content[i])
 	{
-		bytes_written = write(cmd->fd_in, heredoc_content[i], ft_strlen(heredoc_content[i]));
+		len = ft_strlen(heredoc_content[i]);
+		bytes_written = write(cmd->fd_in, heredoc_content[i], len);
 		write(cmd->fd_in, "\n", 1);
 		i++;
 	}
@@ -34,8 +37,6 @@ void	ft_create_temp_file(char ** heredoc_content, t_cmd *cmd)
 	cmd->file_name = "/tmp/tempfile21008";
 	close(cmd->fd_in);
 	cmd->fd_in = open(cmd->file_name, O_RDONLY, 0777);
-	printf("fd_in on heredoc 2: %d\n", cmd->fd_in);
-	printf("fd_out on heredoc 2: %d\n", cmd->fd_out);
 	if (cmd->fd_in == -1)
 		error_temp("Failed to reopen tempfile", temp_file);
 }

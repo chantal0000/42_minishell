@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 16:11:45 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:43:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ extern int	g_signal;
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-//MACOS
-//# include <editline/readline.h>
-//# include <histedit.h>
-//Linux
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stddef.h>
@@ -33,8 +29,8 @@ extern int	g_signal;
 # include <signal.h>
 # include <errno.h>
 
-# define DELIMITER "|<>()"
-# define WHITESPACE " \n\t\r\v"
+//# define DELIMITER "|<>()"
+//# define WHITESPACE " \n\t\r\v"
 # define MAXARGS 100
 # define MAX_CONTENT_SIZE 1000
 
@@ -43,26 +39,15 @@ typedef struct s_env t_env;
 
 typedef struct s_env
 {
-//	char	*env_name;
-//	char	*env_value;
 	char	*cmd_env;
-	t_env	*next; // pointer to the next node in the linked list
+	t_env	*next;
 
 }	t_env;
-
-/*typedef struct s_exp
-{
-	char	*exp_name;
-	char	*exp_value;
-	t_exp	*next;
-}	t_exp;*/
-
 
 typedef struct s_cmd
 {
 	int		index;
 	t_env	*m_env;
-//	t_exp	*exp;
 	int		token;
 	char	*cmd[MAXARGS + 1];
 	char	*file_name;
@@ -102,10 +87,16 @@ t_cmd	*parse_exec_cmds(char **s);
 //parse_for_cmds.c
 void	parse_for_cmds(t_cmd **cmd, char *s);
 int		check_next_char(char **s, char token);
-char 	*check_for_quotes(char *s);
+char	*check_for_quotes(char *s);
 char	ft_replace(char *c);
 
 //parse_environ_variables.c
+int		ft_find_environ_name(char *s);
+int		find_dollar_sign(char *s);
+char	*find_substitution(t_env *env, char *s, size_t cmd_len);
+char	*ft_variable(char *s, t_env *env, int exit_status);
+char	*move_past_dollar(char *s);
+
 char	*ft_find_variable(char *s, t_env *env, int exit_status);
 char	*parse_string_for_expansions(char *s, t_env *env, int exit_status);
 void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int exit_status);
@@ -117,17 +108,12 @@ char	*make_string(char **s);
 
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);
-t_cmd	*parse_multiple_redirections(t_cmd *cmd, char **s, char *filename, int token);
+t_cmd	*parse_mult_redir(t_cmd *cmd, char **s, char *filename, int token);
 t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
-//parse_for_variable_exp.c
-//not checked for long functions and notes
-/*t_exp	*insert_exp(t_exp *head, char *name, char *value);
-int		search_string_for_equal(char *s);
-char	*find_name(char **s);
-char	*find_value(char **s);
-void	parse_for_variables(t_exp **exp, char **s);*/
+//expansions.c
+void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int exit_status);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);

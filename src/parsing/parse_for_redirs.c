@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 11:13:06 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:31:26 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 			node = redir_cmd(node, O_WRONLY | O_APPEND | O_CREAT, 1);
 	}
 	if (check_next_char(s, '<') || check_next_char(s, '>'))
-		node = parse_multiple_redirections(node, s, file_name, token);
+		node = parse_mult_redir(node, s, file_name, token);
 	return (node);
 }
 
-t_cmd	*parse_multiple_redirections(t_cmd *node, char **s, char *file_name, int token)
+t_cmd	*parse_mult_redir(t_cmd *node, char **s, char *file_name, int token)
 {
 	file_name = NULL;
 	if (node->token == '-' )
