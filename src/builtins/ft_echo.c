@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 12:31:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:26:05 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	parse_for_echo(t_cmd *cmd_tree)
 	t_cmd	*temp;
 
 	temp = cmd_tree;
+	printf("ok\n");
 	while (temp)
 	{
 		if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
@@ -55,9 +56,11 @@ int	ft_echo(t_cmd *cmd)
 		i = 2;
 	if (temp->token == 'e')
 		i = 1;
+	
 	ft_write_echo(temp, num, i);
 	if (cmd->token == 'e')
 		ft_putchar_fd('\n', 1);
+	printf("arr len %d\n", num);
 	return (0);
 }
 

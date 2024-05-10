@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/10 12:16:18 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/10 13:57:50 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,11 @@ SRCS = 	src/main.c \
 		src/parsing/find_tokens.c \
 		src/parsing/init_struct.c \
 		src/parsing/parse_exec_cmds.c \
+		src/parsing/parse_environ_variables.c \
 		src/parsing/parse_for_cmds.c \
-		src/parsing/parse_for_expanders.c \
 		src/parsing/parse_for_heredocs.c \
 		src/parsing/parse_for_redirs.c \
 		src/parsing/parse_pipes.c \
-		src/parsing/parse_for_variable_exp.c \
 		src/free_functions.c \
 		src/utils.c \
 		src/executor/executor.c \

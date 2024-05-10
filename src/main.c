@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/08 15:07:57 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:50:02 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,11 @@ void	print_stack(t_cmd *root)
 		temp = temp -> next;
 	}
 }
-void	print_exp(t_exp *exp)
-{
-	t_exp	*temp;
-
-	temp = exp;
-	while (temp)
-	{
-		printf("exp name: %s\n", temp->exp_name);
-		printf("exp value: %s\n", temp->exp_value);
-		temp = temp->next;
-	}
-}
 
 int	main(int argc, char **argv, char **env)
 {
 	static char	*line;
 	t_cmd	*list;
-	t_exp	*exp;
 	t_env	*env_list;
 	int original_stdout = dup(STDOUT_FILENO);
 	int original_stdin = dup(STDIN_FILENO);
@@ -71,7 +58,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	g_signal = 0;
-	exp = NULL;
 	list = NULL;
 	if (argc != 1)
 	{
@@ -93,16 +79,16 @@ int	main(int argc, char **argv, char **env)
 			exit(0);
 		}
 		add_history(line);
-		parse_for_variables(&exp, &line);
-//		print_exp(exp);
 		if (line)
 		{
 			parse_for_cmds(&list, line);//need to add envp
-			// print_stack(list);
-			parse_cmds_for_expansions(&list, exp, exit_status);
+//			print_stack(list);
+//			ft_env(env_list);//prints env list
+			parse_cmds_for_expansions(&list, env_list, exit_status);
 //			printf("\nafter expansion\n");
 			print_stack(list);
 		}
+
 		if (list)
 		{
 		exit_status =	ft_executor(list, env_list);
@@ -112,16 +98,11 @@ int	main(int argc, char **argv, char **env)
 			// close(original_stdout);
 		}
 		list = NULL; // here needs to be freed
-		// free_cmdtree(list);
 	}
 	rl_clear_history();
-//	HIST_ENTRY *entry = history_get(where_history());
-//	printf("%s\n", entry->line);
 //	exit_status = ft_executor(list);
 //	print_exp(exp);
 	free(line);
-	// free_cmdtree(list);
 	ft_free_env_list(env_list);
-	free_exp(&exp);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:25:16 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/07 15:00:46 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:44:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_exp	*insert_exp(t_exp *head, char *name, char *value)
+/*t_exp	*insert_exp(t_exp *head, char *name, char *value)
 {
 	t_exp	*new_node;
 	t_exp	*temp;
@@ -127,4 +127,4 @@ void	parse_for_variables(t_exp **exp, char **s)
 		free (name);
 		free (value);
 	}
-}
+}*/
