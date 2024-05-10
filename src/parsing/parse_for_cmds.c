@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 15:12:46 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/09 11:27:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,26 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	if (*s != '\0')
 		error_message("check syntax", 1, 0);
 	
+}
+
+int	is_token(char s)
+{
+	char	*tokens;
+
+	tokens = "|<>()";
+	if (ft_strchr(tokens, s))
+		return (1);
+	return (0);
+}
+
+int	is_whitespace(char s)
+{
+	char	*whitespace;
+
+	whitespace = " \n\t\r\v";
+	if (ft_strchr(whitespace, s))
+		return (1);
+	return (0);
 }
 
 //iterates through any whitespaces found before cmd/token
@@ -65,8 +85,10 @@ char	*check_for_quotes(char *s)
 			in_single = !in_single;
 		else if (*temp == '\"' && (*temp - 1) != temp[-1] && (*temp - 1) != '\\' && !in_single)
 			in_double = !in_double;
-		else if ((*temp == '|' || *temp == ' ' || *temp == '<' || *temp == '>') && (in_single || in_double))
-			ft_replace(temp);
+		else if (*temp == '|' && (in_single || in_double))
+			*temp = '\xFD';
+		else if (*temp == ' ' && (in_single || in_double))
+			*temp = '\xFE';
 		temp++;
 	}
 	if (in_single || in_double)
@@ -74,15 +96,3 @@ char	*check_for_quotes(char *s)
 	return (s);
 }
 
-char	ft_replace(char *c)
-{
-	if (*c == '|')
-		*c = '\xFD';
-	else if (*c == ' ')
-		*c = '\xFE';
-	else if (*c == '<')
-		*c = '\xD1';
-	else if (*c == '>')
-		*c = '\xA8';
-	return (*c);
-}

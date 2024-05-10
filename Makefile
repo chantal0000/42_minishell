@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
+#    By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/09 15:37:33 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/09 15:15:03 by chbuerge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ SRCS = 	src/main.c \
 		src/parsing/delimiter.c \
 		src/parsing/find_tokens.c \
 		src/parsing/init_struct.c \
+		src/parsing/parse_echo.c \
 		src/parsing/parse_exec_cmds.c \
 		src/parsing/parse_for_cmds.c \
-		src/parsing/parse_for_environ_var.c \
 		src/parsing/parse_for_expanders.c \
 		src/parsing/parse_for_heredocs.c \
 		src/parsing/parse_for_redirs.c \
@@ -34,14 +34,15 @@ SRCS = 	src/main.c \
 		src/builtins/builtins.c \
 		src/builtins/ft_env.c \
 		src/builtins/ft_cd.c \
-		src/builtins/ft_echo.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
 		src/builtins/ft_unset.c \
 		src/builtins/builtins_error.c \
 		src/signals/signals.c \
-		src/errors/error_handling.c
+		src/errors/error_handling.c \
+		src/executor/executor_pipes.c \
+		src/executor/executor_main_utils.c
 
 LIBFT = libft/libft.a
 CC = cc

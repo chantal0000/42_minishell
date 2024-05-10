@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:35:03 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 15:12:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/04/26 14:44:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,4 @@ int	find_tokens(char **s, char **beg_of_file)
 		line++;
 	*s = line;
 	return (token);
-}
-
-int	is_token(char s)
-{
-	char	*tokens;
-
-	tokens = "|<>()";
-	if (ft_strchr(tokens, s))
-		return (1);
-	return (0);
-}
-
-int	is_whitespace(char s)
-{
-	char	*whitespace;
-
-	whitespace = " \n\t\r\v";
-	if (ft_strchr(whitespace, s))
-		return (1);
-	return (0);
 }
