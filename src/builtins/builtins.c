@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/10 15:37:13 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:47:37 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
 	else if (ft_strcmp(cmd_to_check, "env") == 0)
 		exit_status = ft_env(cmd, env_list);
 	else if (ft_strcmp(cmd_to_check, "export") == 0)
+	{
+		printf("GOING INTO EXPORT \n");
 		exit_status = ft_export(cmd, env_list);
+	}
 	else if (ft_strcmp(cmd_to_check, "pwd") == 0)
 		exit_status = ft_pwd();
 	else if (ft_strcmp(cmd_to_check, "unset") == 0)

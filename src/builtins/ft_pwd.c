@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:44:55 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/04/08 15:33:20 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:50:37 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@
 ** current working directory path.
 */
 
-int	ft_pwd()
+int	ft_pwd(void)
 {
 	char	*pwd;
 
-	if ((pwd = getcwd(NULL, 0)) == NULL)
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
 	{
 		printf("error in pwd\n");
 		return (EXIT_FAILURE);
 	}
 	printf("%s\n", pwd);
 	free(pwd);
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
