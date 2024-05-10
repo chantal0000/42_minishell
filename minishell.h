@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 12:21:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 14:21:01 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int		ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list);
 void	close_after(int std_in, int std_out, int pipe_fd[2]);
 void	ft_start_exec(t_env *env_list, t_cmd *node);
 void	ft_reset_std(int std_in, int std_out);
+t_cmd	*first_node(t_cmd *node);
 
 //error_handling.c
 void	error_message(char *str, int i, int fd);
@@ -185,7 +186,7 @@ int	ft_is_builtin(t_cmd *cmd, t_env *env_list);
 int	ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
-int	ft_env(t_env *env_list);
+int	ft_env(t_cmd *cmd, t_env *env_list);
 //builtins/cd.c
 int	ft_cd(t_cmd *cmd);
 
