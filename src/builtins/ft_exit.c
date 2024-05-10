@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/10 15:36:27 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:49:01 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 ** if only "exit"
 ** EXIT CODE 0
 */
-void ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
+void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
 {
 	printf("exit\n");
 	printf("Error: exit: non-numeric argument for exit\n");
@@ -42,12 +42,14 @@ void ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
 	ft_free_env_list(env_list);
 	exit (2);
 }
-void ft_free_exit(t_cmd *cmd, t_env *env_list)
+
+void	ft_free_exit(t_cmd *cmd, t_env *env_list)
 {
 	printf("exit\n");
 	ft_free_cmd_struct(cmd);
 	ft_free_env_list(env_list);
 }
+
 int	ft_exit(t_cmd *cmd, t_env *env_list)
 {
 	char	**exit_cmd;
