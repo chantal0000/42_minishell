@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/05 17:14:25 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:36:27 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,29 @@
 ** if only "exit"
 ** EXIT CODE 0
 */
+void ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
+{
+	printf("exit\n");
+	printf("Error: exit: non-numeric argument for exit\n");
+	ft_free_cmd_struct(cmd);
+	ft_free_env_list(env_list);
+	exit (2);
+}
+void ft_free_exit(t_cmd *cmd, t_env *env_list)
+{
+	printf("exit\n");
+	ft_free_cmd_struct(cmd);
+	ft_free_env_list(env_list);
+}
 int	ft_exit(t_cmd *cmd, t_env *env_list)
 {
 	char	**exit_cmd;
 	int		i;
+	int		exit_status;
 
 	exit_cmd = cmd->cmd;
 	i = 0;
+	exit_status = 0;
 	if (exit_cmd[1] != NULL)
 	{
 		while (exit_cmd[1][i])
@@ -50,39 +66,13 @@ int	ft_exit(t_cmd *cmd, t_env *env_list)
 			if (exit_cmd[1][i] == '-' || exit_cmd[1][i] == '+')
 				i++;
 			if ((ft_isdigit(exit_cmd[1][i]) == 0))
-			{
-				printf("exit_cmd[1][%d]: %c\n", i, exit_cmd[1][i]);
-				printf("exit\n");
-				printf("Error: exit: non-numeric argument for exit\n");
-				exit (2);
-			}
+				ft_handle_nodigi(cmd, env_list);
 			i++;
 		}
-		if (exit_cmd[2] != NULL)
-		{
-			printf("exit\n");
-			printf("Error: exit: too many arguments\n");
-			// if yes and argv + 1 exists then error, return & code 1
-			// what to do in this case?
-			return (1);
-		}
-		else
-		{
-			// ft_free_cmd_struct(cmd);
-			ft_free_env_list(env_list);
-			printf("exit\n");
-			exit (ft_atoi(exit_cmd[1]));
-		}
-
-	// if yes and !argv+1, exit & code is whatever we input
+		exit_status = ft_atoi(exit_cmd[1]);
+		ft_free_exit(cmd, env_list);
+		exit (exit_status);
 	}
-	// there is no arg then exit & code 0
-	else
-	{
-		ft_free_cmd_struct(cmd);
-		ft_free_env_list(env_list);
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
-	return (EXIT_SUCCESS);
+	ft_free_exit(cmd, env_list);
+	exit (EXIT_SUCCESS);
 }

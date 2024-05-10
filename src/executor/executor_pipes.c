@@ -6,11 +6,18 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:17:22 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/09 14:50:37 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:45:14 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+int	ft_exit_free(t_env *env_list, t_cmd *node, int exit_status)
+{
+	ft_free_env_list(env_list);
+	ft_free_cmd_struct(first_node(node));
+	exit (exit_status);
+}
 
 /*
 ** Handles the execution of the first command in a pipeline.
@@ -41,7 +48,7 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 		close(pipe_fd[0]);
 		exit_status = ft_is_builtin(node, env_list);
 		if (exit_status != -1)
-			exit (exit_status);
+			ft_exit_free(env_list, node, exit_status);
 		ft_start_exec(env_list, node);
 	}
 	return (0);
@@ -80,7 +87,7 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list)
 		close(pipe_fd[0]);
 		exit_status = ft_is_builtin(node, env_list);
 		if (exit_status != -1)
-			exit (exit_status);
+			ft_exit_free(env_list, node, exit_status);
 		ft_start_exec(env_list, node);
 	}
 	return (0);
@@ -111,7 +118,7 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list)
 		close(pipe_fd[0]);
 		exit_status = ft_is_builtin(node, env_list);
 		if (exit_status != -1)
-			exit (exit_status);
+			ft_exit_free(env_list, node, exit_status);
 		ft_start_exec(env_list, node);
 	}
 	return (0);
