@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 12:14:15 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:21:36 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ char	*check_quotes(char *s);
 //find_tokens.c
 int		check_for_alligators(char **s);
 int		find_tokens(char **s, char **beg_of_file);
+int		is_token(char s);
+int		is_whitespace(char s);
 
 //init_struct.c
 t_cmd	*ft_init_struct(void);
@@ -100,10 +102,9 @@ t_cmd	*parse_exec_cmds(char **s);
 
 //parse_for_cmds.c
 void	parse_for_cmds(t_cmd **cmd, char *s);
-int		is_token(char s);
-int		is_whitespace(char s);
 int		check_next_char(char **s, char token);
 char 	*check_for_quotes(char *s);
+char	ft_replace(char *c);
 
 //parse_for_expanders.c
 char	*ft_var_name(char *s, t_exp *exp);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_echo.c                                       :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 12:06:46 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:31:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@ void	ft_write_echo(t_cmd *cmd, int num, int i)
 			if (i < num - 1)
 			{
 				ft_putstr_fd(cmd->cmd[i], 1);
-				ft_putchar_fd(' ', 1);
+				ft_putchar_fd(' ', 1);//this doesn't work
 			}
 			else
+			{
+				if (!cmd->cmd[1])
+					ft_putchar_fd(' ', 1);
 				ft_putstr_fd(cmd->cmd[i], 1);
+			}
 			i++;
 		}
 	}
