@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/05 17:14:25 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:59:34 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,12 @@ int	ft_exit(t_cmd *cmd, t_env *env_list)
 				i++;
 			if ((ft_isdigit(exit_cmd[1][i]) == 0))
 			{
+
 				printf("exit_cmd[1][%d]: %c\n", i, exit_cmd[1][i]);
 				printf("exit\n");
 				printf("Error: exit: non-numeric argument for exit\n");
+				ft_free_cmd_struct(cmd);
+				ft_free_env_list(env_list);
 				exit (2);
 			}
 			i++;
@@ -69,8 +72,11 @@ int	ft_exit(t_cmd *cmd, t_env *env_list)
 		else
 		{
 			// ft_free_cmd_struct(cmd);
+			// ft_free_env_list(env_list);
+			ft_free_cmd_struct(cmd);
 			ft_free_env_list(env_list);
 			printf("exit\n");
+
 			exit (ft_atoi(exit_cmd[1]));
 		}
 
