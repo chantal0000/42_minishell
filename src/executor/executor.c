@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/09 14:41:31 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:29:55 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, t_env *env_list)
 		close(node->fd_out);
 	}
 	exit_status = ft_is_builtin(node, env_list);
+	printf("exit_status in simple %d\n", exit_status);
 	if (exit_status != -1)
 		return (exit_status);
 	else
