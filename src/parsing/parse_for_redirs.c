@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 10:50:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:23:30 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		if (find_tokens(s, &file_name) != 'a')
 			error_message("missing file", 1, 0);
 		if (token == '-')
-		{
-//			if (!check_next_char(s, '|'))
-//				printf("%d\n", find_tokens(s, NULL));
 			ft_heredoc(node, file_name);
-		}
 		else
 			node->file_name = parse_line(strdup(file_name));
 		if (token == '>')
@@ -79,6 +75,8 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token)
 				node = redir_cmd(node, O_WRONLY | O_CREAT, 1);
 		}
 	}
+	else
+		node->fd_out = -1;
 	return (node);
 }
 

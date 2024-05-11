@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 11:21:00 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 15:04:59 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	update_fd(t_cmd *tree);
 
 //parse_for_cat.c
 void	parse_for_cat(t_cmd *cmd);
+void	ft_catdoc(t_cmd *cmd);
 
 //parse_exec_cmds.c
 char	*parse_line(char *arr);
@@ -106,6 +107,7 @@ char	*move_past_dollar(char *s);
 //parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
 void	ft_heredoc(t_cmd *cmd, char *file_name);
+void	write_heredoc(char **heredoc_content, t_cmd *cmd, char *temp_file);
 char	*make_string(char **s);
 
 //parse_for_redir.c
