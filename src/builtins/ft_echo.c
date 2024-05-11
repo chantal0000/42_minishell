@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 13:26:05 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 08:46:57 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,9 @@ int	ft_echo(t_cmd *cmd)
 		i = 2;
 	if (temp->token == 'e')
 		i = 1;
-	
 	ft_write_echo(temp, num, i);
 	if (cmd->token == 'e')
 		ft_putchar_fd('\n', 1);
-	printf("arr len %d\n", num);
 	return (0);
 }
 

@@ -6,50 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 13:50:05 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 09:15:23 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*void	free_cmdtree(t_cmd *tree)
-{
-	t_cmd	*temp;
-
-	if (!tree)
-		return ;
-	while (tree)
-	{
-		temp = tree;
-		// if (temp->fd_in)
-		// 	close(temp->fd_in);
-		// if (temp->fd_out)
-		// 	close(temp->fd_out);
-		// if (temp->pid)
-		// 	close(temp->pid)
-		temp = tree->next;
-		if (tree->fd_in)
-			close(tree->fd_in);
-		if (tree->fd_out)
-			close(tree->fd_out);
-		if (tree->pid)
-		{
-			close(tree->pid);
-//			kill(tree->pid, SIGKILL); should I use this?
-		}
-		// if (temp->m_env)
-		// 	free_env(&temp->m_env);
-		if (tree->file_name)
-			free(tree->file_name);
-		free_memory(tree->cmd);
-		if (tree->heredoc_delimiter)
-			free (tree->heredoc_delimiter);
-		free_memory(tree->heredoc_content);
-		free(tree);
-		tree = temp;
-	}
-	free(tree);
-}*/
 
 void	free_memory(char **arr)
 {
@@ -63,7 +24,6 @@ void	free_memory(char **arr)
 		free(arr[i]);
 		i++;
 	}
-	// free(arr);
 }
 
 /* free the array of env, in every loop*/
@@ -90,16 +50,17 @@ void	free_env(char **env)
 ** needs to be freed only at the very end of the program vs the array that needs to be freed in every loop
 */
 
-void ft_free_env_list(t_env *env_list)
+void	ft_free_env_list(t_env *env_list)
 {
-	t_env *next;
+	t_env	*next;
+
 	if (!env_list)
 		return ;
 	while (env_list != NULL)
 	{
-			next = env_list->next;
-			free(env_list);
-			env_list = next;
+		next = env_list->next;
+		free(env_list);
+		env_list = next;
 	}
 }
 
@@ -129,24 +90,3 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		current = next;
 	}
 }
-
-
-/*void free_exp(t_exp **exp)
-{
-	t_exp *current = *exp;
-	t_exp *next;
-
-	while (current != NULL)
-	{
-		next = current->next;
-
-		if (current->exp_name)
-			free(current->exp_name);
-		if (current->exp_value)
-			free(current->exp_value);
-		free(current);
-
-		current = next;
-	}
-	*exp = NULL; // Set the original pointer to NULL after freeing all nodes
-}*/
