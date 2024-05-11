@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 09:19:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 11:21:00 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ t_cmd	*m_lstlast(t_cmd *lst);
 void	m_lstadd_back(t_cmd **lst, t_cmd *new);
 void	update_fd(t_cmd *tree);
 
+//parse_for_cat.c
+void	parse_for_cat(t_cmd *cmd);
+
 //parse_exec_cmds.c
 char	*parse_line(char *arr);
 t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token);
@@ -90,6 +93,9 @@ int		check_next_char(char **s, char token);
 char	*check_for_quotes(char *s);
 char	ft_replace(char *c);
 
+//parse_input.c
+void	parse_input(char *s);
+
 //parse_environ_variables.c
 int		ft_find_environ_name(char *s);
 int		find_dollar_sign(char *s);
@@ -97,13 +103,9 @@ char	*find_substitution(t_env *env, char *s, size_t cmd_len);
 char	*ft_variable(char *s, t_env *env, int exit_status);
 char	*move_past_dollar(char *s);
 
-char	*ft_find_variable(char *s, t_env *env, int exit_status);
-char	*parse_string_for_expansions(char *s, t_env *env, int exit_status);
-void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int exit_status);
-
 //parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
-void	ft_heredoc(t_cmd *cmd, char * file_name);
+void	ft_heredoc(t_cmd *cmd, char *file_name);
 char	*make_string(char **s);
 
 //parse_for_redir.c
@@ -112,7 +114,7 @@ t_cmd	*parse_mult_redir(t_cmd *cmd, char **s, char *filename, int token);
 t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
-//expansions.c
+//parse_expansions.c
 void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int exit_status);
 char	*split_on_dollar(char *s, t_env *env, int exit_status);
 char	*find_and_substitute(char *s, t_env *env, int exit_status);

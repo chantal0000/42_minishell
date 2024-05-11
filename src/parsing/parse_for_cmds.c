@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 12:21:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 11:28:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	index = 0;
 	s = check_for_quotes(s);
 	parse_for_pipe(&s, cmd, 0, &index);
+	parse_for_cat(*cmd);
 	update_fd(*cmd);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;

@@ -1,18 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_for_heredocs.c                               :+:      :+:    :+:   */
+/*   parse_for_cat.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 11:14:02 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 10:48:38 by kbolon           ###   ########.fr       */
+/*   Created: 2024/05/11 10:17:57 by kbolon            #+#    #+#             */
+/*   Updated: 2024/05/11 11:22:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd)
+void	parse_for_cat(t_cmd *cmd)
+{
+	t_cmd	*temp;
+	size_t	i;
+
+	temp = cmd;
+	while (temp)
+	{
+		i = 0;
+		while (temp->cmd[i])
+		{
+			if (ft_strcmp(temp->cmd[i], "cat") == 0)
+			{
+				printf("cat found\n");
+//				break ;
+			}
+			i++;
+		}
+		temp = temp->next;
+	}
+}
+
+/*void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd)
 {
 	char	temp_file[] = "/tmp/tempfile21008";
 	ssize_t	bytes_written;
@@ -69,22 +91,4 @@ void	ft_heredoc(t_cmd *cmd, char *file_name)
 	ft_create_temp_file(heredoc_content, cmd);
 	free_memory(heredoc_content);
 }
-
-char	*make_string(char **s)
-{
-	char	*temp;
-	int		i;
-
-	i = 0;
-	temp = (char *)ft_calloc(1, sizeof(char));
-	if (!temp)
-		error_general("problem allocating mem for string");
-	while (s[i] != NULL)
-	{
-		temp = ft_strjoin(temp, s[i]);
-		if (!temp)
-			error_general("problem allocating mem for string");
-		i++;
-	}
-	return (temp);
-}
+*/
