@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/11 11:20:34 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/11 14:02:59 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS = 	src/main.c \
 		src/parsing/parse_for_cmds.c \
 		src/parsing/parse_for_heredocs.c \
 		src/parsing/parse_for_redirs.c \
-		src/parsing/parse_input.c \
+		src/parsing/parse_for_cat_redirs.c \
 		src/parsing/parse_pipes.c \
 		src/free_functions.c \
 		src/utils.c \

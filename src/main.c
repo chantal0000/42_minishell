@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 13:07:18 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:19:36 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_execute(char *line, t_cmd **list, t_env *env_list, int *exit_status)
 	original_stdin = dup(STDIN_FILENO);
 	parse_for_cmds(list, line);
 	parse_cmds_for_expansions(list, env_list, *exit_status);
+	print_stack(*list);
 	*exit_status = ft_executor(*list, env_list);
 	dup2(original_stdin, STDIN_FILENO);
 		// close(original_stdin);

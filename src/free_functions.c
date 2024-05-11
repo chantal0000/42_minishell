@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 09:15:23 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:39:47 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_memory(char **arr)
 		return ;
 	while (arr[i] != NULL)
 	{
-		free(arr[i]);
+//		free(arr[i]);
 		i++;
 	}
 }
@@ -78,7 +78,7 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		// store the next node before freeing the current one
 		next = current->next;
 		// free cmd string
-		// if (current->cmd)
+		//if (current->cmd)
 		free_memory(current->cmd);
 		if (current->file_name && ft_strcmp(current->file_name, "/tmp/tempfile21008") != 0)
 			free(current->file_name);
