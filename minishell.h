@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 17:43:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 09:19:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
 //expansions.c
 void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int exit_status);
+char	*split_on_dollar(char *s, t_env *env, int exit_status);
+char	*find_and_substitute(char *s, t_env *env, int exit_status);
+void	free_array(char **arr);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
@@ -121,7 +124,6 @@ void	restore_pipes_and_spaces(t_cmd *cmd);
 void	ft_restore(char *s);
 
 //free_functions.c
-//void	free_cmdtree(t_cmd *tree);
 void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env *env_list);
@@ -150,6 +152,7 @@ t_cmd	*first_node(t_cmd *node);
 void	error_message(char *str, int i, int fd);
 void	error_temp(char *str, char *temp);
 void	error_general(char *str);
+void	error_memory(char **arr, char *s);
 
 //execute_utils.c
 int		execute_cmd(char **env, char **cmd);

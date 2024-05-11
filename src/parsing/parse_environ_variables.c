@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 18:02:18 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 08:51:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ char	*find_substitution(t_env *env, char *s, size_t cmd_len)
 		var_len = ft_find_environ_name(temp->cmd_env);
 		if (ft_strncmp(s, temp->cmd_env, cmd_len) == 0 && var_len == cmd_len)
 		{
-			var_exp = ft_strdup(temp->cmd_env + var_len + 1);
-			if (!var_exp)
-				return (NULL);
+			var_exp = temp->cmd_env + var_len + 1;
 			break ;
 		}
 		temp = temp->next;
@@ -73,7 +71,7 @@ char	*ft_variable(char *s, t_env *env, int exit_status)
 	result = NULL;
 	if (*(s) == '?')
 	{
-		result = ft_strdup(ft_itoa(exit_status));
+		result = ft_itoa(exit_status);
 		return (result);
 	}
 	cmd_len = ft_strlen(s);
