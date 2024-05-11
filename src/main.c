@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 16:50:02 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/11 12:01:20 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	print_stack(t_cmd *root)
 		temp = temp -> next;
 	}
 }
-
 int	main(int argc, char **argv, char **env)
 {
 	static char	*line;
@@ -71,6 +70,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		ft_init_signals();
 		line = readline("minishell: ");
+		while (is_whitespace(*line))
+			line = readline("minishell: ");
 		// this is basically ctrl D
 		if (!line)
 		{
@@ -78,17 +79,14 @@ int	main(int argc, char **argv, char **env)
 			printf("exit\n");
 			exit(0);
 		}
-		add_history(line);
 		if (line)
 		{
+			add_history(line);
 			parse_for_cmds(&list, line);//need to add envp
-//			print_stack(list);
-//			ft_env(env_list);//prints env list
 			parse_cmds_for_expansions(&list, env_list, exit_status);
 //			printf("\nafter expansion\n");
 			print_stack(list);
 		}
-
 		if (list)
 		{
 		exit_status =	ft_executor(list, env_list);
