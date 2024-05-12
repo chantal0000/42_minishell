@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 09:40:13 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/08 12:06:37 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:30:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,42 +27,35 @@ int	ft_len_until_delimiter(char *str)
 	return i;
 }
 
-int	ft_unset(t_cmd *cmd, t_env *env_list)
+int	ft_unset(t_cmd *cmd, t_env **env_list)
 {
-	t_env	*temp;
-	t_env	*prev;
+	t_env	*current;
+	t_env	*prev = NULL;
 
 	if (!env_list)
-		return (1);
-	temp = env_list;
-	prev = NULL;
-	while (temp)
+		return (0);
+	current = *env_list;
+	while (current)
 	{
-		if (ft_strncmp(temp->cmd_env, cmd->cmd[1], ft_len_until_delimiter(temp->cmd_env)) == 0)
+		if (ft_strncmp(current->cmd_env, cmd->cmd[1], ft_len_until_delimiter(current->cmd_env)) == 0)
 		{
 			if (prev == NULL)
 			{
-				// temp = temp->next;
-				// temp->next = temp->next->next;
-				// free(temp);
-				free(env_list->cmd_env);
-				env_list = temp->next;
-    			// free(temp); // Free the original head node
+				*env_list = current->next;
+  				free(current->cmd_env);
+				free(current);
 				return (0);
 			}
 			else
 			{
-				prev->next = temp->next;
-				free(temp);
-			}
-				// env_list = temp;
+				prev->next = current->next;
+				free(current->cmd_env);
+				free(current);
 				return (0);
+			}
 		}
-
-		prev = temp;
-		temp = temp->next;
+		prev = current;
+		current = current->next;
 	}
-
 	return (0);
-
 }

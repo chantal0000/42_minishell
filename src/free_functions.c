@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 15:18:56 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 14:29:27 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,32 @@ void	free_env(char **env)
 ** needs to be freed only at the very end of the program vs the array that needs to be freed in every loop
 */
 
-void	ft_free_env_list(t_env *env_list)
+// void	ft_free_env_list(t_env **env_list)
+// {
+// 	t_env	*next;
+
+// 	if (!env_list)
+// 		return ;
+// 	while (env_list != NULL)
+// 	{
+// 		next = (*env_list)->next;
+// 		free((*env_list)->cmd_env);
+// 		free(*env_list);
+// 		env_list = &next;
+// 	}
+// }
+void	ft_free_env_list(t_env **env_list)
 {
 	t_env	*next;
 
-	if (!env_list)
+	if (!env_list || !*env_list) // Check if env_list or *env_list is NULL
 		return ;
-	while (env_list != NULL)
+	while (*env_list != NULL) // Check if the value pointed to by env_list is not NULL
 	{
-		next = env_list->next;
-		free(env_list);
-		env_list = next;
+		next = (*env_list)->next;
+		free((*env_list)->cmd_env);
+		free(*env_list);
+		*env_list = next; // Update the value pointed to by env_list
 	}
 }
 

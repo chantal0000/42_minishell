@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:36:23 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/05 15:31:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:01:35 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	*create_env_node(char *line)
 	new_node = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	// new_node->cmd_env = strdup(line);
-	new_node->cmd_env = line;
+	new_node->cmd_env = strdup(line);
+	// new_node->cmd_env = line;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -60,7 +60,7 @@ void	insert_end(t_env **head, char *line)
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new_node;
-//	free (new_node);
+	// free (new_node);
 }
 
 /*
@@ -82,7 +82,7 @@ t_env	*fill_env_struct(char **environment)
 			insert_end(&env_head, environment[i]);
 			i++;
 		}
-//	free (temp);
+	// free (temp);
 /*	 (environment[i])
 	{
 		insert_end(&env_head, environment[i]);

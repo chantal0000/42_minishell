@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/10 15:46:22 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:12:33 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Executes a simple command. If it's a built-in command, it's executed directly.
 ** Otherwise, it handles redirections and executes using execve().
 */
-int	ft_simple_cmd(t_cmd *node, int exit_status, t_env *env_list)
+int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 {
 	if ((node->fd_in) != -1)
 		dup2(node->fd_in, STDIN_FILENO);
@@ -32,7 +32,7 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, t_env *env_list)
 	{
 		node->pid = fork();
 		if (node->pid == 0)
-			ft_start_exec(env_list, node);
+			ft_start_exec(*env_list, node);
 		else
 		{
 			waitpid(node->pid, &exit_status, WUNTRACED);
@@ -55,7 +55,7 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, t_env *env_list)
 ** 7. move on to the next node in the linked list
 */
 
-int	loop_cmds(t_cmd *node, t_cmd *head, t_env *env_list)
+int	loop_cmds(t_cmd *node, t_cmd *head, t_env **env_list)
 {
 	int	old_p_in;
 	int	pipe_fd[2];
@@ -70,11 +70,11 @@ int	loop_cmds(t_cmd *node, t_cmd *head, t_env *env_list)
 		if (node->next)
 			pipe(pipe_fd);
 		if (!node->prev && node->next)
-			ft_pipe_first(node, pipe_fd, env_list);
+			ft_pipe_first(node, pipe_fd, *env_list);
 		else if (node->prev && node->next)
-			ft_pipe_middle(node, pipe_fd, old_p_in, env_list);
+			ft_pipe_middle(node, pipe_fd, old_p_in, *env_list);
 		else
-			ft_pipe_last(node, pipe_fd, old_p_in, env_list);
+			ft_pipe_last(node, pipe_fd, old_p_in, *env_list);
 		old_p_in = pipe_fd[0];
 		ft_reset_std(std_in, std_out);
 		node = node->next;
@@ -91,7 +91,7 @@ int	loop_cmds(t_cmd *node, t_cmd *head, t_env *env_list)
 ** if successful we free the linked list -> cmd structure
 ** and return the exit status to our main function
 */
-int	ft_executor(t_cmd *node, t_env *env_list)
+int	ft_executor(t_cmd *node, t_env **env_list)
 {
 	int		exit_status;
 	t_cmd	*head;

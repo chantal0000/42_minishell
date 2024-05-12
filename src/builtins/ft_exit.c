@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/10 15:49:01 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:27:33 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
 	printf("exit\n");
 	printf("Error: exit: non-numeric argument for exit\n");
 	ft_free_cmd_struct(cmd);
-	ft_free_env_list(env_list);
+	ft_free_env_list(&env_list);
 	exit (2);
 }
 
-void	ft_free_exit(t_cmd *cmd, t_env *env_list)
+void	ft_free_exit(t_cmd *cmd, t_env **env_list)
 {
 	printf("exit\n");
 	ft_free_cmd_struct(cmd);
 	ft_free_env_list(env_list);
 }
 
-int	ft_exit(t_cmd *cmd, t_env *env_list)
+int	ft_exit(t_cmd *cmd, t_env **env_list)
 {
 	char	**exit_cmd;
 	int		i;
@@ -68,7 +68,7 @@ int	ft_exit(t_cmd *cmd, t_env *env_list)
 			if (exit_cmd[1][i] == '-' || exit_cmd[1][i] == '+')
 				i++;
 			if ((ft_isdigit(exit_cmd[1][i]) == 0))
-				ft_handle_nodigi(cmd, env_list);
+				ft_handle_nodigi(cmd, *env_list);
 			i++;
 		}
 		exit_status = ft_atoi(exit_cmd[1]);

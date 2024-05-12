@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:14:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/09 14:30:18 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:20:52 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_start_exec(t_env *env_list, t_cmd *node)
 {
 	if (execute_cmd(ft_env_list_to_array(env_list), node->cmd) == 127)
 	{
-		ft_free_env_list(env_list);
+		ft_free_env_list(&env_list);
 		ft_free_cmd_struct(first_node(node));
 		exit (127);
 	}

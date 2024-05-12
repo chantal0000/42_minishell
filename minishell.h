@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 11:36:39 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 15:02:37 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
 //parse_expansions.c
-void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int exit_status);
+void	parse_cmds_for_expansions(t_cmd **cmd, t_env **env, int exit_status);
 char	*split_on_dollar(char *s, t_env *env, int exit_status);
 char	*find_and_substitute(char *s, t_env *env, int exit_status);
 void	free_array(char **arr);
@@ -131,7 +131,7 @@ void	ft_restore(char *s);
 //free_functions.c
 void	free_memory(char **arr);
 void	free_env(char	**env);
-void	ft_free_env_list(t_env *env_list);
+void	ft_free_env_list(t_env **env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
 
 //utils.c
@@ -144,7 +144,7 @@ void	parse_string(char *s);
 
 // Executer | executer.c
 //void	ft_executor(t_cmd *node);
-int		ft_executor(t_cmd *node, t_env *env_list);
+int		ft_executor(t_cmd *node, t_env **env_list);
 int		ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list);
 int		ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list);
 int		ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list);
@@ -172,11 +172,11 @@ char 	**ft_env_list_to_array(t_env *head);
 
 
 //builtins/builtins.c
-int	ft_is_builtin(t_cmd *cmd, t_env *env_list);
+int	ft_is_builtin(t_cmd *cmd, t_env **env_list);
 int	ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
-int	ft_env(t_cmd *cmd, t_env *env_list);
+int	ft_env(t_cmd *cmd, t_env **env_list);
 //builtins/cd.c
 int	ft_cd(t_cmd *cmd);
 
@@ -188,12 +188,12 @@ void	ft_write_echo(t_cmd *cmd, int num, int i);
 void	check_echo_flags(t_cmd *cmd);
 
 //builtins/exit.c
-int	ft_exit(t_cmd *cmd, t_env *env_list);
+int	ft_exit(t_cmd *cmd, t_env **env_list);
 //builtins/pwd.c
 int	ft_pwd();
-int	ft_export(t_cmd *cmd, t_env *env_list);
+int	ft_export(t_cmd *cmd, t_env **env_list);
 void	insert_end(t_env **head, char *line);
-int	ft_unset(t_cmd *cmd, t_env *env_list);
+int	ft_unset(t_cmd *cmd, t_env **env_list);
 
 int	ft_handle_error_export(t_cmd *cmd);
 int	ft_handle_error_cd(t_cmd *cmd);
