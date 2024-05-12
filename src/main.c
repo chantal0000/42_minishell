@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 14:19:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 11:46:12 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,20 @@ char	*read_command(t_cmd *list, t_env *env_list, int *exit_status)
 		line = readline("minishell: ");
 		if (!line)
 		{
-			printf("exit\n");//do we need to print this?
+			printf("exit\n");
 			exit(0);
 		}
-		while (is_whitespace(*line))
-			line = readline("minishell: ");
-		add_history(line);
-		ft_execute(line, &list, env_list, exit_status);
-		list = NULL;
-		return (line);
+		while (*line != '\0' && is_whitespace(*line))
+			line++;
+		if (check_for_hanging_pipes(line) || *line == '\0')
+			break ;
+		else
+		{
+			add_history(line);
+			ft_execute(line, &list, env_list, exit_status);
+			list = NULL;
+			return (line);
+		}
 	}
 	return (line);
 }
