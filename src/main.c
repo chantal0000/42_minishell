@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 13:22:55 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:22:31 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
 	original_stdout = dup(STDOUT_FILENO);
 	original_stdin = dup(STDIN_FILENO);
 	parse_for_cmds(list, line);
-	parse_cmds_for_expansions(list, env_list, *exit_status);
+	parse_cmds_for_expansions(list, *env_list, exit_status);
 	print_stack(*list);
 	*exit_status = ft_executor(*list, env_list);
 	dup2(original_stdin, STDIN_FILENO);

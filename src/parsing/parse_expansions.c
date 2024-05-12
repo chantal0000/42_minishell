@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_expansions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 13:09:35 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:24:16 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	parse_cmds_for_expansions(t_cmd **cmd, t_env **env, int exit_status)
+void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
 {
 	t_cmd	*temp;
 	int		i;
@@ -28,14 +28,14 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env **env, int exit_status)
 		while (temp->cmd[i] != NULL)
 		{
 			if (find_dollar_sign(temp->cmd[i]))
-				temp->cmd[i] = split_on_dollar(temp->cmd[i], *env, exit_status);
+				temp->cmd[i] = split_on_dollar(temp->cmd[i], env, exit_status);
 			i++;
 		}
 		temp = temp->next;
 	}
 }
 
-char	*split_on_dollar(char *s, t_env *env, int exit_status)
+char	*split_on_dollar(char *s, t_env *env, int *exit_status)
 {
 	char	**arr;
 	char	*string;
@@ -63,7 +63,7 @@ char	*split_on_dollar(char *s, t_env *env, int exit_status)
 	return (string);
 }
 
-char	*find_and_substitute(char *s, t_env *env, int exit_status)
+char	*find_and_substitute(char *s, t_env *env, int *exit_status)
 {
 	char	*string;
 	char	*temp;
