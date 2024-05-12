@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 15:08:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 15:23:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		if (token == '-')
 			ft_heredoc(node, file_name);
 		else
-			node->file_name = parse_line(strdup(file_name));
+			node->file_name = parse_line(file_name);
 		if (token == '>')
 			node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);
 		if (token == '<')
