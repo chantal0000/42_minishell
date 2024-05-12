@@ -6,13 +6,13 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 10:17:57 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 15:24:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 08:57:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	parse_for_cat(t_cmd *cmd)
+/*void	parse_for_cat(t_cmd *cmd)
 {
 	t_cmd	*temp;
 	size_t	i;
@@ -40,14 +40,18 @@ void	ft_catdoc(t_cmd *cmd)
 	static char	*str;
 
 	str = readline(">");
+//	cmd->fd_in = 0;
+//	cmd->fd_out = -1;
+	printf("fd)in: %d\n", cmd->fd_in);
+	printf("fd)out: %d\n", cmd->fd_out);
 	if (!str)
-		error_general("minishell: warning: delimited by end-of-file");
+		error_message("minishell: syntax error: unexpected end of file", 1, cmd->fd_in);
 	cmd->cmd[0] = ft_strdup(str);
-	cmd->fd_out = -1;
+//	cmd->fd_out = -1;
 //	printf("fd_in: %d\n", cmd->fd_in);
 //	printf("fd_out: %d\n", cmd->fd_out);
 	str = readline("");
 	if (!str)
 		error_general("minishell: warning: delimited by end-of-file");
 	free (str);
-}
+}*/
