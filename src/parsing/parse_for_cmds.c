@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 08:58:11 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 11:44:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	index = 0;
 	s = check_for_quotes(s);
 	parse_for_pipe(&s, cmd, 0, &index);
-//	parse_for_cat(*cmd);
 	update_fd(*cmd);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
@@ -31,6 +30,29 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 		error_message("check syntax", 1, 0);
 }
 
+int	check_for_hanging_pipes(char *s)
+{
+	int	pipe_found;
+
+	pipe_found = 0;
+	while (*s)
+	{
+		if (*s == '|')
+		{
+			pipe_found = !pipe_found;
+			s++;
+			while (*s && is_whitespace(*s))
+				s++;
+			if (!*s && pipe_found)
+			{
+				perror("hanging pipe found, check syntax");
+				return (1);
+			}
+		}
+		s++;
+	}
+	return (0);
+}
 
 char	*check_for_quotes(char *s)
 {

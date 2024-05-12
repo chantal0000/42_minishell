@@ -72,14 +72,20 @@ char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)
 		{
 			printf("exit\n");//do we need to print this?
 			ft_free_env_list(env_list);
+			printf("exit\n");
 			exit(0);
 		}
-		while (is_whitespace(*line))
-			line = readline("minishell: ");
-		add_history(line);
-		ft_execute(line, &list, env_list, exit_status);
-		list = NULL;
-		return (line);
+		while (*line != '\0' && is_whitespace(*line))
+			line++;
+		if (check_for_hanging_pipes(line) || *line == '\0')
+			break ;
+		else
+		{
+			add_history(line);
+			ft_execute(line, &list, env_list, exit_status);
+			list = NULL;
+			return (line);
+		}
 	}
 	return (line);
 }

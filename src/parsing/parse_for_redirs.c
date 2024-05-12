@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 14:23:30 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 15:23:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		if (token == '-')
 			ft_heredoc(node, file_name);
 		else
-			node->file_name = parse_line(strdup(file_name));
+			node->file_name = parse_line(file_name);
 		if (token == '>')
 			node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);
 		if (token == '<')
@@ -43,7 +43,10 @@ t_cmd	*parse_mult_redir(t_cmd *node, char **s, char *file_name, int token)
 {
 	file_name = NULL;
 	if (node->token == '-' )
+	{
+		printf("heredoc 1\n");
 		node = parse_outfile(node, s, file_name, token);
+	}
 	else if (node->token == '+' )
 	{
 		if (node->fd_out > 0)
@@ -74,9 +77,11 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token)
 			else
 				node = redir_cmd(node, O_WRONLY | O_CREAT, 1);
 		}
+		else
+			node->fd_out = -1;
 	}
 	else
-		node->fd_out = -1;
+		node = parse_for_redirections(node, s);
 	return (node);
 }
 
@@ -84,7 +89,6 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 {
 	if (!node)
 		return (NULL);
-	node->instructions = instructions;
 	if (fd == 0)
 	{
 		node->fd_in = open(node->file_name, instructions, 0777);

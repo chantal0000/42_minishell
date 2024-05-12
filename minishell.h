@@ -90,6 +90,7 @@ t_cmd	*parse_exec_cmds(char **s);
 
 //parse_for_cmds.c
 void	parse_for_cmds(t_cmd **cmd, char *s);
+int		check_for_hanging_pipes(char *s);
 int		check_next_char(char **s, char token);
 char	*check_for_quotes(char *s);
 char	ft_replace(char *c);
