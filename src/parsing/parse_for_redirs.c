@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 14:23:30 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 10:51:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ t_cmd	*parse_mult_redir(t_cmd *node, char **s, char *file_name, int token)
 				error_message("missing file", 1, 0);
 			if (token == '>')
 				node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);
+//			if (token == '<')
+//				node = redir_cmd(node, O_RDONLY, 0);
+		}
+		if (node->fd_out < 0)
+		{
+			printf("multi direct found\n");
+			if (token == '<')
+				node = redir_cmd(node, O_RDONLY, 0);
 		}
 	}
 	else
@@ -64,6 +72,7 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token)
 {
 	if (node->fd_in > 0)
 	{
+		printf("in parse outfile\n");
 		token = find_tokens(s, &file_name);
 		if (find_tokens(s, &file_name) != 'a')
 			error_message("missing file", 1, 0);
@@ -74,6 +83,15 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token)
 			else
 				node = redir_cmd(node, O_WRONLY | O_CREAT, 1);
 		}
+		if (token == '<')
+		{
+			printf("file_name: %s\n", node->file_name);
+			node->fd_in = -1;
+//			node->fd_in = open(node->file_name, O_RDONLY, 0777);
+//			node->fd_out = 0;
+		}
+		else
+			node = parse_for_redirections(node, s);
 	}
 	else
 		node->fd_out = -1;
@@ -84,7 +102,7 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 {
 	if (!node)
 		return (NULL);
-	node->instructions = instructions;
+//	node->instructions = instructions;
 	if (fd == 0)
 	{
 		node->fd_in = open(node->file_name, instructions, 0777);
@@ -97,6 +115,7 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd)
 		node->fd_out = open(node->file_name, instructions, 0777);
 		if (fd < 0)
 			error_message("Error Opening file", 1, fd);
+		node->fd_in = -1;
 	}
 	else if (!fd)
 	{
