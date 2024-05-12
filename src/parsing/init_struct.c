@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:22:50 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/09 13:19:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 08:48:00 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ void	update_fd(t_cmd *tree)
 	{
 		if (temp->file_name == NULL)
 		{
-			temp->fd_in = -1;
-			temp->fd_out = -1;
+			if (!temp->fd_in)
+				temp->fd_in = -1;
+			if (!temp->fd_out)
+				temp->fd_out = -1;
 		}
 		temp->pid = 0;
 		if (ft_strcmp(temp->cmd[0], "echo") == 0)
