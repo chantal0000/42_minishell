@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 14:19:36 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 13:22:55 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_stack(t_cmd *root)
 	}
 }
 
-void	ft_execute(char *line, t_cmd **list, t_env *env_list, int *exit_status)
+void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
 {
 	int	original_stdout;
 	int	original_stdin;
@@ -60,7 +60,7 @@ void	ft_execute(char *line, t_cmd **list, t_env *env_list, int *exit_status)
 		// close(original_stdout);
 }
 
-char	*read_command(t_cmd *list, t_env *env_list, int *exit_status)
+char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)
 {
 	char	*line;
 
@@ -71,6 +71,7 @@ char	*read_command(t_cmd *list, t_env *env_list, int *exit_status)
 		if (!line)
 		{
 			printf("exit\n");//do we need to print this?
+			ft_free_env_list(env_list);
 			exit(0);
 		}
 		while (is_whitespace(*line))
@@ -88,7 +89,7 @@ void	handle_exit(t_env *env_list, char *line)
 {
 	rl_clear_history();
 	free(line);
-	ft_free_env_list(env_list);
+	ft_free_env_list(&env_list);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -113,7 +114,7 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	env_list = fill_env_struct(env);
 	while (1)
-		line = read_command(list, env_list, &exit_status);
+		line = read_command(list, &env_list, &exit_status);
 	handle_exit(env_list, line);
 	return (exit_status);
 }

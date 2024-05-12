@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/11 15:15:09 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 15:21:06 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
+int	ft_is_builtin(t_cmd *cmd, t_env **env_list)
 {
 	char	*cmd_to_check;
 	int		exit_status;
@@ -38,10 +38,7 @@ int	ft_is_builtin(t_cmd *cmd, t_env *env_list)
 	else if (ft_strcmp(cmd_to_check, "env") == 0)
 		exit_status = ft_env(cmd, env_list);
 	else if (ft_strcmp(cmd_to_check, "export") == 0)
-	{
-		printf("GOING INTO EXPORT \n");
 		exit_status = ft_export(cmd, env_list);
-	}
 	else if (ft_strcmp(cmd_to_check, "pwd") == 0)
 		exit_status = ft_pwd();
 	else if (ft_strcmp(cmd_to_check, "unset") == 0)
