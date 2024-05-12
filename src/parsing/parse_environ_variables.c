@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 08:51:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 16:26:12 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*find_substitution(t_env *env, char *s, size_t cmd_len)
 
 //this function copies the environment into the command array 
 //it copies everything beyond the '='
-char	*ft_variable(char *s, t_env *env, int exit_status)
+char	*ft_variable(char *s, t_env *env, int *exit_status)
 {
 	size_t	cmd_len;
 	char	*result;
@@ -71,7 +71,7 @@ char	*ft_variable(char *s, t_env *env, int exit_status)
 	result = NULL;
 	if (*(s) == '?')
 	{
-		result = ft_itoa(exit_status);
+		result = ft_itoa(*exit_status);
 		return (result);
 	}
 	cmd_len = ft_strlen(s);

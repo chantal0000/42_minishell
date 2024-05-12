@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 15:02:37 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:23:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	parse_input(char *s);
 int		ft_find_environ_name(char *s);
 int		find_dollar_sign(char *s);
 char	*find_substitution(t_env *env, char *s, size_t cmd_len);
-char	*ft_variable(char *s, t_env *env, int exit_status);
+char	*ft_variable(char *s, t_env *env, int *exit_status);
 char	*move_past_dollar(char *s);
 
 //parse_for_heredocs.c
@@ -118,9 +118,9 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
 
 //parse_expansions.c
-void	parse_cmds_for_expansions(t_cmd **cmd, t_env **env, int exit_status);
-char	*split_on_dollar(char *s, t_env *env, int exit_status);
-char	*find_and_substitute(char *s, t_env *env, int exit_status);
+void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);
+char	*split_on_dollar(char *s, t_env *env, int *exit_status);
+char	*find_and_substitute(char *s, t_env *env, int *exit_status);
 void	free_array(char **arr);
 
 //parse_pipes_and_groups.c
