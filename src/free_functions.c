@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 08:31:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/12 15:18:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		// free cmd string
 		//if (current->cmd)
 		free_memory(current->cmd);
-		if (current->file_name && ft_strcmp(current->file_name, "/tmp/tempfile21008") != 0)
-			free(current->file_name);
+//		if (current->file_name && ft_strcmp(current->file_name, "/tmp/tempfile21008") != 0)
+//			free(current->file_name);
 //	**this causes IOT Instruction error and invalid freeing to free delimiter
 
 //		if (current->heredoc_delimiter)
