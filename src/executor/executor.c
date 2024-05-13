@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/12 13:12:33 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:33:59 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 {
 	if ((node->fd_in) != -1)
+	{
 		dup2(node->fd_in, STDIN_FILENO);
+		// added does this break my stuff
+		close(node->fd_in);
+	}
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);

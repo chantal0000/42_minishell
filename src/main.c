@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 11:38:16 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 13:25:29 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ void	print_stack(t_cmd *root)
 
 void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
 {
-	int	original_stdout;
-	int	original_stdin;
+	// int	original_stdout;
+	// int	original_stdin;
 
-	original_stdout = dup(STDOUT_FILENO);
-	original_stdin = dup(STDIN_FILENO);
+	// original_stdout = dup(STDOUT_FILENO);
+	// original_stdin = dup(STDIN_FILENO);
 	parse_for_cmds(list, line);
 	parse_cmds_for_expansions(list, *env_list, exit_status);
 	print_stack(*list);
 	*exit_status = ft_executor(*list, env_list);
-	dup2(original_stdin, STDIN_FILENO);
-		// close(original_stdin);
-	dup2(original_stdout, STDOUT_FILENO);
-		// close(original_stdout);
+	// dup2(original_stdin, STDIN_FILENO);
+	// 	close(original_stdin);
+	// dup2(original_stdout, STDOUT_FILENO);
+	// 	close(original_stdout);
 }
 
 char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)

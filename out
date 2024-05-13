@@ -1,0 +1,13 @@
+infile.txt
+kb_pipex
+libft
+Makefile
+minishell
+minishell.h
+notes.txt
+out
+outf
+readline.supp
+sandbox
+src
+minishell: exit
