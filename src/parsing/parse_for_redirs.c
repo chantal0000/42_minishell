@@ -6,28 +6,11 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 07:03:37 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 11:40:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-/*
-
-I need to add this to the open/read of files
-//outward
-	fd_out = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (fd_out < 0)
-		error_message("Error Opening Outfile", 1, fd);
-	if (access(file, F_OK | W_OK) == -1)
-		error_message("Error with Outfile permissions: no access.", 1, fd_out);
-			
-//inward			
-	fd_in = open(file, O_RDONLY, 0777);
-	if (fd_in < 0)
-		error_message("Error Opening Infile", 1, fd, &filein);
-	if (access(file, F_OK | R_OK) == -1)
-		error_message("Error with Infile Permissions: No access.", 1 , fd);*/
 
 //this function parses through the strings betwen pipes for redirs
 //it looks for single <, > , and double << (heredocs), >>
@@ -41,7 +24,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s)
 		file_name = NULL;
 		token = find_tokens(s, &file_name);
 		if (find_tokens(s, &file_name) != 'a')
-			error_message("missing file", 1, 0);
+			error_general("missing file");
 		if (token == '-')
 			ft_heredoc(node, file_name);
 		else
@@ -71,7 +54,7 @@ t_cmd	*parse_mult_redir(t_cmd *node, char **s, char *file_name, int token)
 		{
 			token = find_tokens(s, &file_name);
 			if (find_tokens(s, &file_name) != 'a')
-				error_message("missing file", 1, 0);
+				error_general("missing file");
 			if (token == '>')
 				node = redir_cmd(node, O_WRONLY | O_CREAT | O_TRUNC, 1);
 		}
@@ -88,7 +71,7 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token)
 	{
 		token = find_tokens(s, &file_name);
 		if (find_tokens(s, &file_name) != 'a')
-			error_message("missing file", 1, 0);
+			error_general("missing file");
 		if (token == '>')
 		{
 			if (access(node->file_name, F_OK) != -1)
@@ -112,21 +95,12 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd_type)
 	{
 		node->fd_in = open(node->file_name, instructions, 0777);
 		node->fd_out = -1;
-		check_access_and_fd(node->fd_in, node->file_name);
-//		if (node->fd_in < 0)
-//			error_message("Error Opening file", 1, node->fd_in);
-//		if (access(node->file_name, F_OK | R_OK) == -1)
-//			error_message("minishell: infile: No such file or directory:", 1, node->fd_in);
-
+		check_access_and_fd(node, node->fd_in, 0);
 	}
 	else if (fd_type == 1)
 	{
 		node->fd_out = open(node->file_name, instructions, 0777);
-		check_access_and_fd(node->fd_out, node->file_name);
-//		if (node->fd_out < 0)
-//			error_message("Error Opening file", 1, node->fd_out);
-//		if (access(node->file_name, F_OK | W_OK) == -1)
-//			error_message("Error with Outfile permissions: no access.", 1, node->fd_out);
+		check_access_and_fd(node, 0, node->fd_out);
 	}
 	else if (!fd_type)
 	{
@@ -136,10 +110,43 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd_type)
 	return (node);
 }
 
-void	check_access_and_fd(int fd, char *file_name)
+void	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out)
 {
-	if (fd < 0)
-		error_message("Error Opening file", 1, fd);
-	if (access(file_name, F_OK | W_OK) == -1)
-		error_message("Error with Outfile permissions: no access.", 1, fd);
+	t_cmd	*temp;
+
+	temp = cmd;
+	if (fd_in)
+	{
+		if (temp->fd_in < 0)
+		{
+			if (access(temp->file_name, F_OK | W_OK) == -1)
+			{
+				temp->fd_in = -1;
+				perror("minishell: infile: No such file or directory");
+				
+			}
+			else if (temp->fd_in < 0)
+			{
+//				close(temp->fd_in);
+				temp->fd_in = -1;
+				error_general("Error Opening file");
+			}
+		}
+	}
+	if (fd_out)
+	{
+		if (temp->fd_out < 0)
+		{
+			close(temp->fd_out);
+			temp->fd_out = -1;
+			error_general("Error Opening file");
+		}
+		if (access(temp->file_name, F_OK | W_OK) == -1)
+		{
+			close(temp->fd_out);
+			temp->fd_out = -1;
+			error_general("minishell: infile: No such file or directory");
+		}
+	}
+	cmd = temp;
 }
