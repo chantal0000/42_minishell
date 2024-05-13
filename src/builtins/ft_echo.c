@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/11 08:46:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:16:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	parse_for_echo(t_cmd *cmd_tree)
 	t_cmd	*temp;
 
 	temp = cmd_tree;
-	printf("ok\n");
+//	printf("ok\n");
+//	printf("cmd[0] parse echo: %s\n", cmd_tree->cmd[0]);
+//	printf("cmd[1] parse echo: %s\n", cmd_tree->cmd[1]);
 	while (temp)
 	{
 		if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
@@ -47,6 +49,7 @@ int	ft_echo(t_cmd *cmd)
 	int		num;
 	int		i;
 
+//	printf("in ft_echo\n");
 	if (!cmd)
 		return (1);
 	temp = cmd;
@@ -64,16 +67,17 @@ int	ft_echo(t_cmd *cmd)
 
 void	ft_write_echo(t_cmd *cmd, int num, int i)
 {
-	if (i == num - 1)
-		ft_putstr_fd(check_quotes(cmd->cmd[i]), 1);
+	check_quotes(cmd->cmd[i]);
+	if (i == num - 1 && cmd->cmd[i])
+		ft_putstr_fd(cmd->cmd[i], 1);
 	else
 	{
 		while (i < num)
 		{
-			if (i < num - 1)
+			if (i < num - 1 && cmd->cmd[i])
 			{
 				ft_putstr_fd(cmd->cmd[i], 1);
-				ft_putchar_fd(' ', 1);//this doesn't work
+				ft_putchar_fd(' ', 1);
 			}
 			else
 			{
@@ -91,24 +95,36 @@ void	check_echo_flags(t_cmd *cmd)
 	t_cmd	*temp;
 	int		i;
 	int		j;
+	int		count;
 
 	temp = cmd;
+	i = 2;
+	j = 0;
+	count = 0;
+//	printf("in check_echo_flags\n");
+//	printf("cmd[0]: %s\n", cmd->cmd[0]);
+//	printf("cmd[1]: %s\n", cmd->cmd[1]);
 	while (temp)
 	{
-		if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
+		count = ft_count(temp->cmd);
+		if (count > 1)
 		{
-			i = 2;
-			j = 0;
-			while (temp->cmd[i] != NULL)
+			if ((temp->cmd[0] && !ft_strcmp(temp->cmd[0], "echo")) &&  (temp->cmd[1] && !ft_strcmp(temp->cmd[1], "-n")))
 			{
-				if (!ft_strcmp(temp->cmd[i], "-n"))
-					j++;
-				else
-					temp->cmd[i - j] = temp->cmd[i];
-				i++;
+//				i = 2;
+				j = 0;
+				while (temp->cmd[i] != NULL)
+				{
+					if (!ft_strcmp(temp->cmd[i], "-n"))
+						j++;
+					else
+//						temp->cmd[i - j] = ft_strdup(temp->cmd[i]);
+						temp->cmd[i - j] = temp->cmd[i];
+					i++;
+				}
+				temp->cmd[i - j] = NULL;
 			}
-			temp->cmd[i - j] = NULL;
+			temp = temp->next;
 		}
-		temp = temp->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 11:49:54 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:58:57 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_memory(char **arr)
 		return ;
 	while (arr[i] != NULL)
 	{
-//		free(arr[i]);
+		free(arr[i]);
 		i++;
 	}
 }
@@ -38,7 +38,7 @@ void	free_env(char **env)
 		return ;
 	while (env[i] != NULL)
 	{
-		// free(env[i]);
+		free(env[i]);
 		i++;
 	}
 	free (env);
@@ -93,7 +93,7 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		// store the next node before freeing the current one
 		next = current->next;
 		// free cmd string
-		//if (current->cmd)
+//		if (current->cmd)
 		free_memory(current->cmd);
 		if (current->file_name)
 		{

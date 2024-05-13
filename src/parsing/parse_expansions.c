@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 06:38:28 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 17:58:19 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
 		{
 			if (find_dollar_sign(temp->cmd[i]))
 			{
-//				temp->cmd[i] = split_on_dollar(temp->cmd[i], env, exit_status);
-				string = split_on_dollar(temp->cmd[i], env, exit_status);
-				temp->cmd[i] = string;
-				free(string);
+				split_on_dollar(&temp->cmd[i], env, exit_status);
+				printf("temp->cmd[i]: %s\n", temp->cmd[i]);
 			}
 			i++;
 		}
@@ -40,47 +38,53 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
 	}
 }
 
-char	*split_on_dollar(char *s, t_env *env, int *exit_status)
+void split_on_dollar(char **s, t_env *env, int *exit_status)
 {
 	char	**arr;
-	char	*string;
 	char	*temp;
+	char	*new_str;
 
-	string = s;
-	temp = NULL;
-	if (*s == '$')
-		string = find_and_substitute(s, env, exit_status);
+	new_str = NULL;
+	if (**s == '$')
+	{
+		temp = find_and_substitute(*s, env, exit_status);
+		if (!temp)
+			return ;
+		*s = temp;
+//		free (temp);
+	}
 	else
 	{
-		arr = ft_split(s, '$');
+		arr = ft_split(*s, '$');
 		if (!arr)
-			return (NULL);
-		string = find_and_substitute(arr[1], env, exit_status);
-		if (!string)
-			error_memory(arr, NULL);
-		temp = ft_strjoin(arr[0], string);
+			return ;
+		temp = find_and_substitute(arr[1], env, exit_status);
 		if (!temp)
-			error_memory(arr, string);
-		free (string);
+		{
+			free_array(arr);
+			return ;
+		}
+		new_str = ft_strjoin(arr[0], temp);
+		free(temp);
 		free_array(arr);
-		return (temp);
+		if (!new_str)
+			return ;
+		*s = new_str;
+//		free(new_str);
 	}
-	return (string);
 }
 
 char	*find_and_substitute(char *s, t_env *env, int *exit_status)
 {
 	char	*string;
 	char	*temp;
+	char	*temp1;
 
 	temp = s;
-	temp = move_past_dollar(temp);
-	string = ft_variable(temp, env, exit_status);
+	temp1 = move_past_dollar(temp);
+	string = ft_variable(temp1, env, exit_status);
 	if (string && *string != '\0')
-	{
-		free (temp);
 		temp = string;
-	}
 	else
 		free (string);
 	return (temp);

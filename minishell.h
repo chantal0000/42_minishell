@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 12:06:34 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 17:32:33 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	print_stack(t_cmd *root);
 
 //delimiter.c
 int		find_delimiter(char *s1, char *delim);
-char	*check_quotes(char *s);
+void	check_quotes(char *s);
 
 //find_tokens.c
 int		check_for_alligators(char **s);
@@ -118,7 +118,7 @@ void	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out);
 
 //parse_expansions.c
 void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);
-char	*split_on_dollar(char *s, t_env *env, int *exit_status);
+void	split_on_dollar(char **s, t_env *env, int *exit_status);
 char	*find_and_substitute(char *s, t_env *env, int *exit_status);
 void	free_array(char **arr);
 
@@ -132,11 +132,13 @@ void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env **env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
+void	free_cmdtree(t_cmd *tree);
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
 char	**export_split(char	*s);
 void	parse_string(char *s);
+char	*ft_strcpy(char *s1, char *s2);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);
