@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 14:29:27 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:49:54 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_env(char **env)
 		return ;
 	while (env[i] != NULL)
 	{
-		free(env[i]);
+		// free(env[i]);
 		i++;
 	}
 	free (env);
@@ -95,6 +95,11 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		// free cmd string
 		//if (current->cmd)
 		free_memory(current->cmd);
+		if (current->file_name)
+		{
+			if (ft_strcmp(current->file_name, "/tmp/tempfile21008") == 0)
+				unlink("/tmp/tempfile21008");
+		}
 //		if (current->file_name && ft_strcmp(current->file_name, "/tmp/tempfile21008") != 0)
 //			free(current->file_name);
 //	**this causes IOT Instruction error and invalid freeing to free delimiter
