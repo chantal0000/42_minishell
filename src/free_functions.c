@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 17:58:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 12:55:51 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	free_env(char **env)
 		return ;
 	while (env[i] != NULL)
 	{
+		// IMPORTANT!!!!!!!!!
 		free(env[i]);
 		i++;
 	}
