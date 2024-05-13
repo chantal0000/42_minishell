@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 07:04:00 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:30:02 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-extern int	g_signal;
-
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -29,6 +26,7 @@ extern int	g_signal;
 # include <signal.h>
 # include <errno.h>
 
+extern int	g_signal;
 //# define DELIMITER "|<>()"
 //# define WHITESPACE " \n\t\r\v"
 # define MAXARGS 100
@@ -37,7 +35,7 @@ extern int	g_signal;
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
 
-typedef struct s_env
+typedef struct	s_env
 {
 	char	*cmd_env;
 	t_env	*next;
@@ -58,9 +56,10 @@ typedef struct s_cmd
 	t_cmd	*prev;
 	t_cmd	*next;
 	char	*heredoc_delimiter;
-	char	*heredoc_content[MAX_CONTENT_SIZE + 1];
+	// char	*heredoc_content[MAX_CONTENT_SIZE + 1];
 }	t_cmd;
 
+// TESTING
 void	print_stack(t_cmd *root);
 
 //delimiter.c
@@ -147,8 +146,10 @@ void	parse_string(char *s);
 //void	ft_executor(t_cmd *node);
 int		ft_executor(t_cmd *node, t_env **env_list);
 int		ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list);
-int		ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list);
-int		ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list);
+int		ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in,
+			t_env *env_list);
+int		ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in,
+			t_env *env_list);
 void	close_after(int std_in, int std_out, int pipe_fd[2]);
 void	ft_start_exec(t_env *env_list, t_cmd *node);
 void	ft_reset_std(int std_in, int std_out);
@@ -169,17 +170,16 @@ int		handle_exit_status(t_cmd *node);
 //environment.c
 void	*create_env_node(char *line);
 t_env	*fill_env_struct(char **environment);
-char 	**ft_env_list_to_array(t_env *head);
-
+char	**ft_env_list_to_array(t_env *head);
 
 //builtins/builtins.c
-int	ft_is_builtin(t_cmd *cmd, t_env **env_list);
-int	ft_strcmp(char *s1, char *s2);
+int		ft_is_builtin(t_cmd *cmd, t_env **env_list);
+int		ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
-int	ft_env(t_cmd *cmd, t_env **env_list);
+int		ft_env(t_cmd *cmd, t_env **env_list);
 //builtins/cd.c
-int	ft_cd(t_cmd *cmd);
+int		ft_cd(t_cmd *cmd);
 
 //ft_echo.c
 void	parse_for_echo(t_cmd *cmd_tree);
@@ -189,17 +189,15 @@ void	ft_write_echo(t_cmd *cmd, int num, int i);
 void	check_echo_flags(t_cmd *cmd);
 
 //builtins/exit.c
-int	ft_exit(t_cmd *cmd, t_env **env_list);
+int		ft_exit(t_cmd *cmd, t_env **env_list);
 //builtins/pwd.c
-int	ft_pwd();
-int	ft_export(t_cmd *cmd, t_env **env_list);
+int		ft_pwd(void);
+int		ft_export(t_cmd *cmd, t_env **env_list);
 void	insert_end(t_env **head, char *line);
-int	ft_unset(t_cmd *cmd, t_env **env_list);
+int		ft_unset(t_cmd *cmd, t_env **env_list);
 
-int	ft_handle_error_export(t_cmd *cmd);
-int	ft_handle_error_cd(t_cmd *cmd);
-
-
+int		ft_handle_error_export(t_cmd *cmd);
+int		ft_handle_error_cd(t_cmd *cmd);
 
 // signals.c
 void	ft_init_signals(void);

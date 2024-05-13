@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 09:40:13 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/12 15:30:45 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:43:13 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,36 @@ int	ft_len_until_delimiter(char *str)
 	i = 0;
 	while (str[i] && (str[i] != '='))
 		i++;
-	return i;
+	return (i);
+}
+
+void	free_unset(t_env *current)
+{
+	free(current->cmd_env);
+	free(current);
 }
 
 int	ft_unset(t_cmd *cmd, t_env **env_list)
 {
 	t_env	*current;
-	t_env	*prev = NULL;
+	t_env	*prev;
 
+	prev = NULL;
 	if (!env_list)
 		return (0);
 	current = *env_list;
 	while (current)
 	{
-		if (ft_strncmp(current->cmd_env, cmd->cmd[1], ft_len_until_delimiter(current->cmd_env)) == 0)
+		if (ft_strncmp(current->cmd_env, cmd->cmd[1],
+				ft_len_until_delimiter(current->cmd_env)) == 0)
 		{
 			if (prev == NULL)
-			{
 				*env_list = current->next;
-  				free(current->cmd_env);
-				free(current);
-				return (0);
-			}
 			else
-			{
 				prev->next = current->next;
-				free(current->cmd_env);
-				free(current);
-				return (0);
-			}
+			free(current->cmd_env);
+			free(current);
+			return (0);
 		}
 		prev = current;
 		current = current->next;
