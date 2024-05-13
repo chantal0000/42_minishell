@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 16:24:16 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 06:38:28 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
 		while (temp->cmd[i] != NULL)
 		{
 			if (find_dollar_sign(temp->cmd[i]))
-				temp->cmd[i] = split_on_dollar(temp->cmd[i], env, exit_status);
+			{
+//				temp->cmd[i] = split_on_dollar(temp->cmd[i], env, exit_status);
+				string = split_on_dollar(temp->cmd[i], env, exit_status);
+				temp->cmd[i] = string;
+				free(string);
+			}
 			i++;
 		}
 		temp = temp->next;
