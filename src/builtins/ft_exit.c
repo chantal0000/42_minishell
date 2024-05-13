@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/12 14:27:33 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:58:05 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_free_exit(t_cmd *cmd, t_env **env_list)
 	ft_free_env_list(env_list);
 }
 
-int	ft_exit(t_cmd *cmd, t_env **env_list)
+int	ft_exit(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdout)
 {
 	char	**exit_cmd;
 	int		i;
@@ -73,8 +73,18 @@ int	ft_exit(t_cmd *cmd, t_env **env_list)
 		}
 		exit_status = ft_atoi(exit_cmd[1]);
 		ft_free_exit(cmd, env_list);
+		if (original_stdin > 3 || original_stdout > 3 )
+		{
+			close(original_stdin);
+			close(original_stdout);
+		}
 		exit (exit_status);
 	}
 	ft_free_exit(cmd, env_list);
+	if (original_stdin > 3 || original_stdout > 3 )
+	{
+		close(original_stdin);
+		close(original_stdout);
+	}
 	exit (EXIT_SUCCESS);
 }

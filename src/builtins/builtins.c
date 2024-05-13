@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:32:24 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/12 15:21:06 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:51:21 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int	ft_is_builtin(t_cmd *cmd, t_env **env_list)
+int	ft_is_builtin(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdout)
 {
 	char	*cmd_to_check;
 	int		exit_status;
@@ -30,7 +30,7 @@ int	ft_is_builtin(t_cmd *cmd, t_env **env_list)
 	exit_status = 0;
 	cmd_to_check = cmd->cmd[0];
 	if (ft_strcmp(cmd_to_check, "exit") == 0)
-		exit_status = ft_exit(cmd, env_list);
+		exit_status = ft_exit(cmd, env_list, original_stdin, original_stdout);
 	else if (ft_strcmp(cmd_to_check, "cd") == 0)
 		exit_status = ft_cd(cmd);
 	else if (ft_strcmp(cmd_to_check, "echo") == 0)

@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/13 13:33:59 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:35:17 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,32 @@
 */
 int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 {
+	int	original_stdout;
+	int	original_stdin;
+
+	original_stdout = dup(STDOUT_FILENO);
+	original_stdin = dup(STDIN_FILENO);
 	if ((node->fd_in) != -1)
 	{
 		dup2(node->fd_in, STDIN_FILENO);
 		// added does this break my stuff
-		close(node->fd_in);
+		// close(node->fd_in);
 	}
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
 		close(node->fd_out);
 	}
-	exit_status = ft_is_builtin(node, env_list);
+	// pass stdin stdout here
+	exit_status = ft_is_builtin(node, env_list, original_stdin, original_stdout);
 	if (exit_status != -1)
+	{
+		if (original_stdin > 3)
+			close(original_stdin);
+		if(original_stdin > 3)
+			close(original_stdout);
 		return (exit_status);
+	}
 	else
 	{
 		node->pid = fork();
@@ -41,6 +53,10 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 		{
 			waitpid(node->pid, &exit_status, WUNTRACED);
 			exit_status = WEXITSTATUS(exit_status);
+			dup2(original_stdin, STDIN_FILENO);
+			close(original_stdin);
+			dup2(original_stdout, STDOUT_FILENO);
+			close(original_stdout);
 			return (exit_status);
 		}
 	}
