@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 10:30:02 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:06:34 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@
 # include <errno.h>
 
 extern int	g_signal;
-//# define DELIMITER "|<>()"
-//# define WHITESPACE " \n\t\r\v"
+
 # define MAXARGS 100
 # define MAX_CONTENT_SIZE 1000
 
@@ -115,7 +114,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*parse_mult_redir(t_cmd *cmd, char **s, char *filename, int token);
 t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
-void	check_access_and_fd(int fd, char *file_name);
+void	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out);
 
 //parse_expansions.c
 void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);
@@ -156,7 +155,6 @@ void	ft_reset_std(int std_in, int std_out);
 t_cmd	*first_node(t_cmd *node);
 
 //error_handling.c
-void	error_message(char *str, int i, int fd);
 void	error_temp(char *str, char *temp);
 void	error_general(char *str);
 void	error_memory(char **arr, char *s);
@@ -178,6 +176,7 @@ int		ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
 int		ft_env(t_cmd *cmd, t_env **env_list);
+
 //builtins/cd.c
 int		ft_cd(t_cmd *cmd);
 
@@ -190,6 +189,7 @@ void	check_echo_flags(t_cmd *cmd);
 
 //builtins/exit.c
 int		ft_exit(t_cmd *cmd, t_env **env_list);
+
 //builtins/pwd.c
 int		ft_pwd(void);
 int		ft_export(t_cmd *cmd, t_env **env_list);
