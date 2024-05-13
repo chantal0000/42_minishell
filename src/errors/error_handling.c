@@ -6,19 +6,19 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:14:08 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 06:44:07 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 11:18:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	error_message(char *str, int i, int fd)
+/*void	error_message(char *str, int i, int fd)
 {
 	if (fd)
 		close (fd);
 	perror(str);
-	exit (i);
-}
+	return ;
+}*/
 
 void	error_temp(char *str, char *temp)
 {

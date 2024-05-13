@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 11:44:25 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 11:37:43 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 		(*s)++;
 	restore_pipes_and_spaces(*cmd);
 	if (*s != '\0')
-		error_message("check syntax", 1, 0);
+		error_general("check syntax");
 }
 
 int	check_for_hanging_pipes(char *s)
@@ -79,7 +79,7 @@ char	*check_for_quotes(char *s)
 		temp++;
 	}
 	if (in_single || in_double)
-		error_message("open quotes found, can't parse", 1, 0);
+		error_general("open quotes found, can't parse");
 	return (s);
 }
 
