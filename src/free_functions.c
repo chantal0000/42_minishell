@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 11:49:54 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:55:51 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	free_env(char **env)
 		return ;
 	while (env[i] != NULL)
 	{
-		// free(env[i]);
+		// IMPORTANT!!!!!!!!!
+		free(env[i]);
 		i++;
 	}
 	free (env);
