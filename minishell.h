@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 17:32:33 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 18:36:37 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ t_env	*fill_env_struct(char **environment);
 char	**ft_env_list_to_array(t_env *head);
 
 //builtins/builtins.c
-int		ft_is_builtin(t_cmd *cmd, t_env **env_list);
+int		ft_is_builtin(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdout);
 int		ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
@@ -190,7 +190,7 @@ void	ft_write_echo(t_cmd *cmd, int num, int i);
 void	check_echo_flags(t_cmd *cmd);
 
 //builtins/exit.c
-int		ft_exit(t_cmd *cmd, t_env **env_list);
+int		ft_exit(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdout);
 
 //builtins/pwd.c
 int		ft_pwd(void);
