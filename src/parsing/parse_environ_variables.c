@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/12 16:26:12 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 18:26:27 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*ft_variable(char *s, t_env *env, int *exit_status)
 	if (*(s) == '?')
 	{
 		result = ft_itoa(*exit_status);
+		free (s);
 		return (result);
 	}
 	cmd_len = ft_strlen(s);
@@ -81,6 +82,7 @@ char	*ft_variable(char *s, t_env *env, int *exit_status)
 	result = ft_strjoin(var_exp, s + cmd_len);
 	if (!result)
 		return (NULL);
+	free (s);
 	return (result);
 }
 

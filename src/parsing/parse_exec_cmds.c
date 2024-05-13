@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/10 17:07:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:58:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token)
 {
 	int		i;
 	int		token;
+//	char	*temp;
 
 	i = 0;
 	token = 0;
+//	temp = NULL;
 	while (*s && !is_token(**s))
 	{
 		token = find_tokens(s, &non_token);
@@ -46,7 +48,10 @@ t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token)
 			return (NULL);
 		}
 		parse_line(cmd_tree->cmd[i]);
-		cmd_tree->cmd[i] = check_quotes(cmd_tree->cmd[i]);
+//		cmd_tree->cmd[i] = check_quotes(cmd_tree->cmd[i]);
+		check_quotes(cmd_tree->cmd[i]);
+//		cmd_tree->cmd[i] 
+//		free (temp);
 		i++;
 		cmd_tree = parse_for_redirections(cmd_tree, s);
 	}
