@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 17:27:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 15:32:47 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_cmd
 	t_cmd	*prev;
 	t_cmd	*next;
 	char	*heredoc_delimiter;
+	int		og_stdin;
+	int		og_stdout;
 	// char	*heredoc_content[MAX_CONTENT_SIZE + 1];
 }	t_cmd;
 
@@ -181,7 +183,7 @@ t_env	*fill_env_struct(char **environment);
 char	**ft_env_list_to_array(t_env *head);
 
 //builtins/builtins.c
-int		ft_is_builtin(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdout);
+int		ft_is_builtin(t_cmd *cmd, t_env **env_list);
 int		ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
@@ -198,13 +200,14 @@ void	ft_write_echo(t_cmd *cmd, int num, int i);
 void	check_echo_flags(t_cmd *cmd);
 
 //builtins/exit.c
-int		ft_exit(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdout);
+int		ft_exit(t_cmd *cmd, t_env **env_list);
 
 //builtins/pwd.c
 int		ft_pwd(void);
 int		ft_export(t_cmd *cmd, t_env **env_list);
 void	insert_end(t_env **head, char *line);
 int		ft_unset(t_cmd *cmd, t_env **env_list);
+int	ft_len_until_delimiter(char *str);
 
 int		ft_handle_error_export(t_cmd *cmd);
 int		ft_handle_error_cd(t_cmd *cmd);

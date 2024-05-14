@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/13 16:35:17 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:01:35 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 */
 int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 {
-	int	original_stdout;
-	int	original_stdin;
+	// int	original_stdout = node->og_stdin;
+	// int	original_stdin = node->og_stdout;
 
-	original_stdout = dup(STDOUT_FILENO);
-	original_stdin = dup(STDIN_FILENO);
+	// original_stdout = dup(STDOUT_FILENO);
+	// original_stdin = dup(STDIN_FILENO);
 	if ((node->fd_in) != -1)
 	{
 		dup2(node->fd_in, STDIN_FILENO);
@@ -35,13 +35,13 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 		close(node->fd_out);
 	}
 	// pass stdin stdout here
-	exit_status = ft_is_builtin(node, env_list, original_stdin, original_stdout);
+	exit_status = ft_is_builtin(node, env_list);
 	if (exit_status != -1)
 	{
-		if (original_stdin > 3)
-			close(original_stdin);
-		if(original_stdin > 3)
-			close(original_stdout);
+		// if (original_stdin > 3)
+		// 	close(original_stdin);
+		// if(original_stdin > 3)
+		// 	close(original_stdout);
 		return (exit_status);
 	}
 	else
@@ -53,10 +53,10 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 		{
 			waitpid(node->pid, &exit_status, WUNTRACED);
 			exit_status = WEXITSTATUS(exit_status);
-			dup2(original_stdin, STDIN_FILENO);
-			close(original_stdin);
-			dup2(original_stdout, STDOUT_FILENO);
-			close(original_stdout);
+			// dup2(original_stdin, STDIN_FILENO);
+			// close(original_stdin);
+			// dup2(original_stdout, STDOUT_FILENO);
+			// close(original_stdout);
 			return (exit_status);
 		}
 	}

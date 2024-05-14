@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:16:16 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/13 10:06:00 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:01:19 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,34 @@
 ** if used without arguments it prints all env variables
 // bash: export: `var@=hello': not a valid identifier
 */
+int	ft_unset_for_export(char *var_name, t_env **env_list)
+{
+	t_env	*current;
+	t_env	*prev;
 
+
+	if (!env_list)
+		return (0);
+	current = *env_list;
+	while (current)
+	{
+		if (ft_strncmp(current->cmd_env, var_name,
+				ft_len_until_delimiter(current->cmd_env)) == 0)
+		{
+			if (prev == NULL)
+				*env_list = current->next;
+			else
+				prev->next = current->next;
+			free(current->cmd_env);
+			free(current);
+			return (0);
+		}
+		prev = current;
+		current = current->next;
+	}
+
+	return (0);
+}
 /*
 ** checks that there is at least one equal sign otherwise returns 1 to show err
 */
@@ -35,6 +62,7 @@ int	check_for_equal(char *str)
 	}
 	return (1);
 }
+// bash: export: `=moin': not a valid identifier
 
 int	ft_check_syntax(char *str)
 {
@@ -56,13 +84,18 @@ int	ft_check_syntax(char *str)
 		i++;
 	}
 	if (check_for_equal(str) == 1)
+	{
+		printf("%s: not a valid identifier\n", str);
 		return (1);
+	}
 	return (0);
 }
 
 int	ft_export(t_cmd *cmd, t_env **env_list)
 {
 	t_env	*temp;
+	int i = 1;
+	int exit_status = 0;
 
 	temp = *env_list;
 	if (cmd->cmd[1] == NULL)
@@ -73,13 +106,22 @@ int	ft_export(t_cmd *cmd, t_env **env_list)
 			printf("%s\n", temp->cmd_env);
 			temp = temp->next;
 		}
-		return (0);
+		return (exit_status);
 	}
-	if (ft_check_syntax(cmd->cmd[1]) == 0)
+	while(cmd->cmd[i] != NULL)
 	{
-		ft_unset(cmd, env_list);
-		insert_end(env_list, cmd->cmd[1]);
-		return (0);
+		if (ft_check_syntax(cmd->cmd[i]) != 0)
+		{
+			exit_status = 1;
+		}
+		else
+		{
+			ft_unset_for_export(cmd->cmd[i], env_list);
+			insert_end(env_list, cmd->cmd[i]);
+		}
+		i++;
 	}
-	return (1);
+	return (exit_status);
 }
+
+
