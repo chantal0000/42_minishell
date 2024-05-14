@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 09:51:46 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 10:42:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*check_for_quotes(char *s)
 			(*temp - 1) != '\\' && !in_single)
 			in_double = !in_double;
 		else if ((*temp == '|' || *temp == ' ' || *temp == '<' || \
-			*temp == '>' || *temp == '$') && (in_single || in_double))
+			*temp == '>') && (in_single || in_double))
 			ft_replace(temp);
 		temp++;
 	}
