@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 15:16:42 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 13:56:44 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ void	parse_for_echo(t_cmd *cmd_tree)
 	t_cmd	*temp;
 
 	temp = cmd_tree;
-//	printf("ok\n");
-//	printf("cmd[0] parse echo: %s\n", cmd_tree->cmd[0]);
-//	printf("cmd[1] parse echo: %s\n", cmd_tree->cmd[1]);
 	while (temp)
 	{
 		if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
 			temp->token = 'n';
-		else if (!ft_strcmp(temp->cmd[0], "echo") && ft_strcmp(temp->cmd[1], "-n"))
+		else if (!ft_strcmp(temp->cmd[0], "echo") && \
+			ft_strcmp(temp->cmd[1], "-n"))
 			temp->token = 'e';
 		else
 			temp = temp->next;
@@ -49,7 +47,6 @@ int	ft_echo(t_cmd *cmd)
 	int		num;
 	int		i;
 
-//	printf("in ft_echo\n");
 	if (!cmd)
 		return (1);
 	temp = cmd;
@@ -101,17 +98,14 @@ void	check_echo_flags(t_cmd *cmd)
 	i = 2;
 	j = 0;
 	count = 0;
-//	printf("in check_echo_flags\n");
-//	printf("cmd[0]: %s\n", cmd->cmd[0]);
-//	printf("cmd[1]: %s\n", cmd->cmd[1]);
 	while (temp)
 	{
 		count = ft_count(temp->cmd);
 		if (count > 1)
 		{
-			if ((temp->cmd[0] && !ft_strcmp(temp->cmd[0], "echo")) &&  (temp->cmd[1] && !ft_strcmp(temp->cmd[1], "-n")))
+			if ((temp->cmd[0] && !ft_strcmp(temp->cmd[0], "echo")) && \
+				(temp->cmd[1] && !ft_strcmp(temp->cmd[1], "-n")))
 			{
-//				i = 2;
 				j = 0;
 				while (temp->cmd[i] != NULL)
 				{
