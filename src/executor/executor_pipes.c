@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:17:22 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/13 16:38:05 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:32:30 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list)
 	if (node->pid == 0)
 	{
 		close(pipe_fd[0]);
-		exit_status = ft_is_builtin(node, &env_list, -1, -1);
+		exit_status = ft_is_builtin(node, &env_list);
 		if (exit_status != -1)
 			ft_exit_free(env_list, node, exit_status);
 		ft_start_exec(env_list, node);
@@ -85,7 +85,7 @@ int	ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list)
 	if (node->pid == 0)
 	{
 		close(pipe_fd[0]);
-		exit_status = ft_is_builtin(node, &env_list, -1, -1);
+		exit_status = ft_is_builtin(node, &env_list);
 		if (exit_status != -1)
 			ft_exit_free(env_list, node, exit_status);
 		ft_start_exec(env_list, node);
@@ -116,7 +116,7 @@ int	ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in, t_env *env_list)
 	if (node->pid == 0)
 	{
 		close(pipe_fd[0]);
-		exit_status = ft_is_builtin(node, &env_list, -1, -1);
+		exit_status = ft_is_builtin(node, &env_list);
 		if (exit_status != -1)
 			ft_exit_free(env_list, node, exit_status);
 		ft_start_exec(env_list, node);

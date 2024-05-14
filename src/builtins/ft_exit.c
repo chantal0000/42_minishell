@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/13 15:58:05 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:25:10 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_free_exit(t_cmd *cmd, t_env **env_list)
 	ft_free_env_list(env_list);
 }
 
-int	ft_exit(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdout)
+int	ft_exit(t_cmd *cmd, t_env **env_list)
 {
 	char	**exit_cmd;
 	int		i;
@@ -59,6 +59,7 @@ int	ft_exit(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdou
 	exit_cmd = cmd->cmd;
 	i = 0;
 	exit_status = 0;
+
 	if (exit_cmd[1] != NULL)
 	{
 		while (exit_cmd[1][i])
@@ -71,20 +72,15 @@ int	ft_exit(t_cmd *cmd, t_env **env_list, int original_stdin, int original_stdou
 				ft_handle_nodigi(cmd, *env_list);
 			i++;
 		}
+		if (exit_cmd[2] != NULL)
+		{
+			printf("minishell: exit: too many arguments\n");
+			return (1);
+		}
 		exit_status = ft_atoi(exit_cmd[1]);
 		ft_free_exit(cmd, env_list);
-		if (original_stdin > 3 || original_stdout > 3 )
-		{
-			close(original_stdin);
-			close(original_stdout);
-		}
 		exit (exit_status);
 	}
 	ft_free_exit(cmd, env_list);
-	if (original_stdin > 3 || original_stdout > 3 )
-	{
-		close(original_stdin);
-		close(original_stdout);
-	}
-	exit (EXIT_SUCCESS);
+	exit (0);
 }
