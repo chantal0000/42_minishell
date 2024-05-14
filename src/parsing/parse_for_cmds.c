@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 07:09:03 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 09:51:46 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	update_fd(*cmd);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
-	restore_pipes_and_spaces(*cmd);
+//	restore_pipes_and_spaces(*cmd);
 	if (*s != '\0')
 		error_general("check syntax");
 }
@@ -74,7 +74,7 @@ char	*check_for_quotes(char *s)
 			(*temp - 1) != '\\' && !in_single)
 			in_double = !in_double;
 		else if ((*temp == '|' || *temp == ' ' || *temp == '<' || \
-			*temp == '>') && (in_single || in_double))
+			*temp == '>' || *temp == '$') && (in_single || in_double))
 			ft_replace(temp);
 		temp++;
 	}
@@ -93,5 +93,7 @@ char	ft_replace(char *c)
 		*c = '\xD1';
 	else if (*c == '>')
 		*c = '\xA8';
+	else if (*c == '$')
+		*c = '\xAC';
 	return (*c);
 }
