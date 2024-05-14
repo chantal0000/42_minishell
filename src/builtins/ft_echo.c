@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 13:56:44 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:27:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	ft_write_echo(t_cmd *cmd, int num, int i)
 	{
 		while (i < num)
 		{
-			if (i < num - 1 && cmd->cmd[i])
+			if (!cmd->cmd[i])
+				return ;//seg faults if nothing following -n, should just return command line
+			else if (i < num - 1 && cmd->cmd[i])
 			{
 				ft_putstr_fd(cmd->cmd[i], 1);
 				ft_putchar_fd(' ', 1);

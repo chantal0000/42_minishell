@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 13:30:02 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 21:47:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,44 @@ char	*ft_strcpy(char *s1, char *s2)
 	}
 	s1[i] = '\0';
 	return (s1);
+}
+
+size_t	ft_strlcpy(char *dst, char *src, size_t size)
+{
+	size_t	i;
+	size_t	src_len;
+	
+	i = 0;
+	src_len = ft_strlen(src);
+	if (size != 0)
+	{
+		while (src[i] != '\0' && i < size - 1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		if (size > 0)
+			dst[i] = '\0';
+	}
+	return(src_len);
+}
+
+size_t	ft_strncat(char *dst, const char *src, size_t size)
+{
+	size_t	d;
+	size_t	dst_len;
+	size_t	src_len;
+
+	src_len = ft_strlen(src);
+	dst_len = ft_strlen(dst);
+	if (size <= dst_len)
+		return (size + src_len);
+	d = dst_len;
+	while (src[d = dst_len] && d < size - 1)
+	{
+		dst[d] = src[d - dst_len];
+		d++;
+	}
+	dst[d] = '\0';
+	return (dst_len + src_len);
 }

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 18:23:52 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 21:42:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_catdoc(t_cmd *cmd);
 char	*parse_line(char *arr);
 t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token);
 t_cmd	*parse_exec_cmds(char **s);
-void	token_echo_dollar(t_cmd *cmd);
+//void	token_echo_dollar(t_cmd *cmd);
 
 //parse_for_cmds.c
 void	parse_for_cmds(t_cmd **cmd, char *s);
@@ -104,7 +104,7 @@ void	parse_input(char *s);
 
 //parse_environ_variables.c
 int		ft_find_environ_name(char *s);
-int		find_dollar_sign(char *s);
+int		find_dollar_sign(t_cmd *cmd, char *s);
 char	*find_substitution(t_env *env, char *s, size_t cmd_len);
 char	*ft_variable(char *s, t_env *env, int *exit_status);
 char	*move_past_dollar(char *s);
@@ -149,6 +149,8 @@ char	*ft_strndup(const char *s, size_t n);
 char	**export_split(char	*s);
 void	parse_string(char *s);
 char	*ft_strcpy(char *s1, char *s2);
+size_t	ft_strlcpy(char *dst, char *src, size_t size);
+size_t	ft_strncat(char *dst, const char *src, size_t size);
 
 //heredoc.c
 //int	ft_strcmp(const char *s1, const char *s2);
