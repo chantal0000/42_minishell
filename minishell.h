@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 15:32:47 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:23:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		ft_find_environ_name(char *s);
 int		find_dollar_sign(char *s);
 char	*find_substitution(t_env *env, char *s, size_t cmd_len);
 char	*ft_variable(char *s, t_env *env, int *exit_status);
-void	move_past_dollar(char *s);
+char	*move_past_dollar(char *s);
 
 //parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
