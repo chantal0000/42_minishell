@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:14:08 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 11:18:48 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 17:25:03 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	error_general(char *str)
 	return ;
 }
 
-void	error_memory(char **arr, char *s)
+/*void	error_memory(char **arr, char *s)
 {
 	if (arr)
 		free_array(arr);
 	if (s)
 		free(s);
 	return ;
-}
+}*/

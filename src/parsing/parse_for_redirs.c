@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 11:40:18 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 15:58:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd_type)
 	{
 		node->fd_out = open(node->file_name, instructions, 0777);
 		check_access_and_fd(node, 0, node->fd_out);
+		node->fd_in = -1;
 	}
 	else if (!fd_type)
 	{

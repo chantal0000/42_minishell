@@ -30,6 +30,7 @@ void	print_stack(t_cmd *root)
 		printf("file_name: %s\n", temp->file_name);
 		printf("token: %c\n", temp->token);
 		printf("delimiter: %s\n", temp->heredoc_delimiter);
+		printf("token_env: %d\n", temp->token_env);
 //		for (int i = 0; i < MAX_CONTENT_SIZE && temp->heredoc_content[i] != NULL; i++)
 //		{
 //			printf("heredoc content [%d]: %s\n", i, temp->heredoc_content[i]);
@@ -51,8 +52,8 @@ void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
 	original_stdout = dup(STDOUT_FILENO);
 	original_stdin = dup(STDIN_FILENO);
 	parse_for_cmds(list, line);
-//	print_stack(*list);
 	parse_cmds_for_expansions(list, *env_list, exit_status);
+	print_stack(*list);
 	restore_pipes_and_spaces(*list);
 //	printf("\nafter expansions and restoration\n");
 	print_stack(*list);
@@ -85,6 +86,8 @@ char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)
 		{
 			add_history(line);
 			ft_execute(line, &list, env_list, exit_status);
+			ft_free_cmd_struct(list);
+//			free(list);
 			list = NULL;
 			return (line);
 		}
@@ -125,6 +128,10 @@ int	main(int argc, char **argv, char **env)
 		line = read_command(list, &env_list, &exit_status);
 	handle_exit(env_list, line);
 	free(list);
+	free (line);
+	free (env_list);
+	env_list = NULL;
 	list = NULL;
+	line = NULL;
 	return (exit_status);
 }
