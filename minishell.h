@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 07:15:04 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 17:27:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	print_stack(t_cmd *root);
 //delimiter.c
 int		find_delimiter(char *s1, char *delim);
 void	check_quotes(char *s);
+void	check_quotes_single(char *s);
+void	check_quotes_double(char *s);
 
 //find_tokens.c
 int		check_for_alligators(char **s);
@@ -86,6 +88,7 @@ void	ft_catdoc(t_cmd *cmd);
 char	*parse_line(char *arr);
 t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token);
 t_cmd	*parse_exec_cmds(char **s);
+void	token_echo_dollar(t_cmd *cmd);
 
 //parse_for_cmds.c
 void	parse_for_cmds(t_cmd **cmd, char *s);
@@ -102,7 +105,7 @@ int		ft_find_environ_name(char *s);
 int		find_dollar_sign(char *s);
 char	*find_substitution(t_env *env, char *s, size_t cmd_len);
 char	*ft_variable(char *s, t_env *env, int *exit_status);
-char	*move_past_dollar(char *s);
+void	move_past_dollar(char *s);
 
 //parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
@@ -211,4 +214,16 @@ void	ft_init_signals(void);
 void	ft_init_signals_input(void);
 void	ft_init_signals_heredoc(int sig);
 void	ft_ctrl_c_signals_input(int sig);
+
+//other
+int	is_varname(char c);
+char	*find_var_position(char *input);
+void	update_input(char **input, char *var_value, char *second_part);
+void	expand_variables(char **input, t_env *minienv);
+void	expand_exit_status(char **input, int exit_status);
+void	update_input(char **input, char *exit_code, char *second_part);
+//void	handle_expansions(char **input, int exit_status);
+char	*find_exit_status_position(char *input);
+char	*replace_var_exitcode(char *tok, int *i, int *exit_status);
+
 #endif

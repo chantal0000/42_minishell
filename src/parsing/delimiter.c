@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 15:00:00 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 14:34:29 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,32 +88,75 @@ int	find_delimiter(char *s1, char *delim)
 	free (temp);
 }*/
 
-void check_quotes(char *s) {
-    size_t i = 0;
-    size_t len = ft_strlen(s);
+/*void	check_echo_and_quotes(t_cmd *cmd)
+{}*/
 
-    if (!s || len < 2) // Check if string is valid and has at least two characters
-        return;
+void	check_quotes_single(char *s)
+{
+	size_t	i;
+	size_t	len;
+	size_t	new_len;
+	char	*temp;
 
-    if ((s[0] == '\'' && s[len - 1] == '\'') || (s[0] == '\"' && s[len - 1] == '\"')) {
-        if (s[i] == s[len - 1]) {
-            size_t new_len = len - 2; // Calculate length of the modified string
-            char *temp = (char *)ft_calloc(new_len + 1, sizeof(char)); // Allocate memory for the modified string
-            if (!temp)
-                return; // Allocation failed, return
+	len = ft_strlen(s);
+	if (!s || len < 2)
+		return ;
+	i = 0;
+	new_len = 0;
+	if ((s[0] == '\'' && s[len - 1] == '\''))
+	{
+		if (s[i] == s[len - 1])
+		{
+			new_len = len - 2;
+			temp = (char *)ft_calloc(new_len + 1, sizeof(char));
+			if (!temp)
+				return ;
+			while (i < new_len)
+			{
+				temp[i] = s[i + 1];
+				i++;
+			}
+			temp[i] = '\0';
+			ft_strcpy(s, temp);
+			free(temp);
+		}
+	}
+}
 
-            // Copy the content of s without the surrounding quotes to temp
-            while (i < new_len) {
-                temp[i] = s[i + 1];
-                i++;
-            }
-            temp[i] = '\0';
+void	check_quotes_double(char *s)
+{
+	size_t	i;
+	size_t	len;
+	size_t	new_len;
+	char	*temp;
 
-            // Copy the modified string back to s
-            strcpy(s, temp);
-
-            // Free the memory allocated for temp
-            free(temp);
-        }
-    }
+	len = ft_strlen(s);
+	if (!s || len < 2)
+		return ;
+	i = 0;
+	new_len = 0;
+	if ((s[0] == '\"' && s[len - 1] == '\"'))
+	{
+		if (s[i] == s[len - 1])
+		{
+			new_len = len - 2;
+			temp = (char *)ft_calloc(new_len + 1, sizeof(char));
+			if (!temp)
+				return ;
+			while (i < new_len)
+			{
+				temp[i] = s[i + 1];
+				i++;
+			}
+			temp[i] = '\0';
+			ft_strcpy(s, temp);
+			ft_restore(s);
+			free(temp);
+		}
+	}
+}
+void	check_quotes(char *s)
+{
+	check_quotes_double(s);
+	check_quotes_single(s);
 }

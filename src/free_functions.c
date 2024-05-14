@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 06:17:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:23:56 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_memory(char **arr)
 		return ;
 	while (arr[i] != NULL)
 	{
-		free(arr[i]);
+//		free(arr[i]);
 		i++;
 	}
 }
@@ -95,8 +95,8 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		next = current->next;
 		// free cmd string
 //		if (current->cmd)
-		if (cmd->token_env)
-			free_memory(current->cmd);
+//		if (cmd->token_env == 1)
+		free_memory(current->cmd);
 		if (current->file_name)
 		{
 			if (ft_strcmp(current->file_name, "/tmp/tempfile21008") == 0)
@@ -110,7 +110,7 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 //			free(current->heredoc_delimiter);
 		// if (current->heredoc_content)
 		// free_memory(current->heredoc_content);
-		free(current);
+//		free(current);
 		current = next;
 	}
 }
