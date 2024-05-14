@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 14:58:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 07:15:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token)
 		parse_line(cmd_tree->cmd[i]);
 //		cmd_tree->cmd[i] = check_quotes(cmd_tree->cmd[i]);
 		check_quotes(cmd_tree->cmd[i]);
+		check_in_cmd_array_for_quotes(cmd_tree->cmd[i]);
 //		cmd_tree->cmd[i] 
 //		free (temp);
 		i++;

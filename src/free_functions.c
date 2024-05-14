@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 12:55:51 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 06:17:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		next = current->next;
 		// free cmd string
 //		if (current->cmd)
-		free_memory(current->cmd);
+		if (cmd->token_env)
+			free_memory(current->cmd);
 		if (current->file_name)
 		{
 			if (ft_strcmp(current->file_name, "/tmp/tempfile21008") == 0)

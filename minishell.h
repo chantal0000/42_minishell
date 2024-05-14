@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 18:36:37 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 07:15:04 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_cmd
 	int		index;
 	t_env	*m_env;
 	int		token;
+	int		token_env;
 	char	*cmd[MAXARGS + 1];
 	char	*file_name;
 	int		instructions;
@@ -108,6 +109,10 @@ void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
 void	ft_heredoc(t_cmd *cmd, char *file_name);
 void	write_heredoc(char **heredoc_content, t_cmd *cmd, char *temp_file);
 char	*make_string(char **s);
+
+//parse_for_quotes_in_cmds.c
+void	remove_quotes(char *str);
+void	check_in_cmd_array_for_quotes(char *s);
 
 //parse_for_redir.c
 t_cmd	*parse_for_redirections(t_cmd *node, char **s);

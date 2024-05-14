@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/13 07:06:43 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/14 07:10:42 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = 	src/main.c \
 		src/parsing/parse_for_cat.c \
 		src/parsing/parse_for_cmds.c \
 		src/parsing/parse_for_heredocs.c \
+		src/parsing/parse_for_quotes_in_cmds.c \
 		src/parsing/parse_for_redirs.c \
 		src/parsing/parse_pipes.c \
 		src/free_functions.c \
@@ -49,15 +50,15 @@ LIBFT = libft/libft.a
 CC = cc
 OBJS = $(SRCS:.c=.o)
 #LINUX
-CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
-COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
-LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
+CFLAGS = -Wall -Wextra -Werror -ggdb3 -fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
+#COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+#LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
 #CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
 #CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
-#COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
-#LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
+COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
+LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
 
 all: $(NAME)
 
