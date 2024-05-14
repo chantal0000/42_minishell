@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:20:46 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:47 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 18:27:23 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_cmd	*init_exec_cmds(t_cmd *cmd_tree, char **s, char *non_token)
 		if (token == 0)
 			break ;
 		cmd_tree->token = token;
-		cmd_tree->cmd[i] = ft_strdup(non_token);
+		cmd_tree->cmd[i] = non_token;
 		if (!cmd_tree->cmd[i])
 		{
 			free_memory(s);
@@ -80,3 +80,4 @@ t_cmd	*parse_exec_cmds(char **s)
 	}
 	return (cmd_tree);
 }
+
