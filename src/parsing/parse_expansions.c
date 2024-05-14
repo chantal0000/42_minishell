@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 17:58:19 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 06:21:15 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
 {
 	t_cmd	*temp;
 	int		i;
-	char	*string;
 
 	if (!cmd || !*cmd)
 		return ;
 	temp = *cmd;
-	string = NULL;
 	while (temp)
 	{
 		i = 0;
@@ -29,8 +27,9 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
 		{
 			if (find_dollar_sign(temp->cmd[i]))
 			{
+				temp->token_env = 1;
 				split_on_dollar(&temp->cmd[i], env, exit_status);
-				printf("temp->cmd[i]: %s\n", temp->cmd[i]);
+//				printf("temp->cmd[i]: %s\n", temp->cmd[i]);
 			}
 			i++;
 		}
@@ -51,7 +50,6 @@ void split_on_dollar(char **s, t_env *env, int *exit_status)
 		if (!temp)
 			return ;
 		*s = temp;
-//		free (temp);
 	}
 	else
 	{
@@ -70,7 +68,6 @@ void split_on_dollar(char **s, t_env *env, int *exit_status)
 		if (!new_str)
 			return ;
 		*s = new_str;
-//		free(new_str);
 	}
 }
 

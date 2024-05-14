@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 18:30:34 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/14 06:04:11 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 int	g_signal;
 
-void	print_stack(t_cmd *root)
+/*void	print_stack(t_cmd *root)
 {
 	t_cmd	*temp;
 
@@ -41,7 +41,7 @@ void	print_stack(t_cmd *root)
 		}
 		temp = temp -> next;
 	}
-}
+}*/
 
 void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
 {
@@ -52,7 +52,7 @@ void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
 	// original_stdin = dup(STDIN_FILENO);
 	parse_for_cmds(list, line);
 	parse_cmds_for_expansions(list, *env_list, exit_status);
-	print_stack(*list);
+//	print_stack(*list);
 	*exit_status = ft_executor(*list, env_list);
 	// dup2(original_stdin, STDIN_FILENO);
 	// close(original_stdin);

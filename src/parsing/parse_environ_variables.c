@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 18:26:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 06:23:43 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,27 @@ char	*move_past_dollar(char *s)
 	char	*str;
 	int		i;
 	int		j;
+	int		len;
 
 
 	i = 0;
 	j = 0;
-	str = (char *)malloc(sizeof(char)* (ft_strlen(s) + 1));
-	if (!str)
-		return (NULL);
-	while (s[i] != '\0')
+	len = ft_strlen(s);
+	str = s;
+	if (len > 1)
 	{
-		if (s[i] == '$')
+		str = (char *)malloc(sizeof(char)* (ft_strlen(s) + 1));
+		if (!str)
+			return (NULL);
+		while (s[i] != '\0')
+		{
+			if (s[i] == '$')
+				i++;
+			str[j] = s[i];
 			i++;
-		str[j] = s[i];
-		i++;
-		j++;
+			j++;
+		}
+		str[j] = '\0';
 	}
-	str[j] = '\0';
 	return (str);
 }
