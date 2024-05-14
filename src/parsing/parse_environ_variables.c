@@ -6,12 +6,14 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 18:28:30 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 21:57:10 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+//this function iterates through the nodes searching for the 
+//'=' sign and then returns the length of string before '='.
 //this function iterates through the nodes searching for the 
 //'=' sign and then returns the length of string before '='.
 int	ft_find_environ_name(char *s)
@@ -25,12 +27,19 @@ int	ft_find_environ_name(char *s)
 }
 
 //function looks for $, returns 1 if found
-int	find_dollar_sign(char *s)
+int	find_dollar_sign(t_cmd *cmd, char *s)
 {
+	t_cmd	*temp;
+
+	temp = cmd;
 	while (*s != '\0' && *s != '$')
 		s++;
 	if (*s == '$')
+	{
+		if (!ft_strcmp((s + 1), "?"))
+			temp->token_env = '?';
 		return (1);
+	}
 	return (0);
 }
 
