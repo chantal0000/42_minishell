@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 20:41:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/15 16:51:23 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
 	original_stdout = dup(STDOUT_FILENO);
 	original_stdin = dup(STDIN_FILENO);
 	parse_for_cmds(list, line);
-	parse_cmds_for_expansions(list, *env_list, exit_status);
 //	print_stack(*list);
+	parse_cmds_for_expansions(list, *env_list, exit_status);
 	restore_pipes_and_spaces(*list);
 //	printf("\nafter expansions and restoration\n");
 //	print_stack(*list);
