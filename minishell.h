@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 21:42:17 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/15 16:34:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void	free_env(char	**env);
 void	ft_free_env_list(t_env **env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
 void	free_cmdtree(t_cmd *tree);
+void	free_arr(char **arr);
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 21:56:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/15 16:50:01 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,32 +37,62 @@ void split_on_dollar(char **s, t_env *env, int *exit_status)
 	char	**arr;
 	char	*temp;
 	char	*new_str;
+	int		count;
+	int		i;
 
+	i = 0;
 	new_str = NULL;
+	count = 0;
 	if (**s == '$')
 	{
 		temp = find_and_substitute(*s, env, exit_status);
-		if (!temp)
-			return ;
-		*s = temp;
+		if (temp)
+		{
+			free(*s);
+			*s = temp;
+		}
 	}
 	else
 	{
 		arr = ft_split(*s, '$');
 		if (!arr)
 			return ;
-		temp = find_and_substitute(arr[1], env, exit_status);
-		if (!temp)
+		count = ft_count(arr);
+		while (arr[i + 1] != NULL)
 		{
-			free_memory(arr);
-			return ;
+			temp = find_and_substitute(arr[i + 1], env, exit_status);
+			if (!temp)
+			{
+				free_memory(arr);
+				return ;
+			}
+			if (new_str == NULL)
+			{
+				new_str = ft_strjoin(arr[i], temp);
+				if (!new_str)
+				{
+					free_memory(arr);
+					free (temp);
+					return ;
+				}
+			}
+			else
+			{
+				new_str = ft_strjoin(new_str, temp);	
+				if (!new_str)
+				{
+					free_memory(arr);
+					free(new_str);
+					free (temp);
+					return ;
+				}
+			}
+			free(temp);
+			i++;
 		}
-		new_str = ft_strjoin(arr[0], temp);
-		free(temp);
-		free_memory(arr);
-		if (!new_str)
-			return ;
+//		free_memory(arr);
 		*s = new_str;
+		free(new_str);
 	}
 }
 
@@ -81,3 +111,18 @@ char	*find_and_substitute(char *s, t_env *env, int *exit_status)
 		free (string);
 	return (temp);
 }
+
+
+/*void	free_arr(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	if (!*arr || !arr)
+		return ;
+	while (arr[i] != NULL)
+	{
+//		free(arr[i]);
+		i++;
+	}
+}*/

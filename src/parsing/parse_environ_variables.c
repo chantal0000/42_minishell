@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 21:57:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/15 13:13:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ char	*ft_variable(char *s, t_env *env, int *exit_status)
 	if (*(s) == '?')
 	{
 		result = ft_itoa(*exit_status);
-		free (s);
 		return (result);
 	}
 	cmd_len = ft_strlen(s);
@@ -95,7 +94,7 @@ char	*ft_variable(char *s, t_env *env, int *exit_status)
 	return (result);
 }
 
-char	*move_past_dollar(char *s)
+/*char	*move_past_dollar(char *s)
 {
 	char	*str;
 	int		i;
@@ -123,4 +122,15 @@ char	*move_past_dollar(char *s)
 		str[j] = '\0';
 	}
 	return (str);
+}*/
+
+char	*move_past_dollar(char *s)
+{
+	char	*str;
+
+	if (!s || *s != '$')
+		return (s);
+	str = s + 1;
+	return (str);		
 }
+
