@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 20:27:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/15 21:11:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ void	parse_for_echo(t_cmd *cmd_tree)
 	temp = cmd_tree;
 	while (temp)
 	{
-		if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
-			temp->token = 'n';
-		else if (!ft_strcmp(temp->cmd[0], "echo") && \
-			ft_strcmp(temp->cmd[1], "-n"))
-			temp->token = 'e';
-		else
-			temp = temp->next;
+		if (temp->cmd[0] && !ft_strcmp(temp->cmd[0], "echo"))
+		{
+			if (temp->cmd[1] && !ft_strcmp(temp->cmd[1], "-n"))
+				temp->token = 'n';
+			else
+				temp->token = 'e';
+		}
+		temp = temp->next;
 	}
 }
 
@@ -47,8 +48,6 @@ int	ft_echo(t_cmd *cmd)
 	int		num;
 	int		i;
 
-	if (!cmd)
-		return (1);
 	temp = cmd;
 	check_echo_flags(temp);
 	num = ft_count(temp->cmd);
@@ -65,7 +64,7 @@ int	ft_echo(t_cmd *cmd)
 void	ft_write_echo(t_cmd *cmd, int num, int i)
 {
 	check_quotes(cmd->cmd[i]);
-	if (i == num - 1 && cmd->cmd[i])
+	if (cmd->cmd[i] && i == num - 1 && cmd->cmd[i])
 		ft_putstr_fd(cmd->cmd[i], 1);
 	else
 	{
@@ -114,7 +113,6 @@ void	check_echo_flags(t_cmd *cmd)
 					if (!ft_strcmp(temp->cmd[i], "-n"))
 						j++;
 					else
-//						temp->cmd[i - j] = ft_strdup(temp->cmd[i]);
 						temp->cmd[i - j] = temp->cmd[i];
 					i++;
 				}
