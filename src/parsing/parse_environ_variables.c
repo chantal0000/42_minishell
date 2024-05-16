@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/15 20:44:54 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/16 12:29:15 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ char	*ft_variable(char *s, t_env *env, int *exit_status)
 	var_exp = NULL;
 	result = NULL;
 	if (*(s) == '?')
-	{
-		result = ft_itoa(*exit_status);
-		return (result);
-	}
+		return (ft_itoa(*exit_status));
 	cmd_len = ft_strlen(s);
 	var_exp = find_substitution(env, s, cmd_len);
 	if (var_exp == NULL)
@@ -90,8 +87,9 @@ char	*ft_variable(char *s, t_env *env, int *exit_status)
 	result = ft_strjoin(var_exp, s + cmd_len);
 	if (!result)
 		return (NULL);
-	free (s);
-	return (result);
+	s = result;
+	free (result);
+	return (s);
 }
 
 char	*move_past_dollar(char *s)
@@ -101,6 +99,6 @@ char	*move_past_dollar(char *s)
 	if (!s || *s != '$')
 		return (s);
 	str = s + 1;
-	return (str);		
+	return (str);
 }
 

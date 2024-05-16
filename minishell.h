@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/15 16:34:13 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/16 12:20:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);
 void	split_on_dollar(char **s, t_env *env, int *exit_status);
 char	*find_and_substitute(char *s, t_env *env, int *exit_status);
 void	free_array(char **arr);
+char	*make_new_str(char **arr, char * new_str, char *temp);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
@@ -152,9 +153,11 @@ void	parse_string(char *s);
 char	*ft_strcpy(char *s1, char *s2);
 size_t	ft_strlcpy(char *dst, char *src, size_t size);
 size_t	ft_strncat(char *dst, const char *src, size_t size);
+void	ft_putstr(char *s);
 
-//heredoc.c
-//int	ft_strcmp(const char *s1, const char *s2);
+
+char	*ft_run_sub(char **arr, t_env *env, int *exit_status);
+
 
 // Executer | executer.c
 //void	ft_executor(t_cmd *node);
@@ -196,11 +199,10 @@ int		ft_env(t_cmd *cmd, t_env **env_list);
 int		ft_cd(t_cmd *cmd);
 
 //ft_echo.c
-void	parse_for_echo(t_cmd *cmd_tree);
+
 int		ft_count(char **arr);
 int		ft_echo(t_cmd *cmd);
-void	ft_write_echo(t_cmd *cmd, int num, int i);
-void	check_echo_flags(t_cmd *cmd);
+void	ft_write_echo(char **arr, int i);
 
 //builtins/exit.c
 int		ft_exit(t_cmd *cmd, t_env **env_list);
@@ -210,7 +212,7 @@ int		ft_pwd(void);
 int		ft_export(t_cmd *cmd, t_env **env_list);
 void	insert_end(t_env **head, char *line);
 int		ft_unset(t_cmd *cmd, t_env **env_list);
-int	ft_len_until_delimiter(char *str);
+int		ft_len_until_delimiter(char *str);
 
 int		ft_handle_error_export(t_cmd *cmd);
 int		ft_handle_error_cd(t_cmd *cmd);
