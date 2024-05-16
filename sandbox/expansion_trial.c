@@ -1,444 +1,320 @@
-
-# include <stdio.h>
-
-//# include <readline/readline.h>
-//# include <readline/history.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-//# include <fcntl.h>
-//# include "libft/libft.h"
-
-typedef struct s_exp t_exp;
-void	parse_string(char *s);
-void ft_find_var_declarations(char **s, t_exp **exp);
-void	free_memory(char **arr);
-char	**fill_array(char **arr, char **s, char *end);
-int 	check_for_breaks(char **line) ;
-void	quote_work(char *ptr, int *in_single, int *in_double);
-
-typedef struct s_exp
-{
-	char	*exp_name;
-	char	*exp_value;
-	t_exp	*next;
-}	t_exp;
-
-int	is_token(char s)
-{
-	char	*tokens;
-
-	tokens = "|<>()";
-	if (strchr(tokens, s))
-		return (1);
-	return (0);
-}
-
-int	is_whitespace(char s)
-{
-	char	*whitespace;
-
-	whitespace = " \n\t\r\v";
-	if (strchr(whitespace, s))
-		return (1);
-	return (0);
-}
-char	*check_for_quotes(char *s)
-{
-	int		in_single;
-	int		in_double;
-	char	*ptr;
-	char	*temp;
-
-	if (!s)
-	{
-		printf("string is empty");
-		return (NULL);
-	}
-	in_single = 0;
-	in_double = 0;
-	ptr = strdup(s);
-	if (!ptr)
-		return (NULL);
-	quote_work(ptr, &in_single, &in_double);
-	if (in_single || in_double)// == -1)
-	{
-		printf("open quotes found, can't parse\n");
-		free (ptr);
-		return (NULL);
-	}
-	return (ptr);
-}
-
-void	quote_work(char *ptr, int *in_single, int *in_double)
-{
-	char *temp;
-
-	temp = ptr;
-	while (*temp)
-	{
-		if (*temp == '\'' && (*temp - 1) != '\\' && !(*in_double))
-			*in_single = !(*in_single);
-		else if (*temp == '\"' && (*temp - 1) != '\\' && !(*in_single))
-			*in_double = !(*in_double);
-		else if (*temp == '|' && (in_single || in_double))
-			*temp = '\xFD';
-		else if (*temp == ' ' && (in_single || in_double))
-			*temp =  '\xFE';
-		temp++;
-	}
-}
-
-void	check_for_var(char **line, t_exp **exp)
+int	ft_find_environ_name(char *s)
 {
 	int		i;
-	char	*temp;
 
 	i = 0;
-	printf("temp after quotes: %s\n", temp);
-	if (strchr(*line, '='))
-	{
-		while (*line && **line == ' ')
-			(*line)++;
-		if (**line == '\'' || **line == '\"')
-		{
-			printf("found quotes\n");
-			return ;
-		}
-		while ((*line)[i] != '\0')
-		{
-			if ((*line)[i] == '=')
-				break ;
-			else if (is_token((*line)[i]))
-			{
-				printf("Token found before '='\n");
-				return ;
-			}
-			i++;
-		}
-		ft_find_var_declarations(line, exp);
-	}
-//	parse_string(*line);
+	while (s[i] != '\0' && s[i] != '=' && s[i] != '\n')
+		i++;
+	return (i);
 }
 
-void	restore_exp(t_exp *exp)
-//void	restore_pipes_and_spaces(t_cmd *cmd)
+char	*extract_variable_name(char *s)
 {
-	int		i;
-	t_cmd	*temp;
-
-	i = 0;
-	temp = cmd;
-	while (temp)
-	{
-		while (temp->cmd[i])
-		{
-			ft_restore(temp->cmd[i]);
-			i++;
-		}
-		temp = temp->next;
-	}
-}
-
-void	ft_restore(char *s)
-{
-	if (!s)
-		return ;
-	while (*s)
-	{
-		if (*s == '\xFD')
-			*s = '|';
-		if (*s == '\xFE')
-			*s = ' ';
-		s++;
-	}
-}
-
-int check_for_breaks(char **line) //1 if space found
-{
-	char	*temp;
-
-	temp = *line;
-	while (*temp != '\0')
-	{
-		if (is_whitespace(*temp))//white space is found
-		{
-			temp = strchr(temp, ' ');
-			(*line) = temp;
-			return (1);
-		}
-		temp++;
-	}
-	return (0);
-}
-
-t_exp	*insert_exp(t_exp *head, char *name, char *value)
-{
-	t_exp	*new_node;
-	t_exp	*temp;
-
-	new_node = (t_exp *)calloc(1, sizeof(t_exp));
-	if (!new_node)
-		return (NULL);
-	new_node->exp_name = strdup(name);
-	new_node->exp_value = strdup(value);
-	new_node->next = NULL;
-	if(!head)
-		return (new_node);
-	temp = head;
-	while (temp->next != NULL)
-		temp = temp->next;
-	temp->next = new_node;
-	return (head);
-}
-
-char	*check_quotes_var(char **s)
-{
-	size_t		len;
-	char		*temp;
-	size_t		i;
-
-	i = 0;
-	len = strlen(*s);
-	temp = *s;
-	if ((temp[0] == '\'' && temp[len - 1] == '\'') || (temp[0] == '\"' && temp[len - 1] == '\"'))
-	{
-		printf("quotes found\n");
-		temp = (char *)malloc(sizeof(char) * (len - 2));
-		if (!temp)
-		{
-			printf("problems mem alloc checkquotes");
-			exit (1);
-		}
-		while (i < len - 2)
-		{
-			temp[i] = (*s)[i + 1];
-			i++;
-		}
-		temp[i] = '\0';
-		free(*s);
-//		*s = strdup(temp);
-//		free (temp);
-	}
-	return (temp);
-}
-
-char	**shell_split(char **s, char delimiter)
-{
-	char	**arr;
 	char	*end;
 
-	arr = (char **)calloc(3, sizeof(char *));
-	if (!arr)
-	{
-		printf("problems allocating mem in export split\n");
-		exit (1);
-	}
-	end = *s;
-	while (*end != '\0' && *end != delimiter)
+	if (!s || *s == '\0')
+		return (NULL);
+	end = NULL;
+	while (valid_char(*end))
 		end++;
-	if (*end == delimiter)
-		arr = fill_array(arr, s, end);
-	return (arr);
-}
-/*char	*parse_line(char *arr)
-{
-	int		i;
-	char	*temp;
-
-	i = 0;
-	if (!arr)
+	if (end == s)
 		return (NULL);
-	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
-		i++;
-	temp = (char *)malloc(sizeof(char) * (i + 1));
-	if (!temp)
-		return (NULL);
-	i = 0;
-	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
-	{
-		temp[i] = arr[i];
-		i++;
-	}
-	temp[i] = '\0';
-	free (arr);
-	return (temp);
-}*/
-
-char	*parse_line(char *arr)
-{
-	int	i;
-
-	if (!arr)
-		return (NULL);
-	i = 0;
-	while (arr[i] != '\0' && (!is_whitespace(arr[i]) && !is_token(arr[i])))
-		i++;
-	arr[i] = '\0';
-	return (arr);
+	return (ft_strndup(s, end - s));
 }
 
-char	**fill_array(char **arr, char **s, char *end)
+//function looks for $, returns 1 if found
+int	find_dollar_sign(t_cmd *cmd, char *s)
 {
-	char	*var_end;
+	t_cmd	*temp;
 
-	arr[0] = strndup(*s, end - *s);
-	if (!arr[0])
+	temp = cmd;
+	while (*s != '\0' && *s != '$')
+		s++;
+	if (*s == '$')
 	{
-		free(arr);
-		printf("problems mem alloc in ex split");
-		exit (1);
+		if (!ft_strcmp((s + 1), "?"))
+			temp->token_env = '?';
+		return (1);
 	}
-	var_end = end;
-	while (*var_end != ' ' && *var_end != '\0' && *var_end != '|')
-		var_end++;
-	arr[1] =strdup(end + 1);
-	if (!arr[1])
-	{
-		free (arr[0]);
-		free (arr);
-//		free_memory(arr);
-		printf("problems mem alloc in ex split");
-		exit (1);
-	}
-	*s = var_end;
-	arr[2] = NULL;
-	arr[1] = parse_line(arr[1]);
-	arr[1] = check_quotes_var(&arr[1]);
-	return (arr);
+	return (0);
 }
 
-/*void	parse_string(char *s)
+int	valid_char(char c)
+{
+	return (isalnum(c) || (c == '_'));
+}
+
+int valid_variable(char *s)
 {
 	char	*temp;
 
+	if (s == NULL || *s == '\0' || (!ft_isalpha(*s) && *s != '_'))
+		return (0);
 	temp = s;
-	if (*temp != '\0')
+	while (*temp != '\0')
 	{
-		while (*temp != '\0')
-		{
-			if (*temp != '\0' && is_whitespace(*temp))
-			{
-//				printf("open heredoc?\n");//check what bash returns
-				return ;
-			}
-			temp++;
-		}
-	}
-	s = temp;
-}*/
-
-void	ft_find_var_declarations(char **s, t_exp **exp)
-{
-	int		i;
-	int		j;
-	char	**arr;
-	char	*temp;
-
-	i = 0;
-	temp = *s;
-	while (*temp != '\0' && is_whitespace(*temp))
+		if (!valid_char(*temp))
+			return (0);
 		temp++;
-	while (temp[i] != '\0')
-	{
-		if (temp[i] == '=')
-		{
-			j = i - 1;
-			while (j >= 0 && (temp[j] == ' '))
-				j--;
-			if (j >= 0)
-			{
-//				temp = check_quotes_var(&temp);//need to chek for quotes
-				if (check_for_breaks(&temp) == 0)
-				{
-					printf("string after break: %s\n", temp);
-					arr = shell_split(&temp, '=');
-					if (!arr)
-					{
-						printf("problems splitting shell in exp finder\n");
-						exit (0);
-					}
-					printf("string in shell split after split 2: %s\n", temp);
-					*exp = insert_exp(*exp, arr[0], arr[1]);
-					free(arr[0]);
-					free(arr[1]);
-					free(arr);
-					*s = temp;
-				}
-				else
-					*s = temp;
-			}
-		}
-		i++;
 	}
+	return (1);
+	
 }
-void	print_exp(t_exp *exp)
-{
-	t_exp	*temp;
 
-	temp = exp;
+char *ft_strappend(char *orig, const char *add) {
+    char *new_str = ft_strjoin(orig, add);
+    free(orig);
+    return new_str;
+}
+
+//function iterates through environment struct looking for a match
+//when match is found, it copies everything after the '=' on from 
+//environment
+/*char	*find_substitution(t_env *env, char *s, size_t cmd_len)
+{
+	t_env	*temp;
+	size_t	var_len;
+	char	*var_exp;
+
+	temp = env;
+	var_exp = NULL;
+	var_len = 0;
 	while (temp)
 	{
-		printf("exp name: %s\n", temp->exp_name);
-		printf("exp value: %s\n", temp->exp_value);
+		var_len = ft_find_environ_name(temp->cmd_env);
+		if (ft_strncmp(s, temp->cmd_env, cmd_len) == 0 && var_len == cmd_len)
+		{
+			var_exp = temp->cmd_env + var_len + 1;
+			break ;
+		}
+		temp = temp->next;
+	}
+	return (var_exp);
+}*/
+
+char *find_substitution(t_env *env, char *s, size_t cmd_len) {
+    t_env *temp = env;
+    while (temp) {
+        size_t var_len = ft_find_environ_name(temp->cmd_env);
+        if (var_len == cmd_len && strncmp(s, temp->cmd_env, var_len) == 0) {
+            return temp->cmd_env + var_len + 1;  // Return the value part of "VAR=value"
+        }
+        temp = temp->next;
+    }
+    return NULL;  // Not found
+}
+
+//this function copies the environment into the command array 
+//it copies everything beyond the '='
+/*char	*ft_variable(char *s, t_env *env, int *exit_status)
+{
+	size_t	cmd_len;
+	char	*result;
+	char	*var_exp;
+
+	var_exp = NULL;
+	result = NULL;
+	if (*(s) == '?')
+		return (ft_itoa(*exit_status));
+	cmd_len = ft_strlen(s);
+	var_exp = find_substitution(env, s, cmd_len);
+	if (var_exp == NULL)
+		return (ft_strdup(""));
+	result = ft_strjoin(var_exp, s + cmd_len);
+	if (!result)
+		return (NULL);
+	s = result;
+	free (result);
+	return (s);
+}*/
+
+char *ft_variable(char *s, t_env *env, int *exit_status) {
+    // If the variable is special case `$?`, return its value immediately.
+    if (*s == '?') {
+        return ft_itoa(*exit_status);
+    }
+
+    // Calculate the length of the variable name.
+    size_t cmd_len = ft_strlen(s);
+
+    // Attempt to find the environment variable.
+    char *variable_value = find_substitution(env, s, cmd_len);
+
+    // If not found, return an empty string.
+    if (variable_value == NULL) {
+        return ft_strdup("");
+    }
+
+    // Return a copy of the found value to ensure memory safety.
+    return ft_strdup(variable_value);
+}
+
+char	*move_past_dollar(char *s)
+{
+	char	*str;
+
+	if (!s || *s != '$')
+		return (s);
+	str = s + 1;
+	return (str);
+}
+
+void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
+{
+	t_cmd	*temp;
+	int		i;
+
+	if (!cmd || !*cmd)
+		return ;
+	temp = *cmd;
+	while (temp)
+	{
+		i = 0;
+		while (temp->cmd[i] != NULL)
+		{
+			if (find_dollar_sign(temp, temp->cmd[i]))
+				split_on_dollar(&temp->cmd[i], env, exit_status);
+			i++;
+		}
 		temp = temp->next;
 	}
 }
 
-void	free_memory(char **arr)
+/*void split_on_dollar(char **s, t_env *env, int *exit_status)
 {
-	int	i;
+	char	**arr;
+	char	*temp;
+	char	*new_str;
+	int		i;
 
 	i = 0;
-	if (!*arr || !arr)
-		return ;
-	while (arr[i] != NULL)
+	new_str = NULL;
+	if (**s == '$')
 	{
-		free(arr[i]);
-		i++;
+		temp = find_and_substitute(*s, env, exit_status);
+		if (temp)
+			*s = temp;
 	}
-	// free(arr);
-}
-
-void	free_exp(t_exp *exp)
-{
-	t_exp	*temp;
-	if (!exp)
-		return ;
-	while (exp)
+	else
 	{
-		temp = exp;
-		if (temp->exp_name)
-			free(temp->exp_name);
-		if (temp->exp_value)
-			free (temp->exp_value);
-		exp = exp->next;
+		arr = ft_split(*s, '$');
+		if (!arr)
+			return ;
+		while (arr[i] != NULL)
+		{
+			temp = ft_run_sub(&arr[i], env, exit_status);
+			if (!temp)
+			{
+				free_memory(arr);
+				return ;
+			}
+			else
+				new_str = make_new_str(arr, new_str, temp);
+			free(temp);
+			i++;
+		}
+		*s = new_str;
+		free(new_str);
 	}
-	free (exp);
+}*/
+
+
+void split_on_dollar(char **s, t_env *env, int *exit_status) {
+    char *result = NULL;
+    char *cur = *s;
+    char *part_start = cur;
+    char *temp;
+
+    while (*cur) {
+        if (*cur == '$') {
+            // Copy text before '$'
+            temp = strndup(part_start, cur - part_start);
+            result = ft_strappend(result, temp);
+            free(temp);
+
+            char *var_name = extract_variable_name(cur + 1);
+            if (var_name) {
+                char *value = ft_variable(var_name, env, exit_status);
+                result = ft_strappend(result, value);
+                free(value);
+                cur += strlen(var_name) + 1;  // Skip past the variable name
+                free(var_name);
+            } else {
+                // No valid variable name, treat '$' as literal
+                result = ft_strappend(result, "$");
+                cur++;  // Move past the '$'
+            }
+            part_start = cur;  // Update the start of the next part
+        } else {
+            cur++;
+        }
+    }
+
+    // Append any remaining part of the string after the last '$'
+    if (cur != part_start) {
+        temp = strndup(part_start, cur - part_start);
+        result = ft_strappend(result, temp);
+        free(temp);
+    }
+
+    free(*s);  // Free the original string
+    *s = result;  // Update the original string pointer to the new string
 }
 
-int	main()
+char	*ft_run_sub(char **arr, t_env *env, int *exit_status)
 {
-	static char	*line = "  ccvar='123  ls'";
-	t_exp	*exp;
+	char	*temp;
+	char 	*new_str;
+	int		i;
 
-	exp = NULL;
-	line = check_for_quotes(line);
-//	check_for_var(&line, &exp);
-	printf("string in main: %s\n", line);
-	printf("string len: %lu\n", strlen(line));
-	if (strlen(line) > 0)
-
-		printf("command found\n");
-	if (exp)
-		print_exp(exp);
-	restore_exp(exp);
-	printf(after\n);
-	if (exp)
-		print_exp(exp);
-	free_exp(exp);
-	if (exp)
-		free (exp);
-	return (0);
+	i = 0;
+	new_str = NULL;
+	temp = find_and_substitute(arr[i + 1], env, exit_status);
+	if (!temp)
+	{
+		free_memory(arr);
+		return (NULL);
+	}
+	if (new_str == NULL)
+	{
+		new_str = ft_strjoin(arr[i], temp);
+		if (!new_str)
+		{
+			free_memory(arr);
+			free (temp);
+			return (NULL);
+		}
+	}
+	return (new_str);
 }
+
+char	*make_new_str(char **arr, char *new_str, char *temp)
+{
+	new_str = ft_strjoin(new_str, temp);
+	if (!new_str)
+	{
+		free_memory(arr);
+		free(new_str);
+		free (temp);
+		return (NULL);
+	}
+	return (new_str);
+}
+
+char	*find_and_substitute(char *s, t_env *env, int *exit_status)
+{
+	char	*string;
+	char	*temp;
+	char	*temp1;
+
+	temp = s;
+	temp1 = move_past_dollar(temp);
+	string = ft_variable(temp1, env, exit_status);
+	if (string && *string != '\0')
+		temp = string;
+	else
+		free (string);
+	return (temp);
+}
+
+
