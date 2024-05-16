@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/16 12:20:48 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/16 17:07:39 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int		find_dollar_sign(t_cmd *cmd, char *s);
 char	*find_substitution(t_env *env, char *s, size_t cmd_len);
 char	*ft_variable(char *s, t_env *env, int *exit_status);
 char	*move_past_dollar(char *s);
+char *extract_variable_name(char *s);
 
 //parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);

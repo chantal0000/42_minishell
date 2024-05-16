@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/16 12:24:44 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/16 17:30:08 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,3 +125,22 @@ char	*find_and_substitute(char *s, t_env *env, int *exit_status)
 		free (string);
 	return (temp);
 }
+/*char *extract_variable_name(char *s) {
+    char *start = s;
+    if (!s || (*s != '_' && !isalpha(*s))) {
+        return NULL;  // Not a valid start for a variable name
+    }
+
+    while (*s && (isalnum(*s) || *s == '_')) {
+        s++;
+    }
+
+    // Allocate a new string for the variable name
+    int len = s - start;
+    char *var_name = (char *)malloc(len + 1);
+    if (var_name) {
+        strncpy(var_name, start, len);
+        var_name[len] = '\0';
+    }
+    return var_name;
+}*/
