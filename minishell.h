@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:23:21 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:38:57 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,13 @@ extern int	g_signal;
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
 
-typedef struct	s_env
+typedef struct s_minishell {
+	t_env	*env_list;
+	int		og_stdin;
+	int		og_stdout;
+}	t_minishell;
+
+typedef struct s_env
 {
 	char	*cmd_env;
 	t_env	*next;
@@ -56,9 +62,6 @@ typedef struct s_cmd
 	t_cmd	*prev;
 	t_cmd	*next;
 	char	*heredoc_delimiter;
-	int		og_stdin;
-	int		og_stdout;
-	// char	*heredoc_content[MAX_CONTENT_SIZE + 1];
 }	t_cmd;
 
 // TESTING
@@ -109,7 +112,6 @@ int		find_dollar_sign(t_cmd *cmd, char *s);
 char	*find_substitution(t_env *env, char *s, size_t cmd_len);
 char	*ft_variable(char *s, t_env *env, int *exit_status);
 char	*move_past_dollar(char *s);
-char *extract_variable_name(char *s);
 
 //parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
@@ -133,7 +135,6 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);
 void	split_on_dollar(char **s, t_env *env, int *exit_status);
 char	*find_and_substitute(char *s, t_env *env, int *exit_status);
 void	free_array(char **arr);
-char	*make_new_str(char **arr, char * new_str, char *temp);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
@@ -145,8 +146,6 @@ void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env **env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
-void	free_cmdtree(t_cmd *tree);
-void	free_arr(char **arr);
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
@@ -157,19 +156,22 @@ size_t	ft_strlcpy(char *dst, char *src, size_t size);
 size_t	ft_strncat(char *dst, const char *src, size_t size);
 void	ft_putstr(char *s);
 char	*ft_strcat(char *dest, char *src);
-
+int		ft_exit_free(t_minishell *minishell_struct,
+			t_cmd *node, int exit_status);
 char	*ft_run_sub(char **arr, t_env *env, int *exit_status);
 
 
 // Executer | executer.c
-//void	ft_executor(t_cmd *node);
-int		ft_executor(t_cmd *node, t_env **env_list);
-int		ft_pipe_first(t_cmd *node, int pipe_fd[2], t_env *env_list);
+int		ft_executor(t_cmd *node, t_minishell *minishell_struct);
+int		ft_pipe_first(t_cmd *node, int pipe_fd[2],
+			t_minishell *minishell_struct);
+void	ft_set_pipes_first(t_cmd *node, int pipe_fd[2]);
 int		ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in,
-			t_env *env_list);
+			t_minishell *minishell_struct);
+void	ft_set_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in);
 int		ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in,
-			t_env *env_list);
-void	close_after(int std_in, int std_out, int pipe_fd[2]);
+			t_minishell *minishell_struct);
+void	ft_set_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in);
 void	ft_start_exec(t_env *env_list, t_cmd *node);
 void	ft_reset_std(int std_in, int std_out);
 t_cmd	*first_node(t_cmd *node);
@@ -177,7 +179,6 @@ t_cmd	*first_node(t_cmd *node);
 //error_handling.c
 void	error_temp(char *str, char *temp);
 void	error_general(char *str);
-void	error_memory(char **arr, char *s);
 
 //execute_utils.c
 int		execute_cmd(char **env, char **cmd);
@@ -191,7 +192,7 @@ t_env	*fill_env_struct(char **environment);
 char	**ft_env_list_to_array(t_env *head);
 
 //builtins/builtins.c
-int		ft_is_builtin(t_cmd *cmd, t_env **env_list);
+int		ft_is_builtin(t_cmd *cmd, t_minishell *minishell_struct);
 int		ft_strcmp(char *s1, char *s2);
 
 //builtins/env.c
@@ -201,13 +202,14 @@ int		ft_env(t_cmd *cmd, t_env **env_list);
 int		ft_cd(t_cmd *cmd);
 
 //ft_echo.c
-
+void	parse_for_echo(t_cmd *cmd_tree);
 int		ft_count(char **arr);
 int		ft_echo(t_cmd *cmd);
-void	ft_write_echo(char **arr, int i);
+void	ft_write_echo(t_cmd *cmd, int num, int i);
+void	check_echo_flags(t_cmd *cmd);
 
 //builtins/exit.c
-int		ft_exit(t_cmd *cmd, t_env **env_list);
+int		ft_exit(t_cmd *cmd, t_minishell *minishell_struct);
 
 //builtins/pwd.c
 int		ft_pwd(void);
@@ -222,11 +224,11 @@ int		ft_handle_error_cd(t_cmd *cmd);
 // signals.c
 void	ft_init_signals(void);
 void	ft_init_signals_input(void);
-void	ft_init_signals_heredoc(int sig);
+void		ft_init_signals_heredoc(int sig);
 void	ft_ctrl_c_signals_input(int sig);
 
 //other
-int	is_varname(char c);
+int		is_varname(char c);
 char	*find_var_position(char *input);
 void	update_input(char **input, char *var_value, char *second_part);
 void	expand_variables(char **input, t_env *minienv);

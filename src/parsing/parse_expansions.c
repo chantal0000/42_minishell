@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:07:40 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:43:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void split_on_dollar(char **s, t_env *env, int *exit_status)
 	char	*old_str;
 	int		i;
 
-	i = 0;
 	new_str = NULL;
 	if (**s == '$')
 	{

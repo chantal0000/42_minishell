@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 15:22:25 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:42:44 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,29 @@ char	*ft_variable(char *s, t_env *env, int *exit_status)
 char	*move_past_dollar(char *s)
 {
 	char	*str;
+	int		i;
+	int		j;
+	int		len;
 
-	if (!s || *s != '$')
-		return (s);
-	str = s + 1;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(s);
+	str = s;
+	if (len > 1)
+	{
+		str = (char *)malloc(sizeof(char)* (ft_strlen(s) + 1));
+		if (!str)
+			return (NULL);
+		while (s[i] != '\0')
+		{
+			if (s[i] == '$')
+				i++;
+			str[j] = s[i];
+			i++;
+			j++;
+		}
+		str[j] = '\0';
+	}
 	return (str);
 }
-

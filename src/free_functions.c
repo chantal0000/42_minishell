@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 16:51:53 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:39:55 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_memory(char **arr)
 		return ;
 	while (arr[i] != NULL)
 	{
-		free(arr[i]);
+		//free(arr[i]);
 		i++;
 	}
 //	free (arr);

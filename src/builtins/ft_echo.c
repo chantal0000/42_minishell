@@ -6,11 +6,28 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/16 12:09:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:27:54 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	parse_for_echo(t_cmd *cmd_tree)
+{
+	t_cmd	*temp;
+
+	temp = cmd_tree;
+	while (temp)
+	{
+		if (!ft_strcmp(temp->cmd[0], "echo") && !ft_strcmp(temp->cmd[1], "-n"))
+			temp->token = 'n';
+		else if (!ft_strcmp(temp->cmd[0], "echo") && \
+			ft_strcmp(temp->cmd[1], "-n"))
+			temp->token = 'e';
+		else
+			temp = temp->next;
+	}
+}
 
 int	ft_count(char **arr)
 {
@@ -26,44 +43,84 @@ int	ft_count(char **arr)
 
 int	ft_echo(t_cmd *cmd)
 {
-	int	i;
-	int	new_line;
+	t_cmd	*temp;
+	int		num;
+	int		i;
 
-	i = 1;
-	new_line = 1;
-	if (cmd->cmd[i] == NULL)
-		return (write(1, "\n", 1), 0);
-	while (cmd->cmd[i] && !ft_strcmp(cmd->cmd[i], "-n"))
-	{
-		i++;
-		new_line = 0;
-	}
-	if (!cmd->cmd[i])
-	{
-		if (!new_line)
-			return (0);
-		write(1, "\n", 1);
-		return (0);
-	}
-	ft_write_echo(cmd->cmd, i);
-	if (new_line)
-		write(1, "\n", 1);
+	if (!cmd)
+		return (1);
+	temp = cmd;
+	check_echo_flags(temp);
+	num = ft_count(temp->cmd);
+	if (temp->token == 'n')
+		i = 2;
+	if (temp->token == 'e')
+		i = 1;
+	ft_write_echo(temp, num, i);
+	if (cmd->token == 'e')
+		ft_putchar_fd('\n', 1);
 	return (0);
 }
 
-void	ft_putstr(char *s)
+void	ft_write_echo(t_cmd *cmd, int num, int i)
 {
-	while (*s)
-		write(1, s++, 1);
+	check_quotes(cmd->cmd[i]);
+	if (i == num - 1 && cmd->cmd[i])
+		ft_putstr_fd(cmd->cmd[i], 1);
+	else
+	{
+		while (i < num)
+		{
+			if (!cmd->cmd[i])
+				return ;//seg faults if nothing following -n, should just return command line
+			else if (i < num - 1 && cmd->cmd[i])
+			{
+				ft_putstr_fd(cmd->cmd[i], 1);
+				ft_putchar_fd(' ', 1);
+			}
+			else
+			{
+				if (!cmd->cmd[1])
+					ft_putchar_fd(' ', 1);
+				ft_putstr_fd(cmd->cmd[i], 1);
+			}
+			i++;
+		}
+	}
 }
 
-void	ft_write_echo(char **arr, int i)
+void	check_echo_flags(t_cmd *cmd)
 {
-	while (arr[i])
+	t_cmd	*temp;
+	int		i;
+	int		j;
+	int		count;
+
+	temp = cmd;
+	i = 2;
+	j = 0;
+	count = 0;
+	while (temp)
 	{
-		ft_putstr(arr[i]);
-		if (arr[i + 1])
-			write (1, " ", 1);
-		i++;
+		count = ft_count(temp->cmd);
+		if (count > 1)
+		{
+			if ((temp->cmd[0] && !ft_strcmp(temp->cmd[0], "echo")) && \
+				(temp->cmd[1] && !ft_strcmp(temp->cmd[1], "-n")))
+			{
+				j = 0;
+				while (temp->cmd[i] != NULL)
+				{
+					if (!ft_strcmp(temp->cmd[i], "-n"))
+						j++;
+					else
+//						temp->cmd[i - j] = ft_strdup(temp->cmd[i]);
+						temp->cmd[i - j] = temp->cmd[i];
+					i++;
+				}
+				temp->cmd[i - j] = NULL;
+			}
+			temp = temp->next;
+		}
 	}
 }
