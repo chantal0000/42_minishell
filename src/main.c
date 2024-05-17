@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 20:41:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:04:46 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_execute(char *line, t_cmd **list, t_minishell *minishell_struct, int *ex
 //	print_stack(*list);
 	restore_pipes_and_spaces(*list);
 //	printf("\nafter expansions and restoration\n");
-	print_stack(*list);
+	// print_stack(*list);
 	*exit_status = ft_executor(*list, minishell_struct);
 	dup2(minishell_struct->og_stdin, STDIN_FILENO);
 	dup2(minishell_struct->og_stdout, STDOUT_FILENO);
@@ -110,11 +110,9 @@ int	main(int argc, char **argv, char **env)
 {
 	static char	*line;
 	t_cmd		*list;
-	// t_env		*env_list;
 	int			exit_status;
 	t_minishell	*minishell_struct;
 
-	(void)argc;
 	(void)argv;
 	g_signal = 0;
 	line = NULL;
@@ -127,18 +125,13 @@ int	main(int argc, char **argv, char **env)
 	}
 	if (!env)
 		return (0);
-	
 	minishell_struct = init_minishell(env);
-	// env_list = fill_env_struct(env);
 	while (1)
 		line = read_command(list, minishell_struct, &exit_status);
+	printf("hi\n\n");
 	handle_exit(minishell_struct->env_list, line);
 	free(list);
-//	free (line);
-//	free (env_list);
-//	env_list = NULL;
 	list = NULL;
-//	line = NULL;
 	close(minishell_struct->og_stdin);
 	close(minishell_struct->og_stdout);
 	return (exit_status);

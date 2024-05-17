@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 13:07:56 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:43:36 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <signal.h>
 # include <errno.h>
 
-
 extern int	g_signal;
 
 # define MAXARGS 100
@@ -39,9 +38,9 @@ typedef struct s_minishell {
 	t_env	*env_list;
 	int		og_stdin;
 	int		og_stdout;
-} t_minishell;
+}	t_minishell;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char	*cmd_env;
 	t_env	*next;
@@ -63,9 +62,6 @@ typedef struct s_cmd
 	t_cmd	*prev;
 	t_cmd	*next;
 	char	*heredoc_delimiter;
-//	int		og_stdin;
-//	int		og_stdout;
-	// char	*heredoc_content[MAX_CONTENT_SIZE + 1];
 }	t_cmd;
 
 // TESTING
@@ -149,7 +145,6 @@ void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env **env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
-void	free_cmdtree(t_cmd *tree);
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
@@ -159,22 +154,20 @@ char	*ft_strcpy(char *s1, char *s2);
 size_t	ft_strlcpy(char *dst, char *src, size_t size);
 size_t	ft_strncat(char *dst, const char *src, size_t size);
 
-//heredoc.c
-//int	ft_strcmp(const char *s1, const char *s2);
-
 //executor_pipes.c
-int	ft_exit_free(t_minishell *minishell_struct, t_cmd *node, int exit_status);
+int		ft_exit_free(t_minishell *minishell_struct,
+			t_cmd *node, int exit_status);
 
 // Executer | executer.c
-//void	ft_executor(t_cmd *node);
 int		ft_executor(t_cmd *node, t_minishell *minishell_struct);
-int		ft_pipe_first(t_cmd *node, int pipe_fd[2], t_minishell *minishell_struct);
+int		ft_pipe_first(t_cmd *node, int pipe_fd[2],
+			t_minishell *minishell_struct);
 void	ft_set_pipes_first(t_cmd *node, int pipe_fd[2]);
 int		ft_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in,
-		t_minishell *minishell_struct);
+			t_minishell *minishell_struct);
 void	ft_set_pipe_middle(t_cmd *node, int pipe_fd[2], int old_p_in);
 int		ft_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in,
-		t_minishell *minishell_struct);
+			t_minishell *minishell_struct);
 void	ft_set_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in);
 void	ft_start_exec(t_env *env_list, t_cmd *node);
 void	ft_reset_std(int std_in, int std_out);
@@ -183,7 +176,6 @@ t_cmd	*first_node(t_cmd *node);
 //error_handling.c
 void	error_temp(char *str, char *temp);
 void	error_general(char *str);
-void	error_memory(char **arr, char *s);
 
 //execute_utils.c
 int		execute_cmd(char **env, char **cmd);
@@ -221,7 +213,7 @@ int		ft_pwd(void);
 int		ft_export(t_cmd *cmd, t_env **env_list);
 void	insert_end(t_env **head, char *line);
 int		ft_unset(t_cmd *cmd, t_env **env_list);
-int	ft_len_until_delimiter(char *str);
+int		ft_len_until_delimiter(char *str);
 
 int		ft_handle_error_export(t_cmd *cmd);
 int		ft_handle_error_cd(t_cmd *cmd);
@@ -233,7 +225,7 @@ void		ft_init_signals_heredoc(int sig);
 void	ft_ctrl_c_signals_input(int sig);
 
 //other
-int	is_varname(char c);
+int		is_varname(char c);
 char	*find_var_position(char *input);
 void	update_input(char **input, char *var_value, char *second_part);
 void	expand_variables(char **input, t_env *minienv);

@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:17:22 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/17 12:46:29 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:26:43 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_exit_free(t_minishell *minishell_struct, t_cmd *node, int exit_status)
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
+	free(minishell_struct);
 	exit (exit_status);
 }
 
