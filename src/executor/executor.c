@@ -6,59 +6,50 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:35:42 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/14 14:01:35 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:34:33 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+int	handle_exit_simple_cmd(t_cmd *node, int exit_status)
+{
+	waitpid(node->pid, &exit_status, WUNTRACED);
+	if (WIFEXITED(exit_status))
+		exit_status = WEXITSTATUS(exit_status);
+	else
+		exit_status = 130;
+	return (exit_status);
+}
+
 /*
 ** Executes a simple command. If it's a built-in command, it's executed directly.
 ** Otherwise, it handles redirections and executes using execve().
+	// WIFEEXITED is 0, when CTRL C
 */
-int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
+int	ft_simple_cmd(t_cmd *node, int exit_status, t_minishell *minishell_struct)
 {
-	// int	original_stdout = node->og_stdin;
-	// int	original_stdin = node->og_stdout;
-
-	// original_stdout = dup(STDOUT_FILENO);
-	// original_stdin = dup(STDIN_FILENO);
 	if ((node->fd_in) != -1)
-	{
 		dup2(node->fd_in, STDIN_FILENO);
-		// added does this break my stuff
-		// close(node->fd_in);
-	}
 	if (node->fd_out != -1)
 	{
 		dup2(node->fd_out, STDOUT_FILENO);
 		close(node->fd_out);
 	}
-	// pass stdin stdout here
-	exit_status = ft_is_builtin(node, env_list);
+	exit_status = ft_is_builtin(node, minishell_struct);
 	if (exit_status != -1)
-	{
-		// if (original_stdin > 3)
-		// 	close(original_stdin);
-		// if(original_stdin > 3)
-		// 	close(original_stdout);
 		return (exit_status);
-	}
 	else
 	{
 		node->pid = fork();
 		if (node->pid == 0)
-			ft_start_exec(*env_list, node);
-		else
 		{
-			waitpid(node->pid, &exit_status, WUNTRACED);
-			exit_status = WEXITSTATUS(exit_status);
-			// dup2(original_stdin, STDIN_FILENO);
-			// close(original_stdin);
-			// dup2(original_stdout, STDOUT_FILENO);
-			// close(original_stdout);
-			return (exit_status);
+			exit_status = execute_cmd
+				(ft_env_list_to_array(minishell_struct->env_list), node->cmd);
+			ft_exit_free(minishell_struct, node, exit_status);
 		}
+		else
+			return (handle_exit_simple_cmd(node, exit_status));
 	}
 	return (exit_status);
 }
@@ -75,31 +66,28 @@ int	ft_simple_cmd(t_cmd *node, int exit_status, t_env **env_list)
 ** 7. move on to the next node in the linked list
 */
 
-int	loop_cmds(t_cmd *node, t_cmd *head, t_env **env_list)
+int	loop_cmds(t_cmd *node, t_cmd *head, t_minishell *minishell_struct)
 {
 	int	old_p_in;
 	int	pipe_fd[2];
-	int	std_in;
-	int	std_out;
 
 	old_p_in = 0;
-	std_in = dup(STDIN_FILENO);
-	std_out = dup(STDOUT_FILENO);
 	while (node)
 	{
 		if (node->next)
 			pipe(pipe_fd);
 		if (!node->prev && node->next)
-			ft_pipe_first(node, pipe_fd, *env_list);
+			ft_pipe_first(node, pipe_fd, minishell_struct);
 		else if (node->prev && node->next)
-			ft_pipe_middle(node, pipe_fd, old_p_in, *env_list);
+			ft_pipe_middle(node, pipe_fd, old_p_in, minishell_struct);
 		else
-			ft_pipe_last(node, pipe_fd, old_p_in, *env_list);
+			ft_pipe_last(node, pipe_fd, old_p_in, minishell_struct);
 		old_p_in = pipe_fd[0];
-		ft_reset_std(std_in, std_out);
+		ft_reset_std(minishell_struct->og_stdin, minishell_struct->og_stdout);
 		node = node->next;
 	}
-	close_after(std_in, std_out, pipe_fd);
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
 	return (handle_exit_status(head));
 }
 
@@ -111,7 +99,7 @@ int	loop_cmds(t_cmd *node, t_cmd *head, t_env **env_list)
 ** if successful we free the linked list -> cmd structure
 ** and return the exit status to our main function
 */
-int	ft_executor(t_cmd *node, t_env **env_list)
+int	ft_executor(t_cmd *node, t_minishell *minishell_struct)
 {
 	int		exit_status;
 	t_cmd	*head;
@@ -120,9 +108,9 @@ int	ft_executor(t_cmd *node, t_env **env_list)
 	head = node;
 	ft_init_signals_input();
 	if (!node->next && !node->prev)
-		exit_status = ft_simple_cmd(node, exit_status, env_list);
+		exit_status = ft_simple_cmd(node, exit_status, minishell_struct);
 	else
-		exit_status = loop_cmds(node, head, env_list);
+		exit_status = loop_cmds(node, head, minishell_struct);
 	ft_free_cmd_struct(node);
 	return (exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:14:31 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/13 16:05:35 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:29:47 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,12 @@
 */
 t_cmd	*first_node(t_cmd *node)
 {
-	while (node->prev != NULL)
-		node = node->prev;
+	if (node)
+	{
+		while (node->prev != NULL)
+			node = node->prev;
+	}
 	return (node);
-}
-
-/*
-** closing all fd's
-*/
-void	close_after(int std_in, int std_out, int pipe_fd[2])
-{
-	if (std_in >= 0)
-		close(std_in);
-	if (std_out >= 0)
-		close(std_out);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/16 17:30:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 21:56:13 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,77 +37,33 @@ void split_on_dollar(char **s, t_env *env, int *exit_status)
 	char	**arr;
 	char	*temp;
 	char	*new_str;
-	int		i;
 
-	i = 0;
 	new_str = NULL;
 	if (**s == '$')
 	{
 		temp = find_and_substitute(*s, env, exit_status);
-		if (temp)
-			*s = temp;
+		if (!temp)
+			return ;
+		*s = temp;
 	}
 	else
 	{
 		arr = ft_split(*s, '$');
 		if (!arr)
 			return ;
-		while (arr[i] != NULL)
-		{
-			temp = ft_run_sub(&arr[i], env, exit_status);
-			if (!temp)
-			{
-				free_memory(arr);
-				return ;
-			}
-			else
-				new_str = make_new_str(arr, new_str, temp);
-			free(temp);
-			i++;
-		}
-		*s = new_str;
-		free(new_str);
-	}
-}
-
-char	*ft_run_sub(char **arr, t_env *env, int *exit_status)
-{
-	char	*temp;
-	char 	*new_str;
-	int		i;
-
-	i = 0;
-	new_str = NULL;
-	temp = find_and_substitute(arr[i + 1], env, exit_status);
-	if (!temp)
-	{
-		free_memory(arr);
-		return (NULL);
-	}
-	if (new_str == NULL)
-	{
-		new_str = ft_strjoin(arr[i], temp);
-		if (!new_str)
+		temp = find_and_substitute(arr[1], env, exit_status);
+		if (!temp)
 		{
 			free_memory(arr);
-			free (temp);
-			return (NULL);
+			return ;
 		}
-	}
-	return (new_str);
-}
-
-char	*make_new_str(char **arr, char *new_str, char *temp)
-{
-	new_str = ft_strjoin(new_str, temp);
-	if (!new_str)
-	{
+		new_str = ft_strjoin(arr[0], temp);
+		free(temp);
 		free_memory(arr);
-		free(new_str);
-		free (temp);
-		return (NULL);
+		if (!new_str)
+			return ;
+		*s = new_str;
 	}
-	return (new_str);
 }
 
 char	*find_and_substitute(char *s, t_env *env, int *exit_status)
@@ -125,22 +81,3 @@ char	*find_and_substitute(char *s, t_env *env, int *exit_status)
 		free (string);
 	return (temp);
 }
-/*char *extract_variable_name(char *s) {
-    char *start = s;
-    if (!s || (*s != '_' && !isalpha(*s))) {
-        return NULL;  // Not a valid start for a variable name
-    }
-
-    while (*s && (isalnum(*s) || *s == '_')) {
-        s++;
-    }
-
-    // Allocate a new string for the variable name
-    int len = s - start;
-    char *var_name = (char *)malloc(len + 1);
-    if (var_name) {
-        strncpy(var_name, start, len);
-        var_name[len] = '\0';
-    }
-    return var_name;
-}*/

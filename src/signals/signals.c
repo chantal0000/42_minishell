@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:34:15 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/08 17:21:38 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:54:00 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_ctrl_c_signals(int sig)
 ** Ctrl C -> SIGINT
 ** Ctrl \ -> SIGQUIT (SIG_IGN function)
 */
-void ft_init_signals(void)
+void	ft_init_signals(void)
 {
 	signal(SIGINT, ft_ctrl_c_signals);
 	signal(SIGQUIT, SIG_IGN);
@@ -49,8 +49,8 @@ void	ft_ctrl_c_signals_input(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	write(STDERR_FILENO, "\n", 1);
-	// rl_redisplay();
 }
+
 void	ft_quit_signals_input(int sig)
 {
 	(void)sig;
@@ -63,24 +63,22 @@ void	ft_quit_signals_input(int sig)
 ** Ctrl C -> SIGINT
 ** Ctrl \ -> SIGQUIT (SIG_IGN function)
 */
-void ft_init_signals_input(void)
+void	ft_init_signals_input(void)
 {
 	signal(SIGINT, ft_ctrl_c_signals_input);
 	signal(SIGQUIT, ft_quit_signals_input);
 }
-
-
 /* SIGNALS IN HEREDOC
 ** CTRL C -> exits
 ** CTRL \ -> nothing
 ** CTRL D (which is not actually a signal) bash: warning: here-document at line 9 delimited by end-of-file (wanted `eof')
 */
-void	ft_init_signals_heredoc(int sig)
-{
-	write(1, "\n", 2);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	(void) sig;
-	g_signal = 130;
-	exit(130);
-}
+// void	ft_init_signals_heredoc(int sig)
+// {
+// 	write(1, "\n", 2);
+// 	rl_replace_line("", 0);
+// 	rl_on_new_line();
+// 	(void) sig;
+// 	g_signal = 130;
+// 	exit(130);
+// }
