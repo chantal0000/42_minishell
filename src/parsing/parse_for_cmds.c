@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 17:37:04 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:22:49 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,34 @@ int	check_for_hanging_pipes(char *s)
 				perror("hanging pipe found, check syntax");
 				return (1);
 			}
+		}
+		s++;
+	}
+	return (0);
+}
+
+
+int	check_redirection_file_names(char *s)
+{
+	int redir_found;
+
+	redir_found = 0;
+	while (*s)
+	{
+		if (*s == '<' || *s == '>')
+		{
+			redir_found = 1;
+			s++;
+			if (*s == '<' || *s == '>')
+				s++;
+			while (*s && is_whitespace(*s))
+				s++;
+			if (!*s || *s == '|' || *s == '<' || *s == '>')
+			{
+				perror("syntax error: missing file after redirection");
+				return (1);
+			}
+			redir_found = 0;
 		}
 		s++;
 	}

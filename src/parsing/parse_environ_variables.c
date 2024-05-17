@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 21:57:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:42:44 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,31 @@ char	*find_substitution(t_env *env, char *s, size_t cmd_len)
 //it copies everything beyond the '='
 char	*ft_variable(char *s, t_env *env, int *exit_status)
 {
-	size_t	cmd_len;
+	char	*temp;
+	char	*variable;
 	char	*result;
-	char	*var_exp;
+	size_t	cmd_len;
+	size_t	total_len;
 
-	var_exp = NULL;
-	result = NULL;
-	if (*(s) == '?')
+	if (!s)
+		return (NULL);
+	cmd_len = 0;
+	while (s[cmd_len] && (ft_isalnum(s[cmd_len]) || s[cmd_len] == '_'))
+		cmd_len++;
+	if (*s == '?')
 	{
-		result = ft_itoa(*exit_status);
-		free (s);
-		return (result);
+		temp = ft_itoa(*exit_status);
+		return (temp);
 	}
-	cmd_len = ft_strlen(s);
-	var_exp = find_substitution(env, s, cmd_len);
-	if (var_exp == NULL)
-		return (ft_strdup(""));
-	result = ft_strjoin(var_exp, s + cmd_len);
+	variable = find_substitution(env, s, cmd_len);
+	if (variable == NULL)
+		variable = "";
+	total_len = ft_strlen(variable) + ft_strlen(s + cmd_len);
+	result = (char *)malloc(total_len + 1);
 	if (!result)
 		return (NULL);
-	free (s);
+	ft_strcpy(result, variable);
+	ft_strcat(result, s + cmd_len);
 	return (result);
 }
 

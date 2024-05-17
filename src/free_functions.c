@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 21:57:37 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:39:55 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_memory(char **arr)
 		//free(arr[i]);
 		i++;
 	}
+//	free (arr);
 }
 
 /* free the array of env, in every loop*/
@@ -92,25 +93,13 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 	current = cmd;
 	while (current)
 	{
-		// store the next node before freeing the current one
 		next = current->next;
-		// free cmd string
-//		if (current->cmd)
-		//if (cmd->token_env == '?')
-		//	free_memory(current->cmd);
+		free_memory(current->cmd);
 		if (current->file_name)
 		{
 			if (ft_strcmp(current->file_name, "/tmp/tempfile21008") == 0)
 				unlink("/tmp/tempfile21008");
 		}
-//		if (current->file_name && ft_strcmp(current->file_name, "/tmp/tempfile21008") != 0)
-//			free(current->file_name);
-//	**this causes IOT Instruction error and invalid freeing to free delimiter
-
-//		if (current->heredoc_delimiter)
-//			free(current->heredoc_delimiter);
-		// if (current->heredoc_content)
-		// free_memory(current->heredoc_content);
 		free(current);
 		current = next;
 	}

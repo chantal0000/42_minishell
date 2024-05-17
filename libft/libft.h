@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:40:11 by kbolon            #+#    #+#             */
-/*   Updated: 2023/12/07 10:33:11 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 14:58:28 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 # include "get_next_line.h"
 # include "ft_printf.h"
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000000

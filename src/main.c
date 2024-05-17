@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:04:46 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:41:22 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ char	*read_command(t_cmd *list, t_minishell *minishell_struct , int *exit_status
 		while (*line != '\0' && is_whitespace(*line))
 			line++;
 		if (*line == '\0')
+		{
+			free (line);
 			break ;
-		else if (check_for_hanging_pipes(line) == 0)
+		}
+		else if (check_for_hanging_pipes(line) == 0 && check_redirection_file_names (line) == 0)
 		{
 			add_history(line);
 			ft_execute(line, &list, minishell_struct, exit_status);
@@ -128,7 +131,6 @@ int	main(int argc, char **argv, char **env)
 	minishell_struct = init_minishell(env);
 	while (1)
 		line = read_command(list, minishell_struct, &exit_status);
-	printf("hi\n\n");
 	handle_exit(minishell_struct->env_list, line);
 	free(list);
 	list = NULL;
