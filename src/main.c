@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/15 16:51:23 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:41:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,20 @@ void	print_stack(t_cmd *root)
 	}
 }
 
-void	ft_execute(char *line, t_cmd **list, t_env **env_list, int *exit_status)
+void	ft_execute(char *line, t_cmd **list, t_minishell *minishell_struct, int *exit_status)
 {
-	int	original_stdout;
-	int	original_stdin;
-
-	original_stdout = dup(STDOUT_FILENO);
-	original_stdin = dup(STDIN_FILENO);
 	parse_for_cmds(list, line);
+	parse_cmds_for_expansions(list, minishell_struct->env_list, exit_status);
 //	print_stack(*list);
-	parse_cmds_for_expansions(list, *env_list, exit_status);
 	restore_pipes_and_spaces(*list);
 //	printf("\nafter expansions and restoration\n");
-//	print_stack(*list);
-	*exit_status = ft_executor(*list, env_list);
-	dup2(original_stdin, STDIN_FILENO);
-	close(original_stdin);
-	dup2(original_stdout, STDOUT_FILENO);
-	close(original_stdout);
+	print_stack(*list);
+	*exit_status = ft_executor(*list, minishell_struct);
+	dup2(minishell_struct->og_stdin, STDIN_FILENO);
+	dup2(minishell_struct->og_stdout, STDOUT_FILENO);
 }
 
-char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)
+char	*read_command(t_cmd *list, t_minishell *minishell_struct , int *exit_status)
 {
 	char	*line;
 
@@ -74,9 +67,8 @@ char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)
 		line = readline("minishell: ");
 		if (!line)
 		{
-			ft_free_env_list(env_list);
 			printf("exit\n");
-			exit(0);
+			ft_exit_free(minishell_struct, NULL, 0);
 		}
 		while (*line != '\0' && is_whitespace(*line))
 			line++;
@@ -85,7 +77,7 @@ char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)
 		else if (check_for_hanging_pipes(line) == 0)
 		{
 			add_history(line);
-			ft_execute(line, &list, env_list, exit_status);
+			ft_execute(line, &list, minishell_struct, exit_status);
 //			ft_free_cmd_struct(list);
 //			free(list);
 			list = NULL;
@@ -103,12 +95,24 @@ void	handle_exit(t_env *env_list, char *line)
 	ft_free_env_list(&env_list);
 }
 
+t_minishell	*init_minishell(char **env)
+{
+	t_minishell	*minishell_struct;
+
+	minishell_struct = malloc(sizeof(t_minishell));
+	minishell_struct->og_stdin = dup(STDIN_FILENO);
+	minishell_struct->og_stdout  = dup(STDOUT_FILENO);
+	minishell_struct->env_list= fill_env_struct(env);
+	return(minishell_struct);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	static char	*line;
 	t_cmd		*list;
-	t_env		*env_list;
+	// t_env		*env_list;
 	int			exit_status;
+	t_minishell	*minishell_struct;
 
 	(void)argc;
 	(void)argv;
@@ -123,15 +127,19 @@ int	main(int argc, char **argv, char **env)
 	}
 	if (!env)
 		return (0);
-	env_list = fill_env_struct(env);
+	
+	minishell_struct = init_minishell(env);
+	// env_list = fill_env_struct(env);
 	while (1)
-		line = read_command(list, &env_list, &exit_status);
-	handle_exit(env_list, line);
+		line = read_command(list, minishell_struct, &exit_status);
+	handle_exit(minishell_struct->env_list, line);
 	free(list);
 //	free (line);
 //	free (env_list);
 //	env_list = NULL;
 	list = NULL;
 //	line = NULL;
+	close(minishell_struct->og_stdin);
+	close(minishell_struct->og_stdout);
 	return (exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:25:24 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/15 16:30:22 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/14 21:47:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	size_t	i;
 	size_t	src_len;
-
+	
 	i = 0;
 	src_len = ft_strlen(src);
 	if (size != 0)
@@ -152,7 +152,7 @@ size_t	ft_strlcpy(char *dst, char *src, size_t size)
 		if (size > 0)
 			dst[i] = '\0';
 	}
-	return (src_len);
+	return(src_len);
 }
 
 size_t	ft_strncat(char *dst, const char *src, size_t size)

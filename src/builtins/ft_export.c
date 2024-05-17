@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:16:16 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/14 16:01:19 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:05:19 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_unset_for_export(char *var_name, t_env **env_list)
 {
 	t_env	*current;
 	t_env	*prev;
-
 
 	if (!env_list)
 		return (0);
@@ -43,9 +42,9 @@ int	ft_unset_for_export(char *var_name, t_env **env_list)
 		prev = current;
 		current = current->next;
 	}
-
 	return (0);
 }
+
 /*
 ** checks that there is at least one equal sign otherwise returns 1 to show err
 */
@@ -91,29 +90,33 @@ int	ft_check_syntax(char *str)
 	return (0);
 }
 
+void	ft_export_print(t_env *temp)
+{
+	while ((temp != NULL) && (temp->cmd_env != NULL))
+	{
+		printf("declare -x %s\n", temp->cmd_env);
+		temp = temp->next;
+	}
+}
+
 int	ft_export(t_cmd *cmd, t_env **env_list)
 {
 	t_env	*temp;
-	int i = 1;
-	int exit_status = 0;
+	int		i;
+	int		exit_status;
 
+	i = 1;
+	exit_status = 0;
 	temp = *env_list;
 	if (cmd->cmd[1] == NULL)
 	{
-		while ((temp != NULL) && (temp->cmd_env != NULL))
-		{
-			printf("declare -x ");
-			printf("%s\n", temp->cmd_env);
-			temp = temp->next;
-		}
+		ft_export_print(temp);
 		return (exit_status);
 	}
-	while(cmd->cmd[i] != NULL)
+	while (cmd->cmd[i] != NULL)
 	{
 		if (ft_check_syntax(cmd->cmd[i]) != 0)
-		{
 			exit_status = 1;
-		}
 		else
 		{
 			ft_unset_for_export(cmd->cmd[i], env_list);
@@ -123,5 +126,3 @@ int	ft_export(t_cmd *cmd, t_env **env_list)
 	}
 	return (exit_status);
 }
-
-

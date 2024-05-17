@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_for_heredocs.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:02 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/13 12:08:32 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 13:40:50 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_heredoc(t_cmd *cmd, char *file_name)
 	if (cmd->fd_in != -1)
 		cmd->fd_in = -1;
 	cmd->heredoc_delimiter = parse_line(file_name);
-	signal(SIGINT, ft_init_signals_heredoc);
+	// signal(SIGINT, ft_init_signals_heredoc);
 	while (i < MAX_CONTENT_SIZE)
 	{
 		str = readline("> ");

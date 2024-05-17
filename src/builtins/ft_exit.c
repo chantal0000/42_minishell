@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/14 14:25:10 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:05:42 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,7 @@ void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
 	exit (2);
 }
 
-void	ft_free_exit(t_cmd *cmd, t_env **env_list)
-{
-	printf("exit\n");
-	ft_free_cmd_struct(cmd);
-	ft_free_env_list(env_list);
-}
-
-int	ft_exit(t_cmd *cmd, t_env **env_list)
+int	ft_exit(t_cmd *cmd, t_minishell *minishell_struct)
 {
 	char	**exit_cmd;
 	int		i;
@@ -59,7 +52,6 @@ int	ft_exit(t_cmd *cmd, t_env **env_list)
 	exit_cmd = cmd->cmd;
 	i = 0;
 	exit_status = 0;
-
 	if (exit_cmd[1] != NULL)
 	{
 		while (exit_cmd[1][i])
@@ -69,7 +61,7 @@ int	ft_exit(t_cmd *cmd, t_env **env_list)
 			if (exit_cmd[1][i] == '-' || exit_cmd[1][i] == '+')
 				i++;
 			if ((ft_isdigit(exit_cmd[1][i]) == 0))
-				ft_handle_nodigi(cmd, *env_list);
+				ft_handle_nodigi(cmd, minishell_struct->env_list);
 			i++;
 		}
 		if (exit_cmd[2] != NULL)
@@ -78,9 +70,8 @@ int	ft_exit(t_cmd *cmd, t_env **env_list)
 			return (1);
 		}
 		exit_status = ft_atoi(exit_cmd[1]);
-		ft_free_exit(cmd, env_list);
-		exit (exit_status);
+		ft_exit_free(minishell_struct, cmd, exit_status);
 	}
-	ft_free_exit(cmd, env_list);
-	exit (0);
+	ft_exit_free(minishell_struct, cmd, exit_status);
+	return (0);
 }
