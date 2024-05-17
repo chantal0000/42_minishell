@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 18:18:58 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 19:00:04 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ t_cmd	*parse_for_redirections(t_cmd *node, char **s);
 t_cmd	*parse_mult_redir(t_cmd *cmd, char **s, char *filename, int token);
 t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token);
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd);
-void	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out);
+int		check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out);
 
 //parse_expansions.c
 void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);

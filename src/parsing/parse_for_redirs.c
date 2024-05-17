@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 15:58:18 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 19:02:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd_type)
 	if (fd_type == 0)
 	{
 		node->fd_in = open(node->file_name, instructions, 0777);
-		node->fd_out = -1;
-		check_access_and_fd(node, node->fd_in, 0);
+		if (check_access_and_fd(node, node->fd_in, 0) == 0)
+			node->fd_out = -1;
 	}
 	else if (fd_type == 1)
 	{
 		node->fd_out = open(node->file_name, instructions, 0777);
-		check_access_and_fd(node, 0, node->fd_out);
-		node->fd_in = -1;
+		if (check_access_and_fd(node, 0, node->fd_out) == 0)
+			node->fd_in = -1;
 	}
 	else if (!fd_type)
 	{
@@ -111,7 +111,7 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd_type)
 	return (node);
 }
 
-void	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out)
+int	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out)
 {
 	t_cmd	*temp;
 
@@ -124,13 +124,13 @@ void	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out)
 			{
 				temp->fd_in = -1;
 				perror("minishell: infile: No such file or directory");
-				
+				return (1);
 			}
 			else if (temp->fd_in < 0)
 			{
-//				close(temp->fd_in);
 				temp->fd_in = -1;
-				error_general("Error Opening file");
+				perror("Error Opening file");
+				return (1);
 			}
 		}
 	}
@@ -140,14 +140,17 @@ void	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out)
 		{
 			close(temp->fd_out);
 			temp->fd_out = -1;
-			error_general("Error Opening file");
+			perror("Error Opening file");
+			return (1);
 		}
 		if (access(temp->file_name, F_OK | W_OK) == -1)
 		{
 			close(temp->fd_out);
 			temp->fd_out = -1;
-			error_general("minishell: infile: No such file or directory");
+			perror("minishell: infile: No such file or directory");
+			return (1);
 		}
 	}
 	cmd = temp;
+	return (0);
 }
