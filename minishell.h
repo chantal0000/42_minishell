@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/16 17:07:39 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:23:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		check_for_hanging_pipes(char *s);
 int		check_next_char(char **s, char token);
 char	*check_for_quotes(char *s);
 char	ft_replace(char *c);
+int	check_redirection_file_names(char *s);
 
 //parse_input.c
 void	parse_input(char *s);
@@ -155,7 +156,7 @@ char	*ft_strcpy(char *s1, char *s2);
 size_t	ft_strlcpy(char *dst, char *src, size_t size);
 size_t	ft_strncat(char *dst, const char *src, size_t size);
 void	ft_putstr(char *s);
-
+char	*ft_strcat(char *dest, char *src);
 
 char	*ft_run_sub(char **arr, t_env *env, int *exit_status);
 

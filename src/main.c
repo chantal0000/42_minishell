@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/15 16:51:23 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:24:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,14 @@ char	*read_command(t_cmd *list, t_env **env_list, int *exit_status)
 		while (*line != '\0' && is_whitespace(*line))
 			line++;
 		if (*line == '\0')
+		{
+			free (line);
 			break ;
-		else if (check_for_hanging_pipes(line) == 0)
+		}
+		else if (check_for_hanging_pipes(line) == 0 && check_redirection_file_names (line) == 0)
 		{
 			add_history(line);
 			ft_execute(line, &list, env_list, exit_status);
-//			ft_free_cmd_struct(list);
-//			free(list);
 			list = NULL;
 			return (line);
 		}
@@ -127,11 +128,8 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 		line = read_command(list, &env_list, &exit_status);
 	handle_exit(env_list, line);
-	free(list);
-//	free (line);
-//	free (env_list);
-//	env_list = NULL;
+	free(line);
+	free (list);
 	list = NULL;
-//	line = NULL;
 	return (exit_status);
 }

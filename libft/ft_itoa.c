@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:29:48 by kbolon            #+#    #+#             */
-/*   Updated: 2023/05/25 13:41:10 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 14:38:18 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ char	*ft_itoa(int n)
 
 	sign = 0;
 	len = ft_nbrlen(n);
+	if (n == INT_MIN)
+	{
+		nbr = (unsigned int)(INT_MAX) + 1;
+		sign = 1;
+	}
 	if (n < 0)
 	{
 		sign = 1;

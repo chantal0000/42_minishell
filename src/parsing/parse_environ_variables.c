@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/16 17:33:24 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 15:22:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,54 +70,34 @@ char	*find_substitution(t_env *env, char *s, size_t cmd_len)
 
 //this function copies the environment into the command array 
 //it copies everything beyond the '='
-/*char	*ft_variable(char *s, t_env *env, int *exit_status)
+char	*ft_variable(char *s, t_env *env, int *exit_status)
 {
-	size_t	cmd_len;
+	char	*temp;
+	char	*variable;
 	char	*result;
-	char	*var_exp;
+	size_t	cmd_len;
+	size_t	total_len;
 
-	var_exp = NULL;
-	result = NULL;
-	if (*(s) == '?')
-		return (ft_itoa(*exit_status));
-	cmd_len = ft_strlen(s);
-	var_exp = find_substitution(env, s, cmd_len);
-	if (var_exp == NULL)
-		return (ft_strdup(""));
-	result = ft_strjoin(var_exp, s + cmd_len);
+	if (!s)
+		return (NULL);
+	cmd_len = 0;
+	while (s[cmd_len] && (ft_isalnum(s[cmd_len]) || s[cmd_len] == '_'))
+		cmd_len++;
+	if (*s == '?')
+	{
+		temp = ft_itoa(*exit_status);
+		return (temp);
+	}
+	variable = find_substitution(env, s, cmd_len);
+	if (variable == NULL)
+		variable = "";
+	total_len = ft_strlen(variable) + ft_strlen(s + cmd_len);
+	result = (char *)malloc(total_len + 1);
 	if (!result)
 		return (NULL);
-	s = result;
-	free (result);
-	return (s);
-}*/
-
-char *ft_variable(char *s, t_env *env, int *exit_status) {
-    // Special case for `$?`
-    if (*s == '?') {
-        char *exit_str = ft_itoa(*exit_status);
-        return exit_str;  // Return the exit status as string.
-    }
-
-    size_t cmd_len = 0;
-    while (s[cmd_len] && (isalnum(s[cmd_len]) || s[cmd_len] == '_')) {
-        cmd_len++;  // Only alphanumeric and underscores are considered part of variable names.
-    }
-
-    char *var_exp = find_substitution(env, s, cmd_len);
-    if (var_exp == NULL) {
-        var_exp = "";  // If no substitution is found, use an empty string.
-    }
-
-    // The following part assumes the rest of the string needs to be appended back after the variable name.
-    size_t total_len = strlen(var_exp) + strlen(s + cmd_len);
-    char *result = (char *)malloc(total_len + 1);
-    if (!result) return NULL;
-
-    strcpy(result, var_exp);
-    strcat(result, s + cmd_len);  // Append the remainder of the string past the variable name.
-
-    return result;
+	ft_strcpy(result, variable);
+	ft_strcat(result, s + cmd_len);
+	return (result);
 }
 
 char	*move_past_dollar(char *s)
