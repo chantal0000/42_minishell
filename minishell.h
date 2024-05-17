@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:38:57 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:18:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);
 void	split_on_dollar(char **s, t_env *env, int *exit_status);
 char	*find_and_substitute(char *s, t_env *env, int *exit_status);
 void	free_array(char **arr);
+char	*make_new_str(char **arr, char *new_str, char *temp);
 
 //parse_pipes_and_groups.c
 void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index);
@@ -146,6 +147,7 @@ void	free_memory(char **arr);
 void	free_env(char	**env);
 void	ft_free_env_list(t_env **env_list);
 void	ft_free_cmd_struct(t_cmd *cmd);
+void free_memory_cmd_tree(t_cmd *cmd_tree) ;
 
 //utils.c
 char	*ft_strndup(const char *s, size_t n);
@@ -205,7 +207,7 @@ int		ft_cd(t_cmd *cmd);
 void	parse_for_echo(t_cmd *cmd_tree);
 int		ft_count(char **arr);
 int		ft_echo(t_cmd *cmd);
-void	ft_write_echo(t_cmd *cmd, int num, int i);
+void	ft_write_echo(char **arr, int i);
 void	check_echo_flags(t_cmd *cmd);
 
 //builtins/exit.c

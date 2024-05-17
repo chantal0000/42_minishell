@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:41:22 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:09:58 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int	main(int argc, char **argv, char **env)
 		line = read_command(list, minishell_struct, &exit_status);
 	handle_exit(minishell_struct->env_list, line);
 	free(list);
+//	free(line);
 	list = NULL;
 	close(minishell_struct->og_stdin);
 	close(minishell_struct->og_stdout);

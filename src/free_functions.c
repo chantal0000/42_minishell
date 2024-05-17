@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:39:55 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:18:42 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,13 @@ void	ft_free_cmd_struct(t_cmd *cmd)
 		free(current);
 		current = next;
 	}
+}
+void free_memory_cmd_tree(t_cmd *cmd_tree) {
+    int i = 0;
+    while (cmd_tree->cmd[i]) {
+        free(cmd_tree->cmd[i]);
+        i++;
+    }
+    free(cmd_tree->cmd);
+    free(cmd_tree);
 }
