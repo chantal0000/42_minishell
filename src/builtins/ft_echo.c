@@ -6,13 +6,13 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:21:12 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/16 12:09:41 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/18 07:45:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_count(char **arr)
+/*int	ft_count(char **arr)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	ft_count(char **arr)
 	while (arr[i])
 		i++;
 	return (i);
-}
+}*/
 
 int	ft_echo(t_cmd *cmd)
 {
