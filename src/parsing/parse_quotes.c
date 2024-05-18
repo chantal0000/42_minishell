@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_for_quotes_in_cmds.c                         :+:      :+:    :+:   */
+/*   parse_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 07:08:19 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/14 07:15:29 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/18 08:01:51 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	remove_quotes(char *str)
 		src++;
 	}
 	*dst = '\0';
-//	return (dst);
 }
 
 void	check_in_cmd_array_for_quotes(char *s)
@@ -57,5 +56,4 @@ void	check_in_cmd_array_for_quotes(char *s)
 	}
 	if (in_single % 2 == 0 && in_double % 2 == 0)
 		remove_quotes(s);
-//	return (s);
 }

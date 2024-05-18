@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling.c                                   :+:      :+:    :+:   */
+/*   signals_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 19:14:08 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 07:39:55 by kbolon           ###   ########.fr       */
+/*   Created: 2024/05/18 08:13:52 by kbolon            #+#    #+#             */
+/*   Updated: 2024/05/18 08:13:59 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	error_temp(char *str, char *temp)
+/* SIGNALS IN HEREDOC
+** CTRL C -> exits
+** CTRL \ -> nothing
+** CTRL D (which is not actually a signal) bash: warning: here-document
+   at line 9 delimited by end-of-file (wanted `eof')
+*/
+void	ft_init_signals_heredoc(int sig)
 {
-	perror(str);
-	unlink(temp);
-	return ;
+	write(1, "\n", 2);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	(void) sig;
+	g_signal = 130;
+	// exit(130);
 }
-
-void	error_general(char *str)
-{
-	perror(str);
-	return ;
-}
-

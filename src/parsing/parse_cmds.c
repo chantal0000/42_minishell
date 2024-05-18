@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_for_cmds.c                                   :+:      :+:    :+:   */
+/*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:22:49 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/18 07:57:43 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	parse_for_cmds(t_cmd **cmd, char *s)
 	update_fd(*cmd);
 	while (*s != '\0' && is_whitespace(*s))
 		(*s)++;
-//	restore_pipes_and_spaces(*cmd);
 	if (*s != '\0')
 		error_general("check syntax");
 }
@@ -54,17 +53,14 @@ int	check_for_hanging_pipes(char *s)
 	return (0);
 }
 
-
 int	check_redirection_file_names(char *s)
 {
-	int redir_found;
-
-	redir_found = 0;
+	if (!s)
+		return (0);
 	while (*s)
 	{
 		if (*s == '<' || *s == '>')
 		{
-			redir_found = 1;
 			s++;
 			if (*s == '<' || *s == '>')
 				s++;
@@ -75,7 +71,6 @@ int	check_redirection_file_names(char *s)
 				perror("syntax error: missing file after redirection");
 				return (1);
 			}
-			redir_found = 0;
 		}
 		s++;
 	}

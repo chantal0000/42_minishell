@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:34:15 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/17 16:47:04 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/18 08:13:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,4 @@ void	ft_init_signals_input(void)
 	signal(SIGINT, ft_ctrl_c_signals_input);
 	signal(SIGQUIT, ft_quit_signals_input);
 }
-/* SIGNALS IN HEREDOC
-** CTRL C -> exits
-** CTRL \ -> nothing
-** CTRL D (which is not actually a signal) bash: warning: here-document
-   at line 9 delimited by end-of-file (wanted `eof')
-*/
-void	ft_init_signals_heredoc(int sig)
-{
-	write(1, "\n", 2);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	(void) sig;
-	g_signal = 130;
-	// exit(130);
-}
+
