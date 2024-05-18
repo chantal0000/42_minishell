@@ -6,140 +6,138 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 17:07:40 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/18 21:15:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
+//check if variable name is valid
+//checks each char is alphanumeric or underscore 
+int	valid_name(char *s)
 {
-	t_cmd	*temp;
-	int		i;
+	if (!s || !ft_isalpha(*s))
+		return (0);
+	while (*s)
+	{
+		if (!ft_isalnum(*s) && *s != '_')
+			return (0);
+		s++;
+	}
+	return (1);
+}
+char	*find_var_position(char *s)
+{
+	if (!s)
+		return (NULL);
+	while (*s)
+	{
+		if (*s == '$' && valid_name((s + 1)))
+			return (s);
+		s++;
+	}
+	return (NULL);
+}
 
-	if (!cmd || !*cmd)
-		return ;
+// Update the input string with the variable value
+void update_string(char **string, char *var_value, char *second_string)
+{
+	char	*beg_part;
+	char	*updated_string;
+	size_t	len;
+
+	if (!*string[0] && var_value)
+		beg_part = ft_strdup(var_value);
+	else if (!*string[0] && !var_value)
+		beg_part = ft_strdup("");
+	else
+		beg_part = ft_strdup(*string);
+	len = ft_strlen(beg_part) + ft_strlen(second_string);
+	updated_string = ft_calloc((len + 1), sizeof(char));
+	if (updated_string) {
+		ft_strcpy(updated_string, beg_part);
+		ft_strcat(updated_string, second_string);
+	}
+	free(beg_part);
+	free(*string);
+	*string = updated_string;
+}
+//**************************************
+//not updated....still copied
+
+// Expand variables in the input string
+void expand_variables(char **input, t_env *env) {
+	char *var_position;
+	char *var_name;
+	char *var_value;
+	int name_size;
+
+	var_position = find_var_position(*input);
+	if (var_position) {
+		name_size = 0;
+		while (valid_name(&var_position[name_size + 1]))
+			name_size++;
+		var_name = strndup(var_position + 1, name_size);
+		*var_position = '\0';
+		var_value = find_substitution(env , var_name);
+		update_string(input, var_value, var_position + 1 + name_size);
+		free(var_name);
+		expand_variables(input, env);
+	}
+}
+
+// Expand the exit status in the input string
+void expand_exit_status(char **input, int exit_status) {
+	char *exit_pos;
+	char *first_part;
+	char *second_part;
+	char *status_str;
+	char *updated_input;
+
+	while ((exit_pos = strstr(*input, "$?")) != NULL) {
+		*exit_pos = '\0';
+		first_part = strdup(*input);
+		second_part = strdup(exit_pos + 2);
+		asprintf(&status_str, "%d", exit_status); // Convert exit status to string
+
+		updated_input = malloc(strlen(first_part) + strlen(status_str) + strlen(second_part) + 1);
+		if (updated_input) {
+			ft_strcpy(updated_input, first_part);
+			ft_strcat(updated_input, status_str);
+			ft_strcat(updated_input, second_part);
+		}
+
+		free(first_part);
+		free(second_part);
+		free(status_str);
+		free(*input);
+		*input = updated_input;
+	}
+}
+
+// Handle all expansions (variables and exit status) in the input string
+void handle_expansions(char **input, t_env *minienv, int exit_status) {
+	expand_exit_status(input, exit_status);
+	expand_variables(input, minienv);
+}
+
+void parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
+{
+	t_cmd *temp;
+	int i;
+
+	if (!cmd || !*cmd || !env || !exit_status)
+		return;
+
 	temp = *cmd;
 	while (temp)
 	{
 		i = 0;
 		while (temp->cmd[i] != NULL)
 		{
-			if (find_dollar_sign(temp, temp->cmd[i]))
-			{
-				temp->token_env = '?';
-				split_on_dollar(&temp->cmd[i], env, exit_status);
-			}
+			handle_expansions(&temp->cmd[i], env, *exit_status);
 			i++;
 		}
 		temp = temp->next;
 	}
-}
-
-void split_on_dollar(char **s, t_env *env, int *exit_status)
-{
-	char	**arr;
-	char	*temp;
-	char	*new_str;
-	char	*old_str;
-	int		i;
-
-	i = 0;
-	new_str = NULL;
-	if (**s == '$')
-	{
-		temp = find_and_substitute(*s, env, exit_status);
-		if (temp)
-		{
-			free (*s);
-			*s = temp;
-		}
-	}
-	else
-	{
-		arr = ft_split(*s, '$');
-		if (!arr)
-			return ;
-		while (arr[i] != NULL)
-		{
-			temp = ft_run_sub(&arr[i], env, exit_status);
-			if (!temp)
-			{
-//				free_memory(arr);
-				return ;
-			}
-			else
-			{
-				old_str = new_str;
-				new_str = make_new_str(arr, new_str, temp);
-				free(old_str);
-				free(temp);
-				free (*s);
-				*s = new_str;
-				free (new_str);
-				free_memory(arr);
-			}
-			i++;
-		}
-/*		free (*s);
-		*s = new_str;
-		free (new_str);
-		free_memory(arr);*/
-	}
-}
-
-char	*ft_run_sub(char **arr, t_env *env, int *exit_status)
-{
-	char	*temp;
-	char 	*new_str;
-	int		i;
-
-	i = 0;
-	new_str = NULL;
-	temp = find_and_substitute(arr[i + 1], env, exit_status);
-	if (!temp)
-		return (NULL);
-	if (new_str == NULL)
-	{
-		new_str = ft_strjoin(arr[i], temp);
-		if (!new_str)
-		{
-			free_memory(arr);
-			return (NULL);
-		}
-		free(temp);
-	}
-	return (new_str);
-}
-
-char	*make_new_str(char **arr, char *new_str, char *temp)
-{
-	char	*result;
-
-	result = ft_strjoin(new_str, temp);
-	if (!result)
-	{
-		free_memory(arr);
-		free(new_str);
-		free (temp);
-		return (NULL);
-	}
-	return (result);
-}
-
-char	*find_and_substitute(char *s, t_env *env, int *exit_status)
-{
-	char	*string;
-	char	*temp;
-	char	*temp1;
-
-	temp = s;
-	temp1 = move_past_dollar(temp);
-	string = ft_variable(temp1, env, exit_status);
-	if (string && *string != '\0')
-		return (string);
-//	else
-//		free (string);
-	return (s);
-//	return (ft_strdup(temp));
 }
