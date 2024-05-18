@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 08:27:20 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/18 21:16:48 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ char	ft_replace(char *c);
 //parsing/parse_environ_variables.c
 int		ft_find_environ_name(char *s);
 int		find_dollar_sign(t_cmd *cmd, char *s);
-char	*find_substitution(t_env *env, char *s, size_t cmd_len);
+char	*find_substitution(t_env *env, char *s);
 char	*ft_variable(char *s, t_env *env, int *exit_status);
 char	*move_past_dollar(char *s);
 
@@ -191,9 +191,9 @@ t_cmd	*parse_exec_cmds(char **s);
 //parsing/parse_expansions.c
 void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status);
 void	split_on_dollar(char **s, t_env *env, int *exit_status);
+void	ft_join_strings(char **arr, char *temp, char **s);
 char	*ft_run_sub(char **arr, t_env *env, int *exit_status);
 char	*make_new_str(char **arr, char *new_str, char *temp);
-char	*find_and_substitute(char *s, t_env *env, int *exit_status);
 
 //parsing/parse_for_heredocs.c
 void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd);
@@ -248,5 +248,12 @@ t_minishell	*init_minishell(char **env);
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strcpy(char *s1, char *s2);
 char	*ft_strcat(char *dest, char *src);
+
+//other
+void handle_expansions(char **input, t_env *minienv, int exit_status) ;
+void expand_exit_status(char **input, int exit_status);
+void expand_variables(char **input, t_env *minienv);
+int is_varname(char c);
+void update_string(char **string, char *var_value, char *second_string);
 
 #endif

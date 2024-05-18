@@ -6,7 +6,7 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/18 08:28:09 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/18 21:17:09 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
 LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-#CFLAGS = -Wall -Wextra -Werror -ggdb3 #-fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
+#CFLAGS = -Wall -Wextra -Werror -ggdb3 -fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
 #COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
 #LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
 
