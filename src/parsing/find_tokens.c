@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:35:03 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 07:54:59 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 16:45:41 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	is_token(char s)
 {
 	char	*tokens;
 
-	tokens = "|<>";//()";
+	tokens = "|<>";
 	if (ft_strchr(tokens, s))
 		return (1);
 	return (0);

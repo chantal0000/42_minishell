@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:43:30 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 10:39:47 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:10:25 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,9 @@ char	*check_for_quotes(char *s)
 	temp = s;
 	while (*temp)
 	{
-		if (*temp == '\'' && (*temp - 1) != temp[-1] && (*temp - 1) != '\\' \
-			&& !in_double)
+		if (*temp == '\'' && !in_double)
 			in_single = !in_single;
-		else if (*temp == '\"' && (*temp - 1) != temp[-1] && \
-			(*temp - 1) != '\\' && !in_single)
+		else if (*temp == '\"' && !in_single)
 			in_double = !in_double;
 		else if ((*temp == '|' || *temp == ' ' || *temp == '<' || \
 			*temp == '>' || *temp == '$') && (in_single || in_double))

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 07:08:19 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 08:01:51 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 16:45:22 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	remove_quotes(char *str)
 {
 	char	*src;
 	char	*dst;
-	
+
 	src = str;
 	dst = str;
 	while (*src)
@@ -44,13 +44,12 @@ void	check_in_cmd_array_for_quotes(char *s)
 	in_single = 0;
 	in_double = 0;
 	temp = s;
+	check_quotes(temp);
 	while (*temp)
 	{
-		if (*temp == '\'' && (*temp - 1) != temp[-1] && (*temp - 1) != '\\' \
-			&& !in_double)
+		if (*temp == '\'' && !in_double)
 			in_single++;
-		else if (*temp == '\"' && (*temp - 1) != temp[-1] && \
-			(*temp - 1) != '\\' && !in_single)
+		else if (*temp == '\"' && !in_single)
 			in_double++;
 		temp++;
 	}

@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 08:13:52 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 08:13:59 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:31:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,4 @@ void	ft_init_signals_heredoc(int sig)
 	rl_on_new_line();
 	(void) sig;
 	g_signal = 130;
-	// exit(130);
 }

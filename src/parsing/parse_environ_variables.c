@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:55:51 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 10:31:37 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 16:46:21 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ char	*find_substitution(char *name, t_env *env)
 	var = NULL;
 	while (temp)
 	{
-		if (ft_strncmp(name, temp->cmd_env, len) == 0 && temp->cmd_env[len] == '=')
+		if (ft_strncmp(name, temp->cmd_env, len) == 0 \
+			&& temp->cmd_env[len] == '=')
 		{
 			var = temp->cmd_env + len + 1;
 			return (var);
