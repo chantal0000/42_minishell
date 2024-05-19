@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:34:15 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/18 08:13:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:31:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,3 @@ void	ft_init_signals_input(void)
 	signal(SIGINT, ft_ctrl_c_signals_input);
 	signal(SIGQUIT, ft_quit_signals_input);
 }
-

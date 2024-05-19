@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 10:58:24 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 16:44:43 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	find_delimiter(char *s1, char *delim)
 	return (0);
 }
 
-
 void	check_quotes(char *s)
 {
 	size_t	i;
@@ -40,7 +39,7 @@ void	check_quotes(char *s)
 		return ;
 	i = 0;
 	quote_helper(s, '\'', i, len);
-	quote_helper(s, '\"', i , len);
+	quote_helper(s, '\"', i, len);
 }
 
 void	quote_helper(char *s, int quote, size_t i, size_t len)

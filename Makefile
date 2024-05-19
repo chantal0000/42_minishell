@@ -6,13 +6,14 @@
 #    By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:53:41 by kbolon            #+#    #+#              #
-#    Updated: 2024/05/19 08:23:29 by kbolon           ###   ########.fr        #
+#    Updated: 2024/05/19 18:38:15 by kbolon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS = 	src/main.c \
+		src/run_shell.c \
 		src/parsing/delimiter.c \
 		src/parsing/find_tokens.c \
 		src/parsing/init_struct.c \
@@ -22,7 +23,8 @@ SRCS = 	src/main.c \
 		src/parsing/parse_cmds.c \
 		src/parsing/parse_heredocs.c \
 		src/parsing/parse_quotes.c \
-		src/parsing/parse_redirs.c \
+		src/parsing/parse_redirections.c \
+		src/parsing/parse_redirections2.c \
 		src/parsing/parse_pipes.c \
 		src/free_functions.c \
 		src/utils.c \
@@ -50,14 +52,14 @@ LIBFT = libft/libft.a
 CC = cc
 OBJS = $(SRCS:.c=.o)
 #LINUX
-#CFLAGS = -Wall -Wextra -Werror -ggdb3  #-I/opt/homebrew/opt/readline/include #could be -leditline
-#COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
-#LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
+CFLAGS = -Wall -Wextra -Werror -ggdb3  #-I/opt/homebrew/opt/readline/include #could be -leditline
+COMFLAGS = -I/Users/$(USER)/.brew/opt/readline/include
+LINKFLAGS = -L/Users/$(USER)/.brew/opt/readline -lreadline
 
 #MACOS
-CFLAGS = -Wall -Wextra -Werror -ggdb3 -fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
-COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
-LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
+#CFLAGS = -Wall -Wextra -Werror -ggdb3 -fsanitize=address #-I/opt/homebrew/opt/readline/include #could be -leditline
+#COMFLAGS = -I/opt/homebrew/opt/readline/include #libedit/include
+#LINKFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #libedit/lib -ledit
 
 all: $(NAME)
 

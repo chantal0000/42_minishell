@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:35:54 by kbolon            #+#    #+#             */
-/*   Updated: 2024/02/20 17:08:27 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:30:17 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	child(char **argv, int *fd, char **envp)
 	if (filein < 0)
 		error_message("Error Opening Infile", 1, fd, &filein);
 	if (access(argv[1], F_OK | R_OK) == -1)
-		error_message("Error with Infile Permissions: No access.", 1 ,\
+		error_message("Error with Infile Permissions: No access.", 1, \
 			fd, &filein);
 	if (dup2(filein, 0) == -1)
 		error_message("Error dup2 FD stdin child", 1, fd, &filein);
@@ -39,7 +39,7 @@ void	parent(char **argv, int *fd, char **envp)
 	if (fileout < 0)
 		error_message("Error Opening Outfile", 1, fd, &fileout);
 	if (access(argv[4], F_OK | W_OK) == -1)
-		error_message("Error with Outfile permissions: no access.",\
+		error_message("Error with Outfile permissions: no access.", \
 			1, fd, &fileout);
 	if (dup2(fileout, 1) == -1)
 		error_message("Error dup2 FD stdout parent", 1, fd, &fileout);

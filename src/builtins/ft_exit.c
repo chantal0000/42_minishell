@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/17 16:03:53 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/19 18:35:20 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,12 @@ void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
 
 int	ft_exit(t_cmd *cmd, t_minishell *minishell_struct)
 {
-	int		i;
 	int		exit_status;
 
-	i = 0;
 	exit_status = 0;
 	if (cmd->cmd[1] != NULL)
 	{
-		while (cmd->cmd[1][i])
-		{
-			while (cmd->cmd[1][i] == 32)
-				i++;
-			if (cmd->cmd[1][i] == '-' || cmd->cmd[1][i] == '+')
-				i++;
-			if ((ft_isdigit(cmd->cmd[1][i]) == 0))
-				ft_handle_nodigi(cmd, minishell_struct->env_list);
-			i++;
-		}
+		ft_exit_helper(cmd, minishell_struct);
 		if (cmd->cmd[2] != NULL)
 		{
 			printf("minishell: exit: too many arguments\n");
@@ -71,4 +60,21 @@ int	ft_exit(t_cmd *cmd, t_minishell *minishell_struct)
 	}
 	ft_exit_free(minishell_struct, cmd, exit_status);
 	return (0);
+}
+
+void	ft_exit_helper(t_cmd *cmd, t_minishell *minishell_struct)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->cmd[1][i])
+	{
+		while (cmd->cmd[1][i] == 32)
+			i++;
+		if (cmd->cmd[1][i] == '-' || cmd->cmd[1][i] == '+')
+			i++;
+		if ((ft_isdigit(cmd->cmd[1][i]) == 0))
+			ft_handle_nodigi(cmd, minishell_struct->env_list);
+		i++;
+	}
 }

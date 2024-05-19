@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_for_heredocs.c                               :+:      :+:    :+:   */
+/*   parse_heredocs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:02 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 13:40:50 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:11:39 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd)
 	char	*temp_file;
 
 	temp_file = "/tmp/tempfile21008";
-	cmd->fd_in = open(temp_file,  O_RDWR | O_CREAT | O_TRUNC, 0777);
+	cmd->fd_in = open(temp_file, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (cmd->fd_in == -1)
 		error_general("Failed to create temporary file");
 	write_heredoc(heredoc_content, cmd, temp_file);
@@ -59,14 +59,12 @@ void	ft_heredoc(t_cmd *cmd, char *file_name)
 	if (cmd->fd_in != -1)
 		cmd->fd_in = -1;
 	cmd->heredoc_delimiter = parse_line(file_name);
-	// signal(SIGINT, ft_init_signals_heredoc);
 	while (i < MAX_CONTENT_SIZE)
 	{
 		str = readline("> ");
 		if (!str)
 		{
-			printf("minishell: warning: here-document delimited \
-				by end-of-file\n");
+			perror("warning: here-document delimited by end-of-file\n");
 			break ;
 		}
 		if (ft_strcmp(str, cmd->heredoc_delimiter) == 0)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_for_redirs.c                                 :+:      :+:    :+:   */
+/*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:29:20 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 19:02:14 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:09:14 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_cmd	*parse_outfile(t_cmd *node, char **s, char *file_name, int token)
 		node = parse_for_redirections(node, s);
 	return (node);
 }
+
 //this function opens the files and checks for errors
 t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd_type)
 {
@@ -109,48 +110,4 @@ t_cmd	*redir_cmd(t_cmd *node, int instructions, int fd_type)
 		node->fd_out = -1;
 	}
 	return (node);
-}
-
-int	check_access_and_fd(t_cmd *cmd, int fd_in, int fd_out)
-{
-	t_cmd	*temp;
-
-	temp = cmd;
-	if (fd_in)
-	{
-		if (temp->fd_in < 0)
-		{
-			if (access(temp->file_name, F_OK | W_OK) == -1)
-			{
-				temp->fd_in = -1;
-				perror("minishell: infile: No such file or directory");
-				return (1);
-			}
-			else if (temp->fd_in < 0)
-			{
-				temp->fd_in = -1;
-				perror("Error Opening file");
-				return (1);
-			}
-		}
-	}
-	if (fd_out)
-	{
-		if (temp->fd_out < 0)
-		{
-			close(temp->fd_out);
-			temp->fd_out = -1;
-			perror("Error Opening file");
-			return (1);
-		}
-		if (access(temp->file_name, F_OK | W_OK) == -1)
-		{
-			close(temp->fd_out);
-			temp->fd_out = -1;
-			perror("minishell: infile: No such file or directory");
-			return (1);
-		}
-	}
-	cmd = temp;
-	return (0);
 }

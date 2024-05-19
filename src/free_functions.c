@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:53:32 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 08:15:49 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:31:07 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_free_env_list(t_env **env_list)
 		next = (*env_list)->next;
 		free((*env_list)->cmd_env);
 		free(*env_list);
-		*env_list = next; // Update the value pointed to by env_list
+		*env_list = next;
 	}
 }
 
