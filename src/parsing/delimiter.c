@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 07:53:35 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 10:58:24 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,51 +29,27 @@ int	find_delimiter(char *s1, char *delim)
 	return (0);
 }
 
-void	check_quotes_single(char *s)
+
+void	check_quotes(char *s)
 {
 	size_t	i;
 	size_t	len;
-	size_t	new_len;
-	char	*temp;
 
 	len = ft_strlen(s);
 	if (!s || len < 2)
 		return ;
 	i = 0;
-	new_len = 0;
-	if ((s[0] == '\'' && s[len - 1] == '\''))
-	{
-		if (s[i] == s[len - 1])
-		{
-			new_len = len - 2;
-			temp = (char *)ft_calloc(new_len + 1, sizeof(char));
-			if (!temp)
-				return ;
-			while (i < new_len)
-			{
-				temp[i] = s[i + 1];
-				i++;
-			}
-			temp[i] = '\0';
-			ft_strcpy(s, temp);
-			free(temp);
-		}
-	}
+	quote_helper(s, '\'', i, len);
+	quote_helper(s, '\"', i , len);
 }
 
-void	check_quotes_double(char *s)
+void	quote_helper(char *s, int quote, size_t i, size_t len)
 {
-	size_t	i;
-	size_t	len;
 	size_t	new_len;
 	char	*temp;
 
-	len = ft_strlen(s);
-	if (!s || len < 2)
-		return ;
-	i = 0;
 	new_len = 0;
-	if ((s[0] == '\"' && s[len - 1] == '\"'))
+	if ((s[0] == quote && s[len - 1] == quote))
 	{
 		if (s[i] == s[len - 1])
 		{
@@ -92,9 +68,4 @@ void	check_quotes_double(char *s)
 			free(temp);
 		}
 	}
-}
-void	check_quotes(char *s)
-{
-	check_quotes_double(s);
-	check_quotes_single(s);
 }
