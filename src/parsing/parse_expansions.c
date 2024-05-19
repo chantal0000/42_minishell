@@ -6,138 +6,142 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:42:49 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/18 21:15:48 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 10:38:30 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-//check if variable name is valid
-//checks each char is alphanumeric or underscore 
-int	valid_name(char *s)
+/*
+checks the command arrays in linked lists for expansions
+*/
+void	parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
 {
-	if (!s || !ft_isalpha(*s))
-		return (0);
-	while (*s)
-	{
-		if (!ft_isalnum(*s) && *s != '_')
-			return (0);
-		s++;
-	}
-	return (1);
-}
-char	*find_var_position(char *s)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == '$' && valid_name((s + 1)))
-			return (s);
-		s++;
-	}
-	return (NULL);
-}
-
-// Update the input string with the variable value
-void update_string(char **string, char *var_value, char *second_string)
-{
-	char	*beg_part;
-	char	*updated_string;
-	size_t	len;
-
-	if (!*string[0] && var_value)
-		beg_part = ft_strdup(var_value);
-	else if (!*string[0] && !var_value)
-		beg_part = ft_strdup("");
-	else
-		beg_part = ft_strdup(*string);
-	len = ft_strlen(beg_part) + ft_strlen(second_string);
-	updated_string = ft_calloc((len + 1), sizeof(char));
-	if (updated_string) {
-		ft_strcpy(updated_string, beg_part);
-		ft_strcat(updated_string, second_string);
-	}
-	free(beg_part);
-	free(*string);
-	*string = updated_string;
-}
-//**************************************
-//not updated....still copied
-
-// Expand variables in the input string
-void expand_variables(char **input, t_env *env) {
-	char *var_position;
-	char *var_name;
-	char *var_value;
-	int name_size;
-
-	var_position = find_var_position(*input);
-	if (var_position) {
-		name_size = 0;
-		while (valid_name(&var_position[name_size + 1]))
-			name_size++;
-		var_name = strndup(var_position + 1, name_size);
-		*var_position = '\0';
-		var_value = find_substitution(env , var_name);
-		update_string(input, var_value, var_position + 1 + name_size);
-		free(var_name);
-		expand_variables(input, env);
-	}
-}
-
-// Expand the exit status in the input string
-void expand_exit_status(char **input, int exit_status) {
-	char *exit_pos;
-	char *first_part;
-	char *second_part;
-	char *status_str;
-	char *updated_input;
-
-	while ((exit_pos = strstr(*input, "$?")) != NULL) {
-		*exit_pos = '\0';
-		first_part = strdup(*input);
-		second_part = strdup(exit_pos + 2);
-		asprintf(&status_str, "%d", exit_status); // Convert exit status to string
-
-		updated_input = malloc(strlen(first_part) + strlen(status_str) + strlen(second_part) + 1);
-		if (updated_input) {
-			ft_strcpy(updated_input, first_part);
-			ft_strcat(updated_input, status_str);
-			ft_strcat(updated_input, second_part);
-		}
-
-		free(first_part);
-		free(second_part);
-		free(status_str);
-		free(*input);
-		*input = updated_input;
-	}
-}
-
-// Handle all expansions (variables and exit status) in the input string
-void handle_expansions(char **input, t_env *minienv, int exit_status) {
-	expand_exit_status(input, exit_status);
-	expand_variables(input, minienv);
-}
-
-void parse_cmds_for_expansions(t_cmd **cmd, t_env *env, int *exit_status)
-{
-	t_cmd *temp;
-	int i;
+	t_cmd	*temp;
+	int		i;
 
 	if (!cmd || !*cmd || !env || !exit_status)
-		return;
-
+		return ;
 	temp = *cmd;
 	while (temp)
 	{
 		i = 0;
 		while (temp->cmd[i] != NULL)
 		{
-			handle_expansions(&temp->cmd[i], env, *exit_status);
+			expand_exit_status(&temp->cmd[i], exit_status);
+			expand_variables(&temp->cmd[i], env);
 			i++;
 		}
 		temp = temp->next;
 	}
+}
+
+/*
+Update the input string with the variable value
+-if string empty and var_value not empty, copy var_value
+-if string & var_value empty, copy ""
+-else copy string
+*/
+void	update_string(char **s, char *var_value, char *second_s)
+{
+	char	*beg_part;
+	char	*new;
+
+	if (!*s[0] && var_value)
+	{
+		beg_part = ft_strdup(var_value);
+		new = ft_strjoin(beg_part, second_s);
+	}
+	else if (!*s[0] && !var_value)
+	{
+		beg_part = ft_strdup("");
+		new = ft_strjoin(beg_part, second_s);
+	}
+	else
+	{
+		beg_part = ft_strdup(*s);
+		new = ft_strjoin(beg_part, var_value);
+		new = ft_strjoin(new, second_s);
+	}
+	free(*s);
+	free(beg_part);
+	*s = new;
+}
+
+/*
+Finds variable in env, if var is found, proceeds
+to substitute value of var, checking for valid characters
+& updates the string
+*/
+void	expand_variables(char **s, t_env *env)
+{
+	char	*position;
+	char	*name;
+	char	*value;
+	int		len;
+
+	position = find_var_position(*s);
+	while (position != NULL)
+	{
+		*position = '\0';
+		len = 0;
+		while (position[len + 1] && (valid_name(&position[len + 1])))
+			len++;
+		name = ft_strndup(position + 1, len);
+		value = find_substitution(name, env);
+		if (value)
+		{
+			update_string(s, value, position + 1 + len);
+			free(name);
+		}
+		else
+			value = ft_strdup("");
+		position = find_var_position(*s);
+	}
+}
+
+/*
+finds the $ in string adn null terminates after $.
+This splits the string to before $ and after.
+First copies string before $, second jumps past $ &
+copies rest
+*/
+void	expand_exit_status(char **s, int *exit_status)
+{
+	char	*exp_pos;
+	char	*first;
+	char	*second;
+	char	*expansion;
+	char	*temp;
+
+	exp_pos = ft_strstr(*s, "$?");
+	if (exp_pos)
+	{
+		*exp_pos = '\0';
+		first = ft_strdup(*s);
+		second = ft_strdup(exp_pos + 2);
+		expansion = ft_itoa(*exit_status);
+		temp = expanded_string(first, expansion, second);
+		free(first);
+		free(second);
+		free(expansion);
+		free(*s);
+		*s = temp;
+	}
+}
+
+char	*expanded_string(char *first, char *expansion, char *second)
+{
+	char	*temp;
+	size_t	len;
+
+	len = ft_strlen(first) + ft_strlen(expansion) + ft_strlen(second);
+	temp = ft_calloc((len + 1), sizeof(char));
+	if (temp)
+	{
+		ft_strcpy(temp, first);
+		ft_strcat(temp, expansion);
+		ft_strcat(temp, second);
+	}
+	return (temp);
 }

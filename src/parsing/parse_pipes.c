@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/17 18:39:24 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/19 10:46:26 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 //cmd is prev subtree and temp next subtree and if more pipes, 
 //will create a new pipe node
-void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
+void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe)
 {
 	t_cmd	*temp;
-	t_cmd	*temp2;
 
-	temp2 = NULL;
 	if (!**str || !str)
 		return ;
 	if (prev_pipe == 0)
@@ -30,23 +28,25 @@ void	parse_for_pipe(char **str, t_cmd **cmd, int prev_pipe, int *index)
 			ft_free_cmd_struct(*cmd);
 			error_general("parse exec failed");
 		}
-		temp->index = *index;
 		m_lstadd_back(cmd, temp);
 	}
-	(*index)++;
 	if (check_next_char(str, '|'))
+		pipe_found_fcn(cmd, str);
+}
+
+void	pipe_found_fcn(t_cmd **cmd, char **str)
+{
+	t_cmd	*temp;
+
+	find_tokens(str, NULL);
+	temp = parse_exec_cmds(str);
+	if (!temp)
 	{
-		find_tokens(str, NULL);
-		temp2 = parse_exec_cmds(str);
-		if (!temp2)
-		{
-			ft_free_cmd_struct(*cmd);
-			error_general("parse exec failed");
-		}
-		temp2->index = *index;
-		m_lstadd_back(cmd, temp2);
-		parse_for_pipe(str, cmd, 1, index);
+		ft_free_cmd_struct(*cmd);
+		error_general("parse exec failed");
 	}
+	m_lstadd_back(cmd, temp);
+	parse_for_pipe(str, cmd, 1);
 }
 
 void	restore_pipes_and_spaces(t_cmd *cmd)
