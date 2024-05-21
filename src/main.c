@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:54:42 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/21 14:45:06 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:10:59 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,47 +17,19 @@
 */
 int	g_signal;
 
-// void	print_stack(t_cmd *root)
-// {
-// 	t_cmd	*temp;
-
-// 	temp = root;
-// 	while (temp != NULL)
-// 	{
-// 		printf("\nnode[%d]\n", temp->index);
-// 		printf("fd_in: %d\n", temp->fd_in);
-// 		printf("fd_out: %d\n", temp->fd_out);
-// 		printf("file_name: %s\n", temp->file_name);
-// 		printf("token: %c\n", temp->token);
-// 		printf("delimiter: %s\n", temp->heredoc_delimiter);
-// 		printf("token_env: %d\n", temp->token_env);
-// //		for (int i = 0; i < MAX_CONTENT_SIZE && temp->heredoc_content[i] != NULL; i++)
-// //		{
-// //			printf("heredoc content [%d]: %s\n", i, temp->heredoc_content[i]);
-// //		}
-// //		printf("node->data: %d\n", root-> data);
-// 		for (int i = 0; i < MAXARGS && temp->cmd[i] != NULL; i++)
-// 		{
-// 			printf("cmd[%d]: %s\n", i, temp->cmd[i]);
-// 		}
-// 		temp = temp -> next;
-// 	}
-// }
-
-void	ft_execute(char *line, t_cmd **list, t_minishell *minishell_struct, int *exit_status)
+void	ft_execute(char *line, t_cmd **list,
+		t_minishell *minishell_struct, int *exit_status)
 {
 	parse_for_cmds(list, line);
 	parse_cmds_for_expansions(list, minishell_struct->env_list, exit_status);
-//	print_stack(*list);
 	restore_pipes_and_spaces(*list);
-//	printf("\nafter expansions and restoration\n");
-	// print_stack(*list);
 	*exit_status = ft_executor(*list, minishell_struct);
 	dup2(minishell_struct->og_stdin, STDIN_FILENO);
 	dup2(minishell_struct->og_stdout, STDOUT_FILENO);
 }
 
-char	*read_command(t_cmd *list, t_minishell *minishell_struct , int *exit_status)
+char	*read_command(t_cmd *list,
+		t_minishell *minishell_struct, int *exit_status)
 {
 	char	*line;
 
@@ -78,15 +50,12 @@ char	*read_command(t_cmd *list, t_minishell *minishell_struct , int *exit_status
 		{
 			add_history(line);
 			ft_execute(line, &list, minishell_struct, exit_status);
-//			ft_free_cmd_struct(list);
-//			free(list);
 			list = NULL;
 			return (line);
 		}
 	}
 	return (line);
 }
-
 
 void	handle_exit(t_env *env_list, char *line)
 {
@@ -101,9 +70,9 @@ t_minishell	*init_minishell(char **env)
 
 	minishell_struct = malloc(sizeof(t_minishell));
 	minishell_struct->og_stdin = dup(STDIN_FILENO);
-	minishell_struct->og_stdout  = dup(STDOUT_FILENO);
-	minishell_struct->env_list= fill_env_struct(env);
-	return(minishell_struct);
+	minishell_struct->og_stdout = dup(STDOUT_FILENO);
+	minishell_struct->env_list = fill_env_struct(env);
+	return (minishell_struct);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -128,10 +97,7 @@ int	main(int argc, char **argv, char **env)
 	minishell_struct = init_minishell(env);
 	while (1)
 		line = read_command(list, minishell_struct, &exit_status);
-	// printf("hi\n\n");
 	handle_exit(minishell_struct->env_list, line);
-	free(list);
-	list = NULL;
 	close(minishell_struct->og_stdin);
 	close(minishell_struct->og_stdout);
 	return (exit_status);

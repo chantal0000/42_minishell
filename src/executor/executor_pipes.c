@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:17:22 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/21 14:38:08 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:10:45 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	ft_exit_free(t_minishell *minishell_struct, t_cmd *node, int exit_status)
 {
-	printf("enter function exit_free\n");
-	(void)minishell_struct;
-	(void)node;
 	ft_free_cmd_struct(first_node(node));
 	ft_free_env_list(&(minishell_struct->env_list));
 	close(minishell_struct->og_stdin);

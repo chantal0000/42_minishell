@@ -6,7 +6,7 @@
 /*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/21 13:44:32 by chbuerge         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:12:48 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 ** if only "exit"
 ** EXIT CODE 0
 */
-void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list, t_minishell *minishell_struct)
+void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list,
+		t_minishell *minishell_struct)
 {
 	printf("exit\n");
 	printf("Error: exit: non-numeric argument for exit\n");
