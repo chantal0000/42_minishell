@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 18:34:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:47:52 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void		ft_set_pipe_last(t_cmd *node, int pipe_fd[2], int old_p_in);
 //parsing/delimiter.c
 int			find_delimiter(char *s1, char *delim);
 void		check_quotes(char *s);
+void		check_quotes_single(char *s);
 void		quote_helper(char *s, int quote, size_t i, size_t len);
 
 //parsing/find_tokens.c
@@ -209,7 +210,8 @@ void		ft_restore(char *s);
 
 //parsing/parse_quotes.c
 void		remove_quotes(char *str);
-void		check_in_cmd_array_for_quotes(char *s);
+void		check_in_cmd_array_for_double_quotes(char *s);
+void		check_in_cmd_array_for_single_quotes(char *s);
 
 //parsing/parse_redirections.c
 t_cmd		*parse_for_redirections(t_cmd *node, char **s);
@@ -253,9 +255,10 @@ void		clean_up(t_env *env);
 void		ft_execute(char *line, t_cmd **list, t_minishell *minishell_struct, \
 				int *exit_status);
 char		*read_input(t_minishell *minishell_struct);
-char		*process_command(char *line, t_cmd **list, t_minishell *minishell_struct, \
+char		*process_command(char *line, t_cmd **list, t_minishell \
+				*minishell_struct, int *exit_status);
+char		*read_command(t_cmd *list, t_minishell *minishell_struct, \
 				int *exit_status);
-char		*read_command(t_cmd *list, t_minishell *minishell_struct, int *exit_status);
 t_minishell	*init_minishell(char **env);
 
 //utils.c
