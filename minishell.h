@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:57:05 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 18:34:08 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:45:02 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void		ft_write_echo(char **arr, int i);
 int			ft_env(t_cmd *cmd, t_env **env_list);
 
 //builtins/exit.c
-void		ft_handle_nodigi(t_cmd *cmd, t_env *env_list);
+void		ft_handle_nodigi(t_cmd *cmd, t_env *env_list, t_minishell *minishell_struct);
 int			ft_exit(t_cmd *cmd, t_minishell *minishell_struct);
 void		ft_exit_helper(t_cmd *cmd, t_minishell *minishell_struct);
 

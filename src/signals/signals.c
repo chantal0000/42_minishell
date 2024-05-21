@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:34:15 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/19 17:31:52 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:36:29 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_ctrl_c_signals_input(int sig)
 void	ft_quit_signals_input(int sig)
 {
 	(void)sig;
+	g_signal = 131;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	write(STDERR_FILENO, "Quit\n", 6);
@@ -65,6 +66,7 @@ void	ft_quit_signals_input(int sig)
 */
 void	ft_init_signals_input(void)
 {
+	g_signal = 130;
 	signal(SIGINT, ft_ctrl_c_signals_input);
 	signal(SIGQUIT, ft_quit_signals_input);
 }

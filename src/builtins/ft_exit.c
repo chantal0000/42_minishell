@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:21:20 by chbuerge          #+#    #+#             */
-/*   Updated: 2024/05/19 18:35:20 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:44:32 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@
 ** if only "exit"
 ** EXIT CODE 0
 */
-void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list)
+void	ft_handle_nodigi(t_cmd *cmd, t_env *env_list, t_minishell *minishell_struct)
 {
 	printf("exit\n");
 	printf("Error: exit: non-numeric argument for exit\n");
 	ft_free_cmd_struct(cmd);
 	ft_free_env_list(&env_list);
+	free(minishell_struct);
 	exit (2);
 }
 
@@ -74,7 +75,7 @@ void	ft_exit_helper(t_cmd *cmd, t_minishell *minishell_struct)
 		if (cmd->cmd[1][i] == '-' || cmd->cmd[1][i] == '+')
 			i++;
 		if ((ft_isdigit(cmd->cmd[1][i]) == 0))
-			ft_handle_nodigi(cmd, minishell_struct->env_list);
+			ft_handle_nodigi(cmd, minishell_struct->env_list, minishell_struct);
 		i++;
 	}
 }
