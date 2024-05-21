@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:12:07 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 10:46:26 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:41:53 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	restore_pipes_and_spaces(t_cmd *cmd)
 		i = 0;
 		while (temp->cmd[i])
 		{
+			check_in_cmd_array_for_single_quotes(temp->cmd[i]);
 			ft_restore(temp->cmd[i]);
 			i++;
 		}

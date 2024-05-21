@@ -6,7 +6,7 @@
 /*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:21 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 16:44:43 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:44:38 by kbolon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,19 @@ void	check_quotes(char *s)
 	if (!s || len < 2)
 		return ;
 	i = 0;
-	quote_helper(s, '\'', i, len);
 	quote_helper(s, '\"', i, len);
+}
+
+void	check_quotes_single(char *s)
+{
+	size_t	i;
+	size_t	len;
+
+	len = ft_strlen(s);
+	if (!s || len < 2)
+		return ;
+	i = 0;
+	quote_helper(s, '\'', i, len);
 }
 
 void	quote_helper(char *s, int quote, size_t i, size_t len)
