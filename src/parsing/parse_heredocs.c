@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_heredocs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbolon <kbolon@42.fr>                      +#+  +:+       +#+        */
+/*   By: chbuerge <chbuerge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:02 by kbolon            #+#    #+#             */
-/*   Updated: 2024/05/19 17:11:39 by kbolon           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:57:17 by chbuerge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	ft_create_temp_file(char **heredoc_content, t_cmd *cmd)
 	temp_file = "/tmp/tempfile21008";
 	cmd->fd_in = open(temp_file, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (cmd->fd_in == -1)
-		error_general("Failed to create temporary file");
+		error_general("");
 	write_heredoc(heredoc_content, cmd, temp_file);
 	cmd->file_name = "/tmp/tempfile21008";
 	close(cmd->fd_in);
 	cmd->fd_in = open(cmd->file_name, O_RDONLY, 0777);
 	if (cmd->fd_in == -1)
-		error_temp("Failed to reopen tempfile", temp_file);
+		error_temp("", temp_file);
 	cmd->fd_out = -1;
 }
 
